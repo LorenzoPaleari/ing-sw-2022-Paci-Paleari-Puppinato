@@ -1,6 +1,6 @@
-package it.polimi.ingsw.pawns;
+package it.polimi.ingsw.model.pawns;
 
-import it.polimi.ingsw.enumerations.PawnColor;
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import java.util.*;
 
 public class Student {

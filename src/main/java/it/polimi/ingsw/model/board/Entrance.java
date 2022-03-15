@@ -1,6 +1,6 @@
-package it.polimi.ingsw.board;
+package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.pawns.Student;
+import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.Set;
 

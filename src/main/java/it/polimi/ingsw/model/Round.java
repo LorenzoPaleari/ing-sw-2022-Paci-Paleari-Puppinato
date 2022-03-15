@@ -1,6 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
-import java.awt.*;
+import it.polimi.ingsw.model.player.Player;
+import java.util.*;
 
 public class Round {
     private List<Player> playerSequence;

@@ -1,6 +1,6 @@
-package it.polimi.ingsw.board;
+package it.polimi.ingsw.model.board;
 
-import it.polimi.ingsw.pawns.Tower;
+import it.polimi.ingsw.model.pawns.Tower;
 
 import java.util.Set;
 

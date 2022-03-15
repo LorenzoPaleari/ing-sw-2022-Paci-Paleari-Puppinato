@@ -1,4 +1,8 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.player.Player;
+
+import java.util.*;
 
 public class Game {
     private static Game instance = null;
