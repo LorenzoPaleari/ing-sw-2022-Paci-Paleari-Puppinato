@@ -1,5 +1,7 @@
 package it.polimi.ingsw.board;
 
+import it.polimi.ingsw.pawns.Student;
+
 import java.util.Set;
 
 public class Entrance {

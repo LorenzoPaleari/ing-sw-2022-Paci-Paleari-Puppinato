@@ -1,5 +1,7 @@
 package it.polimi.ingsw.board;
 
+import it.polimi.ingsw.pawns.Professor;
+
 import java.util.List;
 
 public class ProfessorTable {
