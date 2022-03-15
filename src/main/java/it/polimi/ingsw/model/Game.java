@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.player.Player;
+import jdk.javadoc.internal.doclets.formats.html.Table;
 
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class Game {
     public void endGame(){}
 
     public boolean isNicknameUsed(){
-        return 0;
+        return false;
     }
 
 
