@@ -12,12 +12,12 @@ public class Island {
     private boolean motherNature;
     private boolean noEntryTiles;
     private int islandID;
-    private Set<Tower>;
+    private Set<Tower> IslandTower;
 
     public boolean hasMotherNature() {}
-    public Island (int islandID){}
-    public int (int islandID){}
-    public int (Student s){}
+    public Island mergeIsland (int islandID){}
+    public int removeIsland (int islandID){}
+    public int addStudent(Student s){}
 
 
 }
