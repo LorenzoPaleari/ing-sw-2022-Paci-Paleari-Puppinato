@@ -10,6 +10,15 @@ public class Player {
     private Board board;
     private Deck deck;
     private PlayerState state;
+    private Assistant lastUsed;
 
-    public void changeState(){}
+    public void changeState()
+    {
+
+    }
+
+    public void addAssistant (int weight)
+    {
+       lastUsed=deck.removeAssistant(weight);
+    }
 }

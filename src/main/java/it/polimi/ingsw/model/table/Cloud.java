@@ -8,7 +8,13 @@ public class Cloud {
     private int cloudID;
     private List<Student> cloudStudent;
 
-    public int addStudent() {}
-    public int removeAll() {}
+    public void addStudent(List<Student> )
+    {
+
+    }
+    public int removeAll()
+    {
+
+    }
 
 }

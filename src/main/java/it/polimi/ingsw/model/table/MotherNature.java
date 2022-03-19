@@ -11,5 +11,8 @@ public class MotherNature {
         }
         return instance;
     }
-    public int getPositionID() {}
+
+    public int getPositionID() {
+        return positionID;
+    }
 }

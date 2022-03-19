@@ -4,12 +4,19 @@ import java.util.*;
 
 public class Deck {
     private List<Assistant> assistant;
-    private Assistant lastUsed;
 
-    public void useAssistant(Assistant ass){}
+    public Deck () {
+        assistant = new ArrayList<Assistant>(10);
+
+    }
+
+    public Assistant removeAssistant(int weight)
+    {
+       return assistant.remove(weight);
+    }
 
     public boolean isEmpty(){
-        return false;
+        return assistant.size() == 0;
     }
 
 }

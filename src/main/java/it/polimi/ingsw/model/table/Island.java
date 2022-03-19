@@ -14,10 +14,41 @@ public class Island {
     private int islandID;
     private Set<Tower> IslandTower;
 
-    public boolean hasMotherNature() {}
-    public Island mergeIsland (int islandID){}
-    public int removeIsland (int islandID){}
-    public int addStudent(Student s){}
+    public int getWeight() {
+        return weight;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public Set<Student> getIslandStudent() {
+        return islandStudent;
+    }
+
+    public boolean isMotherNature() {
+        return motherNature;
+    }
+
+    public boolean isNoEntryTiles() {
+        return noEntryTiles;
+    }
+
+    public int getIslandID() {
+        return islandID;
+    }
+
+    public Set<Tower> getIslandTower() { return IslandTower; }
+
+    public boolean hasMotherNature(int position)
+    {
+        return islandID==position;
+    }
+
+    public int addStudent(Student s)
+    {
+
+    }
 
 
 }

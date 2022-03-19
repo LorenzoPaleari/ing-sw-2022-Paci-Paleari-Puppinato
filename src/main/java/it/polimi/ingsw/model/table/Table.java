@@ -9,8 +9,10 @@ public class Table {
     private List<Character> character;
 
     public int getNumIsland () {}
-    public void addCoin(int numCoin) {}
+    public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
     public void withdrawCoin() {}
     public void updateIsland () {}
+    public Island mergeIsland (int islandID){}
+    public int removeIsland (int islandID){}
 
 }
