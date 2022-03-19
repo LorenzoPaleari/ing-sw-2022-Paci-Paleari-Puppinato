@@ -8,9 +8,9 @@ public class TowerCourt {
     private Set<Tower> tower;
 
     public void removeTower(int numT){
-
+        //tower.remove(numT);
     }
     public void addTower(int numT){
-
+        //tower.add(numT);
     }
 }
