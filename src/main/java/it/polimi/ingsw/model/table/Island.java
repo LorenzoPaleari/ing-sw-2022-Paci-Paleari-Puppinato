@@ -45,9 +45,9 @@ public class Island {
         return islandID==position;
     }
 
-    public int addStudent(Student s)
+    public void addStudent(Student s)
     {
-
+        islandStudent.add(s);
     }
 
 

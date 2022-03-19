@@ -8,10 +8,12 @@ public class Table {
     private List<Island> island;
     private List<Character> character;
 
-    public int getNumIsland () {}
+    public int getNumIsland () {return island.size();}
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
-    public void withdrawCoin() {}
-    public void updateIsland () {}
+    public void withdrawCoin(int numCoin) {generalSupply=generalSupply-numCoin;} //TODO: generalSupply<0?
+
+
+    public void updateIsland() {}
     public Island mergeIsland (int islandID){}
     public int removeIsland (int islandID){}
 

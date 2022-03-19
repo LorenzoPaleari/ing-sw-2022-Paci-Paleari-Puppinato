@@ -8,6 +8,7 @@ public class Bag {
     private List<Student> student;
 
     public List<Student> withdrawStudent(int numStudents)
+            //TODO: n could be bigger than student.size()
     {
         List<Student> drawOut = new LinkedList<Student>();
         for (int i=0; i<numStudents;i++)
