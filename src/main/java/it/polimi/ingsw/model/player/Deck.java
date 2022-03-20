@@ -7,12 +7,11 @@ public class Deck {
 
     public Deck () {
         assistant = new ArrayList<Assistant>(10);
-
     }
 
-    public Assistant removeAssistant(int weight)
+    public Assistant removeAssistant(int position)
     {
-       return assistant.remove(weight);
+       return assistant.remove(position);
     }
 
     public boolean isEmpty(){

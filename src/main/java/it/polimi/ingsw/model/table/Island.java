@@ -7,19 +7,28 @@ import java.util.*;
 
 public class Island {
     private int weight;
-    private String playerName;
     private Set<Student> islandStudent;
     private boolean motherNature;
     private boolean noEntryTiles;
     private int islandID;
-    private Set<Tower> IslandTower;
+    private Set<Tower> islandTower;
+
+/*    public Island(int weight, Set<Student> islandStudent,boolean motherNature,boolean noEntryTiles,int islandID,Set<Tower> islandTower)
+    {
+        this.weight=weight;
+        this.islandStudent=islandStudent;
+        this.motherNature=motherNature;
+        this.noEntryTiles=noEntryTiles;
+        this.islandID=islandID;
+        this.islandTower=islandTower;
+    }*/
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
     public int getWeight() {
         return weight;
-    }
-
-    public String getPlayerName() {
-        return playerName;
     }
 
     public Set<Student> getIslandStudent() {
@@ -38,7 +47,7 @@ public class Island {
         return islandID;
     }
 
-    public Set<Tower> getIslandTower() { return IslandTower; }
+    public Set<Tower> getIslandTower() { return islandTower; }
 
     public boolean hasMotherNature(int position)
     {

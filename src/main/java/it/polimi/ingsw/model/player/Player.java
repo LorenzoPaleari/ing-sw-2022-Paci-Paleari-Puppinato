@@ -12,13 +12,17 @@ public class Player {
     private PlayerState state;
     private Assistant lastUsed;
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public void changeState()
     {
 
     }
 
-    public void addAssistant (int weight)
+    public void addAssistant (int position)
     {
-       lastUsed=deck.removeAssistant(weight);
+       lastUsed=deck.removeAssistant(position);
     }
 }
