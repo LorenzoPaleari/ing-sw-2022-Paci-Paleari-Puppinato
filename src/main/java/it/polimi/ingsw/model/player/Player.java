@@ -16,7 +16,9 @@ public class Player {
         return nickname;
     }
 
-
+    public Assistant getLastUsed() {
+        return lastUsed;
+    }
 
     public void changeState(PlayerState state)
     {

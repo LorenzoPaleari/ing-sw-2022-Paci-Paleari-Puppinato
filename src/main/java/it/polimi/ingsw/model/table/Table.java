@@ -44,8 +44,6 @@ public class Table {
 
         updateIsland(islandPrev, islandCurr);
         updateIsland(islandNext, islandCurr);
-        island.add(islandCurr);
-
     }
 
     public void updateIsland(Island islandNotCurr, Island islandCurr) {
