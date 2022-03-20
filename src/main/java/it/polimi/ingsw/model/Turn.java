@@ -2,14 +2,27 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.player.Player;
 
-public class Turn {
+public class Turn{
     private Player currentPlayer;
     private int remainingMovements;
 
-    private void nextTurn(){
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }       //Getter
+
+    public int getRemainingMovements() {
+        return remainingMovements;
+    }       //Getter
+
+    public void resetRemainingMovements(int num) {
+        remainingMovements = num;
+    }       //Serve a resettare le mosse
+
+    public void updatePlayer(Player p){
+        currentPlayer = p;
     }
 
-    public void endTurn(){}
-    public void updateMoves(){}
-    public void useCharacter(Character c){}
+    public void updateRemainingMovements(){
+        remainingMovements -= 1;
+    }
 }
