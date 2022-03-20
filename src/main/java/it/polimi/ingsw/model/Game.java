@@ -12,7 +12,7 @@ public class Game {
     private int numPlayer;
     private Table table;
     private Round round;
-    private LinkedList<Player> player;
+    private List<Player> player;
 
     private Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<Player>();
