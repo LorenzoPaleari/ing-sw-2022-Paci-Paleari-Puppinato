@@ -10,8 +10,12 @@ public class Round {
     private Turn turn;
     private Boolean lastRound;
 
-    public Round(Turn turn, List<Player> player) {
-        this.turn = turn;
+    public void setLastRound(Boolean lastRound) {
+        this.lastRound = lastRound;
+    }
+
+    public Round(List<Player> player) {
+        turn = new Turn();
         playerSequence = new LinkedList<Player>(player);
         nextSequence = new LinkedList<Player>(player);
     }
@@ -66,10 +70,6 @@ public class Round {
 
     public void endRound(){
             playerSequence.get(0).changeState(PlayerState.PLANNING);
-    }
-
-    public void setLastRound(Boolean lastRound) {
-        this.lastRound = lastRound;
     }
 
     public Player getNextPlayer(Player p){
