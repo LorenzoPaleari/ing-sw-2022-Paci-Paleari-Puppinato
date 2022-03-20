@@ -21,8 +21,6 @@ public class Table {
     {
         int positionNext;
         int positionPrev;
-        int newWeight;
-        Set<Student> newStudent;
 
         if(position==0)
         {
@@ -46,6 +44,7 @@ public class Table {
 
         updateIsland(islandPrev, islandCurr);
         updateIsland(islandNext, islandCurr);
+        island.add(islandCurr);
 
     }
 

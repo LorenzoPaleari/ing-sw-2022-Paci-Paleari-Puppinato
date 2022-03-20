@@ -16,9 +16,11 @@ public class Player {
         return nickname;
     }
 
-    public void changeState()
-    {
 
+
+    public void changeState(PlayerState state)
+    {
+        this.state=state;
     }
 
     public void addAssistant (int position)
