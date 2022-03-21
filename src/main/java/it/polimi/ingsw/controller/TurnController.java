@@ -27,6 +27,8 @@ public class TurnController {
         if (turn.getRemainingMovements() == 0){
             value = false;
             System.out.println("You have already moved all the student, please move Mother Nature");
+        } else {
+           turn.updateRemainingMovements();
         }
 
         return value;
