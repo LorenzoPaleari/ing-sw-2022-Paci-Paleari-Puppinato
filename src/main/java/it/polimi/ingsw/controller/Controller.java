@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.model.Game;
@@ -13,12 +15,14 @@ import it.polimi.ingsw.model.player.Player;
 public class Controller {
     private TurnController turnController;
     ProfessorContext professorContext;
+    MotherNatureContext motherNatureContext;
     private Game game;
 
     public Controller(){
         game = Game.getInstance();
         turnController = new TurnController();
         professorContext = new ProfessorContext(new ProfessorControllerStandard());
+        motherNatureContext = new MotherNatureContext(new MotherNatureControllerStandard());
     }
 
     public void setNumPlayer(int num) {
@@ -39,10 +43,30 @@ public class Controller {
         if(!turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING))
             return;
 
+        int weight = player.getDeck().getAssistant(position).getWeight();
+        if(sameAssistant(weight, player)) {
+            System.out.println("Choose an Assistant different from others player");
+            return;
+        }
 
-        round.getTurn().getCurrentPlayer().addAssistant(position);
+        player.addAssistant(position);
         if (!round.nextPlanningTurn())
             round.endPlanningPhase();
+    }
+
+    public boolean sameAssistant(int weight, Player player){
+        boolean value = false;
+
+        int size = player.getDeck().getSize();
+        for (Player p: game.getPlayers()){
+            if (p.getDeck().getSize() == size - 1 && p.getLastUsed().getWeight() == weight)
+                value = true;
+        }
+
+        if (size == 1 || size == 2 && game.getRound().getTurnDone() ==2)
+            value = false;
+
+        return value;
     }
 
     public void useStudentIsland(Player player, PawnColor color, int position){
@@ -70,8 +94,17 @@ public class Controller {
         Student student = player.getBoard().getEntrance().removeStudent(color);
         player.getBoard().getDiningRoom().addStudent(student);
 
-        professorContext.professorControl(player, color);
+        professorContext.professorControl(game, player, color);
+    }
 
+    public void moveMotherNature(int endPosition, Player player){
+        int numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
+        if (numMoves == 0){
+            System.out.println("You can't go so far with your Assistant, please choose another Island");
+            return;
+        }
+
+        game.getTable().moveMotherNature(numMoves);
     }
 
 }

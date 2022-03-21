@@ -15,7 +15,10 @@ public class TurnController {
         }
 
         if(!checkCorrectAction(player, state)){
-            System.out.println("It's Action Phase, you need to move a Student");
+            if (state.equals(PlayerState.PLANNING))
+                System.out.println("It's Action Phase, you need to move a Student");
+            else
+                System.out.println("It's Planning Phase, you need to choose an Assistant");
             value = false;
         }
 
