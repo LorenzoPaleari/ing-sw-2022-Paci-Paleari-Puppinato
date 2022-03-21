@@ -30,10 +30,12 @@ public class Game {
     }
 
     public void startGame(){
-        round = new Round(player);
         table = new Table();
+        round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
+        for (Player p :player)
+            player.setUp();
     }
 
     public int addPlayer(Player player) {

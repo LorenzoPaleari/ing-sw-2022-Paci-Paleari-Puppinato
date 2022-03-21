@@ -41,6 +41,10 @@ public class Character {
         return costo;
     }
 
+    public CharacterType getType() {
+        return type;
+    }
+
     public int getNumNoEntryTiles() {
         return numNoEntryTiles;
     }
