@@ -20,6 +20,10 @@ public class Round {
         nextSequence = new LinkedList<Player>(player);
     }
 
+    public Turn getTurn(){
+        return turn;
+    }
+
     public boolean nextActionTurn(){
         int index = playerSequence.indexOf(turn.getCurrentPlayer());
         turn.getCurrentPlayer().changeState(PlayerState.WAIT);

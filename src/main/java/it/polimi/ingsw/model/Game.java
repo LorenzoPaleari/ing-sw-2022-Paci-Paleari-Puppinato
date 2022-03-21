@@ -16,7 +16,6 @@ public class Game {
 
     private Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<Player>();
-        table = new Table();
     }
 
     public static Game getInstance(){  //...but allow clients to get an instance via a static method
@@ -32,7 +31,22 @@ public class Game {
 
     public void startGame(){
         round = new Round(player);
+        table = new Table();
         player.get(0).changeState(PlayerState.PLANNING);
+
+    }
+
+    public int addPlayer(Player player) {
+        this.player.add(player);
+        return (numPlayer - this.player.size());
+    }
+
+    public Round getRound(){
+        return round;
+    }
+
+    public Table getTable() {
+        return table;
     }
 
     public void endGame(){}
