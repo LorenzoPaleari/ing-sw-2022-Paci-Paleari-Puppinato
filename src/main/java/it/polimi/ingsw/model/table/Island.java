@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.table;
 
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
@@ -58,10 +59,14 @@ public class Island {
 
     public List<Tower> getIslandTower() { return islandTower; }
 
-
-    public boolean hasMotherNature(int position)
-    {
-        return islandID==position;
+    public int countStudent(PawnColor c){
+        int count = 0;
+        for(Student s : islandStudent){
+            if(s.getColor() == c){
+                count++;
+            }
+        }
+        return count;
     }
 
     public void addStudent(Student s)
@@ -69,5 +74,15 @@ public class Island {
         islandStudent.add(s);
     }
 
+    public List<Tower> removeTower(){
+       List<Tower> tower;
+       tower = islandTower;
+       islandTower.removeAll(tower);
+       return tower;
+    }
+
+    public void addTower(List<Tower> tower){
+       islandTower.addAll(tower);
+    }
 
 }

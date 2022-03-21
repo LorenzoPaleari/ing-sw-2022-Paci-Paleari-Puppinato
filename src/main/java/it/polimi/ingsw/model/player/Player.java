@@ -31,6 +31,10 @@ public class Player {
         if(expert) numCoin=1;
     }
 
+    public TowerColor getTowerColor() {
+        return towerColor;
+    }
+
     public PlayerState getState() {
         return state;
     }
@@ -59,5 +63,10 @@ public class Player {
     public void addAssistant (int position)
     {
        lastUsed=deck.removeAssistant(position);
+    }
+
+    @Override
+    public String toString() {
+        return ""+nickname;
     }
 }
