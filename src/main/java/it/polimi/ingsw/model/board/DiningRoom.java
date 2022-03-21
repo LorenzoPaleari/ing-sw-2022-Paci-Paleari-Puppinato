@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.LinkedList;
-import java.util.Set;
 
 public class DiningRoom {
     private LinkedList<Student> student;
@@ -17,8 +16,15 @@ public class DiningRoom {
         return student;
     }
 
-    public void removeStudent(Student s){
-        student.remove(s);
+    public void removeStudent(PawnColor color){
+        boolean deleted = false;
+        int i = 0;
+        while(i < student.size() && !deleted) {
+            if(student.get(i).getColor() == color){
+                student.remove(i);
+                deleted = true;
+            }
+        }
 
     }
     public void addStudent(Student s){
@@ -40,6 +46,17 @@ public class DiningRoom {
     }
 
     public LinkedList<Integer> countAll(){
+        int cont;
+        LinkedList<Integer> studCount = new LinkedList<Integer>();
+        for(PawnColor color : PawnColor.values()){
+            cont = 0;
+            for(Student s: student){
+                if(s.getColor() == color) cont++;
+            }
+            studCount.addLast(cont);
+        }
+
+
         return null;
     }
 

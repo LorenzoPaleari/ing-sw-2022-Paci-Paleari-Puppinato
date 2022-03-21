@@ -7,9 +7,11 @@ import java.util.Set;
 
 public class TowerCourt {
     private LinkedList<Tower> tower;
+    private int numInitialTowers;
 
-    public TowerCourt() {
-        tower = new LinkedList<Tower>();
+    public TowerCourt(int numTower) {
+        this.numInitialTowers = numTower;
+        this.tower = new LinkedList<Tower>();
     }
 
     public LinkedList<Tower> getTower() {
@@ -18,7 +20,7 @@ public class TowerCourt {
 
     public void removeTower(int numT){
         for(int i = 0; i < numT; i++)
-                tower.remove(i);
+                tower.removeLast();
     }
     public void addTower(int numT){
         for(int i = 0; i < numT; i++)
