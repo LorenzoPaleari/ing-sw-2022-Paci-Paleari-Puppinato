@@ -28,12 +28,19 @@ public class Entrance {
         }
         return null;
     }
-    public void addStudent(Set<Student> s){
+    public void addStudent(LinkedList<Student> s){
 
         student.addAll(s);
     }
     public void addStudent(Student s){
 
         student.add(s);
+    }
+
+    public Student find (PawnColor color){
+        for(Student s : student){
+            if(s.getColor() == color) return s;
+        }
+        return null;
     }
 }

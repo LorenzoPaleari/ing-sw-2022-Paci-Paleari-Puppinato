@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class ProfessorTable {
     private LinkedList<Professor> professors;

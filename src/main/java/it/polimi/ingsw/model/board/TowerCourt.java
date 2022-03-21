@@ -25,8 +25,8 @@ public class TowerCourt {
         return tower;
     }
 
-    public List<Tower> removeTower(int numT){
-        List<Tower> drawOut = new LinkedList<Tower>();
+    public LinkedList<Tower> removeTower(int numT){
+        LinkedList<Tower> drawOut = new LinkedList<Tower>();
         drawOut.addAll(tower.subList(0, numT - 1));
         tower.subList(0, numT -1).clear();
         return drawOut;
