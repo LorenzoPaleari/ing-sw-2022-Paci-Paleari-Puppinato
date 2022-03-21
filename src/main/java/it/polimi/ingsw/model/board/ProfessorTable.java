@@ -3,22 +3,34 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProfessorTable {
-    private List<Professor> professors;
+    private LinkedList<Professor> professors;
+
+    public  ProfessorTable(){
+        professors = new LinkedList<Professor>();
+    }
+
+    public LinkedList<Professor> getProfessors() {
+        return professors;
+    }
 
     public void removeProfessor(Professor p){
         professors.remove(p);
     }
 
     public void addProfessor(Professor p){
-        professors.add(p);
+        professors.addLast(p);
     }
 
     public Professor find(PawnColor color){
-        Professor temp = null;
-        //professor = professors.stream().filter(PawnColor::color).findAny().orElse(null);
-        return temp;
+        for(Professor p: professors){
+            if(p.getColor() == color){
+                return p;
+            }
+        }
+        return null;
     }
 }
