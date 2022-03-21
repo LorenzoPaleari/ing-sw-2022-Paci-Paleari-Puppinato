@@ -37,6 +37,10 @@ public class Table {
 
     }
 
+    public Bag getBag\ {
+        return bag;
+    }
+
     public Island getIsland(int position)
     {
         return island.get(position);
@@ -46,6 +50,17 @@ public class Table {
     public int getNumIsland () {return island.size();}
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
     public void withdrawCoin(int numCoin) {generalSupply=generalSupply-numCoin;} //TODO: generalSupply<0?
+    public Professor findProfessor(PawnColor color)
+    {
+        for(Professor p: professors)
+        {
+         if(p.getColor()==color)
+         {
+          return p;
+         }
+        }
+        return null;
+    }
 
     public void mergeIsland (int position)
     {
