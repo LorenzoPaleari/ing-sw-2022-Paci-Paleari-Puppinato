@@ -11,6 +11,17 @@ public enum PawnColor {
         this.text = text;
     }
 
+    public static PawnColor getColor(int i){
+        for (PawnColor c : PawnColor.values())
+            if(c.getIndex() == i)
+                return c;
+        return null;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
     public String getText() {
         return text;
     }

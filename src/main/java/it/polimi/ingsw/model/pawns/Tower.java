@@ -5,8 +5,8 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 public class Tower {
     private TowerColor color;
 
-    public Tower(){
-        color = null;
+    public Tower(TowerColor towerColor){
+        color = towerColor;
     }
 
     public TowerColor getColor() {

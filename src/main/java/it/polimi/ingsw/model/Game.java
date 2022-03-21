@@ -44,10 +44,10 @@ public class Game {
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
-        List<Student> student = new LinkedList<Student>();
+        LinkedList<Student> student = new LinkedList<Student>();
         for (Player p :player) {
             student = table.getBag().initialSetup(numPlayer);
-            p.setUp(student, expertMode);
+            p.setUp(student, expertMode, numPlayer);
         }
     }
 
@@ -58,6 +58,10 @@ public class Game {
 
     public Round getRound(){
         return round;
+    }
+
+    public List<Player> getPlayers() {
+        return player;
     }
 
     public Table getTable() {

@@ -29,6 +29,7 @@ public class Character {
         costo = type.getCosto();;
         used = false;
         numNoEntryTiles = 0;
+        this.student = new LinkedList<Student>();
         this.student = student;
     }
 
@@ -47,6 +48,10 @@ public class Character {
 
     public int getNumNoEntryTiles() {
         return numNoEntryTiles;
+    }
+
+    public void returnNoEntryTiles(){
+        numNoEntryTiles += 1;
     }
 
     public boolean isUsed() {
@@ -69,15 +74,16 @@ public class Character {
     }
 
     public Student findStudent(PawnColor color){
-        Student student;
+        Student stud = null;
+
         for (Student s : student){
             if (s.getColor().equals(color)) {
-                student = s;
+                stud = s;
                 break;
             }
         }
 
-        return student;
+        return stud;
     }
 
     public void addStudent(Student s) {

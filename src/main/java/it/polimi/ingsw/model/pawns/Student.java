@@ -6,8 +6,8 @@ import java.util.*;
 public class Student {
     private PawnColor color;
 
-    public Student(){
-        color = null;
+    public Student(int i){
+        color = PawnColor.getColor(i);
     }
 
     public PawnColor getColor() {

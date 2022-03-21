@@ -24,14 +24,23 @@ public class Player {
 
     public void setUp(LinkedList<Student> student, boolean expert, int numPlayer)
     {
-        board=new Board(student, expert,numPlayer );
-        deck=new Deck();
-        state=PlayerState.WAIT;
-        lastUsed=null;
+        board = new Board(student, numPlayer, towerColor);
+        deck = new Deck();
+        state = PlayerState.WAIT;
+        lastUsed = null;
         if(expert) numCoin=1;
     }
+
+    public PlayerState getState() {
+        return state;
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
     public String getNickname() {

@@ -17,11 +17,11 @@ public class Island {
    public Island(int islandID)
     {
         weight=1;
-        islandStudent=new LinkedList<Student>();
-        motherNature=false;
-        noEntryTiles=false;
-        this.islandID=islandID;
-        islandTower=new LinkedList<Tower>();
+        islandStudent = new LinkedList<Student>();
+        motherNature = false;
+        noEntryTiles = false;
+        this.islandID = islandID;
+        islandTower = new LinkedList<Tower>();
     }
 
     public void setWeight(int weight) {
@@ -32,12 +32,20 @@ public class Island {
         return weight;
     }
 
+    public void setNoEntryTiles(boolean noEntryTiles) {
+        this.noEntryTiles = noEntryTiles;
+    }
+
     public List<Student> getIslandStudent() {
         return islandStudent;
     }
 
     public boolean isMotherNature() {
         return motherNature;
+    }
+
+    public void setMotherNature(boolean motherNature) {
+        this.motherNature = motherNature;
     }
 
     public boolean isNoEntryTiles() {

@@ -21,8 +21,7 @@ public class Cloud {
         return cloudStudent;
     }
 
-
-    public void addStudent(List<Student> toAdd,int maxNumPlayer)
+    public void addStudent(List<Student> toAdd)
     {
             cloudStudent.addAll(toAdd);
     }

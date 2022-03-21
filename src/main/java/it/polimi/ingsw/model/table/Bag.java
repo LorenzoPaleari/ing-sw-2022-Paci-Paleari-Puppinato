@@ -17,14 +17,29 @@ public class Bag {
                 student.add(new Student(i));
     }
 
-    public List<Student> withdrawStudent(int numStudents)
-            //TODO: n could be bigger than student.size()
-    {
+    public LinkedList<Student> initialSetup(int numPlayer){
+        LinkedList<Student> draw = new LinkedList<Student>();
+
+        if (numPlayer == 2) {
+            draw.addAll(student.subList(0, 6));
+            student.subList(0, 6).clear();
+        }
+        else {
+            draw.addAll(student.subList(0, 8));
+            student.subList(0, 8).clear();
+        }
+
+        return draw;
+    }
+
+    public List<Student> withdrawStudent(int numStudents) {
         List<Student> drawOut = new LinkedList<Student>();
         drawOut.addAll(student.subList(0,numStudents-1));
         student.subList(0, numStudents -1).clear();
         return drawOut;
     }
+
+
     public boolean isEmpty()
     {
         return student.size()==0;
