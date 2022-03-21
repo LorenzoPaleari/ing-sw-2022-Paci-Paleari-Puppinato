@@ -2,8 +2,8 @@ package it.polimi.ingsw.model.player;
 
 public class Assistant {
 
-    private int weight;
-    private int numMovement;
+    private final int weight;
+    private final int numMovement;
 
     public Assistant(int weight)
     {

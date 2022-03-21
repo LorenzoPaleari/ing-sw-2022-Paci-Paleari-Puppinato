@@ -13,6 +13,23 @@ public class Table {
     private Bag bag;
     private List<Professor> professor;
 
+    public Table(int numPlayer)
+    {
+        generalSupply=20-numPlayer;
+        cloud=new LinkedList<Cloud>();
+        for(int i=1;i<=numPlayer;i++)
+            cloud.add(new Cloud(i));
+        island=new LinkedList<Island>();
+        for(int i=1;i<=numPlayer;i++)
+            island.add(new Island(i));
+
+        character=new LinkedList<Character>();
+        bag=new Bag();
+
+
+
+    }
+
     public int getNumIsland () {return island.size();}
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
     public void withdrawCoin(int numCoin) {generalSupply=generalSupply-numCoin;} //TODO: generalSupply<0?

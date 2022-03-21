@@ -7,6 +7,8 @@ public class Deck {
 
     public Deck () {
         assistant = new ArrayList<Assistant>(10);
+        for(int i=1; i<=10; i++)
+            assistant.add(new Assistant(i));
     }
 
     public Assistant removeAssistant(int position)
