@@ -43,6 +43,7 @@ public class Round {
         int assistenteBasso = 11;
         for (Player p : playerSequence){
             if (p.getLastUsed().getWeight() < assistenteBasso){
+                //STESSO ASSISTENTE
                 nextSequence.set(0, p);
             }
         }

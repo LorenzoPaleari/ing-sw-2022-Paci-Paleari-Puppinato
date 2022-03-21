@@ -68,7 +68,7 @@ public class Controller {
             return;
 
         Student student = player.getBoard().getEntrance().removeStudent(color);
-        player.getBoard().getDiningRoom().AddStudent(student);
+        player.getBoard().getDiningRoom().addStudent(student);
 
         professorContext.professorControl(player, color);
 

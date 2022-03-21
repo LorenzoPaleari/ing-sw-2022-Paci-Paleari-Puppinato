@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Game {
     private static Game instance = null;
+    private boolean expertMode;
     private int numPlayer;
     private Table table;
     private Round round;
@@ -30,15 +31,23 @@ public class Game {
         numPlayer = num;
     }
 
+    public boolean isExpertMode() {
+        return expertMode;
+    }
+
+    public void setExpertMode(boolean expertMode) {
+        this.expertMode = expertMode;
+    }
+
     public void startGame(){
-        table = new Table(numPlayer);
+        table = new Table(numPlayer, expertMode);
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
         List<Student> student = new LinkedList<Student>();
         for (Player p :player) {
             student = table.getBag().initialSetup(numPlayer);
-            player.setUp(student);
+            p.setUp(student, expertMode);
         }
     }
 
