@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandControllerStandard;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
@@ -16,6 +18,8 @@ public class Controller {
     private TurnController turnController;
     ProfessorContext professorContext;
     MotherNatureContext motherNatureContext;
+    IslandContext islandContext;
+    PawnColor noInfluence = null;
     private Game game;
 
     public Controller(){
@@ -23,6 +27,7 @@ public class Controller {
         turnController = new TurnController();
         professorContext = new ProfessorContext(new ProfessorControllerStandard());
         motherNatureContext = new MotherNatureContext(new MotherNatureControllerStandard());
+        islandContext = new IslandContext(new IslandControllerStandard());
     }
 
     public void setNumPlayer(int num) {
@@ -105,6 +110,28 @@ public class Controller {
         }
 
         game.getTable().moveMotherNature(numMoves);
+
+        if(islandContext.conquerIsland(game.getTable().getIsland(game.getTable().getMotherPosition()), game, player, noInfluence)) {
+            game.getTable().mergeIsland(game.getTable().getMotherPosition());
+
+            //Temporary Win
+            for (Player p : game.getPlayers()){
+                if (p.getBoard().getTowercourt().isEmpty())
+                    System.out.println("Complimenti!!! "+p+" hai vinto");
+            }
+
+            if(game.getTable().getNumIsland() <= 3)
+                System.out.println("3 o meno isole rimaste");
+        }
+    }
+
+
+
+
+
+
+    public void setNoInfluence(PawnColor color){
+        noInfluence = color;
     }
 
 }
