@@ -1,15 +1,15 @@
 package it.polimi.ingsw.model.pawns;
 
-import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.enumerations.TowerColor;
 
 public class Tower {
-    private PawnColor color;
+    private TowerColor color;
 
     public Tower(){
         color = null;
     }
 
-    public PawnColor getColor() {
+    public TowerColor getColor() {
         return color;
     }
 }

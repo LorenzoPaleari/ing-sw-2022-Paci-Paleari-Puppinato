@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model.enumerations;
 
 public enum PawnColor {
-    GREEN("GREEN"), RED("RED"), YELLOW("YELLOW"), PINK("PINK"), BLUE("BLUE");
+    GREEN(0, "GREEN"), RED(1, "RED"), YELLOW(2, "YELLOW"), PINK(3, "PINK"), BLUE(4, "BLUE");
 
+    private final int index;
     private final String text;
 
-    PawnColor(String text) {
+    PawnColor(int index, String text) {
+        this.index = index;
         this.text = text;
     }
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.LinkedList;
@@ -8,17 +9,24 @@ import java.util.Set;
 public class Entrance {
     private LinkedList<Student> student;
 
-    public Entrance() {
-        student = new LinkedList<Student>();
+    public Entrance(LinkedList<Student> stud) {
+        this.student = stud;
     }
 
     public LinkedList<Student> getStudent() {
         return student;
     }
 
-    public void removeStudent(Student s){
-
-        student.remove(s);
+    public Student removeStudent(PawnColor c){
+        Student temp;
+        for(Student s : student){
+            if(s.getColor() == c){
+                temp = s;
+                student.remove(s);
+                return temp;
+            }
+        }
+        return null;
     }
     public void addStudent(Set<Student> s){
 

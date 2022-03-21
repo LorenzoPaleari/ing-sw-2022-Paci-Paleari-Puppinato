@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.player;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.board.Board;
+import it.polimi.ingsw.model.pawns.Student;
+
+import java.util.LinkedList;
 
 public class Player {
     private String nickname;
@@ -12,6 +15,7 @@ public class Player {
     private PlayerState state;
     private Assistant lastUsed;
     private int numCoin;
+    private LinkedList<Student> student;
 
     public Player(String nickname, TowerColor towerColor)
     {
@@ -21,7 +25,7 @@ public class Player {
 
     public void setup(boolean expert)
     {
-        board=new Board();
+        board=new Board(student);
         deck=new Deck();
         state=PlayerState.WAIT;
         lastUsed=null;

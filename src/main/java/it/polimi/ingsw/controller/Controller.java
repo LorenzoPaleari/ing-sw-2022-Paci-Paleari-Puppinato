@@ -12,7 +12,7 @@ import it.polimi.ingsw.model.player.Player;
 
 public class Controller {
     private TurnController turnController;
-    ProfessorContext professorContext
+    ProfessorContext professorContext;
     private Game game;
 
     public Controller(){
