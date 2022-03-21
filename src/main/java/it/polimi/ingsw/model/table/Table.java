@@ -13,9 +13,9 @@ public class Table {
     private Bag bag;
     private List<Professor> professor;
 
-    public Table(int numPlayer)
+    public Table(int numPlayer,boolean expert)
     {
-        generalSupply=20-numPlayer;
+
         cloud=new LinkedList<Cloud>();
         for(int i=1;i<=numPlayer;i++)
             cloud.add(new Cloud(i));
@@ -23,12 +23,25 @@ public class Table {
         for(int i=1;i<=numPlayer;i++)
             island.add(new Island(i));
 
-        character=new LinkedList<Character>();
+
         bag=new Bag();
+        for(int i=0;i<5;i++)
+            for(int j=0;j<24;j++)
 
 
+        if(expert)
+        {
+            generalSupply=20-numPlayer;
+            character=new LinkedList<Character>();
+        }
 
     }
+
+    public Island getIsland(int position)
+    {
+        return island.get(position);
+    }
+
 
     public int getNumIsland () {return island.size();}
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}

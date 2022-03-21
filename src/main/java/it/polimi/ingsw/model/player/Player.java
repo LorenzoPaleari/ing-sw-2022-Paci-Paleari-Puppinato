@@ -17,11 +17,18 @@ public class Player {
     {
         this.nickname=nickname;
         this.towerColor=towerColor;
+    }
+
+    public void setup(boolean expert)
+    {
         board=new Board();
         deck=new Deck();
         state=PlayerState.WAIT;
         lastUsed=null;
-        numCoin=1;
+        if(expert) numCoin=1;
+    }
+    public Board getBoard() {
+        return board;
     }
 
     public String getNickname() {
