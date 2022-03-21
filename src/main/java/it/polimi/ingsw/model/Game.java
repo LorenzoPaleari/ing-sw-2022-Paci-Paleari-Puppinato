@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.PlayerState;
+import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
@@ -30,12 +31,15 @@ public class Game {
     }
 
     public void startGame(){
-        table = new Table();
+        table = new Table(numPlayer);
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
-        for (Player p :player)
-            player.setUp();
+        List<Student> student = new LinkedList<Student>();
+        for (Player p :player) {
+            student = table.getBag().initialSetup(numPlayer);
+            player.setUp(student);
+        }
     }
 
     public int addPlayer(Player player) {
