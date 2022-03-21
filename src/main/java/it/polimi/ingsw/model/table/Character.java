@@ -29,7 +29,7 @@ public class Character {
         costo = type.getCosto();;
         used = false;
         numNoEntryTiles = 0;
-        this.student = new LinkedList<Student>();
+        this.student = new LinkedList<>();
         this.student = student;
     }
 

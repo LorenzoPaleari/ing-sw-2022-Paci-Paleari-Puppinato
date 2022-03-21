@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.table;
 
-import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.*;
@@ -11,14 +10,16 @@ public class Bag {
 
     public Bag()
     {
-        student= new LinkedList<Student>();
+        student= new LinkedList<>();
         for(int i=0;i<5;i++)
             for(int j=0;j<24;j++)
                 student.add(new Student(i));
+
+        Collections.shuffle(student);
     }
 
     public LinkedList<Student> initialSetup(int numPlayer){
-        LinkedList<Student> draw = new LinkedList<Student>();
+        LinkedList<Student> draw = new LinkedList<>();
 
         if (numPlayer == 2) {
             draw.addAll(student.subList(0, 6));
@@ -33,7 +34,7 @@ public class Bag {
     }
 
     public List<Student> withdrawStudent(int numStudents) {
-        List<Student> drawOut = new LinkedList<Student>();
+        List<Student> drawOut = new LinkedList<>();
         drawOut.addAll(student.subList(0,numStudents-1));
         student.subList(0, numStudents -1).clear();
         return drawOut;
