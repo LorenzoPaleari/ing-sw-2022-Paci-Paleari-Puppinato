@@ -7,21 +7,21 @@ import java.util.*;
 
 public class Island {
     private int weight;
-    private Set<Student> islandStudent;
+    private List<Student> islandStudent;
     private boolean motherNature;
     private boolean noEntryTiles;
     private int islandID;
-    private Set<Tower> islandTower;
+    private List<Tower> islandTower;
 
-/*    public Island(int weight, Set<Student> islandStudent,boolean motherNature,boolean noEntryTiles,int islandID,Set<Tower> islandTower)
+   public Island(int islandID)
     {
-        this.weight=weight;
-        this.islandStudent=islandStudent;
-        this.motherNature=motherNature;
-        this.noEntryTiles=noEntryTiles;
+        weight=1;
+        islandStudent=new LinkedList<Student>();
+        motherNature=false;
+        noEntryTiles=false;
         this.islandID=islandID;
-        this.islandTower=islandTower;
-    }*/
+        islandTower=new LinkedList<Tower>();
+    }
 
     public void setWeight(int weight) {
         this.weight = weight;
@@ -31,7 +31,7 @@ public class Island {
         return weight;
     }
 
-    public Set<Student> getIslandStudent() {
+    public List<Student> getIslandStudent() {
         return islandStudent;
     }
 
@@ -47,7 +47,7 @@ public class Island {
         return islandID;
     }
 
-    public Set<Tower> getIslandTower() { return islandTower; }
+    public List<Tower> getIslandTower() { return islandTower; }
 
     public boolean hasMotherNature(int position)
     {

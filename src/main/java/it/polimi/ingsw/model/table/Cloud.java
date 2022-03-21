@@ -5,8 +5,13 @@ import it.polimi.ingsw.model.pawns.Student;
 import java.util.*;
 
 public class Cloud {
-    private int cloudID;
+    private final int cloudID;
     private List<Student> cloudStudent;
+
+    public Cloud (int cloudID)
+    {
+        this.cloudID=cloudID;
+    }
 
     public int getCloudID() {
         return cloudID;
@@ -19,15 +24,14 @@ public class Cloud {
 
     public void addStudent(List<Student> toAdd,int maxNumPlayer)
     {
-        for (int i=0; i<=maxNumPlayer;i++)
-            cloudStudent.add(toAdd.get(i));
+            cloudStudent.addAll(toAdd);
     }
-    public List<Student> removeAll(int maxNumPlayer)
+
+    public List<Student> removeAllStudent(int maxNumPlayer)
     {
-        List<Student> removed = new LinkedList<Student>();
-        for (int i=0; i<+maxNumPlayer;i++)
-            removed.add(cloudStudent.remove(i));
-        cloudStudent.subList(0, maxNumPlayer).clear();
+        List<Student> removed;
+        removed=cloudStudent;
+        cloudStudent.removeAll(removed);
         return removed;
     }
 
