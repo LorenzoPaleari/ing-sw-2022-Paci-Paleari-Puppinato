@@ -130,7 +130,7 @@ public class Controller {
 
             //Temporary Win
             for (Player p : game.getPlayers()){
-                if (p.getBoard().getTowercourt().isEmpty())
+                if (p.getBoard().getTowerCourt().isEmpty())
                     System.out.println("Complimenti!!! "+p+" hai vinto");
             }
 

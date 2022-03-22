@@ -45,15 +45,15 @@ public class IslandControllerNoColor implements IslandController {
             return false;
 
         if (color.equals(null)){
-            island.addTower(playerCandidate.getBoard().getTowercourt().removeTower(1));
+            island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(1));
             return true;
         }
 
         if (!playerCandidate.getTowerColor().equals(color))
             value = true;
 
-        owner.getBoard().getTowercourt().addTower(island.removeTower());
-        island.addTower(playerCandidate.getBoard().getTowercourt().removeTower(island.getWeight()));
+        owner.getBoard().getTowerCourt().addTower(island.removeTower());
+        island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(island.getWeight()));
 
         return value;
     }

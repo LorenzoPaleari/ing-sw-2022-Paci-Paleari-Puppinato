@@ -31,7 +31,7 @@ public class Board {
         return professorTable;
     }
 
-    public TowerCourt getTowercourt() {
+    public TowerCourt getTowerCourt() {
         return towercourt;
     }
 }
