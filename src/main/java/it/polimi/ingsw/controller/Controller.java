@@ -59,6 +59,7 @@ public class Controller {
 
         player.addAssistant(position);
         if (!round.nextPlanningTurn())
+            //Se deck è vuoto -> SetLastRound
             round.endPlanningPhase();
     }
 
@@ -138,8 +139,18 @@ public class Controller {
         }
     }
 
+    /*Scegli Nuvola
+    -> sposta tutti gli studenti nel player
 
+    nextTurn()
+    se siamo all'ultimo ->
+        check last round
+            fine
+        reimposta nuvola (se bag vuota non fare niente)
+            (Non ha abbastanza studenti) -> setLastRound()
 
+     endActionTurn()
+    */
 
 
 

@@ -21,17 +21,21 @@ public class Table {
     {
         motherNature = MotherNature.getInstance();
 
-        cloud=new LinkedList<Cloud>();
+        bag=new Bag();
+
+        cloud=new LinkedList<>();
         for(int i=1;i<=numPlayer;i++)
             cloud.add(new Cloud(i));
 
-        island=new LinkedList<Island>();
+        //Riempi Nuvole
+
+        island=new LinkedList<>();
         for(int i=1;i<=numPlayer;i++)
             island.add(new Island(i));
 
         island.get(0).setMotherNature(true);
 
-        List<Student> student = new ArrayList<Student>();
+        List<Student> student = new ArrayList<>();
         for(int i=0;i<5;i++)
             for(int j=0;j<2;j++)
                 student.add(new Student(i));
@@ -44,11 +48,11 @@ public class Table {
 
         student.clear();
 
-        bag=new Bag();
+        //INIT PROFESSOR
 
         if(expert) {
             generalSupply=20-numPlayer;
-            character=new LinkedList<Character>();
+            character=new LinkedList<>();
 
             List<CharacterType> type = Arrays.asList(CharacterType.values());
             Collections.shuffle(type);
@@ -63,6 +67,8 @@ public class Table {
         }
 
     }
+
+    //Riempi Nuvole
 
     public Bag getBag() {
         return bag;
