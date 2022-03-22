@@ -26,7 +26,7 @@ public class Table {
         for(int i=1;i<=numPlayer;i++)
             cloud.add(new Cloud(i));
 
-        //Riempi Nuvole
+        fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
 
         island=new LinkedList<>();
         for(int i=1;i<=numPlayer;i++)
@@ -47,7 +47,10 @@ public class Table {
 
         student.clear();
 
-        //INIT PROFESSOR
+        List<Professor> professor= new LinkedList<>();
+        for(int i=0; i<5;i++)
+            professor.add(new Professor(i));
+
 
         if(expert) {
             generalSupply=20-numPlayer;
@@ -67,7 +70,12 @@ public class Table {
 
     }
 
-    //Riempi Nuvole
+    public void fillCloud(int numPlayer, List<Student> student){
+        for (Cloud c: cloud) {
+            c.addStudent(student.subList(0, numPlayer));
+            student.removeAll(student.subList(0, numPlayer));
+        }
+    }
 
     public Bag getBag() {
         return bag;
@@ -91,10 +99,9 @@ public class Table {
     public Professor findProfessor(PawnColor color) {
         for(Professor p: professor)
         {
-         if(p.getColor()==color)
-         {
-          return p;
-         }
+            if(p.getColor()==color) {
+                return p;
+            }
         }
         return null;
     }
