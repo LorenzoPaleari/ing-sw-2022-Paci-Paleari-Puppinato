@@ -1,4 +1,8 @@
 package it.polimi.ingsw.controller.characterController;
 
-public class NoEntryTiles {
+public class NoEntryTiles extends Decorator{
+    @Override
+    public void useCharacter() {
+
+    }
 }
