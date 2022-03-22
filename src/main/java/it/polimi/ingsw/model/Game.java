@@ -31,6 +31,10 @@ public class Game {
         numPlayer = num;
     }
 
+    public int getNumPlayer() {
+        return numPlayer;
+    }
+
     public boolean isExpertMode() {
         return expertMode;
     }
@@ -40,11 +44,11 @@ public class Game {
     }
 
     public void startGame(){
-        table = new Table(numPlayer, expertMode);
+        table = new Table(numPlayer, isExpertMode());
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
-        LinkedList<Student> student = new LinkedList<Student>();
+        LinkedList<Student> student;
         for (Player p :player) {
             student = table.getBag().initialSetup(numPlayer);
             p.setUp(student, expertMode, numPlayer);

@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 public class Entrance {
     private LinkedList<Student> student;
@@ -28,7 +28,7 @@ public class Entrance {
         }
         return null;
     }
-    public void addStudent(LinkedList<Student> s){
+    public void addStudent(List<Student> s){
 
         student.addAll(s);
     }

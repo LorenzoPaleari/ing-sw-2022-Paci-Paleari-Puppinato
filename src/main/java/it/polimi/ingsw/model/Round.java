@@ -11,8 +11,8 @@ public class Round {
     private Turn turn;
     private Boolean lastRound;
 
-    public void setLastRound(Boolean lastRound) {
-        this.lastRound = lastRound;
+    public void setLastRound() {
+        lastRound = true;
     }
 
     public Round(List<Player> player) {
@@ -24,6 +24,10 @@ public class Round {
 
     public Turn getTurn(){
         return turn;
+    }
+
+    public Boolean getLastRound() {
+        return lastRound;
     }
 
     public int getTurnDone() {

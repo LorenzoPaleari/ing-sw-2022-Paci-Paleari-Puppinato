@@ -5,17 +5,7 @@ import it.polimi.ingsw.model.pawns.Student;
 import java.util.*;
 
 public class Cloud {
-    private final int cloudID;
     private List<Student> cloudStudent;
-
-    public Cloud (int cloudID)
-    {
-        this.cloudID=cloudID;
-    }
-
-    public int getCloudID() {
-        return cloudID;
-    }
 
     public List<Student> getCloudStudent() {
         return cloudStudent;
@@ -26,7 +16,7 @@ public class Cloud {
             cloudStudent.addAll(toAdd);
     }
 
-    public List<Student> removeAllStudent(int maxNumPlayer)
+    public List<Student> removeAllStudent()
     {
         List<Student> removed;
         removed=cloudStudent;
