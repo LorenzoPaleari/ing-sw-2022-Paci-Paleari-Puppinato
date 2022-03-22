@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.table;
 
+import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.*;
@@ -40,9 +41,15 @@ public class Bag {
     }
 
 
-    public List<Student> withdrawStudent(int numStudents) {
+    public List<Student> withdrawStudent(int numStudents) throws BagIsEmptyException {
         List<Student> drawOut = new LinkedList<>();
-        drawOut.addAll(student.subList(0,numStudents-1));
+        try {
+            drawOut.addAll(student.subList(0, numStudents - 1));
+        }
+        catch (IndexOutOfBoundsException e){
+            student.clear();
+            throw new BagIsEmptyException();
+        }
         student.subList(0, numStudents -1).clear();
         return drawOut;
     }
