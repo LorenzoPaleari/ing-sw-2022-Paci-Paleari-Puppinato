@@ -28,6 +28,10 @@ public class Deck {
         return assistant.get(position);
     }
 
+    public List<Assistant> getAssistant(){
+        return assistant;
+    }
+
     public boolean isEmpty(){
         return assistant.size() == 0;
     }

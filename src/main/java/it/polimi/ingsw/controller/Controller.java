@@ -12,7 +12,10 @@ import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
+import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+
+import java.util.List;
 
 public class Controller {
     private TurnController turnController;
@@ -61,15 +64,25 @@ public class Controller {
 
     public boolean sameAssistant(int weight, Player player){
         boolean value = false;
+        List<Integer> weights = null;
 
         int size = player.getDeck().getSize();
         for (Player p: game.getPlayers()){
-            if (p.getDeck().getSize() == size - 1 && p.getLastUsed().getWeight() == weight)
-                value = true;
+            if (p.getDeck().getSize() == size - 1) {
+                weights.add(p.getLastUsed().getWeight());
+                if (p.getLastUsed().getWeight() == weight)
+                    value = true;
+            }
         }
 
-        if (size == 1 || size == 2 && game.getRound().getTurnDone() ==2)
+        if (size == 1)
             value = false;
+
+        if (size == 2 && game.getRound().getTurnDone() == 2)
+            value = false;
+            for (Assistant a : player.getDeck().getAssistant())
+                if (a.getWeight() != weights.get(0) && a.getWeight() != weights.get(1))
+                    value = true;
 
         return value;
     }
