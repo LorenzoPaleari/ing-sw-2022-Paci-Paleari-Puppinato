@@ -7,7 +7,7 @@ public class Deck {
     private int size;
 
     public Deck () {
-        assistant = new ArrayList<Assistant>(10);
+        assistant = new ArrayList<>(10);
         for(int i=1; i<=10; i++)
             assistant.add(new Assistant(i));
 
