@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
@@ -43,7 +44,7 @@ public class Game {
         this.expertMode = expertMode;
     }
 
-    public void startGame(){
+    public void startGame() throws BagIsEmptyException {
         table = new Table(numPlayer, isExpertMode());
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);

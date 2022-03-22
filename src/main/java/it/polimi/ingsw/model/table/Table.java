@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.table;
 
+import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
@@ -16,8 +17,7 @@ public class Table {
     private Bag bag;
     private List<Professor> professor;
 
-    public Table(int numPlayer,boolean expert)
-    {
+    public Table(int numPlayer,boolean expert) throws BagIsEmptyException {
         motherNature = MotherNature.getInstance();
 
         bag=new Bag();
@@ -150,6 +150,7 @@ public class Table {
     }
 
     public void updateIsland(Island islandNotCurr, Island islandCurr) {
+        int numNoEntryTiles;
         if (islandNotCurr.getIslandTower().size() == 0)
             return;
 
@@ -164,7 +165,6 @@ public class Table {
                 for (Character c : character){
                     if (c.getType().equals(CharacterType.NO_ENTRY_TILES)) {
                         c.returnNoEntryTiles();
-                        break;
                     }
                 }
             }
