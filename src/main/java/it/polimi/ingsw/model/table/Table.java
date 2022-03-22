@@ -24,13 +24,13 @@ public class Table {
 
         cloud=new LinkedList<>();
         for(int i=1;i<=numPlayer;i++)
-            cloud.add(new Cloud(i));
+            cloud.add(new Cloud());
 
         fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
 
         island=new LinkedList<>();
         for(int i=1;i<=numPlayer;i++)
-            island.add(new Island(i));
+            island.add(new Island());
 
         island.get(0).setMotherNature(true);
 
@@ -91,6 +91,10 @@ public class Table {
     }
 
     public int getNumIsland () {return island.size();}
+
+    public Cloud getCloud(int position){
+        return cloud.get(position);
+    }
 
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
 

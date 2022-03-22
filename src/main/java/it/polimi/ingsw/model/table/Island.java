@@ -12,16 +12,14 @@ public class Island {
     private List<Student> islandStudent;
     private boolean motherNature;
     private boolean noEntryTiles;
-    private int islandID;
     private List<Tower> islandTower;
 
-   public Island(int islandID)
+   public Island()
     {
         weight=1;
         islandStudent = new LinkedList<Student>();
         motherNature = false;
         noEntryTiles = false;
-        this.islandID = islandID;
         islandTower = new LinkedList<Tower>();
     }
 
@@ -51,10 +49,6 @@ public class Island {
 
     public boolean isNoEntryTiles() {
         return noEntryTiles;
-    }
-
-    public int getIslandID() {
-        return islandID;
     }
 
     public List<Tower> getIslandTower() { return islandTower; }
