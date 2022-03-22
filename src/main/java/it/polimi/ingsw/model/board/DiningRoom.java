@@ -25,6 +25,7 @@ public class DiningRoom {
                 deleted = true;
             }
         }
+        //SISTEMARE PER PERSONAGGIO
 
     }
     public void addStudent(Student s){
