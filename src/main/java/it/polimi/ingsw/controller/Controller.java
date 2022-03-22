@@ -1,11 +1,14 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerStandard;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
+import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 
 import it.polimi.ingsw.model.Round;
@@ -14,36 +17,43 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Cloud;
+import it.polimi.ingsw.model.table.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
     private TurnController turnController;
     ProfessorContext professorContext;
+    ProfessorControllerStandard professorControllerStandard;
     MotherNatureContext motherNatureContext;
+    MotherNatureController motherNatureController;
     IslandContext islandContext;
+    IslandController islandController;
     PawnColor noInfluence = null;
     private Game game;
 
     public Controller(){
         game = Game.getInstance();
         turnController = new TurnController();
-        professorContext = new ProfessorContext(new ProfessorControllerStandard());
-        motherNatureContext = new MotherNatureContext(new MotherNatureControllerStandard());
-        islandContext = new IslandContext(new IslandControllerStandard());
+        professorControllerStandard = new ProfessorControllerStandard();
+        professorContext = new ProfessorContext(professorControllerStandard);
+        motherNatureController = new MotherNatureControllerStandard();
+        motherNatureContext = new MotherNatureContext(motherNatureController);
+        islandController = new IslandControllerStandard();
+        islandContext = new IslandContext(islandController);
     }
 
     public void setNumPlayer(int num) {
         game.setNumPlayer(num);
     }
 
-    public void addPlayer(Player player){
+    public void addPlayer(Player player) throws BagIsEmptyException {
         int remaining = game.addPlayer(player);
         if (remaining == 0)
             game.startGame();
     }
-
-
 
     public void useAssistant(int position, Player player){
         Round round = game.getRound();
@@ -58,9 +68,11 @@ public class Controller {
         }
 
         player.addAssistant(position);
-        if (!round.nextPlanningTurn())
-            //Se deck è vuoto -> SetLastRound
+        if (!round.nextPlanningTurn()) {
+            if (player.getDeck().isEmpty())
+                round.setLastRound();
             round.endPlanningPhase();
+        }
     }
 
     public boolean sameAssistant(int weight, Player player){
@@ -117,6 +129,13 @@ public class Controller {
     }
 
     public void moveMotherNature(int endPosition, Player player){
+        if(!turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION))
+            return;
+
+        if(game.getRound().getTurn().getRemainingMovements() > 0){
+            System.out.println("Non hai finito di muovere gli studenti");
+        }
+
         int numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
         if (numMoves == 0){
             System.out.println("You can't go so far with your Assistant, please choose another Island");
@@ -128,31 +147,63 @@ public class Controller {
         if(islandContext.conquerIsland(game.getTable().getIsland(game.getTable().getMotherPosition()), game, player, noInfluence)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
-            //Temporary Win
             for (Player p : game.getPlayers()){
                 if (p.getBoard().getTowerCourt().isEmpty())
-                    System.out.println("Complimenti!!! "+p+" hai vinto");
+                    winner();
             }
 
             if(game.getTable().getNumIsland() <= 3)
-                System.out.println("3 o meno isole rimaste");
+                winner();
         }
     }
 
-    /*Scegli Nuvola
-    -> sposta tutti gli studenti nel player
+    public void chooseIsland(int position, Player player){
+        Table table = game.getTable();
+        List<Student> student = table.getCloud(position).removeAllStudent();
+        player.getBoard().getEntrance().addStudent(student);
 
-    nextTurn()
-    se siamo all'ultimo ->
-        check last round
-            fine
-        reimposta nuvola (se bag vuota non fare niente)
-            (Non ha abbastanza studenti) -> setLastRound()
+        if (!game.getRound().nextActionTurn()){
+            if (game.getRound().getLastRound().equals(true))
+                winner();
 
-     endActionTurn()
-    */
+            try {
+                List<Student> students = table.getBag().withdrawStudent(game.getNumPlayer() * (game.getNumPlayer()) + 1);
+                game.getTable().fillCloud(game.getNumPlayer(), students);
+            }
+            catch(BagIsEmptyException e) {
+                game.getRound().setLastRound();
+            }
+            finally {
+                game.getRound().endRound();
+            }
+        }
+    }
 
+    public void winner(){
+        Player winner1 = null;
+        Player winner2 = null;
+        int numTowers = 9;
+        int numProfessors = 0;
 
+        for (Player p: game.getPlayers()){
+            int nTowers = p.getBoard().getTowerCourt().getTower().size();
+            int nProfessors = p.getBoard().getProfessorTable().getProfessors().size();
+
+            if (numTowers > nTowers || (numTowers == nTowers && numProfessors < nProfessors)){
+                winner1 = p;
+                winner2 = null;
+                numProfessors = nProfessors;
+                numTowers = nTowers;
+            } else if (numTowers == nTowers && numProfessors == nProfessors){
+                winner2 = p;
+            }
+        }
+
+        if(!winner2.equals(null))
+            System.out.println("Draw between"+winner1+"and"+winner2);
+        else
+            System.out.println(winner1 + "Has won the game");
+    }
 
     public void setNoInfluence(PawnColor color){
         noInfluence = color;
