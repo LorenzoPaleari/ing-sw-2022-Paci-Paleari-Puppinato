@@ -1,14 +1,19 @@
 package it.polimi.ingsw.controller.professorController;
 
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 
 public class ProfessorContext {
-    private ProfessorController strategy;
+    private static ProfessorController strategy;
 
-    public ProfessorContext(ProfessorController strategy){
-        this.strategy = strategy;
+    public ProfessorContext(ProfessorController strat){
+        strategy = strat;
+    }
+
+    public static void changeProfessorContext(ProfessorController strat){
+        strategy = strat;
     }
 
     public void professorControl(Game game, Player player, PawnColor color){
