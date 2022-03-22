@@ -6,8 +6,8 @@ public class Professor {
     private PawnColor color;
     private int numStudent;
 
-    public Professor(){
-        color = null;
+    public Professor(int i){
+        color = PawnColor.getColor(i);
         numStudent = 0;
     }
 
