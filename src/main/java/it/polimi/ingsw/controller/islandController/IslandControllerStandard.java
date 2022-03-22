@@ -7,9 +7,6 @@ import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class IslandControllerStandard implements IslandController {
     public boolean calculateInfluence(Island island, Game game, Player player, PawnColor pawnColor) {
         boolean value = false;
@@ -47,15 +44,15 @@ public class IslandControllerStandard implements IslandController {
             return false;
 
         if (color.equals(null)){
-            island.addTower(playerCandidate.getBoard().getTowercourt().removeTower(1));
+            island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(1));
             return true;
         }
 
         if (!playerCandidate.getTowerColor().equals(color))
             value = true;
 
-        owner.getBoard().getTowercourt().addTower(island.removeTower());
-        island.addTower(playerCandidate.getBoard().getTowercourt().removeTower(island.getWeight()));
+        owner.getBoard().getTowerCourt().addTower(island.removeTower());
+        island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(island.getWeight()));
 
         return value;
     }

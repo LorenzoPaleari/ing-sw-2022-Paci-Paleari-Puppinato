@@ -33,7 +33,12 @@ public class Bag {
         return draw;
     }
 
-    //ADD Student
+    public void addStudent(LinkedList<Student> student)
+    {
+        this.student.addAll(student);
+        Collections.shuffle(this.student);
+    }
+
 
     public List<Student> withdrawStudent(int numStudents) {
         List<Student> drawOut = new LinkedList<>();
