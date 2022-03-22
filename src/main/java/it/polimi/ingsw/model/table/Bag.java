@@ -33,6 +33,8 @@ public class Bag {
         return draw;
     }
 
+    //ADD Student
+
     public List<Student> withdrawStudent(int numStudents) {
         List<Student> drawOut = new LinkedList<>();
         drawOut.addAll(student.subList(0,numStudents-1));
