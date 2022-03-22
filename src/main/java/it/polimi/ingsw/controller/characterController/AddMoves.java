@@ -15,6 +15,6 @@ public class AddMoves extends Decorator{
     }
     @Override
     public void useCharacter() {
-        MotherNatureContext.changeMotherNatureControl(motherNatureController);
+        MotherNatureContext.changeMotherNatureContext(motherNatureController);
     }
 }
