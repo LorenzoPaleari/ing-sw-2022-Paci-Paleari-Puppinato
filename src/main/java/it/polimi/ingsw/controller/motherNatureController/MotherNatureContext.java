@@ -4,10 +4,14 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
 public class MotherNatureContext {
-    private MotherNatureController strategy;
+    private static MotherNatureController strategy;
 
-    public MotherNatureContext(MotherNatureController strategy){
-        this.strategy = strategy;
+    public MotherNatureContext(MotherNatureController strat){
+        strategy = strat;
+    }
+
+    public static void changeMotherNatureContext(MotherNatureController strat){
+        strategy = strat;
     }
 
     public int motherNatureControl(Table table, int endPosition, Player player){
