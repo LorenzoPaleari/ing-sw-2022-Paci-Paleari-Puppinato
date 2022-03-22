@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class DiningRoom {
     private LinkedList<Student> student;
@@ -16,16 +17,16 @@ public class DiningRoom {
         return student;
     }
 
-    public void removeStudent(PawnColor color){
-        boolean deleted = false;
-        int i = 0;
-        while(i < student.size() && !deleted) {
-            if(student.get(i).getColor() == color){
-                student.remove(i);
-                deleted = true;
-            }
+    public List<Student> removeStudent(PawnColor color, int numStudent){
+        List<Student> list = new LinkedList<>();
+        Student temp;
+        for(int i = 0; i < numStudent; i++){
+            temp = find(color);
+            if(!temp.equals(null))
+                list.add(temp);
         }
-        //SISTEMARE PER PERSONAGGIO
+        student.removeAll(list);
+        return list;
 
     }
     public void addStudent(Student s){
