@@ -79,11 +79,10 @@ public class Character {
         for (Student s : student){
             if (s.getColor().equals(color)) {
                 stud = s;
-                break;
+                return s;
             }
         }
-
-        return stud;
+        return null;
     }
 
     public void addStudent(Student s) {
