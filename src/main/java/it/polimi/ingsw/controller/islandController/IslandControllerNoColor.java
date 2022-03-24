@@ -8,7 +8,9 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 public class IslandControllerNoColor implements IslandController {
-    public boolean calculateInfluence(Island island, Game game, Player player, PawnColor pawnColor){
+    private PawnColor noColor = null;
+
+    public boolean calculateInfluence(Island island, Game game){
         boolean value = false;
         TowerColor color = null;
         int MoreInfluence = 0;
@@ -25,7 +27,7 @@ public class IslandControllerNoColor implements IslandController {
         for (Player p : game.getPlayers()){
             TempInfluence = 0;
             for(Professor prof : p.getBoard().getProfessorTable().getProfessors()){
-                if (!prof.getColor().equals(pawnColor))
+                if (!prof.getColor().equals(noColor))
                     TempInfluence += island.countStudent(prof.getColor());
             }
             if(!island.getIslandTower().isEmpty() && p.getTowerColor().equals(color)) {
@@ -56,5 +58,9 @@ public class IslandControllerNoColor implements IslandController {
         island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(island.getWeight()));
 
         return value;
+    }
+
+    public void setNoColor(PawnColor noColor) {
+        this.noColor = noColor;
     }
 }

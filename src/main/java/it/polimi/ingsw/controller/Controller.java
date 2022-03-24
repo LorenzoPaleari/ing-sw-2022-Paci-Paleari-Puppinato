@@ -9,38 +9,40 @@ import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerS
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
+import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.Game;
 
 import it.polimi.ingsw.model.Round;
+import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.table.Cloud;
 import it.polimi.ingsw.model.table.Table;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
     private TurnController turnController;
-    ProfessorContext professorContext;
+    Context professorContext;
     ProfessorControllerStandard professorControllerStandard;
-    MotherNatureContext motherNatureContext;
+    Context motherNatureContext;
     MotherNatureController motherNatureController;
-    IslandContext islandContext;
+    Context islandContext;
     IslandController islandController;
-    PawnColor noInfluence = null;
     private Game game;
 
     public Controller(){
         game = Game.getInstance();
         turnController = new TurnController();
+
         professorControllerStandard = new ProfessorControllerStandard();
         professorContext = new ProfessorContext(professorControllerStandard);
+
         motherNatureController = new MotherNatureControllerStandard();
         motherNatureContext = new MotherNatureContext(motherNatureController);
+
         islandController = new IslandControllerStandard();
         islandContext = new IslandContext(islandController);
     }
@@ -91,7 +93,7 @@ public class Controller {
         if (size == 1)
             value = false;
 
-        if (size == 2 && game.getRound().getTurnDone() == 2)
+        if (size == 2 && game.getRound().getNumTurnDone() == 2)
             value = false;
             for (Assistant a : player.getDeck().getAssistant())
                 if (a.getWeight() != weights.get(0) && a.getWeight() != weights.get(1))
@@ -115,6 +117,7 @@ public class Controller {
 
     public void useStudentDining(Player player, PawnColor color){
         Round round = game.getRound();
+        Board board = player.getBoard();
 
         if(!turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION))
             return;
@@ -122,10 +125,19 @@ public class Controller {
         if(!turnController.canMove(round.getTurn()))
             return;
 
-        Student student = player.getBoard().getEntrance().removeStudent(color);
-        player.getBoard().getDiningRoom().addStudent(student);
+        Student student = board.getEntrance().removeStudent(color);
+        board.getDiningRoom().addStudent(student);
 
         professorContext.professorControl(game, player, color);
+
+        if (game.isExpertMode() && board.getDiningRoom().count(color) % 3 == 0) {
+            try {
+                game.getTable().withdrawCoin();
+                player.addCoin();
+            } catch (GeneralSupplyFinishedException e){
+
+            }
+        }
     }
 
     public void moveMotherNature(int endPosition, Player player){
@@ -144,7 +156,7 @@ public class Controller {
 
         game.getTable().moveMotherNature(numMoves);
 
-        if(islandContext.conquerIsland(game.getTable().getIsland(game.getTable().getMotherPosition()), game, player, noInfluence)) {
+        if(islandContext.conquerIsland(game.getTable().getIsland(game.getTable().getMotherPosition()), game)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
             for (Player p : game.getPlayers()){
@@ -157,10 +169,17 @@ public class Controller {
         }
     }
 
-    public void chooseIsland(int position, Player player){
+    public void chooseCloud(int position, Player player){
+        if(!turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN))
+            return;
+
         Table table = game.getTable();
         List<Student> student = table.getCloud(position).removeAllStudent();
         player.getBoard().getEntrance().addStudent(student);
+
+        professorContext.changeContext(professorControllerStandard);
+        islandContext.changeContext(islandController);
+        motherNatureContext.changeContext(motherNatureController);
 
         if (!game.getRound().nextActionTurn()){
             if (game.getRound().getLastRound().equals(true))
@@ -203,10 +222,6 @@ public class Controller {
             System.out.println("Draw between"+winner1+"and"+winner2);
         else
             System.out.println(winner1 + "Has won the game");
-    }
-
-    public void setNoInfluence(PawnColor color){
-        noInfluence = color;
     }
 
 }

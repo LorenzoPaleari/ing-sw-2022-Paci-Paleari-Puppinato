@@ -1,14 +1,15 @@
 package it.polimi.ingsw.controller.islandController;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 public class IslandControllerMoreInfluence implements IslandController {
-    public boolean calculateInfluence(Island island, Game game, Player player, PawnColor pawnColor){
+    private Player player;
+
+    public boolean calculateInfluence(Island island, Game game){
         boolean value = false;
         TowerColor color = null;
         int MoreInfluence = 0;
@@ -57,5 +58,9 @@ public class IslandControllerMoreInfluence implements IslandController {
         island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(island.getWeight()));
 
         return value;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
