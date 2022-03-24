@@ -20,19 +20,20 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 
 import java.util.List;
 
 public class Controller {
     private TurnController turnController;
-    Context professorContext;
-    ProfessorController professorControllerStandard;
-    Context motherNatureContext;
-    MotherNatureController motherNatureController;
-    Context islandContext;
-    IslandController islandController;
-    private Game game;
+    private Context professorContext;
+    private ProfessorController professorControllerStandard;
+    private Context motherNatureContext;
+    private MotherNatureController motherNatureController;
+    private static Context islandContext;
+    private IslandController islandController;
+    private static Game game;
 
     public Controller(){
         game = Game.getInstance();
@@ -157,7 +158,13 @@ public class Controller {
 
         game.getTable().moveMotherNature(numMoves);
 
-        if(islandContext.conquerIsland(game.getTable().getIsland(game.getTable().getMotherPosition()), game)) {
+        updateIsland(game.getTable().getIsland(game.getTable().getMotherPosition()));
+
+        player.changeState(PlayerState.ENDTURN);
+    }
+
+    public static void updateIsland(Island island){
+        if(islandContext.conquerIsland(island , game)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
             for (Player p : game.getPlayers()){
@@ -199,7 +206,7 @@ public class Controller {
         }
     }
 
-    public void winner(){
+    public static void winner(){
         Player winner1 = null;
         Player winner2 = null;
         int numTowers = 9;
