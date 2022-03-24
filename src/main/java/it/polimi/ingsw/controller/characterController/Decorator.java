@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controller.characterController;
 
-public abstract class Decorator extends BaseCharacter {
-    protected BaseCharacter baseCharacter;
+import it.polimi.ingsw.model.character.Character;
+
+public abstract class Decorator extends Character {
+    protected Character character;
 
     @Override
     public abstract void useCharacter();

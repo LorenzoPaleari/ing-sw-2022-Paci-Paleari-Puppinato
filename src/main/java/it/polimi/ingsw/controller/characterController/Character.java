@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.characterController;
 
-public class Character extends BaseCharacter {
+public class Character extends it.polimi.ingsw.model.character.Character {
     public Character() {
     }
     @Override
