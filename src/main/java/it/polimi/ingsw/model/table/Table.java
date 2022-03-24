@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.table;
 
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
+import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
@@ -98,7 +99,10 @@ public class Table {
 
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
 
-    public void withdrawCoin(int numCoin) {generalSupply=generalSupply-numCoin;}
+    public void withdrawCoin() throws GeneralSupplyFinishedException {
+        if (generalSupply == 0) throw new GeneralSupplyFinishedException();
+        generalSupply -= 1;
+    }
 
     public Professor findProfessor(PawnColor color) {
         for(Professor p: professor)

@@ -7,7 +7,7 @@ import java.util.*;
 public class Round {
     private List<Player> playerSequence;
     private List<Player> nextSequence;
-    private int turnDone;
+    private int numTurnDone;
     private Turn turn;
     private Boolean lastRound;
 
@@ -17,9 +17,9 @@ public class Round {
 
     public Round(List<Player> player) {
         turn = new Turn();
-        playerSequence = new LinkedList<Player>(player);
-        nextSequence = new LinkedList<Player>(player);
-        turnDone = 0;
+        playerSequence = new LinkedList<>(player);
+        nextSequence = new LinkedList<>(player);
+        numTurnDone = 0;
     }
 
     public Turn getTurn(){
@@ -30,13 +30,14 @@ public class Round {
         return lastRound;
     }
 
-    public int getTurnDone() {
-        return turnDone;
+    public int getNumTurnDone() {
+        return numTurnDone;
     }
 
     public boolean nextActionTurn(){
         int index = playerSequence.indexOf(turn.getCurrentPlayer());
         turn.getCurrentPlayer().changeState(PlayerState.WAIT);
+        turn.setUsedCharacter(false);
 
         if (index == playerSequence.size() - 1)
             return false;
@@ -45,7 +46,7 @@ public class Round {
             turn.updatePlayer(p);
             turn.resetRemainingMovements(playerSequence.size() + 1);
             p.changeState(PlayerState.ACTION);
-            turnDone += 1;
+            numTurnDone += 1;
             return true;
         }
     }
@@ -66,7 +67,7 @@ public class Round {
 
         playerSequence = nextSequence;
         playerSequence.get(0).changeState(PlayerState.ACTION);
-        turnDone = playerSequence.size();
+        numTurnDone = playerSequence.size();
     }
 
     public boolean nextPlanningTurn(){
@@ -79,14 +80,14 @@ public class Round {
             Player p = playerSequence.get(index + 1);
             turn.updatePlayer(p);
             p.changeState(PlayerState.PLANNING);
-            turnDone += 1;
+            numTurnDone += 1;
             return true;
         }
     }
 
     public void endRound(){
             playerSequence.get(0).changeState(PlayerState.PLANNING);
-            turnDone = playerSequence.size();
+            numTurnDone = playerSequence.size();
     }
 
     public Player getNextPlayer(Player p){

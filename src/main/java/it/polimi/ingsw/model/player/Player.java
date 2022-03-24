@@ -55,6 +55,14 @@ public class Player {
         return lastUsed;
     }
 
+    public void removeCoin(int numCoin){
+        this.numCoin -= numCoin;
+    }
+
+    public void addCoin() {
+        numCoin -= 1;
+    }
+
     public void changeState(PlayerState state)
     {
         this.state=state;

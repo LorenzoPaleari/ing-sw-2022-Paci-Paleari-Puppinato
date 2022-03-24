@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.enumerations;
 
 public enum PlayerState {
-    PLANNING("PLANNING"), ACTION("ACTION"), WAIT("WAIT");
+    PLANNING("PLANNING"), ACTION("ACTION"), WAIT("WAIT"), ENDTURN("END TURN");
 
     private final String text;
 
