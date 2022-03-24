@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
+import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
@@ -26,7 +27,7 @@ import java.util.List;
 public class Controller {
     private TurnController turnController;
     Context professorContext;
-    ProfessorControllerStandard professorControllerStandard;
+    ProfessorController professorControllerStandard;
     Context motherNatureContext;
     MotherNatureController motherNatureController;
     Context islandContext;
