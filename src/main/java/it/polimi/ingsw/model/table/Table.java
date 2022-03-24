@@ -60,7 +60,7 @@ public class Table {
             List<CharacterType> type = Arrays.asList(CharacterType.values());
             Collections.shuffle(type);
 
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < numPlayer; i++){
                 if(type.get(i).hasStudent() > 0){
                     character.add(new Character(type.get(i), bag.withdrawStudent(type.get(i).hasStudent())));
                 }
