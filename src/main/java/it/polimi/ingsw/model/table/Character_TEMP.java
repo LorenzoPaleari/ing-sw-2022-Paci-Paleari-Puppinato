@@ -6,14 +6,14 @@ import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.*;
 
-public class Character {
+public class Character_TEMP {
     private int costo;
     private CharacterType type;
     private List<Student> student;
     private int numNoEntryTiles;
     private boolean used;
 
-    public Character(CharacterType type){
+    public Character_TEMP(CharacterType type){
         this.type = type;
         costo = type.getCosto();
         used = false;
@@ -24,7 +24,7 @@ public class Character {
             numNoEntryTiles = 4;
     }
 
-    public Character(CharacterType type, List<Student> student){
+    public Character_TEMP(CharacterType type, List<Student> student){
         this.type = type;
         costo = type.getCosto();;
         used = false;

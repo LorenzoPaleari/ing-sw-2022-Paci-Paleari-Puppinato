@@ -15,6 +15,8 @@ import it.polimi.ingsw.model.Game;
 
 import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.board.Board;
+import it.polimi.ingsw.model.character.Character;
+import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
@@ -23,6 +25,7 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 
+import java.sql.Array;
 import java.util.List;
 
 public class Controller {
@@ -146,9 +149,8 @@ public class Controller {
         if(!turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION))
             return;
 
-        if(game.getRound().getTurn().getRemainingMovements() > 0){
-            System.out.println("Non hai finito di muovere gli studenti");
-        }
+        if(!turnController.canMoveMother(game.getRound().getTurn()))
+            return;
 
         int numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
         if (numMoves == 0){
@@ -204,6 +206,69 @@ public class Controller {
                 game.getRound().endRound();
             }
         }
+    }
+
+    public void useCharacter(Player player, int characterPosition){
+        Character character = game.getTable().getCharacter(characterPosition);
+
+        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
+            return;
+
+        if (character.getType().equals(CharacterType.CONTROL_PROFESSOR))
+            character.activateCharacter(professorContext);
+        else if (character.getType().equals(CharacterType.ADD_MOVES))
+            character.activateCharacter(motherNatureContext);
+        else
+            character.activateCharacter(islandContext);
+    }
+
+    public void useCharacter(Player player, int characterPosition, int islandPosition){
+        Character character = game.getTable().getCharacter(characterPosition);
+
+        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
+            return;
+
+        character.activateCharacter(game.getTable().getIsland(islandPosition));
+    }
+
+    public void useCharacter(Player player, int characterPosition, PawnColor color){
+        Character character = game.getTable().getCharacter(characterPosition);
+
+        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
+            return;
+
+        if(character.getType().hasStudent() > 0) {
+            PawnColor[] colorArray = {color};
+            character.activateCharacter(player, colorArray);
+        }
+        else
+            character.activateCharacter(color, game);
+    }
+
+    public void useCharacter(Player player, int characterPosition, int[] colors){
+        Character character = game.getTable().getCharacter(characterPosition);
+
+        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
+            return;
+
+        PawnColor[] color;
+        int size = colors.length;
+        color = new PawnColor[size];
+
+        for (int i = 0; i < size; i++){
+            color[i] = PawnColor.getColor(colors[i]);
+        }
+
+        character.activateCharacter(player, color);
+    }
+
+    public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
+        Character character = game.getTable().getCharacter(characterPosition);
+
+        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
+            return;
+
+        character.activateCharacter(game.getTable().getIsland(islandPosition), color, player);
     }
 
     public static void winner(){

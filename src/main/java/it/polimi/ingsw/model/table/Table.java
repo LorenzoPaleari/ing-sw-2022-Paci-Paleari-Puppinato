@@ -2,6 +2,8 @@ package it.polimi.ingsw.model.table;
 
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
+import it.polimi.ingsw.model.character.Character;
+import it.polimi.ingsw.model.character.Factory;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
@@ -61,11 +63,7 @@ public class Table {
             Collections.shuffle(type);
 
             for (int i = 0; i < 3; i++){
-                if(type.get(i).hasStudent() > 0){
-                    character.add(new Character(type.get(i), bag.withdrawStudent(type.get(i).hasStudent())));
-                }
-                else
-                    character.add(new Character(type.get(i)));
+                character.add(new Factory(type.get(i), bag));
             }
         }
 
@@ -92,6 +90,10 @@ public class Table {
     }
 
     public int getNumIsland () {return island.size();}
+
+    public Character getCharacter(int position) {
+        return character.get(position);
+    }
 
     public Cloud getCloud(int position){
         return cloud.get(position);
