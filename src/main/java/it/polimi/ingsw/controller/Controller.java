@@ -9,8 +9,7 @@ import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerS
 import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
-import it.polimi.ingsw.exceptions.BagIsEmptyException;
-import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 
 import it.polimi.ingsw.model.Round;
@@ -65,13 +64,17 @@ public class Controller {
     public void useAssistant(int position, Player player){
         Round round = game.getRound();
 
-        if(!turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING))
-            return;
+        try {
+            turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING);
+        } catch (Exception e) {
+        }
 
         int weight = player.getDeck().getAssistant(position).getWeight();
-        if(sameAssistant(weight, player)) {
+
+        try {
+            sameAssistant(weight, player);
+        } catch (SameAssistantException e) {
             System.out.println("Choose an Assistant different from others player");
-            return;
         }
 
         player.addAssistant(position);
@@ -82,11 +85,14 @@ public class Controller {
         }
     }
 
-    public boolean sameAssistant(int weight, Player player){
+    public void sameAssistant(int weight, Player player) throws SameAssistantException {
         boolean value = false;
         List<Integer> weights = null;
-
         int size = player.getDeck().getSize();
+
+        if (size == 1)
+            return;
+
         for (Player p: game.getPlayers()){
             if (p.getDeck().getSize() == size - 1) {
                 weights.add(p.getLastUsed().getWeight());
@@ -95,26 +101,28 @@ public class Controller {
             }
         }
 
-        if (size == 1)
-            value = false;
-
         if (size == 2 && game.getRound().getNumTurnDone() == 2)
             value = false;
             for (Assistant a : player.getDeck().getAssistant())
                 if (a.getWeight() != weights.get(0) && a.getWeight() != weights.get(1))
                     value = true;
 
-        return value;
+        if (value)
+            throw new SameAssistantException();
     }
 
     public void useStudentIsland(Player player, PawnColor color, int position){
         Round round = game.getRound();
 
-        if(!turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION))
-            return;
+        try {
+            turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
+        } catch (Exception e) {
+        }
 
-        if(!turnController.canMove(round.getTurn()))
-            return;
+        try {
+            turnController.canMove(round.getTurn());
+        } catch (WrongActionException e){
+        }
 
         Student student = player.getBoard().getEntrance().removeStudent(color);
         game.getTable().getIsland(position).addStudent(student);
@@ -124,11 +132,21 @@ public class Controller {
         Round round = game.getRound();
         Board board = player.getBoard();
 
-        if(!turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION))
-            return;
+        try {
+            turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
+        } catch (Exception e){
+        }
 
-        if(!turnController.canMove(round.getTurn()))
-            return;
+        try {
+            turnController.canMove(round.getTurn());
+        } catch (WrongActionException e) {
+        }
+
+        try {
+            turnController.checkFullDining(board.getDiningRoom(), color);
+        } catch (MaxStudentReachedException e){
+            System.out.println("You've reached the maximum number of "+ color +" student");
+        }
 
         Student student = board.getEntrance().removeStudent(color);
         board.getDiningRoom().addStudent(student);
@@ -145,17 +163,23 @@ public class Controller {
         }
     }
 
-    public void moveMotherNature(int endPosition, Player player){
-        if(!turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION))
-            return;
+    public void moveMotherNature(int endPosition, Player player) {
+        int numMoves = 0;
 
-        if(!turnController.canMoveMother(game.getRound().getTurn()))
-            return;
+        try {
+            turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
+        } catch (Exception e) {
+        }
 
-        int numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
-        if (numMoves == 0){
+        try {
+            turnController.canMoveMother(game.getRound().getTurn());
+        } catch (WrongActionException e) {
+        }
+
+        try {
+            numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
+        } catch (TooMuchMovesException e) {
             System.out.println("You can't go so far with your Assistant, please choose another Island");
-            return;
         }
 
         game.getTable().moveMotherNature(numMoves);
@@ -180,8 +204,10 @@ public class Controller {
     }
 
     public void chooseCloud(int position, Player player){
-        if(!turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN))
-            return;
+        try {
+            turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN);
+        } catch (Exception e){
+        }
 
         Table table = game.getTable();
         List<Student> student = table.getCloud(position).removeAllStudent();
@@ -190,6 +216,7 @@ public class Controller {
         professorContext.changeContext(professorControllerStandard);
         islandContext.changeContext(islandController);
         motherNatureContext.changeContext(motherNatureController);
+        game.getRound().getTurn().setUsedCharacter(false);
 
         if (!game.getRound().nextActionTurn()){
             if (game.getRound().getLastRound().equals(true))
@@ -211,8 +238,12 @@ public class Controller {
     public void useCharacter(Player player, int characterPosition){
         Character character = game.getTable().getCharacter(characterPosition);
 
-        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
-            return;
+        try {
+            turnController.checkCharacter(game, player, character.getCosto(), character);
+        } catch (AlreadyUsedCharacterException e){
+            System.out.println("E' già stato usato un personaggio in questo turno");
+        } catch (Exception e) {
+        }
 
         if (character.getType().equals(CharacterType.CONTROL_PROFESSOR))
             character.activateCharacter(professorContext);
@@ -220,22 +251,34 @@ public class Controller {
             character.activateCharacter(motherNatureContext);
         else
             character.activateCharacter(islandContext);
+
+        game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, int islandPosition){
         Character character = game.getTable().getCharacter(characterPosition);
 
-        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
-            return;
+        try {
+            turnController.checkCharacter(game, player, character.getCosto(), character);
+        } catch (AlreadyUsedCharacterException e){
+            System.out.println("E' già stato usato un personaggio in questo turno");
+        } catch (Exception e) {
+        }
 
         character.activateCharacter(game.getTable().getIsland(islandPosition));
+
+        game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
 
-        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
-            return;
+        try {
+            turnController.checkCharacter(game, player, character.getCosto(), character);
+        } catch (AlreadyUsedCharacterException e){
+            System.out.println("E' già stato usato un personaggio in questo turno");
+        } catch (Exception e) {
+        }
 
         if(character.getType().hasStudent() > 0) {
             PawnColor[] colorArray = {color};
@@ -243,13 +286,19 @@ public class Controller {
         }
         else
             character.activateCharacter(color, game);
+
+        game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, int[] colors){
         Character character = game.getTable().getCharacter(characterPosition);
 
-        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
-            return;
+        try {
+            turnController.checkCharacter(game, player, character.getCosto(), character);
+        } catch (AlreadyUsedCharacterException e){
+            System.out.println("E' già stato usato un personaggio in questo turno");
+        } catch (Exception e) {
+        }
 
         PawnColor[] color;
         int size = colors.length;
@@ -260,15 +309,23 @@ public class Controller {
         }
 
         character.activateCharacter(player, color);
+
+        game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
 
-        if(!turnController.checkCharacter(game, player, character.getCosto(), character))
-            return;
+        try {
+            turnController.checkCharacter(game, player, character.getCosto(), character);
+        } catch (AlreadyUsedCharacterException e){
+            System.out.println("E' già stato usato un personaggio in questo turno");
+        } catch (Exception e) {
+        }
 
         character.activateCharacter(game.getTable().getIsland(islandPosition), color, player);
+
+        game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public static void winner(){

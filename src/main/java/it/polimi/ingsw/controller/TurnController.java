@@ -1,20 +1,23 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Turn;
+import it.polimi.ingsw.model.board.DiningRoom;
 import it.polimi.ingsw.model.character.Character;
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.player.Player;
 
 public class TurnController {
 
-    public boolean checkCharacter(Game game, Player player, int costo, Character character) throws GeneralSupplyFinishedException {
-        if(!checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION))
-            return false;
+    public void checkCharacter(Game game, Player player, int costo, Character character) throws Exception {
+        if(game.getRound().getTurn().isUsedCharacter())
+            throw new AlreadyUsedCharacterException();
 
-        if(!enoughMoney(player, costo))
-            return false;
+        checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
+
+        enoughMoney(player, costo);
 
         player.removeCoin(costo);
         game.getTable().addCoin(costo);
@@ -25,71 +28,54 @@ public class TurnController {
         }
     }
 
-    public boolean checkPermission(Turn turn, Player player, PlayerState state){
-        boolean value = true;
+    public void checkPermission(Turn turn, Player player, PlayerState state) throws Exception {
 
-        if (!checkCorrectTurn(turn, player)){
+        try {
+            checkCorrectTurn(turn, player);
+        } catch (NotYourTurnException e) {
             System.out.println("Not Your Turn");
-            value = false;
+            throw new Exception();
         }
 
-        if(!checkCorrectAction(player, state)){
-            if (state.equals(PlayerState.PLANNING))
-                System.out.println("It's Action Phase, you need to move a Student");
-            else
-                System.out.println("It's Planning Phase, you need to choose an Assistant");
-            value = false;
+        try {
+            checkCorrectAction(player, state);
+        } catch (WrongPhaseException e) {
+            System.out.println(e.getMessage());
+            throw new Exception();
         }
-
-        return value;
     }
 
-    public boolean canMove(Turn turn){
-        boolean value = true;
-        if (turn.getRemainingMovements() == 0){
-            value = false;
-            System.out.println("You have already moved all the student, please move Mother Nature");
-        } else {
-           turn.updateRemainingMovements();
-        }
+    public void canMove(Turn turn) throws WrongActionException {
+        if (turn.getRemainingMovements() == 0)
+            throw new WrongActionException(0);
 
-        return value;
+        turn.updateRemainingMovements();
     }
 
-    public boolean canMoveMother(Turn turn){
-        boolean value = true;
-        if (turn.getRemainingMovements() > 0) {
-            value = false;
-            System.out.println("Non hai finito di muovere gli studenti");
-        }
+    public void canMoveMother(Turn turn) throws WrongActionException {
+        if (turn.getRemainingMovements() > 0)
+            throw new WrongActionException(1);
 
-        return value;
     }
 
-    public boolean enoughMoney(Player player, int costo){
-        boolean value = true;
+    public void enoughMoney(Player player, int costo) throws NotEnoughMoneyException {
         if (player.getNumCoin() < costo)
-            value = false;
-
-        return value;
+            throw new NotEnoughMoneyException();
     }
 
-    public boolean checkCorrectTurn(Turn turn, Player player){
-        boolean value = false;
+    public void checkFullDining(DiningRoom dining, PawnColor color) throws MaxStudentReachedException {
+        if (dining.count(color) == 10)
+            throw new MaxStudentReachedException();
+    }
 
+    public void checkCorrectTurn(Turn turn, Player player) throws NotYourTurnException {
         if(turn.getCurrentPlayer().equals(player))
-            value = true;
-
-        return value;
+            throw new NotYourTurnException();
     }
 
-    public boolean checkCorrectAction(Player player, PlayerState state){
-        boolean value = false;
-
-        if (player.getState().equals(state))
-            value = true;
-
-        return value;
+    public void checkCorrectAction(Player player, PlayerState state) throws WrongPhaseException {
+        if (!player.getState().equals(state))
+            throw new WrongPhaseException(player.getState());
     }
 
 }

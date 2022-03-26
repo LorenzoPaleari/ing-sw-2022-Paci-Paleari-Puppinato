@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.motherNatureController;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.exceptions.TooMuchMovesException;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
@@ -17,7 +18,7 @@ public class MotherNatureContext extends Context {
     }
 
     @Override
-    public int motherNatureControl(Table table, int endPosition, Player player){
+    public int motherNatureControl(Table table, int endPosition, Player player) throws TooMuchMovesException {
         int numMoves = strategy.checkMotherNature(table, endPosition, player);
         return numMoves;
     }

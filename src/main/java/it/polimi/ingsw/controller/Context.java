@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
+import it.polimi.ingsw.exceptions.TooMuchMovesException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
@@ -18,7 +19,7 @@ public abstract class Context {
         return false;
     }
     public void professorControl(Game game, Player player, PawnColor color){}
-    public int motherNatureControl(Table table, int endPosition, Player player){
+    public int motherNatureControl(Table table, int endPosition, Player player) throws TooMuchMovesException {
         return 0;
     }
 }

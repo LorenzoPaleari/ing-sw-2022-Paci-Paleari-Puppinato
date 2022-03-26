@@ -46,7 +46,6 @@ public class Round {
             turn.updatePlayer(p);
             turn.resetRemainingMovements(playerSequence.size() + 1);
             p.changeState(PlayerState.ACTION);
-            numTurnDone += 1;
             return true;
         }
     }
@@ -67,7 +66,9 @@ public class Round {
 
         playerSequence = nextSequence;
         playerSequence.get(0).changeState(PlayerState.ACTION);
-        numTurnDone = playerSequence.size();
+        turn.resetRemainingMovements(playerSequence.size()+ 1);
+
+        numTurnDone = 0;
     }
 
     public boolean nextPlanningTurn(){
@@ -87,7 +88,6 @@ public class Round {
 
     public void endRound(){
             playerSequence.get(0).changeState(PlayerState.PLANNING);
-            numTurnDone = playerSequence.size();
     }
 
     public Player getNextPlayer(Player p){
