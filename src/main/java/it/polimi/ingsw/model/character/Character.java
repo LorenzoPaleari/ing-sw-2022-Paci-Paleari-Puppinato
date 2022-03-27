@@ -8,8 +8,10 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 public abstract class Character {
-    public abstract CharacterType getType();
-    public abstract int getCosto();
+
+    private  CharacterType type;
+    private int costo;
+    private boolean used;
     public abstract void returnNoEntryTiles();
     public abstract void activateCharacter(Context context);
     public abstract void activateCharacter(Island island, PawnColor color, Player player);
@@ -17,6 +19,23 @@ public abstract class Character {
     public abstract void activateCharacter(Player player, PawnColor[] color);
     public abstract void activateCharacter(Island island);
 
+    public void firstUse(){
+        costo += 1;
+        used = true;
+    }
+    public boolean isUsed() {
+        return used;
+    }
+    public int getCosto() {
+        return costo;
+    }
+
+    public CharacterType getType() {
+        return type;
+    }
 
 }
+
+
+
 
