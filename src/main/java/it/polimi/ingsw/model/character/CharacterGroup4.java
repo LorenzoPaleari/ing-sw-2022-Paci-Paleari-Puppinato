@@ -2,6 +2,8 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -16,7 +18,7 @@ public class CharacterGroup4 extends Character{
     private CharacterType type;
     private int price;
     private boolean used;
-
+    private IslandController islandController= new IslandControllerNoColor();
     public CharacterGroup4 (CharacterType type){
         this.type=type;
         price = type.getPrice();
@@ -28,8 +30,8 @@ public class CharacterGroup4 extends Character{
     }
 
     @Override
-    public void activateCharacter(Context context) {
-
+    public void activateCharacter(Context islandContext) {
+        islandContext.changeContext(islandController);
     }
 
     @Override
