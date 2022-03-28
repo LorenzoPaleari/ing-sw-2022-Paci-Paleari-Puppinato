@@ -30,6 +30,10 @@ public class CharacterNoEntryTiles extends Character{
     public void activateCharacter(Context context) {
 
     }
+    @Override
+    public void activateCharacter(Context context,PawnColor color) {
+
+    }
 
     @Override
     public void activateCharacter(Island island, PawnColor color) {

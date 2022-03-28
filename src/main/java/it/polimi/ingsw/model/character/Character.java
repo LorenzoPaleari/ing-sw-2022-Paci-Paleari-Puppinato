@@ -15,6 +15,7 @@ public abstract class Character {
     private boolean used;
     public abstract void returnNoEntryTiles();
     public abstract void activateCharacter(Context context);
+    public abstract void activateCharacter(Context context, PawnColor color);
     public abstract void activateCharacter(PawnColor color, Game game);
     public abstract void activateCharacter(Player player, PawnColor[] color);
     public abstract void activateCharacter(Island island) throws NoEntryTilesSetException;

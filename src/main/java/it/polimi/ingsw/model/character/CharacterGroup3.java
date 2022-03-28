@@ -33,6 +33,10 @@ public class CharacterGroup3 extends Character{
     public void returnNoEntryTiles() {
 
     }
+    @Override
+    public void activateCharacter(Context context,PawnColor color) {
+
+    }
 
     @Override
     public void activateCharacter(Context islandContext) {

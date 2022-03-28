@@ -30,7 +30,12 @@ public class CharacterGroup4 extends Character{
     }
 
     @Override
-    public void activateCharacter(Context islandContext) {
+    public void activateCharacter(Context context) {
+
+    }
+    @Override
+    public void activateCharacter(Context islandContext, PawnColor color) {
+        islandController.setNoColor(color);
         islandContext.changeContext(islandController);
     }
 

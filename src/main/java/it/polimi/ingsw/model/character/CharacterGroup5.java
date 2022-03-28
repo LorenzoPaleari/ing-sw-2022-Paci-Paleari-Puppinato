@@ -37,6 +37,10 @@ public class CharacterGroup5 extends Character{
     public void activateCharacter(Island island, PawnColor color) {
 
     }
+    @Override
+    public void activateCharacter(Context context,PawnColor color) {
+
+    }
 
     @Override
     public void activateCharacter(PawnColor color, Game game) {

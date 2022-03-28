@@ -65,6 +65,12 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
+    public void activateCharacter(Context context,PawnColor color) {
+
+    }
+
+
+    @Override
     public void activateCharacter(Island island, PawnColor color) {
         island.addStudent(removeStudent(color)); //add_student_islands
 

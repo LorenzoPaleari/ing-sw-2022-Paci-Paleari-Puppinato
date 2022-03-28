@@ -30,6 +30,10 @@ public class CharacterGroup2 extends Character {
     public void activateCharacter(Context professorContext) {
         professorContext.changeContext(professor);
     }
+    @Override
+    public void activateCharacter(Context context,PawnColor color) {
+
+    }
 
     @Override
     public void activateCharacter(Island island, PawnColor color) {
