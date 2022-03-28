@@ -29,7 +29,7 @@ public class CharacterGroup3 extends Character{
 
     @Override
     public void activateCharacter(Context context) {
-
+        //more influence
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CharacterGroup3 extends Character{
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
-
+        //exchange
     }
 
     @Override

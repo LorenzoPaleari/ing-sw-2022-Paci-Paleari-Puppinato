@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.professorController.ProfessorController;
-import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -14,7 +14,7 @@ public class CharacterGroup1 extends Character{
     private CharacterType type;
     private int price;
     private boolean used;
-    private ProfessorController professor = new ProfessorControllerModified();
+    private MotherNatureController motherNature = new MotherNatureControllerModified();
 
     public CharacterGroup1 (CharacterType type){
         this.type = type;
@@ -27,8 +27,8 @@ public class CharacterGroup1 extends Character{
     }
 
     @Override
-    public void activateCharacter(Context context) {
-
+    public void activateCharacter(Context motherNatureContext) {
+        motherNatureContext.changeContext(motherNature);
     }
 
     @Override
