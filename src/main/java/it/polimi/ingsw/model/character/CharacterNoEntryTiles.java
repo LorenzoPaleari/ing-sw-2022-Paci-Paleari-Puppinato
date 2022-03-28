@@ -46,7 +46,10 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island) {
-        island.setNoEntryTiles(true);
+    public void activateCharacter(Island island) { //potrebbe generare eccezione
+        if(numNoEntryTiles>0) {
+            island.setNoEntryTiles(true);
+            numNoEntryTiles -= 1;
+        }
     }
 }

@@ -15,7 +15,6 @@ public class CharacterGroup4 extends Character{
     private CharacterType type;
     private int price;
     private boolean used;
-    private ProfessorController professor= new ProfessorControllerModified();
 
     public CharacterGroup4 (CharacterType type){
         this.type=type;
