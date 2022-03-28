@@ -9,8 +9,12 @@ import it.polimi.ingsw.controller.professorController.ProfessorControllerModifie
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
+
+import java.util.LinkedList;
+import java.util.List;
 
 //MORE_INFLUENCE
 //EXCHANGE
@@ -48,7 +52,21 @@ public class CharacterGroup3 extends Character{
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
-        //exchange
+        List<Student> list1 = new LinkedList<>();
+        List<Student> list2 = new LinkedList<>();
+        //prima entrance, poi dining
+        //exchange. you may exchange up to 2 students between your Entrance and your dining room
+        for(int i = 0; i < 2; i++){
+            if(!color[i].equals(null)){
+                list1.add(player.getBoard().getEntrance().removeStudent(color[i]));
+            }
+            if(!color[i+2].equals(null)){
+                list2.addAll(player.getBoard().getDiningRoom().removeStudent(color[i+2], 1));
+            }
+        }
+        player.getBoard().getEntrance().addStudent(list2);
+        player.getBoard().getDiningRoom().addStudent(list1);
+
     }
 
     @Override

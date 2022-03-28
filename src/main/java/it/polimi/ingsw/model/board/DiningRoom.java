@@ -33,6 +33,10 @@ public class DiningRoom {
         student.addLast(s);
     }
 
+    public void addStudent(List<Student> s){
+        student.addAll(s);
+    }
+
     public boolean isEmpty(){
         return student.size() == 0;
     }
