@@ -32,7 +32,7 @@ public class CharacterGroup2 extends Character {
     }
 
     @Override
-    public void activateCharacter(Island island, PawnColor color, Player player) {
+    public void activateCharacter(Island island, PawnColor color) {
 
     }
 
@@ -48,6 +48,10 @@ public class CharacterGroup2 extends Character {
 
     @Override
     public void activateCharacter(Island island) {
+
+    }
+    @Override
+    public void activateCharacter(Player player, PawnColor color) {
 
     }
 

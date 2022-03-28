@@ -257,7 +257,7 @@ public class Controller {
         Character character = game.getTable().getCharacter(characterPosition);
 
         try {
-            turnController.checkCharacter(game, player, character.getCosto(), character);
+            turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (AlreadyUsedCharacterException e){
             System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
@@ -278,15 +278,17 @@ public class Controller {
         Character character = game.getTable().getCharacter(characterPosition);
 
         try {
-            turnController.checkCharacter(game, player, character.getCosto(), character);
+            turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (AlreadyUsedCharacterException e){
             System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
             return;
         }
-
-        character.activateCharacter(game.getTable().getIsland(islandPosition));
-
+        try {
+            character.activateCharacter(game.getTable().getIsland(islandPosition));
+        } catch (NoEntryTilesSetException e){
+            return;
+        }
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
@@ -294,7 +296,7 @@ public class Controller {
         Character character = game.getTable().getCharacter(characterPosition);
 
         try {
-            turnController.checkCharacter(game, player, character.getCosto(), character);
+            turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (AlreadyUsedCharacterException e){
             System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
@@ -314,7 +316,7 @@ public class Controller {
         Character character = game.getTable().getCharacter(characterPosition);
 
         try {
-            turnController.checkCharacter(game, player, character.getCosto(), character);
+            turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (AlreadyUsedCharacterException e){
             System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
@@ -338,14 +340,14 @@ public class Controller {
         Character character = game.getTable().getCharacter(characterPosition);
 
         try {
-            turnController.checkCharacter(game, player, character.getCosto(), character);
+            turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (AlreadyUsedCharacterException e){
             System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
             return;
         }
 
-        character.activateCharacter(game.getTable().getIsland(islandPosition), color, player);
+        character.activateCharacter(game.getTable().getIsland(islandPosition), color);
 
         game.getRound().getTurn().setUsedCharacter(true);
     }

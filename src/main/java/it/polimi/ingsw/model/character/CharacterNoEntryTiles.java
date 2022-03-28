@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -31,7 +32,7 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island, PawnColor color, Player player) {
+    public void activateCharacter(Island island, PawnColor color) {
 
     }
 
@@ -46,10 +47,16 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island) { //potrebbe generare eccezione
-        if(numNoEntryTiles>0) {
+    public void activateCharacter(Player player, PawnColor color) {
+
+    }
+
+    @Override
+    public void activateCharacter(Island island)throws NoEntryTilesSetException {
+        if (numNoEntryTiles < 1) throw new NoEntryTilesSetException("You don't have any other noEntry tile left");
+
             island.setNoEntryTiles(true);
             numNoEntryTiles -= 1;
-        }
+
     }
 }

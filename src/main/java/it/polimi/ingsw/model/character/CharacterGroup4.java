@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -32,22 +33,25 @@ public class CharacterGroup4 extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island, PawnColor color, Player player) {
+    public void activateCharacter(Island island, PawnColor color) {
 
     }
 
     @Override
     public void activateCharacter(PawnColor color, Game game) {
-        //nocolor
+
     }
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
 
     }
+    @Override
+    public void activateCharacter(Player player, PawnColor color) {
 
+    }
     @Override
     public void activateCharacter(Island island) {
-
+        Controller.updateIsland(island);
     }
 }
