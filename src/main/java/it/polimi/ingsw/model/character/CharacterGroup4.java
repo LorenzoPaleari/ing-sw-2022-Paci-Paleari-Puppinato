@@ -39,7 +39,7 @@ public class CharacterGroup4 extends Character{
 
     @Override
     public void activateCharacter(PawnColor color, Game game) {
-
+        //nocolor
     }
 
     @Override

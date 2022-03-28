@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -15,7 +18,7 @@ public class CharacterGroup3 extends Character{
     private CharacterType type;
     private int price;
     private boolean used;
-    private ProfessorController professor= new ProfessorControllerModified();
+    private IslandController island = new IslandControllerMoreInfluence();
 
     public CharacterGroup3 (CharacterType type){
         this.type=type;
@@ -28,8 +31,9 @@ public class CharacterGroup3 extends Character{
     }
 
     @Override
-    public void activateCharacter(Context context) {
-        //more influence
+    public void activateCharacter(Context islandContext) {
+        islandContext.changeContext(island);
+
     }
 
     @Override
