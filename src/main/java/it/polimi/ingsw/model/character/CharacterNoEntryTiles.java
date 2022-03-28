@@ -2,15 +2,27 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 //NO_ENTRY_TILES
 public class CharacterNoEntryTiles extends Character{
+    private CharacterType type;
+    private int price;
+    private boolean used;
+    private int numNoEntryTiles;
+    public CharacterNoEntryTiles (CharacterType type){
+        this.type=type;
+        price = type.getPrice();
+        used = false;
+        numNoEntryTiles=4;
+    }
+
     @Override
     public void returnNoEntryTiles() {
-
+        numNoEntryTiles += 1;
     }
 
     @Override
@@ -35,6 +47,6 @@ public class CharacterNoEntryTiles extends Character{
 
     @Override
     public void activateCharacter(Island island) {
-
+        island.setNoEntryTiles(true);
     }
 }
