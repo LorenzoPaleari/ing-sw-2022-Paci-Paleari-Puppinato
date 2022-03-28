@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.table.Island;
 public abstract class Character {
 
     private  CharacterType type;
-    private int costo;
+    private int price;
     private boolean used;
     public abstract void returnNoEntryTiles();
     public abstract void activateCharacter(Context context);
@@ -20,14 +20,14 @@ public abstract class Character {
     public abstract void activateCharacter(Island island);
 
     public void firstUse(){
-        costo += 1;
+        price += 1;
         used = true;
     }
     public boolean isUsed() {
         return used;
     }
-    public int getCosto() {
-        return costo;
+    public int getPrice() {
+        return price;
     }
 
     public CharacterType getType() {

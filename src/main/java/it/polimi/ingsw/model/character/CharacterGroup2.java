@@ -13,12 +13,12 @@ import it.polimi.ingsw.model.table.Island;
 public class CharacterGroup2 extends Character {
 
     private  CharacterType type;
-    private int costo;
+    private int price;
     private boolean used;
     private ProfessorController  professor= new ProfessorControllerModified();
     public CharacterGroup2 (CharacterType type){
         this.type=type;
-        costo = type.getCosto();
+        price = type.getPrice();
         used = false;
     }
 

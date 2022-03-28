@@ -14,7 +14,7 @@ public enum CharacterType {
     ADD_STUDENT_DINING(2,"ADD_STUDENT_DINING"),
     RETURN_STUDENT(3, "RETURN_STUDENT");
 
-    private final int costo;
+    private final int price;
     private final String text;
 
     /**
@@ -22,9 +22,9 @@ public enum CharacterType {
      *
      * @param text the string representation of the pawn color.
      */
-    CharacterType(int costo, String text) {
+    CharacterType(int cost, String text) {
         this.text = text;
-        this.costo = costo;
+        this.price = cost;
     }
 
     /**
@@ -36,8 +36,8 @@ public enum CharacterType {
         return text;
     }
 
-    public int getCosto() {
-        return costo;
+    public int getPrice() {
+        return price;
     }
 
     public int hasStudent(){

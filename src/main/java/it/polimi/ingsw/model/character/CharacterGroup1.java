@@ -1,13 +1,26 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.professorController.ProfessorController;
+import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 //ADD_MOVES
 public class CharacterGroup1 extends Character{
+    private CharacterType type;
+    private int price;
+    private boolean used;
+    private ProfessorController professor = new ProfessorControllerModified();
+
+    public CharacterGroup1 (CharacterType type){
+        this.type = type;
+        price = type.getPrice();
+        used = false;
+    }
     @Override
     public void returnNoEntryTiles() {
 
