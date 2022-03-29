@@ -88,15 +88,19 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
-    public void activateCharacter(Player player, PawnColor[] color) { //da rivedere
-        List<Student> student_replace= new LinkedList<>();
-        for (int i = 0; i < color.length; i++) {
-            student_replace.add(player.getBoard().getEntrance().removeStudent(color[i]));
+    public void activateCharacter(Player player, PawnColor[] color) { // replace
+        List<Student> list1 = new LinkedList<>();
+        List<Student> list2 = new LinkedList<>();
+        for(int i = 0; i < 3; i++){
+            if(!color[i].equals(null)){
+                list1.add(player.getBoard().getEntrance().removeStudent(color[i]));
+            }
+            if(!color[i+2].equals(null)){
+                list2.add(removeStudent(color[i]));
+            }
         }
-        for (int i = 0; i < color.length; i++) {
-            player.getBoard().getEntrance().addStudent(findStudent(color[i]));
-        }
-            student.addAll(student_replace);
+        player.getBoard().getEntrance().addStudent(list2);
+        student.addAll(list1);
 
     }
 
