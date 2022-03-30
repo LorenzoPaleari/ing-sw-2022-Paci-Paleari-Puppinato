@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.board.DiningRoom;
 import it.polimi.ingsw.model.character.Character;
@@ -29,20 +30,8 @@ public class TurnController {
     }
 
     public void checkPermission(Turn turn, Player player, PlayerState state) throws Exception {
-
-        try {
-            checkCorrectTurn(turn, player);
-        } catch (NotYourTurnException e) {
-            System.out.println("Not Your Turn");
-            throw new Exception();
-        }
-
-        try {
-            checkCorrectAction(player, state);
-        } catch (WrongPhaseException e) {
-            System.out.println(e.getMessage());
-            throw new Exception();
-        }
+        checkCorrectTurn(turn, player);
+        checkCorrectAction(player, state);
     }
 
     public void canMove(Turn turn) throws WrongActionException {
@@ -60,16 +49,16 @@ public class TurnController {
 
     public void enoughMoney(Player player, int costo) throws NotEnoughMoneyException {
         if (player.getNumCoin() < costo)
-            throw new NotEnoughMoneyException();
+            throw new NotEnoughMoneyException("You don't have enough money to use this character (Cost = "+costo+ ")");
     }
 
     public void checkFullDining(DiningRoom dining, PawnColor color) throws MaxStudentReachedException {
         if (dining.count(color) == 10)
-            throw new MaxStudentReachedException();
+            throw new MaxStudentReachedException("You've reached the maximum number of "+ color +" student");
     }
 
     public void checkCorrectTurn(Turn turn, Player player) throws NotYourTurnException {
-        if(turn.getCurrentPlayer().equals(player))
+        if(!turn.getCurrentPlayer().equals(player))
             throw new NotYourTurnException();
     }
 
@@ -78,4 +67,8 @@ public class TurnController {
             throw new WrongPhaseException(player.getState());
     }
 
+    public void checkCloud(Round round, int position) throws AlreadyChosedCloudException {
+        if (round.getCloudChosen().contains(position))
+            throw new AlreadyChosedCloudException();
+    }
 }

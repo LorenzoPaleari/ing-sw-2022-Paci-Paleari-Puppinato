@@ -18,4 +18,8 @@ public class Professor {
     public int getNumStudent() {
         return numStudent;
     }
+
+    public void setNumStudent(int numStudent) {
+        this.numStudent = numStudent;
+    }
 }

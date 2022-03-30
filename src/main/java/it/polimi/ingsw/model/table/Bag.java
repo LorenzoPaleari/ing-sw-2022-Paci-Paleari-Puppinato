@@ -23,18 +23,18 @@ public class Bag {
         LinkedList<Student> draw = new LinkedList<>();
 
         if (numPlayer == 2) {
-            draw.addAll(student.subList(0, 6));
-            student.subList(0, 6).clear();
+            draw.addAll(student.subList(0, 7));
+            student.subList(0, 7).clear();
         }
         else {
-            draw.addAll(student.subList(0, 8));
-            student.subList(0, 8).clear();
+            draw.addAll(student.subList(0, 9));
+            student.subList(0, 9).clear();
         }
 
         return draw;
     }
 
-    public void addStudent(LinkedList<Student> student)
+    public void addStudent(List<Student> student)
     {
         this.student.addAll(student);
         Collections.shuffle(this.student);
@@ -44,13 +44,13 @@ public class Bag {
     public List<Student> withdrawStudent(int numStudents) throws BagIsEmptyException {
         List<Student> drawOut = new LinkedList<>();
         try {
-            drawOut.addAll(student.subList(0, numStudents - 1));
+            drawOut.addAll(student.subList(0, numStudents));
         }
         catch (IndexOutOfBoundsException e){
             student.clear();
             throw new BagIsEmptyException();
         }
-        student.subList(0, numStudents -1).clear();
+        student.subList(0, numStudents).clear();
         return drawOut;
     }
 

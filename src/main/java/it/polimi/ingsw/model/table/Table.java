@@ -20,7 +20,7 @@ public class Table {
     private Bag bag;
     private List<Professor> professor;
 
-    public Table(int numPlayer,boolean expert) throws BagIsEmptyException {
+    public Table(int numPlayer,boolean expert) {
         motherNature = MotherNature.getInstance();
 
         bag=new Bag();
@@ -29,31 +29,33 @@ public class Table {
         for(int i=1;i<=numPlayer;i++)
             cloud.add(new Cloud());
 
-        fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
+        try {
+            fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
+        } catch (BagIsEmptyException e) {
+        }
 
         island=new LinkedList<>();
-        for(int i=1;i<=numPlayer;i++)
+        for(int i=1;i<=12;i++)
             island.add(new Island());
 
         island.get(0).setMotherNature(true);
 
         List<Student> student = new ArrayList<>();
         for(int i=0;i<5;i++)
-            for(int j=0;j<2;j++)
+            for (int j = 0; j < 2; j++)
                 student.add(new Student(i));
 
         Collections.shuffle(student);
-        for (int i = 1; i < 7; i++)
+        for (int i = 1; i < 6; i++)
             island.get(i).addStudent(student.get(i - 1));
-        for (int i = 8; i < 12; i++)
-            island.get(i).addStudent(student.get(i - 1));
+        for (int i = 7; i < 12; i++)
+            island.get(i).addStudent(student.get(i - 2));
 
         student.clear();
 
-        List<Professor> professor= new LinkedList<>();
+        professor= new LinkedList<>();
         for(int i=0; i<5;i++)
             professor.add(new Professor(i));
-
 
         if(expert) {
             generalSupply=20-numPlayer;
@@ -67,13 +69,20 @@ public class Table {
             }
         }
 
+
     }
 
     public void fillCloud(int numPlayer, List<Student> student){
+        int init = 0;
+        int end = numPlayer + 1;
         for (Cloud c: cloud) {
-            c.addStudent(student.subList(0, numPlayer));
-            student.removeAll(student.subList(0, numPlayer));
+            List<Student> sublist = student.subList(init, end);
+            c.addStudent(sublist);
+            init = end;
+            end += numPlayer + 1;
         }
+
+        student.clear();
     }
 
     public Bag getBag() {
@@ -153,10 +162,11 @@ public class Table {
 
         updateIsland(islandPrev, islandCurr);
         updateIsland(islandNext, islandCurr);
+
+        motherNature.setPosition(island.indexOf(islandCurr));
     }
 
-    public void updateIsland(Island islandNotCurr, Island islandCurr) {
-        int numNoEntryTiles;
+    private void updateIsland(Island islandNotCurr, Island islandCurr) {
         if (islandNotCurr.getIslandTower().size() == 0)
             return;
 
@@ -165,7 +175,6 @@ public class Table {
             islandCurr.setWeight(islandNotCurr.getWeight()+islandCurr.getWeight());
             islandCurr.getIslandStudent().addAll(islandNotCurr.getIslandStudent());
             islandCurr.getIslandTower() .addAll(islandNotCurr.getIslandTower());
-
             if (islandCurr.isNoEntryTiles() && islandNotCurr.isNoEntryTiles()) {
                 islandCurr.setNoEntryTiles(true);
                 for (Character c : character){

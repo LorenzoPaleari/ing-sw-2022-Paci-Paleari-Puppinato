@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.islandController;
 
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
@@ -42,7 +43,7 @@ public class IslandControllerStandard implements IslandController {
         if (playerCandidate == null)
             return false;
 
-        if (color.equals(null)){
+        if (color == null){
             island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(1));
             return true;
         }
@@ -55,5 +56,10 @@ public class IslandControllerStandard implements IslandController {
         }
 
         return value;
+    }
+
+    @Override
+    public void setNoColor(PawnColor noColor) {
+
     }
 }

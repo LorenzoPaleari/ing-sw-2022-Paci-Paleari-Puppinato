@@ -7,6 +7,10 @@ import java.util.*;
 public class Cloud {
     private List<Student> cloudStudent;
 
+    public Cloud(){
+        cloudStudent = new LinkedList<>();
+    }
+
     public List<Student> getCloudStudent() {
         return cloudStudent;
     }
@@ -18,9 +22,9 @@ public class Cloud {
 
     public List<Student> removeAllStudent()
     {
-        List<Student> removed;
-        removed=cloudStudent;
-        cloudStudent.removeAll(removed);
+        List<Student> removed = new LinkedList<>();
+        removed.addAll(cloudStudent);
+        cloudStudent.clear();
         return removed;
     }
 

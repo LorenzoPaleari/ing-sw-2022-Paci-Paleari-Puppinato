@@ -7,8 +7,9 @@ public class Turn{
     private int remainingMovements;
     private boolean usedCharacter;
 
-    public Turn(){
+    public Turn(Player player){
         usedCharacter = false;
+        currentPlayer = player;
     }
 
     public Player getCurrentPlayer() {

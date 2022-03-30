@@ -44,8 +44,8 @@ public class Game {
         this.expertMode = expertMode;
     }
 
-    public void startGame() throws BagIsEmptyException {
-        table = new Table(numPlayer, isExpertMode());
+    public void startGame() {
+        table = new Table(numPlayer, expertMode);
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 

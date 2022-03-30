@@ -69,23 +69,18 @@ public class Controller {
 
     public void useAssistant(int position, Player player){
         Round round = game.getRound();
-
-        try {
-            turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING);
-        } catch (Exception e) {
-            return;
-        }
-
         int weight = player.getDeck().getAssistant(position).getWeight();
 
         try {
+            turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING);
             sameAssistant(weight, player);
-        } catch (SameAssistantException e) {
-            System.out.println("Choose an Assistant different from others player");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
         player.addAssistant(position);
+
         if (!round.nextPlanningTurn()) {
             if (player.getDeck().isEmpty())
                 round.setLastRound();
@@ -93,7 +88,7 @@ public class Controller {
         }
     }
 
-    public void sameAssistant(int weight, Player player) throws SameAssistantException {
+    private void sameAssistant(int weight, Player player) throws SameAssistantException {
         boolean value = false;
         List<Integer> weights = new LinkedList<>();
         int size = player.getDeck().getSize();
@@ -112,7 +107,7 @@ public class Controller {
         if (size == 2 && game.getRound().getNumTurnDone() == 2) {
             value = false;
             for (Assistant a : player.getDeck().getAssistant())
-                if (a.getWeight() != weights.get(0) && a.getWeight() != weights.get(1))
+                if (!weights.contains(a.getWeight()))
                     value = true;
         }
 
@@ -125,13 +120,9 @@ public class Controller {
 
         try {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
-        } catch (Exception e) {
-            return;
-        }
-
-        try {
             turnController.canMove(round.getTurn());
-        } catch (WrongActionException e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -145,20 +136,10 @@ public class Controller {
 
         try {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
-        } catch (Exception e){
-            return;
-        }
-
-        try {
             turnController.canMove(round.getTurn());
-        } catch (WrongActionException e) {
-            return;
-        }
-
-        try {
             turnController.checkFullDining(board.getDiningRoom(), color);
-        } catch (MaxStudentReachedException e){
-            System.out.println("You've reached the maximum number of "+ color +" student");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -172,30 +153,21 @@ public class Controller {
                 game.getTable().withdrawCoin();
                 player.addCoin();
             } catch (GeneralSupplyFinishedException e){
+                System.out.println(e.getMessage());
                 return;
             }
         }
     }
 
-    public void moveMotherNature(int endPosition, Player player) {
+    public void moveMotherNature(Player player, int endPosition) {
         int numMoves = 0;
 
         try {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
-        } catch (Exception e) {
-            return;
-        }
-
-        try {
             turnController.canMoveMother(game.getRound().getTurn());
-        } catch (WrongActionException e) {
-            return;
-        }
-
-        try {
             numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
-        } catch (TooMuchMovesException e) {
-            System.out.println("You can't go so far with your Assistant, please choose another Island");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -220,12 +192,16 @@ public class Controller {
         }
     }
 
-    public void chooseCloud(int position, Player player){
+    public void chooseCloud(Player player, int position){
         try {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN);
+            turnController.checkCloud(game.getRound(), position);
         } catch (Exception e){
+            System.out.println(e.getMessage());
             return;
         }
+
+        game.getRound().setCloudChosen(position);
 
         Table table = game.getTable();
         List<Student> student = table.getCloud(position).removeAllStudent();
@@ -241,7 +217,7 @@ public class Controller {
                 winner();
 
             try {
-                List<Student> students = table.getBag().withdrawStudent(game.getNumPlayer() * (game.getNumPlayer()) + 1);
+                List<Student> students = table.getBag().withdrawStudent(game.getNumPlayer() * (game.getNumPlayer() + 1));
                 game.getTable().fillCloud(game.getNumPlayer(), students);
             }
             catch(BagIsEmptyException e) {
@@ -258,9 +234,8 @@ public class Controller {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (AlreadyUsedCharacterException e){
-            System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -279,16 +254,12 @@ public class Controller {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (AlreadyUsedCharacterException e){
-            System.out.println("E' già stato usato un personaggio in questo turno");
-        } catch (Exception e) {
-            return;
-        }
-        try {
             character.activateCharacter(game.getTable().getIsland(islandPosition));
-        } catch (NoEntryTilesSetException e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
+
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
@@ -297,9 +268,8 @@ public class Controller {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (AlreadyUsedCharacterException e){
-            System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -317,9 +287,8 @@ public class Controller {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (AlreadyUsedCharacterException e){
-            System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -341,9 +310,8 @@ public class Controller {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (AlreadyUsedCharacterException e){
-            System.out.println("E' già stato usato un personaggio in questo turno");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -372,13 +340,9 @@ public class Controller {
             }
         }
 
-        if(!winner2.equals(null))
+        if(winner2 != null)
             System.out.println("Draw between"+winner1+"and"+winner2);
         else
-            System.out.println(winner1 + "Has won the game");
-    }
-
-    public Game getGame(){
-        return game;
+            System.out.println(winner1 + " Has won the game");
     }
 }

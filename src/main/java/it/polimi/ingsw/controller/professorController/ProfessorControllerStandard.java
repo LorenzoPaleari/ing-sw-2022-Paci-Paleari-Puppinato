@@ -12,6 +12,7 @@ public class ProfessorControllerStandard implements ProfessorController{
         Board playerBoard = player.getBoard();
 
         if (playerBoard.getDiningRoom().count(color) > prof.getNumStudent()){
+            prof.setNumStudent(playerBoard.getDiningRoom().count(color));
             for (Player p : game.getPlayers()){
                 p.getBoard().getProfessorTable().removeProfessor(prof);
             }

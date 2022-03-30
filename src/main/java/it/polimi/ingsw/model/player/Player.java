@@ -20,13 +20,13 @@ public class Player {
     {
         this.nickname=nickname;
         this.towerColor=towerColor;
+        state = PlayerState.WAIT;
     }
 
     public void setUp(LinkedList<Student> student, boolean expert, int numPlayer)
     {
         board = new Board(student, numPlayer, towerColor);
         deck = new Deck();
-        state = PlayerState.WAIT;
         lastUsed = null;
         if(expert) numCoin=1;
     }

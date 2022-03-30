@@ -26,9 +26,14 @@ public class TowerCourt {
     }
 
     public LinkedList<Tower> removeTower(int numT){
-        LinkedList<Tower> drawOut = new LinkedList<Tower>();
-        drawOut.addAll(tower.subList(0, numT - 1));
-        tower.subList(0, numT -1).clear();
+        LinkedList<Tower> drawOut = new LinkedList<>();
+        try{
+            drawOut.addAll(tower.subList(0, numT));
+        } catch (IndexOutOfBoundsException e) {
+            drawOut.addAll(tower);
+            tower.clear();
+        }
+        tower.subList(0, numT).clear();
         return drawOut;
     }
 

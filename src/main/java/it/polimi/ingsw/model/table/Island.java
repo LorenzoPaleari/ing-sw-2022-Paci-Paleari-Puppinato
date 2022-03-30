@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.table;
 
 import it.polimi.ingsw.model.enumerations.PawnColor;
-import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 
@@ -69,8 +68,8 @@ public class Island {
     }
 
     public List<Tower> removeTower(){
-       List<Tower> tower;
-       tower = islandTower;
+       List<Tower> tower = new LinkedList<>();
+       tower.addAll(islandTower);
        islandTower.removeAll(tower);
        return tower;
     }
