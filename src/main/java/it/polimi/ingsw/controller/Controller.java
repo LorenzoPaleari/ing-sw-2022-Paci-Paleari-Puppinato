@@ -239,12 +239,7 @@ public class Controller {
             return;
         }
 
-        if (character.getType().equals(CharacterType.CONTROL_PROFESSOR))
-            character.activateCharacter(professorContext);
-        else if (character.getType().equals(CharacterType.ADD_MOVES))
-            character.activateCharacter(motherNatureContext);
-        else
-            character.activateCharacter(islandContext);
+        character.activateCharacter(professorContext, motherNatureContext, islandContext);
 
         game.getRound().getTurn().setUsedCharacter(true);
     }
@@ -273,11 +268,7 @@ public class Controller {
             return;
         }
 
-        if(character.getType().hasStudent() > 0) {
-            character.activateCharacter(player, color);
-        }
-        else
-            character.activateCharacter(color, game);
+        character.activateCharacter(game, player, color, islandContext);
 
         game.getRound().getTurn().setUsedCharacter(true);
     }
