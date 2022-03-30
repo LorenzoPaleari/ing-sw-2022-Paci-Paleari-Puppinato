@@ -179,6 +179,14 @@ public class Controller {
     }
 
     public static void updateIsland(Island island){
+        if (island.isNoEntryTiles()){
+            for (int i = 0; i < 3; i++)
+                if (game.getTable().getCharacter(i).getType().equals(CharacterType.NO_ENTRY_TILES)) {
+                    game.getTable().getCharacter(i).returnNoEntryTiles();
+                    island.setNoEntryTiles(false);
+                    return;
+                }
+        }
         if(islandContext.conquerIsland(island , game)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
@@ -268,9 +276,13 @@ public class Controller {
             return;
         }
 
-        character.activateCharacter(game, player, color, islandContext);
-
-        game.getRound().getTurn().setUsedCharacter(true);
+        try {
+            character.activateCharacter(game, player, color, islandContext);
+        } catch (BagIsEmptyException e) {
+            game.getRound().setLastRound();
+        } finally {
+            game.getRound().getTurn().setUsedCharacter(true);
+        }
     }
 
     public void useCharacter(Player player, int characterPosition, int[] colors){
@@ -306,9 +318,13 @@ public class Controller {
             return;
         }
 
-        character.activateCharacter(game.getTable().getIsland(islandPosition), color);
-
-        game.getRound().getTurn().setUsedCharacter(true);
+        try {
+            character.activateCharacter(game.getTable().getIsland(islandPosition), color);
+        } catch (BagIsEmptyException emptyException) {
+            game.getRound().setLastRound();
+        } finally {
+            game.getRound().getTurn().setUsedCharacter(true);
+        }
     }
 
     public static void winner(){

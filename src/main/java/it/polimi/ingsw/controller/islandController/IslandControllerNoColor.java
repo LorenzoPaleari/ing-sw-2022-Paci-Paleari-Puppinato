@@ -18,9 +18,6 @@ public class IslandControllerNoColor implements IslandController {
         Player playerCandidate = null;
         Player owner = null;
 
-        if (island.isNoEntryTiles())
-            return false;
-
         if (!island.getIslandTower().isEmpty())
             color = island.getIslandTower().get(0).getColor();
 

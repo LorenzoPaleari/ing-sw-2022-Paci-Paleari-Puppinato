@@ -22,6 +22,7 @@ public class Table {
 
     public Table(int numPlayer,boolean expert) {
         motherNature = MotherNature.getInstance();
+        Factory factory = new Factory();
 
         bag=new Bag();
 
@@ -65,7 +66,10 @@ public class Table {
             Collections.shuffle(type);
 
             for (int i = 0; i < 3; i++){
-                character.add(new Factory(type.get(i), bag));
+                try {
+                    character.add(new factory.getCharacter(type.get(i), bag));
+                } catch (BagIsEmptyException e) {
+                }
             }
         }
 
