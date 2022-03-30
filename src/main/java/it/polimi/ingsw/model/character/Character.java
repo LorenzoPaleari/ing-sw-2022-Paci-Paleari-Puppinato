@@ -17,7 +17,7 @@ public abstract class Character {
     private int price;
     private boolean used;
     public abstract void returnNoEntryTiles();
-    public abstract void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext);
+    public abstract void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext);
     public abstract void activateCharacter(Game game, Player player, PawnColor color, Context context);
     public abstract void activateCharacter(Player player, PawnColor[] color);
     public abstract void activateCharacter(Island island) throws NoEntryTilesSetException;

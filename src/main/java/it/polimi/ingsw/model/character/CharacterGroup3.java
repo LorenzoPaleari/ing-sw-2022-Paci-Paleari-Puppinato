@@ -1,13 +1,8 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandContext;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
-import it.polimi.ingsw.controller.professorController.ProfessorController;
-import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -41,7 +36,7 @@ public class CharacterGroup3 extends Character{
     }
 
     @Override
-    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         islandContext.changeContext(island);
 
     }
@@ -59,10 +54,10 @@ public class CharacterGroup3 extends Character{
         //prima entrance, poi dining
         //exchange. you may exchange up to 2 students between your Entrance and your dining room
         for(int i = 0; i < 2; i++){
-            if(!color[i].equals(null)){
+            if(color[i] != null){
                 list1.add(player.getBoard().getEntrance().removeStudent(color[i]));
             }
-            if(!color[i+2].equals(null)){
+            if(color[i + 2] != null){
                 list2.addAll(player.getBoard().getDiningRoom().removeStudent(color[i+2], 1));
             }
         }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandContext;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -63,7 +60,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
-    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
 
     }
 
@@ -85,11 +82,11 @@ public class CharacterGroupStudent extends Character{
         List<Student> list1 = new LinkedList<>();
         List<Student> list2 = new LinkedList<>();
         for(int i = 0; i < 3; i++){
-            if(!color[i].equals(null)){
+            if(color[i] != null){
                 list1.add(player.getBoard().getEntrance().removeStudent(color[i]));
             }
-            if(!color[i+2].equals(null)){
-                list2.add(removeStudent(color[i]));
+            if(color[i + 3] != null){
+                list2.add(removeStudent(color[i+3]));
             }
         }
         player.getBoard().getEntrance().addStudent(list2);

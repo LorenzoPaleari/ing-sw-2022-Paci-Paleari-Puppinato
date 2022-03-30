@@ -2,9 +2,6 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.islandController.IslandContext;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -32,7 +29,7 @@ public class CharacterGroup2 extends Character {
 
     }
     @Override
-    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         professorContext.changeContext(professor);
     }
     @Override

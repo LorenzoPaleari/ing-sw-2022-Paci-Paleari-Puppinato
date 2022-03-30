@@ -1,14 +1,10 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.islandController.IslandContext;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -35,7 +31,7 @@ public class CharacterGroup1 extends Character{
     }
 
     @Override
-    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         motherNatureContext.changeContext(motherNature);
     }
 

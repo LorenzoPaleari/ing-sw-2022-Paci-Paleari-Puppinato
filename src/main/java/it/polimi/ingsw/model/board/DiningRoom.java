@@ -22,7 +22,7 @@ public class DiningRoom {
         Student temp;
         for(int i = 0; i < numStudent; i++){
             temp = find(color);
-            if(!temp.equals(null))
+            if(temp != null)
                 list.add(temp);
         }
         student.removeAll(list);

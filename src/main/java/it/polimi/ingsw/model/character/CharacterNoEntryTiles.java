@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandContext;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -30,7 +27,7 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
 
     }
     @Override
@@ -51,7 +48,7 @@ public class CharacterNoEntryTiles extends Character{
 
     @Override
     public void activateCharacter(Island island)throws NoEntryTilesSetException {
-        if (numNoEntryTiles < 1) throw new NoEntryTilesSetException("You don't have any other noEntry tile left");
+        if ((numNoEntryTiles < 1 || island.isNoEntryTiles())) throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the choosen island has already one No Entry Tile on");
 
             island.setNoEntryTiles(true);
             numNoEntryTiles -= 1;

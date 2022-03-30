@@ -1,10 +1,13 @@
 package it.polimi.ingsw.exceptions;
 
-public class NoEntryTilesSetException extends Exception {
+public class NoEntryTilesSetException  extends Exception{
     private String message;
+    public NoEntryTilesSetException (String s) {
+        message = s;
+    }
 
-    public NoEntryTilesSetException (String message){
-        this.message=message;
-        System.out.println(message);
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
