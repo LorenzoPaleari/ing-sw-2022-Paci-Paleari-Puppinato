@@ -67,7 +67,7 @@ public class Table {
 
             for (int i = 0; i < 3; i++){
                 try {
-                    character.add(new factory.getCharacter(type.get(i), bag));
+                    character.add(factory.getCharacter(type.get(i), bag));
                 } catch (BagIsEmptyException e) {
                 }
             }
