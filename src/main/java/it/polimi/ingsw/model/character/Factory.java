@@ -5,20 +5,20 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Bag;
 
 public class Factory {
-    private Character character;
-    public  Character Factory(CharacterType type, Bag bag) throws BagIsEmptyException {
+    public  Character getCharacter (CharacterType type, Bag bag) throws BagIsEmptyException {
+        Character character;
         if(type.equals(CharacterType.ADD_MOVES) || type.equals(CharacterType.NO_COLOR))
-            character=new CharacterGroup1(type);
+            character =new CharacterGroup1(type);
         else if(type.equals(CharacterType.CONTROL_PROFESSOR) || type.equals(CharacterType.FAKE_MOTHER_NATURE))
-            character=new CharacterGroup2(type);
+            character =new CharacterGroup2(type);
         else if(type.equals(CharacterType.MORE_INFLUENCE) || type.equals(CharacterType.STUDENT_EXCHANGE))
-            character=new CharacterGroup3(type);
+            character =new CharacterGroup3(type);
         else if(type.equals(CharacterType.NO_TOWER) || type.equals(CharacterType.RETURN_STUDENT))
-            character=new CharacterGroup4(type);
+            character =new CharacterGroup4(type);
         else if(type.equals(CharacterType.NO_ENTRY_TILES))
-            character=new CharacterNoEntryTiles(type);
+            character =new CharacterNoEntryTiles(type);
         else
-            character=new CharacterGroupStudent(type, bag);
+            character =new CharacterGroupStudent(type, bag);
         return character;
     }
 }
