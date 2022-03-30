@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -60,13 +63,13 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
-    public void activateCharacter(Context context) {
+    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
 
     }
 
     @Override
-    public void activateCharacter(Context context,PawnColor color) {
-
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
+        player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
     }
 
 
@@ -76,16 +79,6 @@ public class CharacterGroupStudent extends Character{
 
     }
 
-    @Override
-    public void activateCharacter(PawnColor color, Game game) {
-
-
-    }
-    @Override
-    public void activateCharacter(Player player, PawnColor color) {
-        player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
-
-    }
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) { // replace

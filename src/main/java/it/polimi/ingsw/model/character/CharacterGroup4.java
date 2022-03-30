@@ -2,8 +2,11 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.islandController.IslandContext;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -12,13 +15,12 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
-//NO_COLOR
-//FAKE_MOTHER_NATURE
+
+
 public class CharacterGroup4 extends Character{
     private CharacterType type;
     private int price;
     private boolean used;
-    private IslandController islandController= new IslandControllerNoColor();
     public CharacterGroup4 (CharacterType type){
         this.type=type;
         price = type.getPrice();
@@ -30,13 +32,11 @@ public class CharacterGroup4 extends Character{
     }
 
     @Override
-    public void activateCharacter(Context context) {
+    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
 
     }
     @Override
-    public void activateCharacter(Context islandContext, PawnColor color) {
-        islandController.setNoColor(color);
-        islandContext.changeContext(islandController);
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
     }
 
     @Override
@@ -44,17 +44,9 @@ public class CharacterGroup4 extends Character{
 
     }
 
-    @Override
-    public void activateCharacter(PawnColor color, Game game) {
-
-    }
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
-
-    }
-    @Override
-    public void activateCharacter(Player player, PawnColor color) {
 
     }
     @Override

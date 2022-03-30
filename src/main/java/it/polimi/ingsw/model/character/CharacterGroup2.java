@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -10,6 +14,7 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 //CONTROL_PROFESSOR
+//FAKE_MOTHER_NATURE
 public class CharacterGroup2 extends Character {
 
     private  CharacterType type;
@@ -27,21 +32,16 @@ public class CharacterGroup2 extends Character {
 
     }
     @Override
-    public void activateCharacter(Context professorContext) {
+    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
         professorContext.changeContext(professor);
     }
     @Override
-    public void activateCharacter(Context context,PawnColor color) {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
 
     }
 
     @Override
     public void activateCharacter(Island island, PawnColor color) {
-
-    }
-
-    @Override
-    public void activateCharacter(PawnColor color, Game game) {
 
     }
 
@@ -52,11 +52,7 @@ public class CharacterGroup2 extends Character {
 
     @Override
     public void activateCharacter(Island island) {
-
-    }
-    @Override
-    public void activateCharacter(Player player, PawnColor color) {
-
+        Controller.updateIsland(island);
     }
 
 }

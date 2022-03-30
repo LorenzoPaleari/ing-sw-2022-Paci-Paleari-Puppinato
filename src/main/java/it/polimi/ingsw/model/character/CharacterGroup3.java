@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.islandController.IslandContext;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.Game;
@@ -34,12 +36,12 @@ public class CharacterGroup3 extends Character{
 
     }
     @Override
-    public void activateCharacter(Context context,PawnColor color) {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
 
     }
 
     @Override
-    public void activateCharacter(Context islandContext) {
+    public void activateCharacter(ProfessorContext professorContext, MotherNatureContext motherNatureContext, IslandContext islandContext) {
         islandContext.changeContext(island);
 
     }
@@ -49,10 +51,6 @@ public class CharacterGroup3 extends Character{
 
     }
 
-    @Override
-    public void activateCharacter(PawnColor color, Game game) {
-
-    }
 
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
@@ -73,10 +71,6 @@ public class CharacterGroup3 extends Character{
 
     }
 
-    @Override
-    public void activateCharacter(Player player, PawnColor color) {
-
-    }
     @Override
     public void activateCharacter(Island island) {
 
