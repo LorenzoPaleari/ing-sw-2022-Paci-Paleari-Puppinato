@@ -65,15 +65,16 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
-    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
+        student.addAll(bag.withdrawStudent(1));
     }
 
 
     @Override
-    public void activateCharacter(Island island, PawnColor color) {
+    public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException {
         island.addStudent(removeStudent(color)); //add_student_islands
-
+        student.addAll(bag.withdrawStudent(1));
     }
 
 
