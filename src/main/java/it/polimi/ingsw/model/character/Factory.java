@@ -12,6 +12,6 @@ public class Factory {
         else if(type.equals(CharacterType.MORE_INFLUENCE) || type.equals(CharacterType.STUDENT_EXCHANGE)) new CharacterGroup3(type);
         else if(type.equals(CharacterType.NO_TOWER) || type.equals(CharacterType.RETURN_STUDENT)) new CharacterGroup4(type);
         else if(type.equals(CharacterType.NO_ENTRY_TILES)) new CharacterNoEntryTiles(type);
-        else if (type.equals(CharacterType.ADD_STUDENT_ISLAND) || type.equals(CharacterType.REPLACE_STUDENT)) new CharacterGroupStudent(type, bag);
+        else if (type.equals(CharacterType.ADD_STUDENT_ISLAND) || type.equals(CharacterType.REPLACE_STUDENT) || type.equals(CharacterType.ADD_STUDENT_DINING)) new CharacterGroupStudent(type, bag);
     }
 }
