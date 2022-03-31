@@ -14,12 +14,18 @@ public abstract class Character {
     private  CharacterType type;
     private int price;
     private boolean used;
-    public abstract void returnNoEntryTiles();
-    public abstract void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext);
-    public abstract void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException;
-    public abstract void activateCharacter(Player player, PawnColor[] color);
-    public abstract void activateCharacter(Island island) throws NoEntryTilesSetException;
-    public abstract void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException;
+    public void returnNoEntryTiles(){};
+    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext){}
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {}
+    public void activateCharacter(Player player, PawnColor[] color){}
+    public void activateCharacter(Island island) throws NoEntryTilesSetException{}
+    public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}
+
+    public Character (CharacterType type){
+        this.type=type;
+        price=type.getPrice();
+        used=false;
+    }
 
     public void firstUse(){
         price += 1;

@@ -9,43 +9,17 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.table.Island;
 
 //ADD_MOVES
 //NO_COLOR
 public class CharacterGroup1 extends Character{
-    private CharacterType type;
-    private int price;
-    private boolean used;
+
     private IslandController islandController= new IslandControllerNoColor();
     private MotherNatureController motherNature = new MotherNatureControllerModified();
 
     public CharacterGroup1 (CharacterType type){
-        this.type = type;
-        price = type.getPrice();
-        used = false;
+        super(type);
     }
-
-    public void firstUse(){
-        price += 1;
-        used = true;
-    }
-    public boolean isUsed() {
-        return used;
-    }
-    public int getPrice() {
-        return price;
-    }
-
-    public CharacterType getType() {
-        return type;
-    }
-
-    @Override
-    public void returnNoEntryTiles() {
-
-    }
-
     @Override
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         motherNatureContext.changeContext(motherNature);
@@ -56,19 +30,4 @@ public class CharacterGroup1 extends Character{
         islandController.setNoColor(color);
         context.changeContext(islandController);
     }
-    @Override
-    public void activateCharacter(Island island, PawnColor color) {
-
-    }
-
-
-    @Override
-    public void activateCharacter(Player player, PawnColor[] color) {
-
-    }
-
-    @Override
-    public void activateCharacter(Island island) {
-    }
-
 }

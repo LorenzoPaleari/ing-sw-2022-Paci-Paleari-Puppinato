@@ -16,16 +16,11 @@ import java.util.*;
 //ADD_STUDENT_DINING
 //REPLACE
 public class CharacterGroupStudent extends Character{
-    private CharacterType type;
-    private int price;
-    private boolean used;
     private Bag bag;
     private List<Student> student;
 
     public CharacterGroupStudent (CharacterType type, Bag bag) throws BagIsEmptyException {
-        this.type=type;
-        price = type.getPrice();
-        used = false;
+        super(type);
         this.bag=bag;
         student=new LinkedList<>();
         student.addAll(bag.withdrawStudent(type.hasStudent()));
@@ -53,27 +48,7 @@ public class CharacterGroupStudent extends Character{
     public void addStudent(Student s) {
         student.add(s);
     }
-    @Override
-    public void returnNoEntryTiles() {
 
-    }
-    public void firstUse(){
-        price += 1;
-        used = true;
-    }
-    public boolean isUsed() {
-        return used;
-    }
-    public int getPrice() {
-        return price;
-    }
-    public CharacterType getType() {
-        return type;
-    }
-    @Override
-    public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
-
-    }
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
@@ -98,10 +73,6 @@ public class CharacterGroupStudent extends Character{
         }
         player.getBoard().getEntrance().addStudent(list2);
         student.addAll(list1);
-
-    }
-    @Override
-    public void activateCharacter(Island island) {
 
     }
 }
