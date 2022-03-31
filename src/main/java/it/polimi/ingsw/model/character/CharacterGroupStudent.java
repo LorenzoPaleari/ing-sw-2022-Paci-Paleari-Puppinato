@@ -53,31 +53,37 @@ public class CharacterGroupStudent extends Character{
     public void addStudent(Student s) {
         student.add(s);
     }
-
     @Override
     public void returnNoEntryTiles() {
 
     }
-
+    public void firstUse(){
+        price += 1;
+        used = true;
+    }
+    public boolean isUsed() {
+        return used;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public CharacterType getType() {
+        return type;
+    }
     @Override
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
 
     }
-
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
         student.addAll(bag.withdrawStudent(1));
     }
-
-
     @Override
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException {
         island.addStudent(removeStudent(color)); //add_student_islands
         student.addAll(bag.withdrawStudent(1));
     }
-
-
     @Override
     public void activateCharacter(Player player, PawnColor[] color) { // replace
         List<Student> list1 = new LinkedList<>();
@@ -94,9 +100,6 @@ public class CharacterGroupStudent extends Character{
         student.addAll(list1);
 
     }
-
-
-
     @Override
     public void activateCharacter(Island island) {
 

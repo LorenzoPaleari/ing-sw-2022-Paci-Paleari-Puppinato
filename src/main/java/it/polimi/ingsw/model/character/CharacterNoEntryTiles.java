@@ -21,11 +21,23 @@ public class CharacterNoEntryTiles extends Character{
         numNoEntryTiles=4;
     }
 
+    public void firstUse(){
+        price += 1;
+        used = true;
+    }
+    public boolean isUsed() {
+        return used;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public CharacterType getType() {
+        return type;
+    }
     @Override
     public void returnNoEntryTiles() {
         numNoEntryTiles += 1;
     }
-
     @Override
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
 
@@ -34,24 +46,21 @@ public class CharacterNoEntryTiles extends Character{
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
 
     }
-
     @Override
     public void activateCharacter(Island island, PawnColor color) {
 
     }
-
     @Override
     public void activateCharacter(Player player, PawnColor[] color) {
 
     }
-
-
     @Override
     public void activateCharacter(Island island)throws NoEntryTilesSetException {
-        if ((numNoEntryTiles < 1 || island.isNoEntryTiles())) throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the choosen island has already one No Entry Tile on");
-
+        if ((numNoEntryTiles < 1 || island.isNoEntryTiles()))
+            {throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the choosen island has already one No Entry Tile on");}
+        else {
             island.setNoEntryTiles(true);
             numNoEntryTiles -= 1;
-
+        }
     }
 }

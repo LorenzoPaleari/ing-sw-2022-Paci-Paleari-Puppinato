@@ -21,7 +21,6 @@ public abstract class Character {
     public abstract void activateCharacter(Island island) throws NoEntryTilesSetException;
     public abstract void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException;
 
-
     public void firstUse(){
         price += 1;
         used = true;

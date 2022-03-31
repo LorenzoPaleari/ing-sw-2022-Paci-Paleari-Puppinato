@@ -24,6 +24,20 @@ public class CharacterGroup2 extends Character {
         used = false;
     }
 
+    public void firstUse(){
+        price += 1;
+        used = true;
+    }
+    public boolean isUsed() {
+        return used;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public CharacterType getType() {
+        return type;
+    }
+
     @Override
     public void returnNoEntryTiles() {
 
