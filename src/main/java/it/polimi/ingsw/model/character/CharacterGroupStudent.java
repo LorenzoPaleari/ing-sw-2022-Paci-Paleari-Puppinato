@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -52,11 +54,13 @@ public class CharacterGroupStudent extends Character{
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
+        Controller.checkProfessor(player, color);
         student.addAll(bag.withdrawStudent(1));
     }
     @Override
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException {
         island.addStudent(removeStudent(color)); //add_student_islands
+
         student.addAll(bag.withdrawStudent(1));
     }
     @Override

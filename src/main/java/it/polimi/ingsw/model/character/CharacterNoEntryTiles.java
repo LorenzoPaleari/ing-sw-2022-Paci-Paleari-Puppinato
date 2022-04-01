@@ -19,7 +19,7 @@ public class CharacterNoEntryTiles extends Character{
     @Override
     public void activateCharacter(Island island)throws NoEntryTilesSetException {
         if ((numNoEntryTiles < 1 || island.isNoEntryTiles()))
-            {throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the choosen island has already one No Entry Tile on");}
+            {throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the chosen island has already one No Entry Tile on");}
         else {
             island.setNoEntryTiles(true);
             numNoEntryTiles -= 1;
