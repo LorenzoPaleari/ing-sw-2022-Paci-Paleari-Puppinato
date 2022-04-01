@@ -32,7 +32,7 @@ public class Table {
 
         try {
             fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
-        } catch (BagIsEmptyException e) {
+        } catch (BagIsEmptyException ignored) {
         }
 
         island=new LinkedList<>();
@@ -68,7 +68,7 @@ public class Table {
             for (int i = 0; i < 3; i++){
                 try {
                     character.add(factory.getCharacter(type.get(i), bag));
-                } catch (BagIsEmptyException e) {
+                } catch (BagIsEmptyException ignored) {
                 }
             }
         }

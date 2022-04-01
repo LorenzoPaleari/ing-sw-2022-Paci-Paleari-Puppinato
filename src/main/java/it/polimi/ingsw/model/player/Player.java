@@ -64,7 +64,7 @@ public class Player {
     }
 
     public void addCoin() {
-        numCoin -= 1;
+        numCoin += 1;
     }
 
     public void changeState(PlayerState state)

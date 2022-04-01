@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
@@ -18,7 +17,7 @@ public class Game {
     private List<Player> player;
 
     private Game(){  //We make the constructor private, so no one else can create new instances...
-        player = new LinkedList<Player>();
+        player = new LinkedList<>();
     }
 
     public static Game getInstance(){  //...but allow clients to get an instance via a static method
@@ -78,8 +77,10 @@ public class Game {
     public boolean isNicknameUsed(String nick){
         boolean value = false;
         for (Player p : player){
-            if (nick.equals(p.getNickname()))
+            if (nick.equals(p.getNickname())){
                 value = true;
+                break;
+            }
         }
         return value;
     }

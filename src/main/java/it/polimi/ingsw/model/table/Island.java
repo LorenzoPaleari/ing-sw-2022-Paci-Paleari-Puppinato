@@ -16,10 +16,10 @@ public class Island {
    public Island()
     {
         weight=1;
-        islandStudent = new LinkedList<Student>();
+        islandStudent = new LinkedList<>();
         motherNature = false;
         noEntryTiles = false;
-        islandTower = new LinkedList<Tower>();
+        islandTower = new LinkedList<>();
     }
 
     public void setWeight(int weight) {
@@ -68,8 +68,7 @@ public class Island {
     }
 
     public List<Tower> removeTower(){
-       List<Tower> tower = new LinkedList<>();
-       tower.addAll(islandTower);
+       List<Tower> tower = new LinkedList<>(islandTower);
        islandTower.removeAll(tower);
        return tower;
     }

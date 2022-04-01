@@ -24,18 +24,17 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 
-import java.sql.Array;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Controller {
-    private TurnController turnController;
-    private Context professorContext;
-    private ProfessorController professorControllerStandard;
-    private Context motherNatureContext;
-    private MotherNatureController motherNatureController;
+    private final TurnController turnController;
+    private static Context professorContext;
+    private final ProfessorController professorControllerStandard;
+    private final Context motherNatureContext;
+    private final MotherNatureController motherNatureController;
     private static Context islandContext;
-    private IslandController islandController;
+    private final IslandController islandController;
     private static Game game;
 
     public Controller(){
@@ -107,8 +106,10 @@ public class Controller {
         if (size == 2 && game.getRound().getNumTurnDone() == 2) {
             value = false;
             for (Assistant a : player.getDeck().getAssistant())
-                if (!weights.contains(a.getWeight()))
+                if (!weights.contains(a.getWeight())) {
                     value = true;
+                    break;
+                }
         }
 
         if (value)
@@ -146,7 +147,7 @@ public class Controller {
         Student student = board.getEntrance().removeStudent(color);
         board.getDiningRoom().addStudent(student);
 
-        professorContext.professorControl(game, player, color);
+        checkProfessor(player, color);
 
         if (game.isExpertMode() && board.getDiningRoom().count(color) % 3 == 0) {
             try {
@@ -154,13 +155,16 @@ public class Controller {
                 player.addCoin();
             } catch (GeneralSupplyFinishedException e){
                 System.out.println(e.getMessage());
-                return;
             }
         }
     }
 
+    public static void checkProfessor(Player player, PawnColor color){
+        professorContext.professorControl(game, player, color);
+    }
+
     public void moveMotherNature(Player player, int endPosition) {
-        int numMoves = 0;
+        int numMoves;
 
         try {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);

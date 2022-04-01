@@ -6,5 +6,5 @@ import it.polimi.ingsw.model.player.Player;
 
 public interface ProfessorController {
 
-    public void checkProfessor(Game game, Player player, PawnColor color);
+    void checkProfessor(Game game, Player player, PawnColor color);
 }

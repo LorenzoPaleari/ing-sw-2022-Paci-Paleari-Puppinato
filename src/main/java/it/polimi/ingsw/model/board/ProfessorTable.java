@@ -9,7 +9,7 @@ public class ProfessorTable {
     private LinkedList<Professor> professors;
 
     public  ProfessorTable(){
-        professors = new LinkedList<Professor>();
+        professors = new LinkedList<>();
     }
 
     public LinkedList<Professor> getProfessors() {
