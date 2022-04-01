@@ -42,9 +42,9 @@ public class Bag {
 
 
     public List<Student> withdrawStudent(int numStudents) throws BagIsEmptyException {
-        List<Student> drawOut = new LinkedList<>();
+        List<Student> drawOut;
         try {
-            drawOut.addAll(student.subList(0, numStudents));
+            drawOut = new LinkedList<>(student.subList(0, numStudents));
         }
         catch (IndexOutOfBoundsException e){
             student.clear();

@@ -6,10 +6,10 @@ import it.polimi.ingsw.model.pawns.Student;
 import java.util.LinkedList;
 
 public class Board {
-    private Entrance entrance;
-    private DiningRoom diningRoom;
-    private ProfessorTable professorTable;
-    private TowerCourt towercourt;
+    private final Entrance entrance;
+    private final DiningRoom diningRoom;
+    private final ProfessorTable professorTable;
+    private final TowerCourt towercourt;
 
     public Board(LinkedList<Student> student, int numPlayer, TowerColor towerColor){
         entrance = new Entrance(student);

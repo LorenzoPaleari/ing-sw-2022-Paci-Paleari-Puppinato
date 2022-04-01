@@ -12,7 +12,7 @@ public class TowerCourt {
     private LinkedList<Tower> tower;
 
     public TowerCourt(int numTower, TowerColor towerColor) {
-        tower = new LinkedList<Tower>();
+        tower = new LinkedList<>();
         for (int i = 0; i < numTower; i++)
             tower.add(new Tower(towerColor));
     }

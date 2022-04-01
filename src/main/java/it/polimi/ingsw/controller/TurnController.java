@@ -67,8 +67,8 @@ public class TurnController {
             throw new WrongPhaseException(player.getState());
     }
 
-    public void checkCloud(Round round, int position) throws AlreadyChosedCloudException {
+    public void checkCloud(Round round, int position) throws AlreadyChosenCloudException {
         if (round.getCloudChosen().contains(position))
-            throw new AlreadyChosedCloudException();
+            throw new AlreadyChosenCloudException();
     }
 }

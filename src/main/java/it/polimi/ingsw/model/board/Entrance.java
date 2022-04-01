@@ -19,15 +19,11 @@ public class Entrance {
 
     public Student removeStudent(PawnColor c){
         Student temp;
-        for(Student s : student){
-            if(s.getColor() == c){
-                temp = s;
-                student.remove(s);
-                return temp;
-            }
-        }
-        return null;
+        temp = find(c);
+        student.remove(temp);
+        return temp;
     }
+
     public void addStudent(List<Student> s){
 
         student.addAll(s);

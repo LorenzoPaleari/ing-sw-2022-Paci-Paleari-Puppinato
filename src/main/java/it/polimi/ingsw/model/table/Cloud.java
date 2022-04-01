@@ -22,8 +22,7 @@ public class Cloud {
 
     public List<Student> removeAllStudent()
     {
-        List<Student> removed = new LinkedList<>();
-        removed.addAll(cloudStudent);
+        List<Student> removed = new LinkedList<>(cloudStudent);
         cloudStudent.clear();
         return removed;
     }

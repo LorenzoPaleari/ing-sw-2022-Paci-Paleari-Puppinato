@@ -19,7 +19,6 @@ public class MotherNatureContext extends Context {
 
     @Override
     public int motherNatureControl(Table table, int endPosition, Player player) throws TooMuchMovesException {
-        int numMoves = strategy.checkMotherNature(table, endPosition, player);
-        return numMoves;
+        return strategy.checkMotherNature(table, endPosition, player);
     }
 }

@@ -10,7 +10,7 @@ public class DiningRoom {
     private LinkedList<Student> student;
 
     public DiningRoom() {
-        student = new LinkedList<Student>();
+        student = new LinkedList<>();
     }
 
     public LinkedList<Student> getStudent() {
@@ -42,27 +42,11 @@ public class DiningRoom {
     }
 
     public Student find(PawnColor color){
-        Student stud;
         for(Student s : student){
             if(s.getColor() == color){
                 return s;
             }
         }
-        return null;
-    }
-
-    public LinkedList<Integer> countAll(){
-        int cont;
-        LinkedList<Integer> studCount = new LinkedList<Integer>();
-        for(PawnColor color : PawnColor.values()){
-            cont = 0;
-            for(Student s: student){
-                if(s.getColor() == color) cont++;
-            }
-            studCount.addLast(cont);
-        }
-
-
         return null;
     }
 
