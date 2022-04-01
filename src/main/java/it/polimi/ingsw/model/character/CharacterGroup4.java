@@ -27,13 +27,11 @@ public class CharacterGroup4 extends Character{
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
         Professor prof = game.getTable().findProfessor(color);
         for (Player p: game.getPlayers()){
-            if(p.getBoard().getDiningRoom().count(color)<3){
-                game.getTable().getBag().addStudent(p.getBoard().getDiningRoom().removeStudent(color, p.getBoard().getDiningRoom().count(color)));
-            }
-            else {
                 game.getTable().getBag().addStudent(p.getBoard().getDiningRoom().removeStudent(color, 3));
-            }
         }
-        prof.setNumStudent(player.getBoard().getDiningRoom().count(color));
+        if (prof.getNumStudent()<3)
+            prof.setNumStudent(0);
+        else
+            prof.setNumStudent(prof.getNumStudent() - 3);
     }
 }
