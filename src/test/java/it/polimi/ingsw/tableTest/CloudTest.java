@@ -17,34 +17,34 @@ class CloudTest {
     private List<Student> student;
 
     @BeforeEach
-    public void setup(){
+    public void setUp(){
         cloud = new Cloud();
         student = new LinkedList<>();
 
     }
     @Test
     void getCloudStudent() {
-        setup();
+        setUp();
         assertEquals(student, cloud.getCloudStudent());
     }
 
     @Test
     void addStudent() {
-        setup();
+        setUp();
         List<Student> test= new LinkedList<>();
         test.add(new Student(1));
         test.add(new Student(1));
         test.add(new Student(0));
 
         cloud.addStudent(test);
-        assertEquals(test.get(0).getColor(), PawnColor.RED);
-        assertEquals(test.get(1).getColor(), PawnColor.RED);
-        assertEquals(test.get(2).getColor(), PawnColor.GREEN);
+        assertEquals(cloud.getCloudStudent().get(0).getColor(), PawnColor.RED);
+        assertEquals(cloud.getCloudStudent().get(1).getColor(), PawnColor.RED);
+        assertEquals(cloud.getCloudStudent().get(2).getColor(), PawnColor.GREEN);
     }
 
     @Test
     void removeAllStudent() {
-        setup();
+        setUp();
         List<Student> test= new LinkedList<>();
         test.add(new Student(1));
         test.add(new Student(1));
