@@ -25,7 +25,6 @@ public class TowerCourtTest {
     }
     @Test
     void isEmpty(){
-        setUp();
         LinkedList<Tower> tower = new LinkedList<>();
         tower.add(new Tower(TowerColor.BLACK));
         assertEquals(true, towerCourt.isEmpty());
@@ -36,7 +35,6 @@ public class TowerCourtTest {
 
     @Test
     void removeTower(int numT){
-        setUp();
         tower.add(new Tower(TowerColor.BLACK));
         tower.add(new Tower(TowerColor.BLACK));
         assertEquals(tower, towerCourt.removeTower(2));
@@ -45,7 +43,6 @@ public class TowerCourtTest {
 
     @Test
     void addTower(List<Tower> tower){
-        setUp();
         assertEquals(tower, towerCourt.getTower());
     }
 

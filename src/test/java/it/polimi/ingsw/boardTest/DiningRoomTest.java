@@ -23,7 +23,6 @@ public class DiningRoomTest{
 
     @Test
     void removeStudent() {
-        setUp();
         LinkedList<Student> list = new LinkedList<>();
         list.add(new Student(4));
         list.add(new Student(4));
@@ -31,18 +30,15 @@ public class DiningRoomTest{
     }
     @Test
     void addStudent(Student s) {
-        setUp();
         assertEquals(true, diningRoom.getStudent().contains(s));
     }
     @Test
     void addStudent(List<Student> s) {
-        setUp();
         assertEquals(s, diningRoom.getStudent());
     }
 
     @Test
     void isEmpty() {
-        setUp();
         assertEquals(true, diningRoom.isEmpty());
         diningRoom.addStudent(new Student(0));
         assertEquals(false, diningRoom.isEmpty());
@@ -51,7 +47,6 @@ public class DiningRoomTest{
 
     @Test
     void find(PawnColor color) {
-        setUp();
         assertEquals(null, diningRoom.find(PawnColor.BLUE));
         diningRoom.addStudent(new Student(4));
         Student s = new Student(4);
@@ -60,7 +55,6 @@ public class DiningRoomTest{
 
     @Test
     void count(PawnColor c){
-        setUp();
         assertEquals(0, diningRoom.count(PawnColor.BLUE));
         diningRoom.addStudent(new Student(4));
         diningRoom.addStudent(new Student(4));

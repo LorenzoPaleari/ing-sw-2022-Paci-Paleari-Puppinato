@@ -22,7 +22,6 @@ public class ProfessorTableTest{
 
     @Test
     void find(PawnColor color) {
-        setUp();
         Professor prof = new Professor(4);
         assertEquals(prof, professorTable.find(PawnColor.BLUE));
     }
