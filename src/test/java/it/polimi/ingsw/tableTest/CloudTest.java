@@ -22,11 +22,7 @@ class CloudTest {
         student = new LinkedList<>();
 
     }
-    @Test
-    void getCloudStudent() {
-        setUp();
-        assertEquals(student, cloud.getCloudStudent());
-    }
+
 
     @Test
     void addStudent() {

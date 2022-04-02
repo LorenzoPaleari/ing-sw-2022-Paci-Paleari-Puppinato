@@ -108,6 +108,10 @@ public class Table {
         return character.get(position);
     }
 
+    public int getGeneralSupply() {
+        return generalSupply;
+    }
+
     public Cloud getCloud(int position){
         return cloud.get(position);
     }

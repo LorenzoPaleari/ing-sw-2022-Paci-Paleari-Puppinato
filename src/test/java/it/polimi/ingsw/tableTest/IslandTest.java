@@ -43,13 +43,6 @@ class IslandTest {
         assertEquals(island.isNoEntryTiles(), noEntryTiles);
     }
 
-    @Test
-    void getIslandStudent() {
-    }
-
-    @Test
-    void isMotherNature() {
-    }
 
     @Test
     void setMotherNature() {
@@ -59,17 +52,7 @@ class IslandTest {
     }
 
     @Test
-    void isNoEntryTiles() {
-    }
-
-    @Test
-    void getIslandTower() {
-    }
-
-    @Test
     void countStudent() {
-        setUp();
-        int count=0;
         island.addStudent(new Student(0));
         assertTrue(island.countStudent(PawnColor.YELLOW)==0, "0 yellow students");
         assertFalse(island.countStudent(PawnColor.RED)==1, "0 red students");
@@ -83,24 +66,22 @@ class IslandTest {
 
     @Test
     void addStudent() {
-        setUp();
         island.addStudent(new Student(1));
         assertEquals(island.getIslandStudent().get(0).getColor(), PawnColor.RED);
     }
 
     @Test
-    void removeTower() {
-        setUp();
+    void addTower() {
         List<Tower> test= new LinkedList<>();
         test.add(new Tower(TowerColor.BLACK));
         test.add(new Tower(TowerColor.BLACK));
         test.add(new Tower(TowerColor.WHITE));
         island.addTower(test);
+        assertEquals(test, island.getIslandTower());
     }
 
     @Test
-    void addTower() {
-        setUp();
+    void removeTower() {
         List<Tower> test= new LinkedList<>();
         test.add(new Tower(TowerColor.BLACK));
         test.add(new Tower(TowerColor.BLACK));
