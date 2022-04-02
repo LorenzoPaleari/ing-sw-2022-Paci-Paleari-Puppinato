@@ -1,30 +1,52 @@
 package it.polimi.ingsw.boardTest;
 
 
+import it.polimi.ingsw.model.board.DiningRoom;
+import it.polimi.ingsw.model.board.TowerCourt;
+import it.polimi.ingsw.model.enumerations.TowerColor;
+import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TowerCourtTest {
-    @Test
-    boolean isEmpty(){
-        return false;
+    private TowerCourt towerCourt;
+    private LinkedList<Tower> tower;
+    @BeforeEach
+    public void setUp(){
+        towerCourt = new TowerCourt(6, TowerColor.BLACK);
+        tower = new LinkedList<>();
+
     }
     @Test
-    LinkedList<Tower> getTower(){
-        return null;
+    void isEmpty(){
+        setUp();
+        LinkedList<Tower> tower = new LinkedList<>();
+        tower.add(new Tower(TowerColor.BLACK));
+        assertEquals(true, towerCourt.isEmpty());
+        towerCourt.addTower(tower);
+        assertEquals(false, towerCourt.isEmpty());
+
     }
 
     @Test
-    LinkedList<Tower> removeTower(int numT){
-        return null;
+    void removeTower(int numT){
+        setUp();
+        tower.add(new Tower(TowerColor.BLACK));
+        tower.add(new Tower(TowerColor.BLACK));
+        assertEquals(tower, towerCourt.removeTower(2));
+
     }
 
     @Test
     void addTower(List<Tower> tower){
-        
+        setUp();
+        assertEquals(tower, towerCourt.getTower());
     }
 
 }
