@@ -78,6 +78,7 @@ class IslandTest {
         test.add(new Tower(TowerColor.WHITE));
         island.addTower(test);
         assertEquals(test, island.getIslandTower());
+        assertEquals(island.getIslandTower().get(0).getColor(), TowerColor.BLACK);
     }
 
     @Test

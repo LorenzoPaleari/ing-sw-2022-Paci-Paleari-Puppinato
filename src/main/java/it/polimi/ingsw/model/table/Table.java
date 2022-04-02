@@ -76,6 +76,7 @@ public class Table {
 
     }
 
+
     public void fillCloud(int numPlayer, List<Student> student){
         int init = 0;
         int end = numPlayer + 1;
@@ -131,6 +132,10 @@ public class Table {
             }
         }
         return null;
+    }
+
+    public List<Professor> getProfessor() {
+        return professor;
     }
 
     public void moveMotherNature(int moves){
@@ -198,6 +203,11 @@ public class Table {
         }
     }
 
+    public void setNoEntryTilesCharacter() throws BagIsEmptyException {
+        Factory factory = new Factory();
+        character.removeAll(character);
+        character.add(factory.getCharacter(CharacterType.NO_ENTRY_TILES, bag));
+    }
 }
 
 

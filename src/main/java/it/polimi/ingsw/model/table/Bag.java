@@ -59,4 +59,8 @@ public class Bag {
     {
         return student.size()==0;
     }
+
+    public List<Student> getStudent() {
+        return student;
+    }
 }

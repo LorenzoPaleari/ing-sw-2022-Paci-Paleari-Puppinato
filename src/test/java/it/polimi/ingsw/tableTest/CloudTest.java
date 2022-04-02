@@ -14,19 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CloudTest {
     private Cloud cloud;
-    private List<Student> student;
 
     @BeforeEach
     public void setUp(){
         cloud = new Cloud();
-        student = new LinkedList<>();
 
     }
 
 
     @Test
     void addStudent() {
-        setUp();
         List<Student> test= new LinkedList<>();
         test.add(new Student(1));
         test.add(new Student(1));
@@ -40,7 +37,6 @@ class CloudTest {
 
     @Test
     void removeAllStudent() {
-        setUp();
         List<Student> test= new LinkedList<>();
         test.add(new Student(1));
         test.add(new Student(1));
