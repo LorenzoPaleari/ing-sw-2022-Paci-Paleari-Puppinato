@@ -19,17 +19,11 @@ public class Bag {
         Collections.shuffle(student);
     }
 
-    public LinkedList<Student> initialSetup(int numPlayer){
+    public LinkedList<Student> initialSetup(int quantity){
         LinkedList<Student> draw = new LinkedList<>();
 
-        if (numPlayer == 2) {
-            draw.addAll(student.subList(0, 7));
-            student.subList(0, 7).clear();
-        }
-        else {
-            draw.addAll(student.subList(0, 9));
-            student.subList(0, 9).clear();
-        }
+        draw.addAll(student.subList(0, quantity));
+        student.subList(0, quantity).clear();
 
         return draw;
     }

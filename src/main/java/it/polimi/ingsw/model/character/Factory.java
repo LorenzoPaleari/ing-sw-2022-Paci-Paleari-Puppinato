@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Bag;
 
 public class Factory {
-    public  Character getCharacter (CharacterType type, Bag bag) throws BagIsEmptyException {
+    public  Character getCharacter (CharacterType type, Bag bag) {
         Character character;
         if(type.equals(CharacterType.ADD_MOVES) || type.equals(CharacterType.NO_COLOR))
             character =new CharacterGroup1(type);

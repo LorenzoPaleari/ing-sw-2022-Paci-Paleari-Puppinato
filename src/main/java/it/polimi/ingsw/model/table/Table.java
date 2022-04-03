@@ -30,10 +30,7 @@ public class Table {
         for(int i=1;i<=numPlayer;i++)
             cloud.add(new Cloud());
 
-        try {
-            fillCloud(numPlayer, bag.withdrawStudent(numPlayer*(numPlayer+1)));
-        } catch (BagIsEmptyException ignored) {
-        }
+        fillCloud(numPlayer, bag.initialSetup(numPlayer*(numPlayer+1)));
 
         island=new LinkedList<>();
         for(int i=1;i<=12;i++)
@@ -66,10 +63,7 @@ public class Table {
             Collections.shuffle(type);
 
             for (int i = 0; i < 3; i++){
-                try {
-                    character.add(factory.getCharacter(type.get(i), bag));
-                } catch (BagIsEmptyException ignored) {
-                }
+                character.add(factory.getCharacter(type.get(i), bag));
             }
         }
 

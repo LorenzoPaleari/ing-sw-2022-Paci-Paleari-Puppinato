@@ -21,11 +21,11 @@ public class CharacterGroupStudent extends Character{
     private Bag bag;
     private List<Student> student;
 
-    public CharacterGroupStudent (CharacterType type, Bag bag) throws BagIsEmptyException {
+    public CharacterGroupStudent (CharacterType type, Bag bag) {
         super(type);
         this.bag=bag;
         student=new LinkedList<>();
-        student.addAll(bag.withdrawStudent(type.hasStudent()));
+        student.addAll(bag.initialSetup(type.hasStudent()));
 
     }
 

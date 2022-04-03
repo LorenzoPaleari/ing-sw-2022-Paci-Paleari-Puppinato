@@ -49,8 +49,14 @@ public class Game {
         player.get(0).changeState(PlayerState.PLANNING);
 
         LinkedList<Student> student;
+        int quantity;
+        if (numPlayer == 2)
+            quantity = 7;
+        else
+            quantity = 9;
+
         for (Player p :player) {
-            student = table.getBag().initialSetup(numPlayer);
+            student = table.getBag().initialSetup(quantity);
             p.setUp(student, expertMode, numPlayer);
         }
     }
