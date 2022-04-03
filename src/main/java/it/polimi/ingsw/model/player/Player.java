@@ -77,8 +77,5 @@ public class Player {
        lastUsed=deck.removeAssistant(position);
     }
 
-    @Override
-    public String toString() {
-        return ""+nickname;
-    }
+
 }
