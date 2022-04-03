@@ -119,13 +119,16 @@ public class Table {
     }
 
     public Professor findProfessor(PawnColor color) {
+        Professor temp = null;
         for(Professor p: professor)
         {
             if(p.getColor()==color) {
-                return p;
+                temp = p;
+                break;
             }
         }
-        return null;
+
+        return temp;
     }
 
     public void moveMotherNature(int moves){
