@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.table.Island;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IslandTest {
     private Island island;
-    private List<Student> islandStudent;
-    private List<Tower> islandTower;
 
     @BeforeEach
     void setUp() {
        island= new Island();
-       islandStudent= new LinkedList<>();
-       islandTower= new LinkedList<>();
+    }
+    @AfterEach
+    void tearDown(){
+        island=null;
     }
 
     @Test

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,10 @@ class PlayerTest {
         void begin(){
         String nameTest = "Test";
         player= new Player(nameTest, TowerColor.WHITE);
+    }
+    @AfterEach
+        void tearDown(){
+        player=null;
     }
 
     @Test
@@ -63,5 +68,11 @@ class PlayerTest {
         assistant=player.getDeck().getAssistant(0);
         player.addAssistant(0);
         assertEquals(player.getLastUsed(), assistant);
+    }
+
+    @Test
+    void changeState(){
+        player.changeState(PlayerState.ACTION);
+        assertEquals(player.getState(), PlayerState.ACTION);
     }
 }

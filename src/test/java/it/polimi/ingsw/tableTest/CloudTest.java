@@ -3,6 +3,7 @@ package it.polimi.ingsw.tableTest;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.table.Cloud;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,10 @@ class CloudTest {
         cloud = new Cloud();
 
     }
-
+    @AfterEach
+    void tearDown(){
+        cloud=null;
+    }
 
     @Test
     void addStudent() {

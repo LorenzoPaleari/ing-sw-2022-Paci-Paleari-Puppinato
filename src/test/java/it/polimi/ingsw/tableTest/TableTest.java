@@ -2,14 +2,13 @@ package it.polimi.ingsw.tableTest;
 
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
-import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.table.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,10 @@ class TableTest {
     @BeforeEach
     void setUp() {
         table= new Table(3, true);
+    }
+    @AfterEach
+    void tearDown(){
+        table=null;
     }
 
     @Test
@@ -54,8 +57,9 @@ class TableTest {
     @Test
     void findProfessor() {
         assertEquals(table.findProfessor(PawnColor.GREEN).getColor(), PawnColor.GREEN);
-        table.getProfessor().remove(0);
-        assertNull(table.findProfessor(PawnColor.GREEN));
+        table.findProfessor(PawnColor.GREEN).setNumStudent(4);
+        assertEquals(table.findProfessor(PawnColor.GREEN).getNumStudent(), 4);
+
     }
 
     @Test
@@ -72,10 +76,9 @@ class TableTest {
         table.mergeIsland(0);
         assertEquals(table.getNumIsland(), 12, "no Island was merged");
 
-        table.setNoEntryTilesCharacter();
+        table.setCharacter(0, CharacterType.NO_ENTRY_TILES);
         assertEquals(table.getCharacter(0).getType(), CharacterType.NO_ENTRY_TILES);
         List<Tower> test1= new LinkedList<>();
-        test1.add(new Tower(TowerColor.BLACK));
         test1.add(new Tower(TowerColor.BLACK));
         table.getIsland(0).addTower(test1);
         table.getIsland(0).addStudent(new Student(0));
@@ -104,15 +107,16 @@ class TableTest {
         table.getIsland(10).setNoEntryTiles(true);
         table.mergeIsland(11);
         assertEquals(table.getNumIsland(), 10);
-        assertEquals(table.getIsland(9).getIslandTower().size(), 4);
+        assertEquals(table.getIsland(9).getIslandTower().size(), 3);
         assertEquals(table.getIsland(9).getIslandStudent().size(), 5);
         assertTrue(table.getIsland(9).isNoEntryTiles());
 
-     /*   table.mergeIsland(0); // ERROR
+        table.getIsland(0).addTower(test3);
+        table.mergeIsland(0);
         assertEquals(table.getNumIsland(), 9);
-        assertEquals(table.getIsland(0).getIslandTower().size(), 7);
+        assertEquals(table.getIsland(0).getIslandTower().size(), 4);
         assertEquals(table.getIsland(0).getIslandStudent().size(), 6);
-        assertTrue(table.getIsland(0).isNoEntryTiles());*/
+        assertTrue(table.getIsland(0).isNoEntryTiles());
 
 
     }

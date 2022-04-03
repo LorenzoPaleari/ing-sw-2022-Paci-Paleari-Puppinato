@@ -1,11 +1,11 @@
 package it.polimi.ingsw.gameTest;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +19,10 @@ class GameTest {
     @BeforeEach
     void setUp() {
       instance =Game.getInstance();
+    }
+    @AfterEach
+    void tearDown(){
+        instance.getPlayers().clear();
     }
 
     @Test
@@ -35,12 +39,24 @@ class GameTest {
 
     @Test
     void startGame() {
+        instance.setNumPlayer(2);
         instance.addPlayer(new Player("test1", TowerColor.WHITE));
         instance.addPlayer(new Player("test2", TowerColor.BLACK));
         instance.startGame();
         assertNotNull(instance.getTable());
         assertNotNull(instance.getRound());
         assertEquals(instance.getPlayers().get(0).getState(), PlayerState.PLANNING);
+        assertEquals(instance.getPlayers().get(0).getBoard().getEntrance().getStudent().size(), 7);
+
+        instance.setNumPlayer(3);
+        instance.addPlayer(new Player("test1", TowerColor.WHITE));
+        instance.addPlayer(new Player("test2", TowerColor.BLACK));
+        instance.addPlayer(new Player("test3", TowerColor.GREY));
+        instance.startGame();
+        assertNotNull(instance.getTable());
+        assertNotNull(instance.getRound());
+        assertEquals(instance.getPlayers().get(0).getState(), PlayerState.PLANNING);
+        assertEquals(instance.getPlayers().get(0).getBoard().getEntrance().getStudent().size(), 9);
     }
 
     @Test
@@ -64,5 +80,6 @@ class GameTest {
        instance.addPlayer(new Player("test5", TowerColor.BLACK));
         String test2= "test2";
         assertFalse(instance.isNicknameUsed(test2));
+
     }
 }

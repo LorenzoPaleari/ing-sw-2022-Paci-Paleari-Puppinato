@@ -128,10 +128,6 @@ public class Table {
         return null;
     }
 
-    public List<Professor> getProfessor() {
-        return professor;
-    }
-
     public void moveMotherNature(int moves){
         island.get(getMotherPosition()).setMotherNature(false);
 
@@ -197,10 +193,10 @@ public class Table {
         }
     }
 
-    public void setNoEntryTilesCharacter() throws BagIsEmptyException {
+    public void setCharacter(int position, CharacterType type){
         Factory factory = new Factory();
         character.removeAll(character);
-        character.add(factory.getCharacter(CharacterType.NO_ENTRY_TILES, bag));
+        character.add(position,factory.getCharacter(type, bag));
     }
 }
 

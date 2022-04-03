@@ -2,8 +2,8 @@ package it.polimi.ingsw.tableTest;
 
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.pawns.Student;
-import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.table.Bag;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +17,11 @@ public class BagTest {
     void setUp(){
         bag= new Bag();
     }
+    @AfterEach
+    void tearDown(){
+        bag=null;
+    }
+
     @Test
     void withdrawStudent() throws BagIsEmptyException {
         int[] color = new int[5];
@@ -31,6 +36,9 @@ public class BagTest {
         for (int i=0; i<5; i++){
             assertEquals(color[i], 24);
         }
-
+        List<Student> test1 = new LinkedList<>(bag.withdrawStudent(120));
+        Exception exception = assertThrows(BagIsEmptyException.class, ()-> {
+           bag.withdrawStudent(1);
+        });
     }
 }
