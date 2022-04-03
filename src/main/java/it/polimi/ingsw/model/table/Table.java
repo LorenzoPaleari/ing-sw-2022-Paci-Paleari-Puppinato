@@ -124,7 +124,6 @@ public class Table {
         {
             if(p.getColor()==color) {
                 temp = p;
-                break;
             }
         }
 
