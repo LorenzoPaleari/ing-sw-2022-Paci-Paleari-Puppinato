@@ -129,10 +129,8 @@ public class Table {
 
         return temp;
     }
-
     public void moveMotherNature(int moves){
         island.get(getMotherPosition()).setMotherNature(false);
-
         if (moves + getMotherPosition() > getNumIsland() - 1)
             motherNature.setPosition(moves + getMotherPosition() - getNumIsland());
         else
@@ -197,8 +195,7 @@ public class Table {
 
     public void setCharacter(int position, CharacterType type){
         Factory factory = new Factory();
-        character.removeAll(character);
-        character.add(position,factory.getCharacter(type, bag));
+        character.set(position,factory.getCharacter(type, bag));
     }
 }
 

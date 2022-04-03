@@ -40,5 +40,6 @@ public class BagTest {
         Exception exception = assertThrows(BagIsEmptyException.class, ()-> {
            bag.withdrawStudent(1);
         });
+        assertEquals(exception.getMessage(),"Bag is Empty");
     }
 }
