@@ -25,21 +25,25 @@ public class EntranceTest{
         @Test
         void removeStudent(PawnColor c) {
                 Student temp = new Student(4);
+                entrance.addStudent(temp);
                 assertEquals(temp, entrance.removeStudent(PawnColor.BLUE));
         }
 
         @Test
         void addStudent(List<Student> s) {
+                entrance.addStudent(s);
                 assertEquals(s, entrance.getStudent());
         }
         @Test
         void addStudent(Student s) {
+                entrance.addStudent(s);
                 assertEquals(true, entrance.getStudent().contains(s));
         }
 
         @Test
         void find(PawnColor color) {
                 Student temp = new Student(4);
+                entrance.addStudent(temp);
                 assertEquals(temp, entrance.find(PawnColor.BLUE));
         }
 

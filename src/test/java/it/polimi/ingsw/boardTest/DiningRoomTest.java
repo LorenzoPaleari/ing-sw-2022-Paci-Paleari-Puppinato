@@ -26,14 +26,17 @@ public class DiningRoomTest{
         LinkedList<Student> list = new LinkedList<>();
         list.add(new Student(4));
         list.add(new Student(4));
+        diningRoom.addStudent(list);
         assertEquals(list, diningRoom.removeStudent(PawnColor.BLUE, 2));
     }
     @Test
     void addStudent(Student s) {
-        assertEquals(true, diningRoom.getStudent().contains(s));
+        diningRoom.addStudent(s);
+        assertEquals(s.getColor(), diningRoom.getStudent().get(0).getColor());
     }
     @Test
     void addStudent(List<Student> s) {
+        diningRoom.addStudent(s);
         assertEquals(s, diningRoom.getStudent());
     }
 
