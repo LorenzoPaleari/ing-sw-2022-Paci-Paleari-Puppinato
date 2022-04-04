@@ -42,9 +42,12 @@ public class DiningRoom {
     }
 
     public Student find(PawnColor color){
+        Student temp;
         for(Student s : student){
             if(s.getColor() == color){
-                return s;
+                temp = s;
+                student.remove(s);
+                return temp;
             }
         }
         return null;

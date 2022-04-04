@@ -3,6 +3,7 @@ package it.polimi.ingsw.boardTest;
 import it.polimi.ingsw.model.board.DiningRoom;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,31 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DiningRoomTest{
     private DiningRoom diningRoom;
-    private LinkedList<Student> student;
     @BeforeEach
     public void setUp(){
         diningRoom = new DiningRoom();
-        student = new LinkedList<>();
-
+    }
+    @AfterEach
+    public void tearDown(){
+        diningRoom = null;
     }
 
     @Test
     void removeStudent() {
-        LinkedList<Student> list = new LinkedList<>();
+        List<Student> list = new LinkedList<>();
         list.add(new Student(4));
         list.add(new Student(4));
         diningRoom.addStudent(list);
-        assertEquals(list, diningRoom.removeStudent(PawnColor.BLUE, 2));
+        List<Student> temp = diningRoom.removeStudent(PawnColor.BLUE, 2);
+        assertEquals(temp, list);
+        assertEquals(diningRoom.getStudent().size(), 0);
     }
     @Test
-    void addStudent(Student s) {
+    void addStudent() {
+        Student s = new Student(0);
         diningRoom.addStudent(s);
-        assertEquals(s.getColor(), diningRoom.getStudent().get(0).getColor());
-    }
-    @Test
-    void addStudent(List<Student> s) {
-        diningRoom.addStudent(s);
-        assertEquals(s, diningRoom.getStudent());
+        assertEquals(s, diningRoom.getStudent().get(0));
+        diningRoom.removeStudent(PawnColor.GREEN, 1);
+        List<Student> list = new LinkedList<>();
+        list.add(new Student(0));
+        list.add(new Student(0));
+        diningRoom.addStudent(list);
+        assertEquals(list, diningRoom.getStudent());
     }
 
     @Test
@@ -49,19 +55,20 @@ public class DiningRoomTest{
     }
 
     @Test
-    void find(PawnColor color) {
+    void find() {
         assertEquals(null, diningRoom.find(PawnColor.BLUE));
-        diningRoom.addStudent(new Student(4));
         Student s = new Student(4);
+        diningRoom.addStudent(s);
+
         assertEquals(s, diningRoom.find(PawnColor.BLUE));
     }
 
     @Test
-    void count(PawnColor c){
+    void count(){
         assertEquals(0, diningRoom.count(PawnColor.BLUE));
         diningRoom.addStudent(new Student(4));
         diningRoom.addStudent(new Student(4));
-        assertEquals(0, diningRoom.count(PawnColor.BLUE));
+        assertEquals(2, diningRoom.count(PawnColor.BLUE));
     }
 
 
