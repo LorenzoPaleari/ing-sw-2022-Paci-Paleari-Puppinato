@@ -40,8 +40,13 @@ public class TowerCourtTest {
     void removeTower(){
         towerCourt.removeTower(6);
         assertEquals(true, towerCourt.isEmpty());
-        //assertThrows(IndexOutOfBoundsException, towerCourt.removeTower(2));
 
+    }
+
+    @Test
+    void removeTowerEx(){
+        towerCourt.removeTower(9);
+        assertEquals(true, towerCourt.isEmpty());
     }
 
     @Test

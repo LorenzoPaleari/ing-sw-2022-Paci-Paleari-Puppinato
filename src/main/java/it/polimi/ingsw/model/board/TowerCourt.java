@@ -29,11 +29,12 @@ public class TowerCourt {
         LinkedList<Tower> drawOut = new LinkedList<>();
         try{
             drawOut.addAll(tower.subList(0, numT));
+            tower.subList(0, numT).clear();
         } catch (IndexOutOfBoundsException e) {
             drawOut.addAll(tower);
             tower.clear();
         }
-        tower.subList(0, numT).clear();
+
         return drawOut;
     }
 
