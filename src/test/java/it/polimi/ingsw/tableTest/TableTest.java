@@ -120,4 +120,19 @@ class TableTest {
 
 
     }
+    @Test
+    void setCharacter(){
+        table.setCharacter(0, CharacterType.ADD_MOVES);
+        assertEquals(table.getCharacter(0).getType(), CharacterType.ADD_MOVES);
+        table.setCharacter(0, CharacterType.CONTROL_PROFESSOR);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.CONTROL_PROFESSOR);
+        table.setCharacter(0, CharacterType.MORE_INFLUENCE);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.MORE_INFLUENCE);
+        table.setCharacter(0, CharacterType.NO_TOWER);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.NO_TOWER);
+        table.setCharacter(0, CharacterType.ADD_STUDENT_DINING);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.ADD_STUDENT_DINING);
+        table.setCharacter(0, CharacterType.NO_ENTRY_TILES);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.NO_ENTRY_TILES);
+    }
 }
