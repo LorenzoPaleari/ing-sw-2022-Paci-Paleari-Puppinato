@@ -25,11 +25,10 @@ public class ProfessorTable {
     }
 
     public Professor find(PawnColor color){
-        for(Professor p: professors){
+        for(Professor p: professors)
             if(p.getColor() == color){
                 return p;
             }
-        }
         return null;
     }
 }

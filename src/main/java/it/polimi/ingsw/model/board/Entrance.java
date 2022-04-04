@@ -34,9 +34,8 @@ public class Entrance {
     }
 
     public Student find (PawnColor color){
-        for(Student s : student){
+        for(Student s : student)
             if(s.getColor() == color) return s;
-        }
         return null;
     }
 }

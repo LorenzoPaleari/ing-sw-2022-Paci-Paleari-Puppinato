@@ -43,13 +43,12 @@ public class DiningRoom {
 
     public Student find(PawnColor color){
         Student temp;
-        for(Student s : student){
+        for(Student s : student)
             if(s.getColor() == color){
                 temp = s;
                 student.remove(s);
                 return temp;
             }
-        }
         return null;
     }
 
