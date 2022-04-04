@@ -15,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
     private Round round;
+    private LinkedList<Player> player;
 
     @BeforeEach
     void setUp() {
-        List<Player> player = new LinkedList<>();
+        player = new LinkedList<>();
         player.add(new Player("test1", TowerColor.WHITE));
         player.add(new Player("test2", TowerColor.BLACK));
         round=new Round(player);
@@ -31,26 +32,43 @@ class RoundTest {
 
     @Test
     void setLastRound() {
-
+        round.setLastRound();
+        assertEquals(round.getLastRound(), true);
     }
 
     @Test
     void setCloudChosen() {
+        int cloudChosen = 1;
+        round.setCloudChosen(cloudChosen);
+        assertEquals(round.getCloudChosen().get(0), cloudChosen);
     }
 
     @Test
     void nextActionTurn() {
+        assertEquals(round.nextActionTurn(), true);
+        player.remove();
+        player.remove();
+        assertEquals(round.nextActionTurn(), false);
+
     }
 
     @Test
     void endPlanningPhase() {
+        round.endPlanningPhase();
+        assertEquals(round.getNumTurnDone(), 0);
     }
 
     @Test
     void nextPlanningTurn() {
+        assertEquals(round.nextPlanningTurn(), true);
+        player.remove();
+        player.remove();
+        assertEquals(round.nextPlanningTurn(), false);
     }
 
     @Test
     void endRound() {
+        round.endRound();
+        assertEquals(round.getNumTurnDone(), 0);
     }
 }
