@@ -9,23 +9,24 @@ import it.polimi.ingsw.model.table.Table;
 import java.util.*;
 
 public class Game {
-    private static Game instance = null;
     private boolean expertMode;
     private int numPlayer;
     private Table table;
     private Round round;
     private List<Player> player;
 
-    private Game(){  //We make the constructor private, so no one else can create new instances...
+    public Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<>();
     }
 
-    public static Game getInstance(){  //...but allow clients to get an instance via a static method
+  /*  public static Game getInstance(){  //...but allow clients to get an instance via a static method
         if(instance == null){
             instance = new Game();
         }
         return instance;
     }
+
+   */
 
     public void setNumPlayer(int num){
         numPlayer = num;

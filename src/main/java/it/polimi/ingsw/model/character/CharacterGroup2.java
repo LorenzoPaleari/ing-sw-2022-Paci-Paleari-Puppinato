@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.controller.professorController.ProfessorControllerModified;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -22,7 +23,7 @@ public class CharacterGroup2 extends Character {
     }
     @Override
     public void activateCharacter(Island island) {
-        Controller.updateIsland(island);
+        TableHandler.updateIsland(island);
     }
 
 }

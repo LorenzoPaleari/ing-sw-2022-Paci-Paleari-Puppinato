@@ -18,7 +18,7 @@ class GameTest {
     private static Game instance = null;
     @BeforeEach
     void setUp() {
-      instance =Game.getInstance();
+      instance = new Game();
     }
     @AfterEach
     void tearDown(){
