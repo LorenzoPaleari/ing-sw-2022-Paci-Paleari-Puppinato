@@ -71,6 +71,10 @@ class GameTest {
 
     @Test
     void endGame() {
+        instance.endGame();
+        for(Player p: instance.getPlayers()){
+            assertEquals(p.getState(), PlayerState.WAIT);
+        }
     }
     @Test
     void isNicknameUsed(){
