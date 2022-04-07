@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Game {
     private boolean expertMode;
+    private boolean gameEnded;
     private int numPlayer;
     private Table table;
     private Round round;
@@ -82,6 +83,8 @@ public class Game {
     public void endGame(){
         for (Player p: player)
             p.changeState(PlayerState.WAIT);
+
+        setGameEnded();
     }
 
     public boolean isNicknameUsed(String nick){
@@ -95,6 +98,12 @@ public class Game {
         return value;
     }
 
+    public boolean isGameEnded() {
+        return gameEnded;
+    }
 
+    private void setGameEnded() {
+        gameEnded = true;
+    }
 }
 
