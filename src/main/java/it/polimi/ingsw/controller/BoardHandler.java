@@ -26,8 +26,8 @@ public class BoardHandler {
 
         try {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
-            turnController.canMove(round.getTurn());
             turnController.checkFullDining(board.getDiningRoom(), color);
+            turnController.canMove(round.getTurn());
         } catch (Exception e){
             System.out.println(e.getMessage());
             return;
