@@ -39,17 +39,18 @@ public class CharacterGroupStudent extends Character{
     public Student findStudent(PawnColor color){
         Student stud = null;
 
-        for (Student s : student){
+        for (Student s : student)
             if (s.getColor().equals(color)) {
                 stud = s;
-                return s;
+                break;
             }
-        }
-        return null;
+
+        return stud;
     }
 
+    @Override
     public void addStudent(Student s) {
-        student.add(s);
+        student.add(0, s);
     }
 
     @Override

@@ -6,6 +6,7 @@ import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
@@ -41,6 +42,8 @@ public abstract class Character {
     public CharacterType getType() {
         return type;
     }
+
+    public void addStudent(Student s){}
 
 }
 

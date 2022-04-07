@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.MotherNature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,8 @@ public class boardHandlerTest {
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
+
+        MotherNature.getInstance().setPosition(0);
 
         game = controller.getGame();
 
