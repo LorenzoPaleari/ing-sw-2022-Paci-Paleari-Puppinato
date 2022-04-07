@@ -124,19 +124,27 @@ public class CharacterHandlerTest {
     void useAdd_MovesCharacter(){
         game.getTable().setCharacter(0, CharacterType.ADD_MOVES);
 
+        List<Tower> towers = new LinkedList<>();
+        towers.add(new Tower(TowerColor.WHITE));
         game.getRound().getTurn().resetRemainingMovements(0); //Forzo il movimento degli studenti
         controller.moveMotherNature(player1, 3);
         assertEquals(0, game.getTable().getMotherPosition()); //Non si è mossa
 
         controller.useCharacter(player1, 0);  //Testo che io possa muovere madre natura di 3 caselle e non solo di 1
+        controller.moveMotherNature(player1, 5);  //Errore
+        game.getTable().getIsland(3).addTower(towers);
         controller.moveMotherNature(player1, 3);
         assertEquals(3, game.getTable().getMotherPosition());
 
-        //Controllo che reimposti la regola correttamente
         controller.chooseCloud(player1, 0);
         game.getRound().getTurn().resetRemainingMovements(0); //Forzo il movimento degli studenti
-        controller.moveMotherNature(player2, 7);
-        assertEquals(3, game.getTable().getMotherPosition()); //Non si è mossa
+        MotherNature.getInstance().setPosition(11);
+        game.getTable().getIsland(3).setMotherNature(false);
+        game.getTable().getIsland(11).setMotherNature(true);
+        player2.addCoin();
+        controller.useCharacter(player2, 0);
+        controller.moveMotherNature(player2, 1);
+        assertEquals(1, game.getTable().getMotherPosition()); //Non si è mossa
     }
 
     @Test
@@ -146,14 +154,22 @@ public class CharacterHandlerTest {
         game.getRound().getTurn().resetRemainingMovements(0);
         game.getTable().getIsland(1).getIslandStudent().clear();
         game.getTable().getIsland(1).addStudent(new Student(4)); //Metto studente blu sull'isola
+        game.getTable().getIsland(1).addStudent(new Student(4));
+        game.getTable().getIsland(1).addStudent(new Student(0));
+        game.getTable().getIsland(1).addStudent(new Student(0));
+        List<Tower> towers = new LinkedList<>();
+        towers.add(new Tower(TowerColor.WHITE));
+        game.getTable().getIsland(1).addTower(towers);
         player1.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.BLUE)); //Assegno il professore blu
+        player2.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
         assertEquals(game.getTable().findProfessor(PawnColor.BLUE), player1.getBoard().getProfessorTable().find(PawnColor.BLUE));
 
         player1.addCoin();
         player1.addCoin();
         controller.useCharacter(player1, 0, PawnColor.BLUE);
         controller.moveMotherNature(player1, 1);
-        assertEquals(0, game.getTable().getIsland(1).getIslandTower().size());
+        assertEquals(1, game.getTable().getIsland(1).getIslandTower().size());
+        assertEquals(TowerColor.BLACK, game.getTable().getIsland(1).getIslandTower().get(0).getColor());
     }
 
     @Test
@@ -192,9 +208,12 @@ public class CharacterHandlerTest {
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         player1.getBoard().getEntrance().addStudent(new Student(0));
-        player1.getBoard().getEntrance().addStudent(new Student(0));
+        player1.getBoard().getEntrance().addStudent(new Student(4));
+        List<Tower> towers = new LinkedList<>();
+        towers.add(new Tower(TowerColor.WHITE));
+        game.getTable().getIsland(6).addTower(towers);
         controller.useStudentIsland(player1, PawnColor.GREEN, 6);
-        controller.useStudentIsland(player1, PawnColor.GREEN, 6);
+        controller.useStudentIsland(player1, PawnColor.BLUE, 6);
         controller.useStudentDining(player1, PawnColor.GREEN);
         game.getRound().nextActionTurn();
 
