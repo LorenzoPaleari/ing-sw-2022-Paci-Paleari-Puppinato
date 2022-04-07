@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.MotherNature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class controllerTest {
+public class ControllerTest {
     private Controller controller;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);
@@ -30,6 +31,8 @@ public class controllerTest {
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
+
+        MotherNature.getInstance().setPosition(0);
 
         game = controller.getGame();
     }
@@ -81,8 +84,12 @@ public class controllerTest {
 
     @Test
     void useAssistant2(){
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
         controller.useAssistant(3, player2);
         assertEquals(null, player2.getLastUsed());
+        outContent.reset();
 
         controller.moveMotherNature(player1, 3);
         assertEquals(0, game.getTable().getMotherPosition());

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.character.Character;
+import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 
@@ -31,6 +33,8 @@ public class CharacterHandler {
             return;
         }
 
+        if (character.getType().equals(CharacterType.MORE_INFLUENCE))
+            IslandControllerMoreInfluence.setPlayer(player);
         character.activateCharacter(professorContext, motherNatureContext, islandContext);
 
         game.getRound().getTurn().setUsedCharacter(true);

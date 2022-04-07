@@ -2,8 +2,6 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -39,17 +37,18 @@ public class CharacterGroupStudent extends Character{
     public Student findStudent(PawnColor color){
         Student stud = null;
 
-        for (Student s : student){
+        for (Student s : student)
             if (s.getColor().equals(color)) {
                 stud = s;
-                return s;
+                break;
             }
-        }
-        return null;
+
+        return stud;
     }
 
+    @Override
     public void addStudent(Student s) {
-        student.add(s);
+        student.add(0, s);
     }
 
     @Override
