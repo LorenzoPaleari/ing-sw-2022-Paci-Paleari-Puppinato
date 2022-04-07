@@ -15,7 +15,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class controllerTest {
+public class ControllerTest {
     private Controller controller;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);

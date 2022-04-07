@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class characterHandlerTest {
+public class CharacterHandlerTest {
     private Controller controller;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);
