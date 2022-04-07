@@ -108,21 +108,43 @@ public class TableHandlerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getRound().getTurn().resetRemainingMovements(0);
         List<Tower> test = new LinkedList<>();
         test.add(new Tower(TowerColor.WHITE));
-        for (int i = 0; i <7; i++) {
+        for (int i = 0; i <5; i++) {
             game.getTable().getIsland(i).addTower(test);
         }
-        game.getTable().mergeIsland(1);
-        game.getTable().mergeIsland(1);
-        game.getTable().mergeIsland(1);
-        game.getTable().mergeIsland(0);
-        for (int i = 0; i < 16; i++) {
-            game.getTable().getIsland(1).addStudent(new Student(0));
+        List<Tower> test1 = new LinkedList<>();
+        test1.add(new Tower(TowerColor.BLACK));
+        for (int i = 5; i <9; i++) {
+            game.getTable().getIsland(i).addTower(test1);
         }
-        player1.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
-        controller.moveMotherNature(player1, 1);
+
+        List<Tower> test2 = new LinkedList<>();
+        test2.add(new Tower(TowerColor.GREY));
+        for (int i = 9; i <11; i++) {
+            game.getTable().getIsland(i).addTower(test2);
+        }
+        game.getTable().mergeIsland(1);
+        assertEquals(game.getTable().getNumIsland(), 10);
+        game.getTable().mergeIsland(1);
+        assertEquals(game.getTable().getNumIsland(), 8);
+        game.getTable().mergeIsland(2);
+        assertEquals(game.getTable().getIsland(2).getIslandTower().get(0).getColor(),TowerColor.BLACK);
+        assertEquals(game.getTable().getNumIsland(), 6);
+        game.getTable().mergeIsland(2);
+        game.getTable().mergeIsland(3);
+        assertEquals(game.getTable().getNumIsland(), 4);
+        for (int i = 0; i < 16; i++) {
+            game.getTable().getIsland(3).addStudent(new Student(0));
+        }
+        player1.getBoard().getTowerCourt().removeTower(5);
+        player2.getBoard().getTowerCourt().removeTower(4);
+        player3.getBoard().getTowerCourt().removeTower(2);
+        game.getRound().nextActionTurn();
+        game.getRound().nextActionTurn();
+        game.getRound().getTurn().resetRemainingMovements(0);
+        player3.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
+        controller.moveMotherNature(player3, 3);
         assertEquals(player1+" Has won the game\n", outContent.toString());
         outContent.reset();
     }
