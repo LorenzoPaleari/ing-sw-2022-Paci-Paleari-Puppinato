@@ -1,23 +1,21 @@
 package it.polimi.ingsw.controllerTest;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.MotherNature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,9 +41,9 @@ public class TableHandlerTest {
 
         game = controller.getGame();
 
-        controller.useAssistant(0, player1);
-        controller.useAssistant(3, player2);
-        controller.useAssistant(6, player3);
+        controller.useAssistant(7, player1);
+        controller.useAssistant(8, player2);
+        controller.useAssistant(9, player3);
 
         MotherNature.getInstance().setPosition(0);
 
@@ -65,11 +63,11 @@ public class TableHandlerTest {
         game.getTable().setCharacter(0, CharacterType.NO_ENTRY_TILES);
         game.getRound().getTurn().resetRemainingMovements(1);
         controller.moveMotherNature(player1, 1);
-        //assertEquals("Before moving mother nature, please move all the students\n",outContent.toString());
+        assertEquals("Before moving mother nature, please move all the students\n",outContent.toString());
         outContent.reset();
         game.getRound().getTurn().resetRemainingMovements(0);
-        controller.moveMotherNature(player1, 2);
-        //assertEquals("You can't go so far with your Assistant, please choose another Island\n",outContent.toString());
+        controller.moveMotherNature(player1, 8);
+        assertEquals("You can't go so far with your Assistant, please choose another Island\n",outContent.toString());
         outContent.reset();
 
         game.getTable().getIsland(1).setNoEntryTiles(true);
@@ -101,7 +99,8 @@ public class TableHandlerTest {
         controller.moveMotherNature(player2, 1);
         assertEquals(game.getTable().getIsland(1).getIslandStudent().size(), 0);
         assertEquals(player2.getBoard().getTowerCourt().getTower().size(), 0);
-        //assertEquals(player2+" Has won the game\n", outContent.toString());
+        assertEquals(player2+" Has won the game\n", outContent.toString());
+        outContent.reset();
     }
 
     @Test
@@ -124,6 +123,57 @@ public class TableHandlerTest {
         }
         player1.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
         controller.moveMotherNature(player1, 1);
-        //assertEquals(player1+" Has won the game\n", outContent.toString());
+        assertEquals(player1+" Has won the game\n", outContent.toString());
+        outContent.reset();
+    }
+    @Test
+    void chooseCloud() throws BagIsEmptyException {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        List<Tower> test = new LinkedList<>();
+        test.add(new Tower(TowerColor.GREY));
+        game.getTable().getIsland(8).addTower(test);
+        game.getTable().getIsland(9).addTower(test);
+        game.getTable().getIsland(10).addTower(test);
+        game.getTable().getIsland(11).addTower(test);
+        game.getRound().getTurn().resetRemainingMovements(0);
+        controller.moveMotherNature(player1, 2);
+        controller.chooseCloud(player1,0);
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+
+        game.getRound().getTurn().resetRemainingMovements(0);
+        controller.moveMotherNature(player2, 3);
+        controller.chooseCloud(player2,0);
+        assertEquals("This cloud has already been chose, please select another\n",outContent.toString());
+        outContent.reset();
+        controller.useAssistant(6, player2);
+        assertEquals("Devi scegliere una Nuvola\n", outContent.toString());
+        outContent.reset();
+        controller.chooseCloud(player2,1);
+        game.getRound().getTurn().resetRemainingMovements(0);
+        controller.moveMotherNature(player3, 4);
+        controller.chooseCloud(player3,2);
+        controller.useAssistant(4, player1);
+        controller.useAssistant(5, player2);
+        controller.useAssistant(6, player3);
+
+        game.getRound().nextActionTurn();
+        game.getRound().nextActionTurn();
+        game.getRound().getTurn().resetRemainingMovements(0);
+        controller.moveMotherNature(player3, 5);
+        game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
+        controller.chooseCloud(player3,2);
+        controller.useAssistant(5, player1);
+        controller.useAssistant(6, player2);
+        controller.useAssistant(7, player3);
+        player3.getBoard().getTowerCourt().removeTower(4);
+        game.getRound().nextActionTurn();
+        game.getRound().nextActionTurn();
+        game.getRound().getTurn().resetRemainingMovements(0);
+        controller.moveMotherNature(player3, 6);
+        controller.chooseCloud(player3,2);
+        assertEquals(player3+" Has won the game\n", outContent.toString());
+        outContent.reset();
     }
 }
