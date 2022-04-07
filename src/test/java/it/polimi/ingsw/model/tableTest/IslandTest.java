@@ -55,13 +55,14 @@ class IslandTest {
     @Test
     void countStudent() {
         island.addStudent(new Student(0));
-        assertTrue(island.countStudent(PawnColor.YELLOW)==0, "0 yellow students");
-        assertFalse(island.countStudent(PawnColor.RED)==1, "0 red students");
+        assertEquals(island.getIslandStudent().get(0).getColor().getText(),PawnColor.GREEN.toString());
+        assertEquals(0, island.countStudent(PawnColor.YELLOW), "0 yellow students");
+        assertNotEquals(1, island.countStudent(PawnColor.RED), "0 red students");
         island.addStudent(new Student(0));
-        assertTrue(island.countStudent(PawnColor.GREEN)==2, "2 green students");
+        assertEquals(2, island.countStudent(PawnColor.GREEN), "2 green students");
         island.addStudent(new Student(0));
         island.addStudent(new Student(2));
-        assertTrue(island.countStudent(PawnColor.YELLOW)==1, "1 yellow students");
+        assertEquals(1, island.countStudent(PawnColor.YELLOW), "1 yellow students");
 
     }
 
@@ -86,6 +87,7 @@ class IslandTest {
     void removeTower() {
         List<Tower> test= new LinkedList<>();
         test.add(new Tower(TowerColor.BLACK));
+        assertEquals(test.get(0).getColor().getText(), TowerColor.BLACK.toString());
         test.add(new Tower(TowerColor.BLACK));
         test.add(new Tower(TowerColor.WHITE));
         island.addTower(test);

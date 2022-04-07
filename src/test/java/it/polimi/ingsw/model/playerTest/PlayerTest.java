@@ -73,6 +73,6 @@ class PlayerTest {
     @Test
     void changeState(){
         player.changeState(PlayerState.ACTION);
-        assertEquals(player.getState(), PlayerState.ACTION);
+        assertEquals(player.getState().getText(), PlayerState.ACTION.toString());
     }
 }

@@ -23,6 +23,8 @@ public class CharacterTest {
     }
     @Test
     void firstUse(){
+        assertEquals(character.getType().getDescription(),"You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.");
+        assertEquals(character.getType().getText(),CharacterType.ADD_MOVES.toString());
         character.firstUse();
         assertEquals(character.getType(), CharacterType.ADD_MOVES);
         assertTrue(character.isUsed());
