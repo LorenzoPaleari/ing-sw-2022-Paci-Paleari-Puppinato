@@ -1,4 +1,4 @@
-package it.polimi.ingsw.tableTest;
+package it.polimi.ingsw.model.tableTest;
 
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.pawns.Student;
