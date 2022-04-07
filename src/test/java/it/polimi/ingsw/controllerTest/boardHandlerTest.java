@@ -71,6 +71,10 @@ public class boardHandlerTest {
         assertEquals("You've reached the maximum number of YELLOW student\n", outContent.toString());
         outContent.reset();
 
+        controller.useAssistant(3, player1);
+        assertEquals("Devi spostare gli studenti o muovere madre natura\n", outContent.toString());
+        outContent.reset();
+
         controller.useStudentDining(player1, PawnColor.GREEN);
         controller.useStudentDining(player1, PawnColor.BLUE);
         controller.useStudentDining(player1, PawnColor.BLUE);
