@@ -80,7 +80,7 @@ public class TableHandler {
                     return;
                 }
         }
-        if(islandContext.conquerIsland(island , game)) {
+        else if(islandContext.conquerIsland(island , game)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
             for (Player p : game.getPlayers()){
