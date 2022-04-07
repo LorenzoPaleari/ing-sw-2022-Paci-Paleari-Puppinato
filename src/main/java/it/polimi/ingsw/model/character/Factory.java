@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.character;
 
-import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Bag;
 
