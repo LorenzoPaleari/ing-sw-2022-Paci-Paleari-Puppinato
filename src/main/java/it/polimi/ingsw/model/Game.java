@@ -79,7 +79,10 @@ public class Game {
         return table;
     }
 
-    public void endGame(){}
+    public void endGame(){
+        for (Player p: player)
+            p.changeState(PlayerState.WAIT);
+    }
 
     public boolean isNicknameUsed(String nick){
         boolean value = false;

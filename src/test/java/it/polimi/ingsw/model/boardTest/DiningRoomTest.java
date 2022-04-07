@@ -1,4 +1,4 @@
-package it.polimi.ingsw.boardTest;
+package it.polimi.ingsw.model.boardTest;
 
 import it.polimi.ingsw.model.board.DiningRoom;
 import it.polimi.ingsw.model.enumerations.PawnColor;

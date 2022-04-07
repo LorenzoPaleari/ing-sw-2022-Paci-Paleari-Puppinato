@@ -1,4 +1,4 @@
-package it.polimi.ingsw.playerTest;
+package it.polimi.ingsw.model.playerTest;
 
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Deck;

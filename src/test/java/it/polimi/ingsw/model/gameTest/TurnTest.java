@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gameTest;
+package it.polimi.ingsw.model.gameTest;
 
 import it.polimi.ingsw.model.Turn;
 import it.polimi.ingsw.model.enumerations.TowerColor;

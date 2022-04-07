@@ -1,4 +1,4 @@
-package it.polimi.ingsw.tableTest;
+package it.polimi.ingsw.model.tableTest;
 
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;

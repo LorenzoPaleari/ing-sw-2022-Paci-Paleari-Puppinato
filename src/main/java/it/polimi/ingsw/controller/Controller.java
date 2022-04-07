@@ -173,8 +173,10 @@ public class Controller {
             }
         }
 
+        game.endGame();
+
         if(winner2 != null)
-            System.out.println("Draw between"+winner1+"and"+winner2);
+            System.out.println("Draw between "+winner1+" and "+winner2);
         else
             System.out.println(winner1 + " Has won the game");
     }
