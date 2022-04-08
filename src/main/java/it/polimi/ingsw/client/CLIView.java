@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.enumerations.TowerColor;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class CLIView implements View{
@@ -17,7 +20,7 @@ public class CLIView implements View{
         boolean valid = false;
 
         do {
-            System.out.println("Enter the server IP [Press enter for default IP]: ");
+            System.out.print("Enter the server IP [Press enter for default IP]: ");
             serverIP = scanner.nextLine();
 
             if (serverIP.equals("\n")){
@@ -40,7 +43,13 @@ public class CLIView implements View{
 
     @Override
     public void initialSetUp(boolean firstPlayer) {
+        System.out.print("Inserire il numero di giocatori [2..3]:  ");
 
+        System.out.print("Vuoi giocare in expert mode?");
+
+        System.out.print("Nickname");
+
+        System.out.print("TowerColor");
     }
 
     private boolean isCorrectIP(String serverIP){

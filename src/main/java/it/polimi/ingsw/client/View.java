@@ -1,5 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.enumerations.TowerColor;
+
+import java.util.List;
+
 public interface View {
 
     /**

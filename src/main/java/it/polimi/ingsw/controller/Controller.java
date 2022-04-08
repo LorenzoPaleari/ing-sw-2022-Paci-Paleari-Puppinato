@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
+import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
 
@@ -65,6 +66,19 @@ public class Controller {
         int remaining = game.addPlayer(player);
         if (remaining == 0)
             game.startGame();
+    }
+
+    public List<TowerColor> getAvailableColor(){
+        List<TowerColor> colors = new LinkedList<>();
+        colors.add(TowerColor.WHITE);
+        colors.add(TowerColor.BLACK);
+        if (game.getNumPlayer() == 3)
+            colors.add(TowerColor.GREY);
+
+        for (Player p : game.getPlayers())
+            colors.remove(p.getTowerColor());
+
+        return colors;
     }
 
     public void useAssistant(int position, Player player){

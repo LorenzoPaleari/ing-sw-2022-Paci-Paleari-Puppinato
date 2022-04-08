@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network;
 
-public enum MessageType {
+import java.io.Serializable;
+
+public enum MessageType implements Serializable {
 
     ControllerView,
 
