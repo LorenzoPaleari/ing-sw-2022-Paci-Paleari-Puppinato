@@ -19,6 +19,7 @@ public class Client {
             if ((selection.equalsIgnoreCase("CLI"))) {
                 view = new CLIView(serverHandler);
                 view.start();
+                serverHandler.setView(view);
                 incorrect = false;
             } else if ((selection.equalsIgnoreCase("GUI"))) {
                 //view = new GuiView();
