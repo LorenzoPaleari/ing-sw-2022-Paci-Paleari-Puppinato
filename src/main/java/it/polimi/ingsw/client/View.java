@@ -7,5 +7,5 @@ public interface View {
      */
     void start();
 
-    void intialSetUp(boolean firstPlayer);
+    void initialSetUp(boolean firstPlayer);
 }

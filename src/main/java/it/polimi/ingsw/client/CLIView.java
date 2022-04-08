@@ -39,7 +39,7 @@ public class CLIView implements View{
     }
 
     @Override
-    public void intialSetUp(boolean firstPlayer) {
+    public void initialSetUp(boolean firstPlayer) {
 
     }
 

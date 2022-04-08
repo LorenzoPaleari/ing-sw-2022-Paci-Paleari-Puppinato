@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.GenericMessage;
+import it.polimi.ingsw.server.VirtualView;
 
 public interface ViewControllerMessage extends GenericMessage {
 

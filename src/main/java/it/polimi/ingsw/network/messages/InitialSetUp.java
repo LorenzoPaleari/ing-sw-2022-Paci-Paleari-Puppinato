@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 public class InitialSetUp implements Serializable, ControllerViewMessage {
     private MessageType type;
+    private boolean firstPlayer;
 
-    public InitialSetUp(){
+    public InitialSetUp(boolean firstPlayer){
         type = MessageType.ControllerView;
+        this.firstPlayer = firstPlayer;
     }
 
     @Override
@@ -20,6 +22,7 @@ public class InitialSetUp implements Serializable, ControllerViewMessage {
 
     @Override
     public void action(View view) {
-        view.intialSetUp(boolean );
+        view.initialSetUp(firstPlayer);
     }
+
 }
