@@ -1,13 +1,16 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.network.GenericMessage;
+import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class ServerHandler {
     private Socket socket;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
     private boolean isConnected = false;
     public ServerHandler(){
 
@@ -18,7 +21,6 @@ public class ServerHandler {
             System.out.println("socket = " +  socket);
             isConnected = true;
             listen();
-            endConnection();
         }
         catch(IOException e){
         }
@@ -28,12 +30,13 @@ public class ServerHandler {
     public void listen(){
         while (isConnected) {
             try {
-                BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream()));
-                PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter( socket.getOutputStream())),true);
-                String str = in.readLine();
-
+                GenericMessage serverMessage = (GenericMessage) input.readObject();
+                if (serverMessage.getType() == MessageType.ModelView) {
+                }
             } catch (IOException e) {
                 isConnected = false;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
