@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.GenericMessage;
-import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -32,14 +31,15 @@ public class ServerHandler {
     public void listen(){
         while (isConnected) {
             try {
-                GenericMessage serverMessage = (GenericMessage) input.readObject();
-                if (serverMessage.getType() == MessageType.ModelView) {
+                GenericMessage message = (GenericMessage) input.readObject();
+                if (message.getType() == MessageType.ModelView) {
+                    ModelViewMessage mvMessage = (ModelViewMessage) message;
                 }
-            } catch (IOException e) {
+                else if (message.getType() == MessageType.ControllerView) {
+                    ControllerViewMessage cvMessage = (ControllerViewMessage) message;
+                }
+            } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
     public void endConnection() {
