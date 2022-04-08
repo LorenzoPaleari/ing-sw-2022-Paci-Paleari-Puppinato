@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CLIView implements View{
     private Scanner scanner;
-    private ServerHanlder serverHandler;
+    private ServerHandler serverHandler;
 
     public CLIView(ServerHandler serverHandler){
         scanner = new Scanner(System.in);
@@ -14,7 +14,7 @@ public class CLIView implements View{
     @Override
     public void start() {
         String serverIP;
-        boolean valid;
+        boolean valid = false;
 
         do {
             System.out.println("Enter the server IP [Press enter for default IP]: ");
