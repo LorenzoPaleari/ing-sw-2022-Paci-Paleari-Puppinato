@@ -38,6 +38,11 @@ public class CLIView implements View{
         serverHandler.initConnection(serverIP);
     }
 
+    @Override
+    public void intialSetUp(boolean firstPlayer) {
+
+    }
+
     private boolean isCorrectIP(String serverIP){
         for (int i = 0; i < serverIP.length(); i++)
             if (!((serverIP.charAt(i) <= '9' && serverIP.charAt(i) >= '0') || serverIP.charAt(i) == '.'))
