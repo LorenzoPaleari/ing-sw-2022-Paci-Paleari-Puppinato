@@ -198,4 +198,21 @@ public class TableHandlerTest {
         assertEquals(player3+" Has won the game\n", outContent.toString());
         outContent.reset();
     }
+
+    @Test
+    void useStudentIsland(){
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        PawnColor color= player1.getBoard().getEntrance().getStudent().get(0).getColor();
+        game.getRound().getTurn().resetRemainingMovements(1);
+        controller.useStudentIsland(player1, color, 0);
+        assertEquals(player1.getBoard().getEntrance().getStudent().size(), 8);
+        assertEquals(game.getRound().getTurn().getRemainingMovements(),0);
+        assertEquals(game.getTable().getIsland(0).getIslandStudent().size(),1);
+        assertEquals(game.getTable().getIsland(0).getIslandStudent().get(0).getColor(),color);
+        PawnColor color2= player1.getBoard().getEntrance().getStudent().get(3).getColor();
+        controller.useStudentIsland(player1, color2, 0);
+        assertEquals("You have already moved all the student, please move Mother Nature\n",outContent.toString());
+    }
 }
