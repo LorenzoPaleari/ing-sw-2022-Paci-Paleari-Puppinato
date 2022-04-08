@@ -24,8 +24,13 @@ public class CLIView implements View{
                 valid = true;
                 serverIP = "127.0.0.1";
                 System.out.println(" > Default server IP has been chosen, " + serverIP);
-            } else if (!isCorrectIP(serverIP)){
-                System.out.println(" > Server IP not valid. Please try again.");
+            } else {
+                if (!isCorrectIP(serverIP)){
+                    valid = false;
+                    System.out.println(" > Server IP not valid. Please try again.");
+                } else {
+                    valid = true;
+                }
             }
 
         } while (!valid);
