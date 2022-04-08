@@ -11,7 +11,12 @@ public class Server {
     public static ServerSocket serverSocket;
 
     public static void main(String[] args) throws IOException {
-        serverSocket = new ServerSocket(PORT);
+        try {
+            serverSocket = new ServerSocket(PORT);
+        }
+        catch(Exception e){
+            System.out.println("There's another server opened");
+        }
         System.out.println("Started: " + serverSocket);
         server= new Server();
         server.acceptPlayer();
@@ -20,13 +25,19 @@ public class Server {
         serverSocket.close();
     }
 
-    public void acceptPlayer() throws IOException {
+    public void acceptPlayer() {
         int numPlayer=0;
         while(numPlayer<3){
-            Socket socket = serverSocket.accept();
-            System.out.println("Connection accepted: "+ socket);
-            numPlayer++;
-            new ClientHandler(socket);
+            try {
+                Socket socket = serverSocket.accept();
+                System.out.println("Connection accepted: "+ socket);
+                numPlayer++;
+                new ClientHandler(socket);
+            }
+            catch(IOException e){
+                System.out.println("Error with connection");
+            }
+
         }
     }
 }
