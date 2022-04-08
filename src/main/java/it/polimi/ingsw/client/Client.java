@@ -18,6 +18,7 @@ public class Client {
             String preferredInterface = scanner.nextLine();
             if ((preferredInterface.equalsIgnoreCase("CLI"))) {
                 view = new CLIView(serverHandler);
+                view.start();
                 incorrect = false;
             } else if ((preferredInterface.equalsIgnoreCase("GUI"))) {
                 //view = new GuiView();
