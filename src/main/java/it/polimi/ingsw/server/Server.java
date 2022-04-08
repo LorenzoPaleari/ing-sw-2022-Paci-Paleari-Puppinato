@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-
 public class Server {
     public static final int PORT = 8080;
     public static Server server;
@@ -25,8 +24,6 @@ public class Server {
         Controller controller = new Controller();
         virtualView= new VirtualView(controller);
         server.acceptPlayer();
-
-
     }
 
     public void acceptPlayer() {
@@ -39,12 +36,21 @@ public class Server {
                 numPlayer++;
                 ClientHandler clientHandler=new ClientHandler(socket, firstPlayer, virtualView);
                 virtualView.addClientHandler(clientHandler);
+                clientHandler.start();
                 firstPlayer=false;
             }
             catch(IOException e){
                 System.out.println("Error with connection");
             }
-
         }
+
+        while (true)
+            try {
+                Socket socket = serverSocket.accept();
+
+                socket.close();
+            } catch (IOException e) {
+
+            }
     }
 }

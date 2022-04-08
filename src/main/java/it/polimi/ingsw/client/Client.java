@@ -18,8 +18,8 @@ public class Client {
             String selection = scanner.nextLine();
             if ((selection.equalsIgnoreCase("CLI"))) {
                 view = new CLIView(serverHandler);
-                view.start();
                 serverHandler.setView(view);
+                view.start();
                 incorrect = false;
             } else if ((selection.equalsIgnoreCase("GUI"))) {
                 //view = new GuiView();

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.enumerations.TowerColor;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.InitialSetUp;
+import it.polimi.ingsw.network.messages.PlayerSetUp;
 
 import javax.imageio.IIOException;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClientHandler {
+public class ClientHandler extends Thread{
     private Socket socket;
     private ObjectInputStream input;
     private ObjectOutputStream output;
@@ -26,21 +28,17 @@ public class ClientHandler {
         this.firstPlayer=firstPlayer;
         isConnected = true;
         this.virtualView=virtualView;
-    }
 
-    public void start(){
-        try{
+        try {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
-
+        } catch (IOException e) {
         }
-        catch (IOException e){
-
-        }
-
     }
 
-    public void listen(){
+    public void run(){
+        initialSetUp();
+
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
@@ -55,8 +53,6 @@ public class ClientHandler {
         }
     }
 
-
-
     public void send(GenericMessage message) {
         try{
             output.writeUnshared(message);
@@ -67,13 +63,19 @@ public class ClientHandler {
             System.out.println("Errore");
         }
     }
+
     public void initialSetUp(){
-        send(new InitialSetUp(firstPlayer));
+        if (firstPlayer)
+            send(new InitialSetUp(firstPlayer));
+
+        playerSetUp();
     }
 
     public void playerSetUp(){
-        List<TowerColor> towerColor= new ArrayList<>();
-        towerColor=virtualView.getAvailableColor();
+        List<TowerColor> towerColor;
+        towerColor = virtualView.getAvailableColor();
+
+        send(new PlayerSetUp(towerColor));
     }
 
 }
