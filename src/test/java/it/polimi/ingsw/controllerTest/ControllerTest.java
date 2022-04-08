@@ -68,6 +68,11 @@ public class ControllerTest {
     }
 
     @Test
+    void getAvailableColors(){
+        assertEquals(0, controller.getAvailableColor().size());
+    }
+
+    @Test
     void useAssistant(){
         controller.useAssistant(6, player1);
         assertEquals(7, player1.getLastUsed().getWeight());
