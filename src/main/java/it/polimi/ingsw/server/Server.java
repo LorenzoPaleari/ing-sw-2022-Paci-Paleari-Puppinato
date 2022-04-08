@@ -11,7 +11,7 @@ public class Server {
     public static final int PORT = 8080;
     public static Server server;
     public static ServerSocket serverSocket;
-    private VirtualView virtualView;
+    private static VirtualView virtualView;
 
     public static void main(String[] args) throws IOException {
         try {
@@ -23,7 +23,7 @@ public class Server {
         System.out.println("Server successfully started");
         server= new Server();
         Controller controller = new Controller();
-        VirtualView virtualView= new VirtualView(controller);
+        virtualView= new VirtualView(controller);
         server.acceptPlayer();
 
 
