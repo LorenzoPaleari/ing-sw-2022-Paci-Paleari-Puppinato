@@ -6,7 +6,7 @@ import java.net.Socket;
 
 
 public class Server {
-    public static final int PORT = 8080;
+    public static final int PORT = 4999;
     public static void main(String[] args) throws IOException {
             ServerSocket s = new ServerSocket(PORT);
             System.out.println("Started: " + s);
