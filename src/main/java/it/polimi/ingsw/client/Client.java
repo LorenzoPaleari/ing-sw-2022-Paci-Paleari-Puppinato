@@ -19,8 +19,8 @@ public class Client {
                 view = new CLIView();
                 incorrect = false;
             } else if ((preferredInterface.equalsIgnoreCase("GUI"))) {
-                    //view = new GuiView();
-                    incorrect = false;
+                //view = new GuiView();
+                incorrect = false;
             } else {
                 System.out.println("Invalid choice. Try again.");
                 incorrect = true;
