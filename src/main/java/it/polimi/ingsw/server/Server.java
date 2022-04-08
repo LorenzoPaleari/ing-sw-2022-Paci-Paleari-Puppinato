@@ -6,30 +6,24 @@ import java.net.Socket;
 
 
 public class Server {
-    public static final int PORT = 4999;
+    public static final int PORT = 8080;
+    public static Server server;
+    public static  ServerSocket serverSocket;
+
     public static void main(String[] args) throws IOException {
-            ServerSocket s = new ServerSocket(PORT);
-            System.out.println("Started: " + s);
-            try {
-                Socket socket = s.accept();
-                try {
-                    System.out.println("Connection accepted: "+ socket);
-                    BufferedReader in = new BufferedReader(new InputStreamReader( socket.getInputStream()));
-                    PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter( socket.getOutputStream())),true);
-                    while (true) {
-                        String str = in.readLine();
-                        if (str.equals("END")) break;
-                        System.out.println("Echoing: " + str);
-                        out.println(str);
-                    }
-                }
-                finally {
-                    System.out.println("closing...");
-                    socket.close();
-                }
-            }
-            finally {
-                s.close();
-            }
+        serverSocket = new ServerSocket(PORT);
+        System.out.println("Started: " + serverSocket);
+        server= new Server();
+        server.acceptPlayer();
+        serverSocket.close();
+    }
+
+    public void acceptPlayer() throws IOException {
+        int numPlayer=0;
+        while(numPlayer<3){
+            Socket socket = serverSocket.accept();
+            System.out.println("Connection accepted: "+ socket);
+            numPlayer++;
+        }
     }
 }
