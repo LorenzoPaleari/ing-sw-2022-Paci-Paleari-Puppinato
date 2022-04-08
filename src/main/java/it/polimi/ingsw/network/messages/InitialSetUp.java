@@ -13,14 +13,13 @@ public class InitialSetUp implements Serializable, ControllerViewMessage {
         type = MessageType.ControllerView;
     }
 
-
-    @Override
-    public void action(View view) {
-        view.initialSetUp(boolean firstPlayer);
-    }
-
     @Override
     public MessageType getType() {
         return type;
+    }
+
+    @Override
+    public void action(View view) {
+        view.intialSetUp(boolean );
     }
 }
