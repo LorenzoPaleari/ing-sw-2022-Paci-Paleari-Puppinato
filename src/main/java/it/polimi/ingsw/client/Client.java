@@ -15,12 +15,12 @@ public class Client {
         boolean incorrect;
         do {
             System.out.print("Choose the interface you want to use [CLI/GUI]: ");
-            String preferredInterface = scanner.nextLine();
-            if ((preferredInterface.equalsIgnoreCase("CLI"))) {
+            String selection = scanner.nextLine();
+            if ((selection.equalsIgnoreCase("CLI"))) {
                 view = new CLIView(serverHandler);
                 view.start();
                 incorrect = false;
-            } else if ((preferredInterface.equalsIgnoreCase("GUI"))) {
+            } else if ((selection.equalsIgnoreCase("GUI"))) {
                 //view = new GuiView();
                 incorrect = false;
             } else {

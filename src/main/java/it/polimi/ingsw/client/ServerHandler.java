@@ -18,6 +18,8 @@ public class ServerHandler {
     public void initConnection(String serverIp){
         try{
             socket = new Socket(serverIp, Server.PORT);
+            output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
             System.out.println("socket = " +  socket);
             isConnected = true;
             listen();
