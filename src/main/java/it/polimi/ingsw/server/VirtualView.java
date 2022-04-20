@@ -3,10 +3,8 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import it.polimi.ingsw.model.player.Player;
+import java.util.*;
 
 public class VirtualView {
     private Controller controller;
@@ -40,5 +38,8 @@ public class VirtualView {
     }
     public boolean isMotherNature(int islandPosition){
         return controller.getGame().getTable().getIsland(islandPosition).isMotherNature();
+    }
+    public int getLastCharacterUsedOtherPlayer(Player player){
+        return player.getLastUsed().getWeight();
     }
 }

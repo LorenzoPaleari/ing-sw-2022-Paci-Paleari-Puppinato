@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class ClientHandler extends Thread{
@@ -44,8 +43,8 @@ public class ClientHandler extends Thread{
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
                 if (message.getType() == MessageType.ViewController) {
-                    ViewControllerMessage vmMessage = (ViewControllerMessage) message;
-                    vmMessage.action(virtualView);
+                    ViewControllerMessage vcMessage = (ViewControllerMessage) message;
+                    vcMessage.action(virtualView);
                 }
 
             } catch (IOException | ClassNotFoundException e) {
@@ -90,6 +89,11 @@ public class ClientHandler extends Thread{
         motherNature= virtualView.isMotherNature(islandPosition);
         //send(new IslandPawns(students,towers,towerColor, motherNature));
 
+    }
+    public void lastCharacterUsedOtherPlayerRequest(Player player){
+       int card;
+       card=virtualView.getLastCharacterUsedOtherPlayer(player);
+       //send(new LastUsedCharacter(card));
     }
 
 }
