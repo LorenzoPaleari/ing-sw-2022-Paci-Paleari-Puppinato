@@ -74,27 +74,9 @@ public class ClientHandler extends Thread{
     public void playerSetUp(){
         List<TowerColor> towerColor;
         towerColor = virtualView.getAvailableColor();
-
         send(new PlayerSetUp(towerColor));
     }
 
-    public void islandPawnsRequest(int islandPosition){
-        int[] students;
-        TowerColor towerColor;
-        int towers;
-        boolean motherNature;
-        students=virtualView.getIslandStudents(islandPosition);
-        towers=virtualView.getNumberIslandTowers(islandPosition);
-        towerColor=virtualView.getColorIslandTowers(islandPosition);
-        motherNature= virtualView.isMotherNature(islandPosition);
-        //send(new IslandPawns(students,towers,towerColor, motherNature));
-
-    }
-    public void lastCharacterUsedOtherPlayerRequest(Player player){
-       int card;
-       card=virtualView.getLastCharacterUsedOtherPlayer(player);
-       //send(new LastUsedCharacter(card));
-    }
 
 }
 

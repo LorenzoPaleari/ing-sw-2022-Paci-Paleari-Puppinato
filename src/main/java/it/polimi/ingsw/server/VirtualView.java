@@ -23,23 +23,4 @@ public class VirtualView {
         return controller.getAvailableColor();
     }
 
-    public  int[] getIslandStudents(int islandPosition){
-        int[] numStudent = new int[5];
-        for(int i=0;i<5;i++){
-            numStudent[i] = controller.getGame().getTable().getIsland(islandPosition).countStudent(PawnColor.getColor(i));
-        }
-        return numStudent;
-    }
-    public int getNumberIslandTowers(int islandPosition){
-        return controller.getGame().getTable().getIsland(islandPosition).getWeight();
-    }
-    public TowerColor getColorIslandTowers(int islandPosition){
-        return controller.getGame().getTable().getIsland(islandPosition).getIslandTower().get(0).getColor();
-    }
-    public boolean isMotherNature(int islandPosition){
-        return controller.getGame().getTable().getIsland(islandPosition).isMotherNature();
-    }
-    public int getLastCharacterUsedOtherPlayer(Player player){
-        return player.getLastUsed().getWeight();
-    }
 }
