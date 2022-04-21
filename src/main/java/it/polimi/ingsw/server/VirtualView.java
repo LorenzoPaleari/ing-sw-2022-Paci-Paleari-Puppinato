@@ -9,6 +9,7 @@ import java.util.*;
 public class VirtualView {
     private Controller controller;
     private List<ClientHandler> clientHandlers;
+    private Player player; //TEMPORANEO, TODO sostituire col vero giocatore che manda la request
 
     public VirtualView(Controller controller){
         this.controller=controller;
@@ -23,4 +24,22 @@ public class VirtualView {
         return controller.getAvailableColor();
     }
 
+    public void cloudChosen(int cloudPosition){
+        controller.chooseCloud(player,cloudPosition);
+    }
+
+    public void moveMotherNature(int endPosition){
+        controller.moveMotherNature(player,endPosition);
+    }
+
+    public void moveStudentToIsland(int islandPosition, PawnColor color){
+        controller.useStudentIsland(player, color, islandPosition);
+    }
+    public void moveStudentToDining(PawnColor color){
+        controller.useStudentDining(player, color);
+    }
+
+    public void useAssistant(int position){
+        controller.useAssistant(position, player);
+    }
 }

@@ -1,13 +1,10 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.InitialSetUp;
 import it.polimi.ingsw.network.messages.PlayerSetUp;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
