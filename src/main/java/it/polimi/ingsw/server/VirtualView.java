@@ -42,4 +42,12 @@ public class VirtualView {
     public void useAssistant(int position){
         controller.useAssistant(position, player);
     }
+
+    public void setUpGameInfo(int numPlayer, boolean expert){
+        controller.setExpertMode(expert);
+        controller.setNumPlayer(numPlayer);
+    }
+    public void setUpPlayerInfo(TowerColor color, String nickname){
+        controller.getGame().addPlayer(new Player(nickname, color));
+    }
 }

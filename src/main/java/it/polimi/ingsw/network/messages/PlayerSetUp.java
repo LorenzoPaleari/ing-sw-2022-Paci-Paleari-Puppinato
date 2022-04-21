@@ -10,20 +10,20 @@ import java.util.List;
 
 public class PlayerSetUp implements Serializable, ControllerViewMessage {
     private MessageType type;
-    List<TowerColor> towers;
+    private List<TowerColor> tower;
 
     public PlayerSetUp(List<TowerColor> tower){
-        this.towers = tower;
+        this.tower = tower;
         type = MessageType.ControllerView;
     }
 
     @Override
     public void action(View view) {
-
+        view.playerSetUp(tower);
     }
 
     @Override
     public MessageType getType() {
-        return null;
+        return type;
     }
 }

@@ -59,6 +59,19 @@ public class ServerHandler {
         } catch (IOException e) {
 
         }
+
+
     }
+    public void send(GenericMessage message) {
+        try{
+            output.writeUnshared(message);
+            output.flush();
+            output.reset();
+        }
+        catch(IOException e){
+            System.out.println("Errore");
+        }
+    }
+
 
 }
