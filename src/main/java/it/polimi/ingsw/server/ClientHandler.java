@@ -34,16 +34,21 @@ public class ClientHandler extends Thread{
     }
 
     public void run(){
-        initialSetUp();
+        listen();
     }
     public void listen(){
+        if (firstPlayer) {
+            initialSetUp();
+        } else {
+            playerSetUp();
+        }
+
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
                 if (message.getType() == MessageType.ViewController) {
                     ViewControllerMessage vcMessage = (ViewControllerMessage) message;
                     vcMessage.action(virtualView);
-                    break;
                 }
 
             } catch (IOException | ClassNotFoundException e) {
@@ -65,19 +70,13 @@ public class ClientHandler extends Thread{
     }
 
     public void initialSetUp(){
-        if (firstPlayer){
-            send(new InitialSetUp(firstPlayer));
-            listen();
-        }
-
-        playerSetUp();
+        send(new InitialSetUp(firstPlayer));
     }
 
     public void playerSetUp(){
         List<TowerColor> towerColor;
         towerColor = virtualView.getAvailableColor();
         send(new PlayerSetUp(towerColor));
-        listen();
     }
 
 

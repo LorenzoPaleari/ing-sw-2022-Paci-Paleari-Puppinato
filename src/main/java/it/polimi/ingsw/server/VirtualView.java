@@ -46,6 +46,7 @@ public class VirtualView {
     public void setUpGameInfo(int numPlayer, boolean expert){
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
+        clientHandlers.get(0).playerSetUp();
     }
     public void setUpPlayerInfo(TowerColor color, String nickname){
         controller.getGame().addPlayer(new Player(nickname, color));
