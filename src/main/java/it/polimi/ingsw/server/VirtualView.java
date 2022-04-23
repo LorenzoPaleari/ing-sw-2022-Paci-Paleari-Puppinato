@@ -50,5 +50,14 @@ public class VirtualView {
     }
     public void setUpPlayerInfo(TowerColor color, String nickname, String playerNickname){
         controller.addPlayer(new Player(nickname, color));
+        getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
     }
+    public ClientHandler getClientHandlerByNickname(String nickname){
+        for (ClientHandler cl: clientHandlers){
+            if(nickname.equals(cl.getPlayerNickname()))
+                return cl;
+        }
+        return null;
+    }
+
 }

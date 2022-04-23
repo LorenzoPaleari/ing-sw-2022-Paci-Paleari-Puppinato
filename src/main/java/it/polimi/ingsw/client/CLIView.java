@@ -98,6 +98,7 @@ public class CLIView implements View{
                 System.out.print("Hai sbagliato a inserire un colore... ");
 
         } while (!valid);
+
         System.out.print("Scegli un nickname:  ");
         String nickname = scanner.nextLine();
         serverHandler.setPlayerInfo(color, nickname);
