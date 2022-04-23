@@ -38,7 +38,7 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, ViewCon
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.setUpPlayerInfo(color, nickname);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.setUpPlayerInfo(color, nickname, playerNickname);
     }
 }

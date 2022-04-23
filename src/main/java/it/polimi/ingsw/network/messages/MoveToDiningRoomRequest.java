@@ -22,7 +22,7 @@ public class MoveToDiningRoomRequest implements Serializable, ViewControllerMess
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-       virtualView.moveStudentToDining(color);
+    public void action(VirtualView virtualView, String playerNickname) {
+       virtualView.moveStudentToDining(color, playerNickname);
     }
 }

@@ -20,7 +20,7 @@ public class CloudChosenRequest implements Serializable, ViewControllerMessage {
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.cloudChosen(cloudPosition);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.cloudChosen(cloudPosition, playerNickname);
     }
 }

@@ -24,7 +24,7 @@ public class MoveStudentToIslandRequest implements Serializable, ViewControllerM
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.moveStudentToIsland(islandPosition, color);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.moveStudentToIsland(islandPosition, color, playerNickname);
     }
 }

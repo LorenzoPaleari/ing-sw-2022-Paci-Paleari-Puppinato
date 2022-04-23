@@ -37,7 +37,7 @@ public class InitialSetUp implements Serializable, ControllerViewMessage, ViewCo
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.setUpGameInfo(numPlayer, expert);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.setUpGameInfo(numPlayer, expert, playerNickname);
     }
 }

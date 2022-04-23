@@ -14,17 +14,19 @@ import java.util.*;
 
 public class ClientHandler extends Thread{
     private Socket socket;
+    private String playerNickname;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
     private boolean isConnected = false;
     private boolean firstPlayer;
 
-    public ClientHandler(Socket socket, boolean firstPlayer, VirtualView virtualView){
+    public ClientHandler(Socket socket, boolean firstPlayer, VirtualView virtualView, String playerNickname){
         this.socket=socket;
         this.firstPlayer=firstPlayer;
         isConnected = true;
         this.virtualView=virtualView;
+        this.playerNickname = playerNickname;
 
         try {
             output = new ObjectOutputStream(socket.getOutputStream());
@@ -48,7 +50,7 @@ public class ClientHandler extends Thread{
                 GenericMessage message = (GenericMessage) input.readObject();
                 if (message.getType() == MessageType.ViewController) {
                     ViewControllerMessage vcMessage = (ViewControllerMessage) message;
-                    vcMessage.action(virtualView);
+                    vcMessage.action(virtualView, playerNickname);
                 }
 
             } catch (IOException | ClassNotFoundException e) {
@@ -79,7 +81,13 @@ public class ClientHandler extends Thread{
         send(new PlayerSetUp(towerColor));
     }
 
+    public String getPlayerNickname() {
+        return playerNickname;
+    }
 
+    public void setPlayerNickname(String playerNickname) {
+        this.playerNickname = playerNickname;
+    }
 }
 
 

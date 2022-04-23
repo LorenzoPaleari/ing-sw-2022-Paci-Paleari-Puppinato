@@ -21,7 +21,7 @@ public class MoveMotherNatureRequest implements Serializable, ViewControllerMess
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.moveMotherNature(endPosition);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.moveMotherNature(endPosition, playerNickname);
     }
 }

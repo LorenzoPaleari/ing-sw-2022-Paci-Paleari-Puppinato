@@ -34,7 +34,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection accepted: " + socket.getRemoteSocketAddress());
                 numPlayer++;
-                ClientHandler clientHandler=new ClientHandler(socket, firstPlayer, virtualView);
+                ClientHandler clientHandler=new ClientHandler(socket, firstPlayer, virtualView, ""+numPlayer);
                 virtualView.addClientHandler(clientHandler);
                 clientHandler.start();
                 firstPlayer=false;

@@ -21,7 +21,7 @@ public class UseAssistantRequest implements Serializable, ViewControllerMessage 
     }
 
     @Override
-    public void action(VirtualView virtualView) {
-        virtualView.useAssistant(position);
+    public void action(VirtualView virtualView, String playerNickname) {
+        virtualView.useAssistant(position, playerNickname);
     }
 }

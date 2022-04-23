@@ -4,5 +4,5 @@ import it.polimi.ingsw.server.VirtualView;
 
 public interface ViewControllerMessage extends GenericMessage {
 
-    void action(VirtualView virtualView);
+    void action(VirtualView virtualView, String playerNickname);
 }

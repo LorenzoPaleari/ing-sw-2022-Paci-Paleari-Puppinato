@@ -24,31 +24,31 @@ public class VirtualView {
         return controller.getAvailableColor();
     }
 
-    public void cloudChosen(int cloudPosition){
+    public void cloudChosen(int cloudPosition, String playerNickname){
         controller.chooseCloud(player,cloudPosition);
     }
 
-    public void moveMotherNature(int endPosition){
+    public void moveMotherNature(int endPosition, String playerNickname){
         controller.moveMotherNature(player,endPosition);
     }
 
-    public void moveStudentToIsland(int islandPosition, PawnColor color){
+    public void moveStudentToIsland(int islandPosition, PawnColor color, String playerNickname){
         controller.useStudentIsland(player, color, islandPosition);
     }
-    public void moveStudentToDining(PawnColor color){
+    public void moveStudentToDining(PawnColor color, String playerNickname){
         controller.useStudentDining(player, color);
     }
 
-    public void useAssistant(int position){
+    public void useAssistant(int position, String playerNickname){
         controller.useAssistant(position, player);
     }
 
-    public void setUpGameInfo(int numPlayer, boolean expert){
+    public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
         clientHandlers.get(0).playerSetUp();
     }
-    public void setUpPlayerInfo(TowerColor color, String nickname){
-        controller.getGame().addPlayer(new Player(nickname, color));
+    public void setUpPlayerInfo(TowerColor color, String nickname, String playerNickname){
+        controller.addPlayer(new Player(nickname, color));
     }
 }
