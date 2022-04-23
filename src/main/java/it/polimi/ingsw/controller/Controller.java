@@ -173,6 +173,13 @@ public class Controller {
         return false;
     }
 
+    public boolean isColorUsed(TowerColor color){
+        for (Player p: game.getPlayers()) {
+            if(p.getTowerColor().equals(color)) return true;
+        }
+        return false;
+    }
+
     public Player getPlayerByNickname(String nickname){
         for (Player p: game.getPlayers()){
             if(p.getNickname().equals(nickname)) return p;

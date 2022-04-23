@@ -16,6 +16,8 @@ import java.util.*;
 public class ClientHandler extends Thread{
     private Socket socket;
     private String playerNickname;
+
+    private TowerColor towerColor;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
@@ -92,6 +94,10 @@ public class ClientHandler extends Thread{
 
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
+    }
+
+    public void setTowerColor(TowerColor color) {
+        this.towerColor = color;
     }
 }
 
