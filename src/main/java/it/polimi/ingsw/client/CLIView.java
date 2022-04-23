@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.network.messages.InitialInfoSetUp;
-import it.polimi.ingsw.network.messages.InitialSetUp;
-import it.polimi.ingsw.network.messages.SetPlayerInfo;
 
 import java.util.List;
 import java.util.Scanner;
