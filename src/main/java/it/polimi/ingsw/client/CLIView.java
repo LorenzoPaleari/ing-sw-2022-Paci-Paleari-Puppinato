@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.messages.InitialInfoSetUp;
+import it.polimi.ingsw.network.messages.InitialSetUp;
 import it.polimi.ingsw.network.messages.SetPlayerInfo;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class CLIView implements View{
                 System.out.print("Errore, hai sbagliato davvero nello scrivere 3 lettere... ");
         }while(!valid2);
 
-        serverHandler.send(new InitialInfoSetUp(numPlayer, expert));
+        serverHandler.initialSetUp(numPlayer, expert);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class CLIView implements View{
         } while (!valid);
         System.out.print("Scegli un nickname:  ");
         String nickname = scanner.nextLine();
-        serverHandler.send(new SetPlayerInfo(color, nickname));
+        serverHandler.setPlayerInfo(color, nickname);
     }
 
     private boolean isCorrectIP(String serverIP){

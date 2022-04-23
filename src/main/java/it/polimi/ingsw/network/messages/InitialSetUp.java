@@ -3,16 +3,27 @@ package it.polimi.ingsw.network.messages;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.ViewControllerMessage;
+import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 
-public class InitialSetUp implements Serializable, ControllerViewMessage {
+public class InitialSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
     private MessageType type;
     private boolean firstPlayer;
+    private int numPlayer;
+    private boolean expert;
 
     public InitialSetUp(boolean firstPlayer){
         type = MessageType.ControllerView;
         this.firstPlayer = firstPlayer;
+    }
+
+    public InitialSetUp(int numPlayer, boolean expert){
+        this.numPlayer=numPlayer;
+        this.expert=expert;
+        type = MessageType.ViewController;
+
     }
 
     @Override
@@ -25,4 +36,8 @@ public class InitialSetUp implements Serializable, ControllerViewMessage {
         view.initialSetUp(firstPlayer);
     }
 
+    @Override
+    public void action(VirtualView virtualView) {
+        virtualView.setUpGameInfo(numPlayer, expert);
+    }
 }

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.messages.InitialSetUp;
+import it.polimi.ingsw.network.messages.SetPlayerInfo;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -57,11 +60,9 @@ public class ServerHandler {
             socket.close();
             isConnected = false;
         } catch (IOException e) {
-
         }
-
-
     }
+
     public void send(GenericMessage message) {
         try{
             output.writeUnshared(message);
@@ -71,6 +72,14 @@ public class ServerHandler {
         catch(IOException e){
             System.out.println("Errore");
         }
+    }
+
+    public void setPlayerInfo(TowerColor color, String nickname){
+        send(new SetPlayerInfo(color, nickname));
+    }
+
+    public void initialSetUp(int numPlayer, boolean expert){
+        send(new InitialSetUp(numPlayer, expert));
     }
 
 
