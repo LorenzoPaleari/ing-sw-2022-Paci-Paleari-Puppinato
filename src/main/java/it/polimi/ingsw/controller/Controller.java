@@ -166,7 +166,19 @@ public class Controller {
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
         characterHandler.useCharacter(player, characterPosition, islandPosition, color);
     }
+    public boolean isNicknameUsed(String nickname){
+        for (Player p: game.getPlayers()) {
+            if(p.getNickname().equals(nickname)) return true;
+        }
+        return false;
+    }
 
+    public Player getPlayerByNickname(String nickname){
+        for (Player p: game.getPlayers()){
+            if(p.getNickname().equals(nickname)) return p;
+        }
+        return null;
+    }
     public static void winner(){
         Player winner1 = null;
         Player winner2 = null;
@@ -198,4 +210,6 @@ public class Controller {
     public static Game getGame() {
         return game;
     }
+
+
 }
