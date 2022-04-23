@@ -11,7 +11,7 @@ import java.util.*;
 public class Game {
     private boolean expertMode;
     private boolean gameEnded;
-    private int numPlayer;
+    private int numPlayer = -1;
     private Table table;
     private Round round;
     private List<Player> player;
@@ -19,15 +19,6 @@ public class Game {
     public Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<>();
     }
-
-  /*  public static Game getInstance(){  //...but allow clients to get an instance via a static method
-        if(instance == null){
-            instance = new Game();
-        }
-        return instance;
-    }
-
-   */
 
     public void setNumPlayer(int num){
         numPlayer = num;

@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.messages.ColorSetUp;
 import it.polimi.ingsw.network.messages.InitialSetUp;
 import it.polimi.ingsw.network.messages.PlayerSetUp;
 
@@ -76,9 +77,13 @@ public class ClientHandler extends Thread{
     }
 
     public void playerSetUp(){
+        send(new PlayerSetUp());
+    }
+
+    public void colorSetUp(){
         List<TowerColor> towerColor;
         towerColor = virtualView.getAvailableColor();
-        send(new PlayerSetUp(towerColor));
+        send(new ColorSetUp(towerColor));
     }
 
     public String getPlayerNickname() {

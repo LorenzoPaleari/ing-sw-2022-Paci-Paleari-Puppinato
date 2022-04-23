@@ -8,11 +8,13 @@ import java.net.Socket;
 
 public class Server {
     public static final int PORT = 8080;
+    public static Controller controller;
     public static Server server;
     public static ServerSocket serverSocket;
     private static VirtualView virtualView;
+    private static int maxPlayer = 3;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try {
             serverSocket = new ServerSocket(PORT);
         }
@@ -21,7 +23,7 @@ public class Server {
         }
         System.out.println("Server successfully started");
         server= new Server();
-        Controller controller = new Controller();
+        controller = new Controller();
         virtualView= new VirtualView(controller);
         server.acceptPlayer();
     }
@@ -29,7 +31,7 @@ public class Server {
     public void acceptPlayer() {
         int numPlayer=0;
         boolean firstPlayer= true;
-        while(numPlayer<3){
+        while(numPlayer < maxPlayer){
             try {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection accepted: " + socket.getRemoteSocketAddress());
@@ -38,9 +40,16 @@ public class Server {
                 virtualView.addClientHandler(clientHandler);
                 clientHandler.start();
                 firstPlayer=false;
+
+                synchronized (virtualView){
+                    while (Controller.getGame().getNumPlayer() == -1)
+                        virtualView.wait();
+                }
             }
             catch(IOException e){
                 System.out.println("Error with connection");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -52,5 +61,9 @@ public class Server {
             } catch (IOException e) {
 
             }
+    }
+
+    public static void setMaxPlayer(int maxPlayer) {
+        Server.maxPlayer = maxPlayer;
     }
 }

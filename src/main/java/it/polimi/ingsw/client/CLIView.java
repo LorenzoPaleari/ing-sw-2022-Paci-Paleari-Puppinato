@@ -74,7 +74,14 @@ public class CLIView implements View{
     }
 
     @Override
-    public void playerSetUp(List<TowerColor> tower) {
+    public void playerSetUp() {
+        System.out.print("Scegli un nickname:  ");
+        String nickname = scanner.nextLine();
+        serverHandler.setPlayerInfo(nickname);
+    }
+
+    @Override
+    public void colorSetUp(List<TowerColor> tower) {
         boolean valid=false;
         TowerColor color = null;
         do {
@@ -99,9 +106,7 @@ public class CLIView implements View{
 
         } while (!valid);
 
-        System.out.print("Scegli un nickname:  ");
-        String nickname = scanner.nextLine();
-        serverHandler.setPlayerInfo(color, nickname);
+        serverHandler.setPlayerColor(color);
     }
 
     private boolean isCorrectIP(String serverIP){

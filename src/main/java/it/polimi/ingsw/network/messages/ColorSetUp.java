@@ -1,29 +1,29 @@
 package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.ViewControllerMessage;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class PlayerSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
+public class ColorSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
     private MessageType type;
-    private String nickname;
+    List<TowerColor> towerColor;
+    TowerColor chosenColor;
 
-    public PlayerSetUp(){
+    public ColorSetUp(List<TowerColor> towerColor){
         type = MessageType.ControllerView;
+        this.towerColor = towerColor;
     }
 
-    public PlayerSetUp(String nickname){
-        this.nickname=nickname;
+    public ColorSetUp(TowerColor color){
+        this.chosenColor=color;
         type = MessageType.ViewController;
-    }
 
-    @Override
-    public void action(View view) {
-        view.playerSetUp();
     }
 
     @Override
@@ -32,7 +32,12 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, ViewCon
     }
 
     @Override
+    public void action(View view) {
+        view.colorSetUp(towerColor);
+    }
+
+    @Override
     public void action(VirtualView virtualView, String playerNickname) {
-        virtualView.setUpPlayerInfo(nickname, playerNickname);
+        virtualView.setUpPlayerColor(chosenColor, playerNickname);
     }
 }

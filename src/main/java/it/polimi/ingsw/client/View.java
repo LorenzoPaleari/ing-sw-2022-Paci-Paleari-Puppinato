@@ -13,5 +13,7 @@ public interface View {
 
     void initialSetUp(boolean firstPlayer);
 
-    void playerSetUp(List<TowerColor> tower);
+    void playerSetUp();
+
+    void colorSetUp(List<TowerColor> tower);
 }
