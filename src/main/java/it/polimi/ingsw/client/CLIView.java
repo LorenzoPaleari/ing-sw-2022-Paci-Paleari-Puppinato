@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
 import java.util.List;
@@ -109,11 +110,48 @@ public class CLIView implements View{
         serverHandler.setPlayerColor(color);
     }
 
+    public void choseAction(int code){
+        switch (code){
+            case 1:
+                int cloudPosition=Integer.parseInt(scanner.nextLine());
+                serverHandler.cloudChosenRequest(cloudPosition);
+                break;
+            case 2:
+                int endPosition=Integer.parseInt(scanner.nextLine());
+                serverHandler.moveMotherNatureRequest(endPosition);
+                break;
+            case 3:
+                int islandPosition=Integer.parseInt(scanner.nextLine());
+                String colorString= scanner.nextLine();
+                PawnColor color=lookup(colorString);
+                serverHandler.moveStudentToIslandRequest(islandPosition, color);
+                break;
+            case 4:
+                String colorString2= scanner.nextLine();
+                PawnColor color2=lookup(colorString2);
+                serverHandler.moveToDiningRoomRequest(color2);
+                break;
+            case 5:
+                int position=Integer.parseInt(scanner.nextLine());
+                serverHandler.useAssistantRequest(position);
+                break;
+
+        }
+    }
+
     private boolean isCorrectIP(String serverIP){
         for (int i = 0; i < serverIP.length(); i++)
             if (!((serverIP.charAt(i) <= '9' && serverIP.charAt(i) >= '0') || serverIP.charAt(i) == '.'))
                 return false;
 
         return true;
+    }
+    private PawnColor lookup(String color) {
+        for (PawnColor p : PawnColor.values()) {
+            if (p.toString().equalsIgnoreCase(color)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.network.messages.ColorSetUp;
-import it.polimi.ingsw.network.messages.InitialSetUp;
-import it.polimi.ingsw.network.messages.PlayerSetUp;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -73,6 +72,26 @@ public class ServerHandler {
         catch(IOException e){
             System.out.println("Errore");
         }
+    }
+
+    public void cloudChosenRequest(int cloudPosition){
+        send(new CloudChosenRequest(cloudPosition));
+    }
+
+    public void moveMotherNatureRequest (int endPosition){
+        send(new MoveMotherNatureRequest(endPosition));
+    }
+
+    public void moveStudentToIslandRequest(int islandPosition, PawnColor color){
+        send(new MoveStudentToIslandRequest(islandPosition, color));
+    }
+
+    public void moveToDiningRoomRequest(PawnColor color){
+        send(new MoveToDiningRoomRequest(color));
+    }
+
+    public void useAssistantRequest(int position){
+        send(new UseAssistantRequest(position));
     }
 
     public void setPlayerInfo(String nickname){
