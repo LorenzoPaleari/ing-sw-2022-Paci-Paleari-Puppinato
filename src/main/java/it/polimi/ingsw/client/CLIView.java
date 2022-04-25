@@ -110,28 +110,36 @@ public class CLIView implements View{
         serverHandler.setPlayerColor(color);
     }
 
-    public void choseAction(int code){
+    public void choseAction(){
+        System.out.print("Insert a command: ");
+        int code = Integer.parseInt(scanner.nextLine());
         switch (code){
             case 1:
+                System.out.print("Insert the number of the cloud you want to chose: ");
                 int cloudPosition=Integer.parseInt(scanner.nextLine());
                 serverHandler.cloudChosenRequest(cloudPosition);
                 break;
             case 2:
+                System.out.print("Insert the number of movements of Mother Nature: ");
                 int endPosition=Integer.parseInt(scanner.nextLine());
                 serverHandler.moveMotherNatureRequest(endPosition);
                 break;
             case 3:
+                System.out.print("Insert the number of the island you want to chose: ");
                 int islandPosition=Integer.parseInt(scanner.nextLine());
+                System.out.print("Insert the color of the student you want to move: ");
                 String colorString= scanner.nextLine();
                 PawnColor color=lookup(colorString);
                 serverHandler.moveStudentToIslandRequest(islandPosition, color);
                 break;
             case 4:
+                System.out.print("Insert the color of the student you want to move: ");
                 String colorString2= scanner.nextLine();
                 PawnColor color2=lookup(colorString2);
                 serverHandler.moveToDiningRoomRequest(color2);
                 break;
             case 5:
+                System.out.print("Insert the position of the assistant card you want to use: ");
                 int position=Integer.parseInt(scanner.nextLine());
                 serverHandler.useAssistantRequest(position);
                 break;
