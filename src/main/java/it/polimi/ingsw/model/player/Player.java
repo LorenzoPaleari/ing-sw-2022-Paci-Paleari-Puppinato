@@ -16,11 +16,19 @@ public class Player {
     private Assistant lastUsed;
     private int numCoin;
 
-    public Player(String nickname, TowerColor towerColor)
-    {
-        this.nickname=nickname;
-        this.towerColor=towerColor;
+    public  Player(String nickname, TowerColor color){
+        this.nickname = nickname;
+        towerColor = color;
         state = PlayerState.WAIT;
+    }
+
+    public Player(String nickname) {
+        this.nickname=nickname;
+        state = PlayerState.WAIT;
+    }
+
+    public Player(TowerColor color){
+        this.towerColor = color;
     }
 
     public void setUp(LinkedList<Student> student, boolean expert, int numPlayer)
@@ -77,5 +85,7 @@ public class Player {
        lastUsed=deck.removeAssistant(position);
     }
 
-
+    public void setTowerColor(TowerColor towerColor) {
+        this.towerColor = towerColor;
+    }
 }

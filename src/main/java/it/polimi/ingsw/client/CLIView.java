@@ -75,8 +75,13 @@ public class CLIView implements View{
     }
 
     @Override
-    public void playerSetUp() {
-        System.out.print("Scegli un nickname:  ");
+    public void playerSetUp(boolean requestAgain) {
+        if (requestAgain == true) {
+            System.out.print("Questo nickname è già stato preso, scegline un altro:  ");
+        } else {
+            System.out.print("Scegli un nickname:  ");
+        }
+
         String nickname = scanner.nextLine();
         serverHandler.setPlayerInfo(nickname);
     }
