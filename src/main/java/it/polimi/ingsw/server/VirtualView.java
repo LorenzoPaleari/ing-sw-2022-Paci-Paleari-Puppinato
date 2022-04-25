@@ -66,14 +66,8 @@ public class VirtualView {
     }
 
     public void setUpPlayerColor(TowerColor color, String playerNickname){
-        if(!controller.isColorUsed(color)){
-            getClientHandlerByNickname(playerNickname).setTowerColor(color);
-            //lock.lock();
-            //lock.unlock();
-            controller.addPlayer(new Player(playerNickname, color));
-
-        }
-
+        getClientHandlerByNickname(playerNickname).setTowerColor(color);
+        controller.addPlayer(new Player(playerNickname, color));
     }
 
     public ClientHandler getClientHandlerByNickname(String nickname){

@@ -27,4 +27,11 @@ public enum TowerColor {
     public String toString() {
         return text;
     }
+
+    public static TowerColor getColor(String color){
+        for (TowerColor t : TowerColor.values())
+            if(t.toString().equals(color))
+                return t;
+        return null;
+    }
 }

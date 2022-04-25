@@ -85,27 +85,26 @@ public class CLIView implements View{
     public void colorSetUp(List<TowerColor> tower) {
         boolean valid=false;
         TowerColor color = null;
-        do {
-            System.out.print("Scegli un colore:  ");
-            for(TowerColor t: tower)
-                System.out.print(t.toString()+" ");
-            String colorString = scanner.nextLine();
-            if (colorString.equalsIgnoreCase("WHITE")) {
-                color=TowerColor.WHITE;
-                valid = true;
-            }
-            else if (colorString.equalsIgnoreCase("BLACK")) {
-                color=TowerColor.BLACK;
-                valid = true;
-            }
-            else if (colorString.equalsIgnoreCase("GREY")) {
-                color=TowerColor.GREY;
-                valid = true;
-            }
-            else
-                System.out.print("Hai sbagliato a inserire un colore... ");
+        if(tower.size() == 1){
+            color = tower.get(0);
+            System.out.print("Il tuo colore sarà " + tower.get(0));
+        }
+        else {
+            do {
+                System.out.print("Scegli un colore:  ");
+                for (TowerColor t : tower)
+                    System.out.print(t.toString() + " ");
+                String colorString = scanner.nextLine();
+                colorString = colorString.toUpperCase();
+                if (tower.contains(TowerColor.getColor(colorString))) {
+                    valid = true;
+                    color = TowerColor.getColor(colorString);
+                } else {
+                    System.out.print("Hai sbagliato a inserire il colore...\n ");
+                }
 
-        } while (!valid);
+            } while (!valid);
+        }
 
         serverHandler.setPlayerColor(color);
     }
