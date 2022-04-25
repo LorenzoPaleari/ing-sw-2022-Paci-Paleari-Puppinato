@@ -46,34 +46,28 @@ public class VirtualView {
 
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
         Server.setMaxPlayer(numPlayer);
+        controller.setExpertMode(expert);
+        controller.setNumPlayer(numPlayer);
         synchronized (this) {
             this.notifyAll();
         }
-        controller.setExpertMode(expert);
-        controller.setNumPlayer(numPlayer);
-        clientHandlers.get(0).playerSetUp();
+        clientHandlers.get(0).playerSetUp(false);
     }
 
     public void setUpPlayerInfo(String nickname, String playerNickname){
         if (!controller.isNicknameUsed(nickname)) {
             getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
+            controller.addPlayer(new Player(nickname));
             lock.lock();
             getClientHandlerByNickname(nickname).colorSetUp();
-            lock.unlock();
         } else {
-
+            getClientHandlerByNickname(playerNickname).playerSetUp(true);
         }
     }
 
     public void setUpPlayerColor(TowerColor color, String playerNickname){
-        if(!controller.isColorUsed(color)){
-            getClientHandlerByNickname(playerNickname).setTowerColor(color);
-            //lock.lock();
-            //lock.unlock();
-            controller.addPlayer(new Player(playerNickname, color));
-
-        }
-
+        controller.getPlayerByNickname(playerNickname).setTowerColor(color);
+        lock.unlock();
     }
 
     public ClientHandler getClientHandlerByNickname(String nickname){

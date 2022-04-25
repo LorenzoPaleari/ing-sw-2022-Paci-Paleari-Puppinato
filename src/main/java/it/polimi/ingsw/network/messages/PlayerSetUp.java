@@ -11,8 +11,10 @@ import java.io.Serializable;
 public class PlayerSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
     private MessageType type;
     private String nickname;
+    private boolean requestAgain;
 
-    public PlayerSetUp(){
+    public PlayerSetUp(boolean requestAgain){
+        this.requestAgain = requestAgain;
         type = MessageType.ControllerView;
     }
 
@@ -23,7 +25,7 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, ViewCon
 
     @Override
     public void action(View view) {
-        view.playerSetUp();
+        view.playerSetUp(requestAgain);
     }
 
     @Override

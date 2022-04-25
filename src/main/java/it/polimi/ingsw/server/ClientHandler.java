@@ -17,7 +17,6 @@ public class ClientHandler extends Thread{
     private Socket socket;
     private String playerNickname;
 
-    private TowerColor towerColor;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
@@ -45,7 +44,7 @@ public class ClientHandler extends Thread{
         if (firstPlayer) {
             initialSetUp();
         } else {
-            playerSetUp();
+            playerSetUp(false);
         }
 
         while (isConnected) {
@@ -78,8 +77,8 @@ public class ClientHandler extends Thread{
         send(new InitialSetUp(firstPlayer));
     }
 
-    public void playerSetUp(){
-        send(new PlayerSetUp());
+    public void playerSetUp(boolean requestAgain){
+        send(new PlayerSetUp(requestAgain));
     }
 
     public void colorSetUp(){
@@ -94,10 +93,6 @@ public class ClientHandler extends Thread{
 
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
-    }
-
-    public void setTowerColor(TowerColor color) {
-        this.towerColor = color;
     }
 }
 

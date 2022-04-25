@@ -13,7 +13,7 @@ public interface View {
 
     void initialSetUp(boolean firstPlayer);
 
-    void playerSetUp();
+    void playerSetUp(boolean requestAgain);
 
     void colorSetUp(List<TowerColor> tower);
 }
