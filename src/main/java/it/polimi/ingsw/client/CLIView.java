@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import java.util.List;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
+
 public class CLIView implements View{
     private Scanner scanner;
     private ServerHandler serverHandler;
@@ -154,12 +156,5 @@ public class CLIView implements View{
 
         return true;
     }
-    private PawnColor lookup(String color) {
-        for (PawnColor p : PawnColor.values()) {
-            if (p.toString().equalsIgnoreCase(color)) {
-                return p;
-            }
-        }
-        return null;
-    }
+
 }

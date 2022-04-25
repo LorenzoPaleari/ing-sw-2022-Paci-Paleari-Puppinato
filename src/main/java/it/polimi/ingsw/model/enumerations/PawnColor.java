@@ -17,6 +17,14 @@ public enum PawnColor {
                 return c;
         return null;
     }
+    public static PawnColor lookup(String color) {
+        for (PawnColor p : PawnColor.values()) {
+            if (p.toString().equalsIgnoreCase(color)) {
+                return p;
+            }
+        }
+        return null;
+    }
 
     public int getIndex() {
         return index;
