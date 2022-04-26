@@ -38,7 +38,13 @@ public class GUIView implements View {
     }
 
     @Override
+    public void printWinner(String winner1, String winner2, String nickname) {
+
+    }
+
+    @Override
     public void printError(String errorText) {
 
     }
+
 }

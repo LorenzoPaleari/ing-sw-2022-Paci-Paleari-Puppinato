@@ -59,6 +59,7 @@ public class VirtualView {
     public void setUpPlayerInfo(String nickname, String playerNickname){
         if (!controller.isNicknameUsed(nickname)) {
             getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
+
             lock.lock();
             getClientHandlerByNickname(nickname).colorSetUp();
         } else {
@@ -86,6 +87,11 @@ public class VirtualView {
 
     public void printError(String error, String player){
         getClientHandlerByNickname(player).printError(error);
+    }
+
+    public void printWinner(String winner1, String winner2){
+        for (ClientHandler c : clientHandlers)
+            c.printWinner(winner1, winner2, c.getPlayerNickname());
     }
 
 }

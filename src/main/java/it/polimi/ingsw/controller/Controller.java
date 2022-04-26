@@ -36,7 +36,7 @@ public class Controller {
     private TableHandler tableHandler;
     private CharacterHandler characterHandler;
 
-    private VirtualView virtualView;
+    private static VirtualView virtualView;
 
     public Controller(){
         game = new Game();
@@ -210,10 +210,11 @@ public class Controller {
 
         game.endGame();
 
-        if(winner2 != null)
-            System.out.println("Draw between "+winner1+" and "+winner2);
+        if(winner2 != null) {
+            virtualView.printWinner(winner1.getNickname(), winner2.getNickname());
+        }
         else
-            System.out.println(winner1 + " Has won the game");
+            virtualView.printWinner(winner1.getNickname(), null);
     }
 
     public static Game getGame() {
