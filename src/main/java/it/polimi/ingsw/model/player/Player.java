@@ -22,15 +22,6 @@ public class Player {
         state = PlayerState.WAIT;
     }
 
-    public Player(String nickname) {
-        this.nickname=nickname;
-        state = PlayerState.WAIT;
-    }
-
-    public Player(TowerColor color){
-        this.towerColor = color;
-    }
-
     public void setUp(LinkedList<Student> student, boolean expert, int numPlayer)
     {
         board = new Board(student, numPlayer, towerColor);
@@ -83,9 +74,5 @@ public class Player {
     public void addAssistant (int position)
     {
        lastUsed=deck.removeAssistant(position);
-    }
-
-    public void setTowerColor(TowerColor towerColor) {
-        this.towerColor = towerColor;
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.client.ViewUtilities.IPValidator;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
@@ -117,6 +118,12 @@ public class CLIView implements View{
         serverHandler.setPlayerColor(color);
     }
 
+    @Override
+    public void printGameBoard(GameInfo gameInfo){
+        System.out.println("Sto funzionando");
+    }
+
+    @Override
     public void choseAction(){
         System.out.print("Insert a command: ");
         int code = Integer.parseInt(scanner.nextLine());

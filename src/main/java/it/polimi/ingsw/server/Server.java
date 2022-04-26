@@ -25,6 +25,7 @@ public class Server {
         server= new Server();
         controller = new Controller();
         virtualView= new VirtualView(controller);
+        controller.setVirtualView(virtualView);
         server.acceptPlayer();
     }
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
@@ -57,7 +59,6 @@ public class VirtualView {
     public void setUpPlayerInfo(String nickname, String playerNickname){
         if (!controller.isNicknameUsed(nickname)) {
             getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
-            controller.addPlayer(new Player(nickname));
             lock.lock();
             getClientHandlerByNickname(nickname).colorSetUp();
         } else {
@@ -66,7 +67,7 @@ public class VirtualView {
     }
 
     public void setUpPlayerColor(TowerColor color, String playerNickname){
-        controller.getPlayerByNickname(playerNickname).setTowerColor(color);
+        controller.addPlayer(new Player(playerNickname, color));
         lock.unlock();
     }
 
@@ -76,6 +77,11 @@ public class VirtualView {
                 return cl;
         }
         return null;
+    }
+
+    public void printGameBoard(Game game){
+        for (ClientHandler c : clientHandlers)
+            c.printGameBoard(new GameInfo(game, c.getPlayerNickname()));
     }
 
 }

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.ColorSetUp;
+import it.polimi.ingsw.network.messages.GameInfoMessage;
 import it.polimi.ingsw.network.messages.InitialSetUp;
 import it.polimi.ingsw.network.messages.PlayerSetUp;
 
@@ -93,6 +95,10 @@ public class ClientHandler extends Thread{
 
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
+    }
+
+    public void printGameBoard(GameInfo gameInfo){
+        send(new GameInfoMessage(gameInfo));
     }
 }
 

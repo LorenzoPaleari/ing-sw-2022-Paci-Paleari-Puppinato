@@ -18,6 +18,7 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.server.VirtualView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class Controller {
     private BoardHandler boardHandler;
     private TableHandler tableHandler;
     private CharacterHandler characterHandler;
+
+    private VirtualView virtualView;
 
     public Controller(){
         game = new Game();
@@ -54,6 +57,10 @@ public class Controller {
         characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext);
     }
 
+    public void setVirtualView(VirtualView virtualView) {
+        this.virtualView = virtualView;
+    }
+
     public void setNumPlayer(int num) {
         game.setNumPlayer(num);
     }
@@ -64,8 +71,10 @@ public class Controller {
 
     public void addPlayer(Player player) {
         int remaining = game.addPlayer(player);
-        if (remaining == 0)
+        if (remaining == 0) {
             game.startGame();
+            virtualView.printGameBoard(game);
+        }
     }
 
     public List<TowerColor> getAvailableColor(){
