@@ -118,4 +118,90 @@ public class GameInfo implements Serializable {
 
         return -1;
     }
+
+    public String[] getPlayersName(){
+        String[] names = null;
+        for(int i = 0; i < players.length; i++){
+            names[i] = players[i][0];
+        }
+        return names;
+    }
+
+    public String[] getPlayersTowerColor(){
+        String[] colors = null;
+        for(int i = 0; i < players.length; i++){
+            colors[i] = players[i][1];
+        }
+        return colors;
+    }
+
+    public String getCurrentPlayer(){
+        return players[playersInfo[0]][0];
+    }
+
+    public String getFrontPlayer(){
+        return players[playersInfo[1]][0];
+    }
+
+    public int getRemainingMoves(){
+        return remainingMoves;
+    }
+
+    public int getIslandSize(int numIsland){
+        return islandSize[numIsland];
+    }
+
+    public Integer[] getEntranceStudents(String nickname){
+        Integer[] students = new Integer[5];
+        int numPlayer = 0;
+        for(int i = 0; i < players.length; i++){
+            if(players[i][0].equals(nickname)) numPlayer = i;
+        }
+        int cont = 0;
+        for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
+            students[cont] = entranceStudents[j];
+            cont++;
+        }
+        return students;
+    }
+
+    public int getBoardTower(String nickname){
+        int numPlayer = 0;
+        for(int i = 0; i < players.length; i++){
+            if(players[i][0].equals(nickname)) numPlayer = i;
+        }
+        return boardTower[numPlayer];
+    }
+
+    public int getMotherNaturePosition(){
+        return motherNaturePosition;
+    }
+
+    public Integer[] getDiningStudents(String nickname){
+        Integer[] students = new Integer[5];
+        int numPlayer = 0;
+        for(int i = 0; i < players.length; i++){
+            if(players[i][0].equals(nickname)) numPlayer = i;
+        }
+        int cont = 0;
+        for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
+            students[cont] = diningStudents[j];
+            cont++;
+        }
+        return students;
+
+    }
+
+    public Integer[] getStudentsOnIsland(int numIsland){
+        Integer[] students = new Integer[5];
+        int cont = 0;
+        for(int j = numIsland*5; j < (numIsland+1)*5; j++){
+            students[cont] = diningStudents[j];
+            cont++;
+        }
+        return students;
+    }
+
+
+
 }
