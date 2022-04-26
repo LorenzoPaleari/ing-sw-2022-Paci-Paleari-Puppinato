@@ -3,10 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.network.messages.ColorSetUp;
-import it.polimi.ingsw.network.messages.GameInfoMessage;
-import it.polimi.ingsw.network.messages.InitialSetUp;
-import it.polimi.ingsw.network.messages.PlayerSetUp;
+import it.polimi.ingsw.network.messages.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -99,6 +96,10 @@ public class ClientHandler extends Thread{
 
     public void printGameBoard(GameInfo gameInfo){
         send(new GameInfoMessage(gameInfo));
+    }
+
+    public void printError(String error){
+        send (new ErrorMessage(error));
     }
 }
 

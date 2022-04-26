@@ -52,9 +52,9 @@ public class Controller {
         islandController = new IslandControllerStandard();
         islandContext = new IslandContext(islandController);
 
-        boardHandler = new BoardHandler(game, turnController, professorContext);
-        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController);
-        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext);
+        boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
+        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
+        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView);
     }
 
     public void setVirtualView(VirtualView virtualView) {
@@ -98,7 +98,7 @@ public class Controller {
             turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING);
             sameAssistant(weight, player);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 

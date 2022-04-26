@@ -8,14 +8,17 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.server.VirtualView;
 
 public class BoardHandler {
     private static Game game;
+    private VirtualView virtualView;
     private TurnController turnController;
     private static Context professorContext;
 
-    public BoardHandler(Game game, TurnController turnController, Context professorContext){
+    public BoardHandler(Game game, TurnController turnController, Context professorContext, VirtualView virtualView){
         this.game = game;
+        this.virtualView = virtualView;
         this.professorContext = professorContext;
         this.turnController = turnController;
     }
@@ -29,7 +32,7 @@ public class BoardHandler {
             turnController.checkFullDining(board.getDiningRoom(), color);
             turnController.canMove(round.getTurn());
         } catch (Exception e){
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 

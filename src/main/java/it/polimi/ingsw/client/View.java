@@ -21,4 +21,6 @@ public interface View {
     void printGameBoard(GameInfo gameInfo);
 
     void choseAction();
+
+    void printError(String errorText);
 }

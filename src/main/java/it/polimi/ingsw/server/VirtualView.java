@@ -84,4 +84,8 @@ public class VirtualView {
             c.printGameBoard(new GameInfo(game, c.getPlayerNickname()));
     }
 
+    public void printError(String error, String player){
+        getClientHandlerByNickname(player).printError(error);
+    }
+
 }

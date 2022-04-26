@@ -7,16 +7,19 @@ import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.server.VirtualView;
 
 public class CharacterHandler {
     private TurnController turnController;
     private static Game game;
+    private VirtualView virtualView;
     private static Context professorContext;
     private final Context motherNatureContext;
     private static Context islandContext;
 
-    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext){
+    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView){
         this.game = game;
+        this.virtualView = virtualView;
         this.turnController = turnController;
         this.professorContext = professorContext;
         this.motherNatureContext = motherNatureContext;
@@ -29,7 +32,7 @@ public class CharacterHandler {
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 
@@ -47,7 +50,7 @@ public class CharacterHandler {
             turnController.checkCharacter(game, player, character.getPrice(), character);
             character.activateCharacter(game.getTable().getIsland(islandPosition));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 
@@ -60,7 +63,7 @@ public class CharacterHandler {
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 
@@ -102,7 +105,7 @@ public class CharacterHandler {
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 

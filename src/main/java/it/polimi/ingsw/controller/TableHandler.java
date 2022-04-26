@@ -13,11 +13,13 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
+import it.polimi.ingsw.server.VirtualView;
 
 import java.util.List;
 
 public class TableHandler {
     private TurnController turnController;
+    private VirtualView virtualView;
     private static Game game;
     private static Context professorContext;
     private final ProfessorController professorControllerStandard;
@@ -26,8 +28,9 @@ public class TableHandler {
     private static Context islandContext;
     private final IslandController islandController;
 
-    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorController professorControllerStandard, MotherNatureController motherNatureController, IslandController islandController){
+    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorController professorControllerStandard, MotherNatureController motherNatureController, IslandController islandController, VirtualView virtualView){
         this.game = game;
+        this.virtualView = virtualView;
         this.turnController = turnController;
         this.professorControllerStandard = professorControllerStandard;
         this.professorContext = professorContext;
@@ -44,7 +47,7 @@ public class TableHandler {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
             turnController.canMove(round.getTurn());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 
@@ -60,7 +63,7 @@ public class TableHandler {
             turnController.canMoveMother(game.getRound().getTurn());
             numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 
@@ -98,7 +101,7 @@ public class TableHandler {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN);
             turnController.checkCloud(game.getRound(), position);
         } catch (Exception e){
-            System.out.println(e.getMessage());
+            virtualView.printError(e.getMessage(), player.getNickname());
             return;
         }
 

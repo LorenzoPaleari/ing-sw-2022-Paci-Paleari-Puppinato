@@ -36,4 +36,9 @@ public class GUIView implements View {
     public void choseAction() {
 
     }
+
+    @Override
+    public void printError(String errorText) {
+
+    }
 }
