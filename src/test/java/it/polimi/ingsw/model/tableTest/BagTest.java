@@ -37,9 +37,8 @@ public class BagTest {
             assertEquals(color[i], 24);
         }
         List<Student> test1 = new LinkedList<>(bag.withdrawStudent(120));
-        Exception exception = assertThrows(BagIsEmptyException.class, ()-> {
+        assertThrows(BagIsEmptyException.class, ()-> {
            bag.withdrawStudent(1);
         });
-        assertEquals(exception.getMessage(),"Bag is Empty");
     }
 }

@@ -25,7 +25,7 @@ public class GameInfo implements Serializable {
     private int[] boardTower;
 
     private Integer[] islandStudents;
-    private int[][] islandTowers;
+    private int[] islandTowers;
 
     private CharacterType[] character;
     private int[] characterCost;
@@ -68,9 +68,10 @@ public class GameInfo implements Serializable {
         index = 0;
         for (Island i : game.getTable().getIsland()){
             tempIslandList.addAll(index*5, Arrays.asList(i.countAll()));
-            islandTowers[index][0] = i.getIslandTower().size();
-            if (islandTowers[index][0] != 0)
-                islandTowers[index][1] = i.getIslandTower().get(0).getColor().getIndex();
+            if (i.getIslandTower().size() != 0)
+                islandTowers[index] = i.getIslandTower().get(0).getColor().getIndex();
+            else
+                islandTowers[index] = -1;
 
             index++;
         }
@@ -97,7 +98,7 @@ public class GameInfo implements Serializable {
         boardTower = new int[numPlayer];
 
         islandStudents = new Integer[numIsland * 5];
-        islandTowers = new int [numIsland][2];
+        islandTowers = new int [numIsland];
 
         if (expertMode) {
             character = new CharacterType[3];
