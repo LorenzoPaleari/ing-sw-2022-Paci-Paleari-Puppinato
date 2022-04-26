@@ -51,14 +51,14 @@ public class Controller {
 
         islandController = new IslandControllerStandard();
         islandContext = new IslandContext(islandController);
-
-        boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
-        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
-        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView);
     }
 
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
+
+        boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
+        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
+        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView);
     }
 
     public void setNumPlayer(int num) {

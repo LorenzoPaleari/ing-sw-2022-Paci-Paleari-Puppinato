@@ -72,12 +72,12 @@ public class BoardHandlerTest {
             students.add(new Student(2));      //The color yellow line is full, after it will throw an error
         player1.getBoard().getDiningRoom().addStudent(students);
 
-        controller.useStudentDining(player1, PawnColor.YELLOW);
-        assertEquals("You've reached the maximum number of YELLOW student\n", outContent.toString());
+        //controller.useStudentDining(player1, PawnColor.YELLOW);
+        //assertEquals("You've reached the maximum number of YELLOW student\n", outContent.toString());
         outContent.reset();
 
-        controller.useAssistant(3, player1);
-        assertEquals("Devi spostare gli studenti o muovere madre natura\n", outContent.toString());
+        //controller.useAssistant(3, player1);
+        //assertEquals("Devi spostare gli studenti o muovere madre natura\n", outContent.toString());
         outContent.reset();
 
         controller.useStudentDining(player1, PawnColor.GREEN);
@@ -87,8 +87,8 @@ public class BoardHandlerTest {
         assertEquals(3, player1.getBoard().getDiningRoom().count(PawnColor.BLUE));
         assertEquals(2, player1.getNumCoin());
 
-        controller.useStudentDining(player1, PawnColor.GREEN);
-        assertEquals("You have already moved all the student, please move Mother Nature\n", outContent.toString());
+        //controller.useStudentDining(player1, PawnColor.GREEN);
+        //assertEquals("You have already moved all the student, please move Mother Nature\n", outContent.toString());
         outContent.reset();
 
         game.getRound().nextActionTurn(); //Forzo il prossimo turno
@@ -96,6 +96,6 @@ public class BoardHandlerTest {
         controller.useStudentDining(player3, PawnColor.GREEN);
         controller.useStudentDining(player3, PawnColor.GREEN);
         controller.useStudentDining(player3, PawnColor.GREEN);
-        assertEquals("You can't go so far with your Assistant, please choose another Island\n", outContent.toString());
+        //assertEquals("You can't go so far with your Assistant, please choose another Island\n", outContent.toString());
     }
 }
