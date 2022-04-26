@@ -101,6 +101,8 @@ public class ClientHandler extends Thread{
     public void printError(String error){
         send (new ErrorMessage(error));
     }
+
+    public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}
 }
 
 

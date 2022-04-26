@@ -14,6 +14,7 @@ public class CLIView implements View{
     private Scanner scanner;
     private ServerHandler serverHandler;
 
+
     public CLIView(ServerHandler serverHandler){
         scanner = new Scanner(System.in);
         this.serverHandler = serverHandler;
@@ -163,5 +164,24 @@ public class CLIView implements View{
 
     public void printError(String error){
         System.out.println(error);
+    }
+
+    @Override
+    public void printWinner(String winner1, String winner2, String nickname) {
+        if(winner2==null){
+            if(winner1.equals(nickname))
+                System.out.println("You have won");
+            else
+                System.out.println(winner1+" has won");
+        }
+        else
+            if(winner1.equals(nickname))
+                System.out.println("It's a draw! You and " +winner2+ " have won the game");
+            else if(winner2.equals(nickname))
+                System.out.println("It's a draw! You and " +winner1+ " have won the game");
+            else
+                System.out.println("It's a draw! "+ winner1 +" and " +winner2+ " have won the game");
+
+
     }
 }

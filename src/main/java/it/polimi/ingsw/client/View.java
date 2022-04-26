@@ -23,4 +23,7 @@ public interface View {
     void choseAction();
 
     void printError(String errorText);
+
+    void printWinner(String winner1, String winner2, String nickname);
 }
+
