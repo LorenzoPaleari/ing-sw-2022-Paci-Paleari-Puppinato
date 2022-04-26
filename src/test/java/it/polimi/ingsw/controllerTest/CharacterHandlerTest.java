@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.MotherNature;
+import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ public class CharacterHandlerTest {
         controller = new Controller();
         controller.setNumPlayer(2);
         controller.setExpertMode(true);
+        controller.setVirtualView(new VirtualView(controller));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
