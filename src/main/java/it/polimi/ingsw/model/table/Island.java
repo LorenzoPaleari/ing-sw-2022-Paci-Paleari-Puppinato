@@ -62,6 +62,15 @@ public class Island {
         return count;
     }
 
+    public Integer[] countAll(){
+        Integer[] colorsCount = new Integer[5];
+
+        for (PawnColor p : PawnColor.values())
+            colorsCount[p.getIndex()] = countStudent(p);
+
+        return colorsCount;
+    }
+
     public void addStudent(Student s)
     {
         islandStudent.add(s);

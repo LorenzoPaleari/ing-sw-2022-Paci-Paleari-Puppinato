@@ -38,4 +38,20 @@ public class Entrance {
             if(s.getColor() == color) return s;
         return null;
     }
+
+    public Integer[] countAll() {
+        int count;
+        Integer[] colorsCount = new Integer[5];
+
+        for (PawnColor p : PawnColor.values()) {
+            count = 0;
+            for (Student s : student) {
+                if (s.getColor().equals(p))
+                    count++;
+            }
+
+            colorsCount[p.getIndex()] = count;
+        }
+        return colorsCount;
+    }
 }

@@ -16,6 +16,12 @@ public class CharacterNoEntryTiles extends Character{
     public void returnNoEntryTiles() {
         numNoEntryTiles += 1;
     }
+
+    @Override
+    public int getNumNoEntryTiles() {
+        return numNoEntryTiles;
+    }
+
     @Override
     public void activateCharacter(Island island)throws NoEntryTilesSetException {
         if ((numNoEntryTiles < 1 || island.isNoEntryTiles()))

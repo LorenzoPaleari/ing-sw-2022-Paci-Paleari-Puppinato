@@ -61,4 +61,13 @@ public class DiningRoom {
         }
         return count;
     }
+
+    public Integer[] countAll() {
+        Integer[] colorsCount = new Integer[5];
+
+        for (PawnColor p : PawnColor.values())
+            colorsCount[p.getIndex()] = count(p);
+
+        return colorsCount;
+    }
 }

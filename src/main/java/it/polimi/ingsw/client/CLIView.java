@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.ViewUtilities.IPValidator;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
@@ -28,10 +29,10 @@ public class CLIView implements View{
 
             if (serverIP.equals("")){
                 valid = true;
-                serverIP = "127.0.0.1";
+                serverIP = IPValidator.getDefaultIP();
                 System.out.println(" > Default server IP has been chosen, " + serverIP);
             } else {
-                if (!isCorrectIP(serverIP)){
+                if (!IPValidator.isCorrectIP(serverIP)){
                     valid = false;
                     System.out.println(" > Server IP not valid. Please try again.");
                 } else {
@@ -152,13 +153,4 @@ public class CLIView implements View{
 
         }
     }
-
-    private boolean isCorrectIP(String serverIP){
-        for (int i = 0; i < serverIP.length(); i++)
-            if (!((serverIP.charAt(i) <= '9' && serverIP.charAt(i) >= '0') || serverIP.charAt(i) == '.'))
-                return false;
-
-        return true;
-    }
-
 }

@@ -1,10 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.Server;
-
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {

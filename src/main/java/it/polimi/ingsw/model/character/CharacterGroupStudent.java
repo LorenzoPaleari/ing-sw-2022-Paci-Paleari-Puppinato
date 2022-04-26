@@ -79,4 +79,14 @@ public class CharacterGroupStudent extends Character{
         student.addAll(list1);
 
     }
+
+    @Override
+    public int count(PawnColor pawnColor){
+        int count = 0;
+        for(Student s: student)
+            if(s.getColor().equals(pawnColor))
+                count++;
+
+        return count;
+    }
 }

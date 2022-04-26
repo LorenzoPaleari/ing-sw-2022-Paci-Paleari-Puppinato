@@ -93,6 +93,10 @@ public class Table {
         return island.get(position);
     }
 
+    public List<Island> getIsland() {
+        return island;
+    }
+
     public int getMotherPosition(){
         return motherNature.getPosition();
     }
