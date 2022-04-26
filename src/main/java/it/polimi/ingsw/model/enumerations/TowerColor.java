@@ -40,4 +40,11 @@ public enum TowerColor {
                 return t;
         return null;
     }
+
+    public static TowerColor getColor(int color){
+        for (TowerColor t : TowerColor.values())
+            if(t.index.equals(color))
+                return t;
+        return null;
+    }
 }
