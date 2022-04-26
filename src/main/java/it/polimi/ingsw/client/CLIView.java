@@ -121,6 +121,7 @@ public class CLIView implements View{
     @Override
     public void printGameBoard(GameInfo gameInfo){
         System.out.println("Sto funzionando");
+        choseAction();
     }
 
     @Override
