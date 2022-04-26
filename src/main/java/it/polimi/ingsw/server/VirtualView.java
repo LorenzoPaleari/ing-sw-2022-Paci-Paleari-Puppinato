@@ -86,7 +86,8 @@ public class VirtualView {
     }
 
     public void printError(String error, String player){
-        getClientHandlerByNickname(player).printError(error);
+        if (getClientHandlerByNickname(player) != null)
+            getClientHandlerByNickname(player).printError(error);
     }
 
     public void printWinner(String winner1, String winner2){

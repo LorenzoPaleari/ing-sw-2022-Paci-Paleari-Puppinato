@@ -165,6 +165,7 @@ public class CLIView implements View{
 
     public void printError(String error){
         System.out.println(error);
+        choseAction();
     }
 
     @Override
