@@ -56,7 +56,7 @@ public class CLIView implements View{
         do {
             System.out.print("Inserire il numero di giocatori [2..3]:  ");
             numPlayer = Integer.parseInt(scanner.nextLine());
-            if (numPlayer<2 | numPlayer>3)
+            if (numPlayer<2 || numPlayer>3)
                 System.out.print("Hai sbagliato a inserire un numero... ");
             else
                 valid1=true;
@@ -165,6 +165,7 @@ public class CLIView implements View{
 
     public void printError(String error){
         System.out.println(error);
+        choseAction();
     }
 
     @Override

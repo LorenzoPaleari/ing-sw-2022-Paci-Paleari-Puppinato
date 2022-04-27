@@ -60,27 +60,27 @@ public class CharacterHandlerTest {
         game.getTable().setCharacter(0, CharacterType.CENTAUR);
         game.getTable().setCharacter(1, CharacterType.MAGIC_DELIVERY_MAN);
 
-        //controller.useCharacter(player1, 0);
+        controller.useCharacter(player1, 0);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
         outContent.reset();
 
-        //controller.useCharacter(player1, 0, PawnColor.BLUE);
+        controller.useCharacter(player1, 0, PawnColor.BLUE);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
         outContent.reset();
 
         int colors[] = new int[1];
         colors[0] = 1;
-        //controller.useCharacter(player1, 0, colors);
+        controller.useCharacter(player1, 0, colors);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
         outContent.reset();
 
-        //controller.useCharacter(player1, 0, 6, PawnColor.BLUE);
+        controller.useCharacter(player1, 0, 6, PawnColor.BLUE);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
         outContent.reset();
 
         player1.addCoin();
         controller.useCharacter(player1, 1);
-        //controller.useCharacter(player1, 1);
+        controller.useCharacter(player1, 1);
         //assertEquals("E' già stato usato un personaggio in questo turno\n", outContent.toString());
     }
 
@@ -118,7 +118,7 @@ public class CharacterHandlerTest {
         controller.useAssistant(6, player2);
         controller.useAssistant(1, player1);
 
-        //controller.useCharacter(player1, 0, 5);
+        controller.useCharacter(player1, 0, 5);
        // assertEquals("You don't have any other No Entry Tile left or the chosen island has already one No Entry Tile on\n", outContent.toString());
     }
 
@@ -129,11 +129,11 @@ public class CharacterHandlerTest {
         List<Tower> towers = new LinkedList<>();
         towers.add(new Tower(TowerColor.WHITE));
         game.getRound().getTurn().resetRemainingMovements(0); //Forzo il movimento degli studenti
-        //controller.moveMotherNature(player1, 3);
+        controller.moveMotherNature(player1, 3);
         //assertEquals(0, game.getTable().getMotherPosition()); //Non si è mossa
 
         controller.useCharacter(player1, 0);  //Testo che io possa muovere madre natura di 3 caselle e non solo di 1
-        //controller.moveMotherNature(player1, 5);  //Errore
+        controller.moveMotherNature(player1, 5);  //Errore
         game.getTable().getIsland(3).addTower(towers);
         controller.moveMotherNature(player1, 3);
         assertEquals(3, game.getTable().getMotherPosition());

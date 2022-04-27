@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.ViewUtilities;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
@@ -203,6 +204,13 @@ public class GameInfo implements Serializable {
         return students;
     }
 
+    public TowerColor getTowersOnIsland(int numIsland){
+        if(islandTowers[numIsland] == - 1) return null;
+        else return TowerColor.getColor(islandTowers[numIsland]);
+    }
 
+    public CharacterType[] getCharacter(){
+        return character;
+    }
 
 }

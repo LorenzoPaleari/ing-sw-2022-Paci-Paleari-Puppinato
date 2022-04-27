@@ -1,10 +1,7 @@
 package it.polimi.ingsw.exceptions;
 
 public class MaxStudentReachedException extends Exception{
-    private String message;
-    public MaxStudentReachedException(String s) {
-        message = s;
-    }
+    private String message ="Max student reached in this island";
 
     @Override
     public String getMessage() {

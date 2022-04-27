@@ -12,10 +12,10 @@ public class WrongPhaseException extends Exception{
 
     public WrongPhaseException(PlayerState state) {
         if (state.equals(PlayerState.PLANNING))
-            message = "Devi scegliere un assistente";
+            message = "You must choose an Assistant";
         else if (state.equals(PlayerState.ACTION))
-            message = "Devi spostare gli studenti o muovere madre natura";
+            message = "You must move students or mother nature";
         else
-            message = "Devi scegliere una Nuvola";
+            message = "You have to choose a cloud";
     }
 }

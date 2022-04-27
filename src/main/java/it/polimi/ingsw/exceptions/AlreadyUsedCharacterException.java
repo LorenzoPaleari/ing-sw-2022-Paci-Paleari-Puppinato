@@ -1,7 +1,7 @@
 package it.polimi.ingsw.exceptions;
 
 public class AlreadyUsedCharacterException extends Exception{
-    private String message = "E' già stato usato un personaggio in questo turno";
+    private String message = "A character has already been used this turn";
 
     @Override
     public String getMessage() {
