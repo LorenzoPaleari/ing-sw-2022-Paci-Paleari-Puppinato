@@ -2,6 +2,8 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
+import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -31,9 +33,10 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
+        } catch (GeneralSupplyFinishedException e){
         }
 
         if (character.getType().equals(CharacterType.KNIGHT))
@@ -49,9 +52,10 @@ public class CharacterHandler {
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
             character.activateCharacter(game.getTable().getIsland(islandPosition));
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
+        } catch (GeneralSupplyFinishedException e){
         }
 
         game.getRound().getTurn().setUsedCharacter(true);
@@ -62,9 +66,10 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
+        } catch (GeneralSupplyFinishedException e){
         }
 
         try {
@@ -81,9 +86,10 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
+        } catch (GeneralSupplyFinishedException e){
         }
 
         PawnColor[] color;
@@ -104,9 +110,10 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
+        } catch (GeneralSupplyFinishedException e){
         }
 
         try {

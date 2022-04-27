@@ -1,15 +1,12 @@
 package it.polimi.ingsw.controllerTest;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.exceptions.BagIsEmptyException;
-import it.polimi.ingsw.exceptions.MaxStudentReachedException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.MotherNature;
-import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 

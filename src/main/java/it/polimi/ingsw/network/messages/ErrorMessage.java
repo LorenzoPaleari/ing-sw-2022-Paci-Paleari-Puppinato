@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
 
@@ -8,16 +9,16 @@ import java.io.Serializable;
 
 public class ErrorMessage implements Serializable, ControllerViewMessage {
     private MessageType type;
-    private String errorText;
+    private ClientException clientException;
 
-    public ErrorMessage(String text){
+    public ErrorMessage(ClientException exception){
         type = MessageType.ControllerView;
-        errorText = text;
+        clientException = exception;
     }
 
     @Override
     public void action(View view) {
-        view.printError(errorText);
+        view.printError(clientException);
     }
 
     @Override

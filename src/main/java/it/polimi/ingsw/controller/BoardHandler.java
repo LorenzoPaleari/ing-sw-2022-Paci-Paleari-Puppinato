@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Round;
@@ -31,8 +32,8 @@ public class BoardHandler {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
             turnController.checkFullDining(board.getDiningRoom(), color);
             turnController.canMove(round.getTurn());
-        } catch (Exception e){
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e){
+            virtualView.printError(e, player.getNickname());
             return;
         }
 
@@ -46,7 +47,6 @@ public class BoardHandler {
                 game.getTable().withdrawCoin();
                 player.addCoin();
             } catch (GeneralSupplyFinishedException e){
-                System.out.println(e.getMessage());
             }
         }
     }

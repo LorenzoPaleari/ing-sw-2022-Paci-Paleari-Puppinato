@@ -1,12 +1,13 @@
 package it.polimi.ingsw.controller.motherNatureController;
 
-import it.polimi.ingsw.exceptions.TooMuchMovesException;
+import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
 public class MotherNatureControllerStandard implements MotherNatureController{
 
-    public int checkMotherNature(Table table, int endPosition, Player player) throws TooMuchMovesException {
+    public int checkMotherNature(Table table, int endPosition, Player player) throws ClientException {
         int numMoves;
 
         int initPosition = table.getMotherPosition();
@@ -16,7 +17,7 @@ public class MotherNatureControllerStandard implements MotherNatureController{
             numMoves = endPosition - initPosition;
 
         if (numMoves > player.getLastUsed().getNumMovement())
-            throw new TooMuchMovesException();
+            throw new ClientException(ErrorType.TOO_MUCH_MOVES);
 
             return numMoves;
 

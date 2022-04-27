@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
-import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -21,7 +21,7 @@ public abstract class Character {
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext){}
     public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {}
     public void activateCharacter(Player player, PawnColor[] color){}
-    public void activateCharacter(Island island) throws NoEntryTilesSetException{}
+    public void activateCharacter(Island island) throws ClientException {}
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}
 
     public Character (CharacterType type){

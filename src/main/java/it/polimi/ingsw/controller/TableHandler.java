@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
 import it.polimi.ingsw.controller.professorController.ProfessorController;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -46,8 +47,8 @@ public class TableHandler {
         try {
             turnController.checkPermission(round.getTurn(), player, PlayerState.ACTION);
             turnController.canMove(round.getTurn());
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
         }
 
@@ -62,8 +63,8 @@ public class TableHandler {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
             turnController.canMoveMother(game.getRound().getTurn());
             numMoves = motherNatureContext.motherNatureControl(game.getTable(), endPosition, player);
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
         }
 
@@ -100,8 +101,8 @@ public class TableHandler {
         try {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN);
             turnController.checkCloud(game.getRound(), position);
-        } catch (Exception e){
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e){
+            virtualView.printError(e, player.getNickname());
             return;
         }
 

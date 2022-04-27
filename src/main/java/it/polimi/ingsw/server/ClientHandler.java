@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
@@ -98,7 +99,7 @@ public class ClientHandler extends Thread{
         send(new GameInfoMessage(gameInfo));
     }
 
-    public void printError(String error){
+    public void printError(ClientException error){
         send (new ErrorMessage(error));
     }
 

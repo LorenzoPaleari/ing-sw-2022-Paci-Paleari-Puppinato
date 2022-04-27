@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
@@ -85,9 +86,9 @@ public class VirtualView {
             c.printGameBoard(new GameInfo(game, c.getPlayerNickname()));
     }
 
-    public void printError(String error, String player){
+    public void printError(ClientException exception, String player){
         if (getClientHandlerByNickname(player) != null)
-            getClientHandlerByNickname(player).printError(error);
+            getClientHandlerByNickname(player).printError(exception);
     }
 
     public void printWinner(String winner1, String winner2){

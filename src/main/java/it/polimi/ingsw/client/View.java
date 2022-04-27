@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface View {
 
     void choseAction();
 
-    void printError(String errorText);
+    void printError(ClientException clientException);
 
     void printWinner(String winner1, String winner2, String nickname);
 }

@@ -97,8 +97,8 @@ public class Controller {
         try {
             turnController.checkPermission(round.getTurn(), player, PlayerState.PLANNING);
             sameAssistant(weight, player);
-        } catch (Exception e) {
-            virtualView.printError(e.getMessage(), player.getNickname());
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
             return;
         }
 
@@ -111,7 +111,7 @@ public class Controller {
         }
     }
 
-    private void sameAssistant(int weight, Player player) throws SameAssistantException {
+    private void sameAssistant(int weight, Player player) throws ClientException {
         boolean value = false;
         List<Integer> weights = new LinkedList<>();
         int size = player.getDeck().getSize();
@@ -137,7 +137,7 @@ public class Controller {
         }
 
         if (value)
-            throw new SameAssistantException();
+            throw new ClientException(ErrorType.SAME_ASSISTANT);
     }
 
     public void useStudentDining(Player player, PawnColor color){

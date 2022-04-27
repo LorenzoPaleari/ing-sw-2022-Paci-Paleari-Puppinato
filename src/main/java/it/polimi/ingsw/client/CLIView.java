@@ -2,6 +2,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.client.ViewUtilities.IPValidator;
+import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
@@ -163,8 +165,14 @@ public class CLIView implements View{
         }
     }
 
-    public void printError(String error){
-        System.out.println(error);
+    @Override
+    public void printError(ClientException exception){
+        if (exception.getErrorType().equals(ErrorType.NOT_ENOUGH_MONEY))
+            System.out.println(exception.getErrorType().getErrorText() + exception.getPrice());
+        else if (exception.getErrorType().equals(ErrorType.MAX_STUDENT_REACHED))
+            System.out.println(exception.getErrorType().getErrorText() + exception.getPawnColor());
+        else
+            System.out.println(exception.getErrorType().getErrorText());
         choseAction();
     }
 

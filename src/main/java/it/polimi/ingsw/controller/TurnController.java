@@ -12,9 +12,9 @@ import it.polimi.ingsw.model.player.Player;
 
 public class TurnController {
 
-    public void checkCharacter(Game game, Player player, int costo, Character character) throws Exception {
+    public void checkCharacter(Game game, Player player, int costo, Character character) throws ClientException, GeneralSupplyFinishedException {
         if(game.getRound().getTurn().isUsedCharacter())
-            throw new AlreadyUsedCharacterException();
+            throw new ClientException(ErrorType.ALREADY_USED_CHARACTER);
 
         checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
 
@@ -29,46 +29,50 @@ public class TurnController {
         }
     }
 
-    public void checkPermission(Turn turn, Player player, PlayerState state) throws Exception {
+    public void checkPermission(Turn turn, Player player, PlayerState state) throws ClientException {
         checkCorrectTurn(turn, player);
         checkCorrectAction(player, state);
     }
 
-    public void canMove(Turn turn) throws WrongActionException {
+    public void canMove(Turn turn) throws ClientException {
         if (turn.getRemainingMovements() == 0)
-            throw new WrongActionException(0);
+            throw new ClientException(ErrorType.WRONG_ACTION);
 
         turn.updateRemainingMovements();
     }
 
-    public void canMoveMother(Turn turn) throws WrongActionException {
+    public void canMoveMother(Turn turn) throws ClientException {
         if (turn.getRemainingMovements() > 0)
-            throw new WrongActionException(1);
-
+            throw new ClientException(ErrorType.WRONG_ACTION2);
     }
 
-    public void enoughMoney(Player player, int costo) throws NotEnoughMoneyException {
+    public void enoughMoney(Player player, int costo) throws ClientException {
         if (player.getNumCoin() < costo)
-            throw new NotEnoughMoneyException("You don't have enough money to use this character (Cost = "+costo+ ")");
+            throw new ClientException(ErrorType.NOT_ENOUGH_MONEY, costo);
     }
 
-    public void checkFullDining(DiningRoom dining, PawnColor color) throws MaxStudentReachedException {
+    public void checkFullDining(DiningRoom dining, PawnColor color) throws ClientException {
         if (dining.count(color) == 10)
-            throw new MaxStudentReachedException("You've reached the maximum number of "+ color +" student");
+            throw new ClientException(ErrorType.MAX_STUDENT_REACHED, color);
     }
 
-    public void checkCorrectTurn(Turn turn, Player player) throws NotYourTurnException {
+    public void checkCorrectTurn(Turn turn, Player player) throws ClientException {
         if(!turn.getCurrentPlayer().equals(player))
-            throw new NotYourTurnException();
+            throw new ClientException(ErrorType.NOT_YOUR_TURN);
     }
 
-    public void checkCorrectAction(Player player, PlayerState state) throws WrongPhaseException {
-        if (!player.getState().equals(state))
-            throw new WrongPhaseException(player.getState());
+    public void checkCorrectAction(Player player, PlayerState state) throws ClientException {
+        if (!player.getState().equals(state)) {
+            switch (player.getState()){
+                case WAIT: throw new ClientException(ErrorType.WRONG_PHASE);
+                case ACTION: throw new ClientException(ErrorType.WRONG_PHASE2);
+                case ENDTURN: throw new ClientException(ErrorType.WRONG_PHASE3);
+            }
+        }
     }
 
-    public void checkCloud(Round round, int position) throws AlreadyChosenCloudException {
+    public void checkCloud(Round round, int position) throws ClientException {
         if (round.getCloudChosen().contains(position))
-            throw new AlreadyChosenCloudException();
+            throw new ClientException(ErrorType.ALREADY_CHOSEN_CLOUD);
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.character;
 
-import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
+import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Island;
 
@@ -23,9 +24,9 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island)throws NoEntryTilesSetException {
+    public void activateCharacter(Island island)throws ClientException {
         if ((numNoEntryTiles < 1 || island.isNoEntryTiles()))
-            {throw new NoEntryTilesSetException("You don't have any other No Entry Tile left or the chosen island has already one No Entry Tile on");}
+            {throw new ClientException(ErrorType.NO_ENTRY_TILES_SET);}
         else {
             island.setNoEntryTiles(true);
             numNoEntryTiles -= 1;

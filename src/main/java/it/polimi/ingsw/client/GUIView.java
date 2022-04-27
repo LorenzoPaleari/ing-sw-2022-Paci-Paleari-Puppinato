@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class GUIView implements View {
     }
 
     @Override
-    public void printError(String errorText) {
+    public void printError(ClientException exception) {
 
     }
 
