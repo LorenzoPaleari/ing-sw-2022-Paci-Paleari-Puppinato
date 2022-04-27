@@ -8,8 +8,8 @@ import it.polimi.ingsw.controller.professorController.ProfessorControllerModifie
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Island;
 
-//CONTROL_PROFESSOR
-//FAKE_MOTHER_NATURE
+//FARMER
+//HERALD
 public class CharacterGroup2 extends Character {
 
     private ProfessorController  professor= new ProfessorControllerModified();

@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 
-//NO_TOWER
+//CENTAUR
 //RETURN
 public class CharacterGroup4 extends Character{
     private IslandController island = new IslandControllerNoTower();

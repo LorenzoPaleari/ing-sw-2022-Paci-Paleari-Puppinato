@@ -15,7 +15,7 @@ public class CharacterTest {
     private Character character;
     @BeforeEach
     void setUp(){
-        character=factory.getCharacter(CharacterType.ADD_MOVES, new Bag());
+        character=factory.getCharacter(CharacterType.MAGIC_DELIVERY_MAN, new Bag());
     }
     @AfterEach
     void tearDown(){
@@ -24,9 +24,9 @@ public class CharacterTest {
     @Test
     void firstUse(){
         assertEquals(character.getType().getDescription(),"You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.");
-        assertEquals(character.getType().getText(),CharacterType.ADD_MOVES.toString());
+        assertEquals(character.getType().getText(),CharacterType.MAGIC_DELIVERY_MAN.toString());
         character.firstUse();
-        assertEquals(character.getType(), CharacterType.ADD_MOVES);
+        assertEquals(character.getType(), CharacterType.MAGIC_DELIVERY_MAN);
         assertTrue(character.isUsed());
         assertEquals(character.getPrice(), 2);
     }

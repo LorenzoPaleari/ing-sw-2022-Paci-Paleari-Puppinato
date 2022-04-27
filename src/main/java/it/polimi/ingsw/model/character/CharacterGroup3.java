@@ -12,7 +12,7 @@ import it.polimi.ingsw.model.player.Player;
 import java.util.LinkedList;
 import java.util.List;
 
-//MORE_INFLUENCE
+//KNIGHT
 //EXCHANGE
 public class CharacterGroup3 extends Character{
     private IslandController island = new IslandControllerMoreInfluence();

@@ -36,7 +36,7 @@ public class CharacterHandler {
             return;
         }
 
-        if (character.getType().equals(CharacterType.MORE_INFLUENCE))
+        if (character.getType().equals(CharacterType.KNIGHT))
             IslandControllerMoreInfluence.setPlayer(player);
         character.activateCharacter(professorContext, motherNatureContext, islandContext);
 

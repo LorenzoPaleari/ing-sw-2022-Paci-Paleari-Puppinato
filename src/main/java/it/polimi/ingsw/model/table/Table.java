@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.table;
 
-import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.character.Factory;
@@ -185,7 +184,7 @@ public class Table {
             if (islandCurr.isNoEntryTiles() && islandNotCurr.isNoEntryTiles()) {
                 islandCurr.setNoEntryTiles(true);
                 for (Character c : character){
-                    if (c.getType().equals(CharacterType.NO_ENTRY_TILES)) {
+                    if (c.getType().equals(CharacterType.GRANDMOTHER_HERBS)) {
                         c.returnNoEntryTiles();
                     }
                 }

@@ -10,8 +10,8 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 
-//ADD_MOVES
-//NO_COLOR
+//MAGIC_DELIVERY_MAN
+//MUSHROOM_HUNTER
 public class CharacterGroup1 extends Character{
 
     private IslandController islandController= new IslandControllerNoColor();

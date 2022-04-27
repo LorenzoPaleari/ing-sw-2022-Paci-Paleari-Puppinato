@@ -77,7 +77,7 @@ public class TableHandler {
     public static void updateIsland(Island island){
         if (island.isNoEntryTiles()){
             for (int i = 0; i < 3; i++)
-                if (game.getTable().getCharacter(i).getType().equals(CharacterType.NO_ENTRY_TILES)) {
+                if (game.getTable().getCharacter(i).getType().equals(CharacterType.GRANDMOTHER_HERBS)) {
                     game.getTable().getCharacter(i).returnNoEntryTiles();
                     island.setNoEntryTiles(false);
                     return;

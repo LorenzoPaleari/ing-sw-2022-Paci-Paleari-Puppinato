@@ -62,7 +62,7 @@ public class TableHandlerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.NO_ENTRY_TILES);
+        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
         game.getRound().getTurn().resetRemainingMovements(1);
         //controller.moveMotherNature(player1, 1);
         //assertEquals("Before moving mother nature, please move all the students\n",outContent.toString());

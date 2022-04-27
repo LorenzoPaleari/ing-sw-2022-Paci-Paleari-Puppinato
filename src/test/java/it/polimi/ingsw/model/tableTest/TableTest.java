@@ -76,8 +76,8 @@ class TableTest {
         table.mergeIsland(0);
         assertEquals(table.getNumIsland(), 12, "no Island was merged");
 
-        table.setCharacter(0, CharacterType.NO_ENTRY_TILES);
-        assertEquals(table.getCharacter(0).getType(), CharacterType.NO_ENTRY_TILES);
+        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        assertEquals(table.getCharacter(0).getType(), CharacterType.GRANDMOTHER_HERBS);
         List<Tower> test1= new LinkedList<>();
         test1.add(new Tower(TowerColor.BLACK));
         table.getIsland(0).addTower(test1);
@@ -122,17 +122,17 @@ class TableTest {
     }
     @Test
     void setCharacter(){
-        table.setCharacter(0, CharacterType.ADD_MOVES);
-        assertEquals(table.getCharacter(0).getType(), CharacterType.ADD_MOVES);
-        table.setCharacter(0, CharacterType.CONTROL_PROFESSOR);
-        assertEquals(table.getCharacter(0).getType(),CharacterType.CONTROL_PROFESSOR);
-        table.setCharacter(0, CharacterType.MORE_INFLUENCE);
-        assertEquals(table.getCharacter(0).getType(),CharacterType.MORE_INFLUENCE);
-        table.setCharacter(0, CharacterType.NO_TOWER);
-        assertEquals(table.getCharacter(0).getType(),CharacterType.NO_TOWER);
-        table.setCharacter(0, CharacterType.ADD_STUDENT_DINING);
-        assertEquals(table.getCharacter(0).getType(),CharacterType.ADD_STUDENT_DINING);
-        table.setCharacter(0, CharacterType.NO_ENTRY_TILES);
-        assertEquals(table.getCharacter(0).getType(),CharacterType.NO_ENTRY_TILES);
+        table.setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN);
+        assertEquals(table.getCharacter(0).getType(), CharacterType.MAGIC_DELIVERY_MAN);
+        table.setCharacter(0, CharacterType.FARMER);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.FARMER);
+        table.setCharacter(0, CharacterType.KNIGHT);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.KNIGHT);
+        table.setCharacter(0, CharacterType.CENTAUR);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.CENTAUR);
+        table.setCharacter(0, CharacterType.SPOILED_PRINCESS);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.SPOILED_PRINCESS);
+        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        assertEquals(table.getCharacter(0).getType(),CharacterType.GRANDMOTHER_HERBS);
     }
 }

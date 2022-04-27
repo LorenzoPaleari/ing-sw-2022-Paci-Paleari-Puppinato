@@ -4,7 +4,7 @@ import it.polimi.ingsw.exceptions.NoEntryTilesSetException;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Island;
 
-//NO_ENTRY_TILES
+//GRANDMOTHER_HERBS
 public class CharacterNoEntryTiles extends Character{
     private int numNoEntryTiles;
     public CharacterNoEntryTiles (CharacterType type){

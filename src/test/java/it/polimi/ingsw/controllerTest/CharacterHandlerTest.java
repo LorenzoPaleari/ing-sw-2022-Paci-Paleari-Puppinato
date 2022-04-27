@@ -57,8 +57,8 @@ public class CharacterHandlerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.NO_TOWER);
-        game.getTable().setCharacter(1, CharacterType.ADD_MOVES);
+        game.getTable().setCharacter(0, CharacterType.CENTAUR);
+        game.getTable().setCharacter(1, CharacterType.MAGIC_DELIVERY_MAN);
 
         //controller.useCharacter(player1, 0);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
@@ -89,7 +89,7 @@ public class CharacterHandlerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.NO_ENTRY_TILES);
+        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
 
         for (int i = 0; i < 7; i++)
             for (Player p : game.getPlayers())
@@ -124,7 +124,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useAdd_MovesCharacter(){
-        game.getTable().setCharacter(0, CharacterType.ADD_MOVES);
+        game.getTable().setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN);
 
         List<Tower> towers = new LinkedList<>();
         towers.add(new Tower(TowerColor.WHITE));
@@ -151,7 +151,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useNo_ColorCharacter(){
-        game.getTable().setCharacter(0, CharacterType.NO_COLOR);
+        game.getTable().setCharacter(0, CharacterType.MUSHROOM_HUNTER);
 
         game.getRound().getTurn().resetRemainingMovements(0);
         game.getTable().getIsland(1).getIslandStudent().clear();
@@ -176,7 +176,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useControl_ProfessorCharacter(){
-        game.getTable().setCharacter(0, CharacterType.CONTROL_PROFESSOR);
+        game.getTable().setCharacter(0, CharacterType.FARMER);
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         controller.useStudentDining(player1, PawnColor.GREEN);
@@ -193,7 +193,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useFake_Mother_NatureCharacter(){
-        game.getTable().setCharacter(0, CharacterType.FAKE_MOTHER_NATURE);
+        game.getTable().setCharacter(0, CharacterType.HERALD);
 
         player1.addCoin();
         player1.addCoin();
@@ -206,7 +206,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useMore_InfluenceCharacter(){
-        game.getTable().setCharacter(0, CharacterType.MORE_INFLUENCE);
+        game.getTable().setCharacter(0, CharacterType.KNIGHT);
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         player1.getBoard().getEntrance().addStudent(new Student(0));
@@ -236,7 +236,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useExchangeCharacter(){
-        game.getTable().setCharacter(0, CharacterType.STUDENT_EXCHANGE);
+        game.getTable().setCharacter(0, CharacterType.MINSTREL);
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         player1.getBoard().getEntrance().addStudent(new Student(1));
@@ -264,7 +264,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useNo_TowerCharacter(){
-        game.getTable().setCharacter(0, CharacterType.NO_TOWER);
+        game.getTable().setCharacter(0, CharacterType.CENTAUR);
 
         List<Tower> towers = new LinkedList<>();
         towers.addAll(player2.getBoard().getTowerCourt().removeTower(2));
@@ -290,7 +290,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useReturnCharacter(){
-        game.getTable().setCharacter(0, CharacterType.RETURN_STUDENT);
+        game.getTable().setCharacter(0, CharacterType.THIEF);
 
         player1.getBoard().getEntrance().addStudent(new Student(4));
         for (int i = 0; i < 3; i++)
@@ -316,7 +316,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useAdd_Student_DinningCharacter() throws BagIsEmptyException {
-        game.getTable().setCharacter(0, CharacterType.ADD_STUDENT_DINING);
+        game.getTable().setCharacter(0, CharacterType.SPOILED_PRINCESS);
 
         game.getTable().getCharacter(0).addStudent(new Student(0));
         game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
@@ -329,7 +329,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useAdd_Student_IslandCharacter() throws BagIsEmptyException {
-        game.getTable().setCharacter(0, CharacterType.ADD_STUDENT_ISLAND);
+        game.getTable().setCharacter(0, CharacterType.MONK);
 
         game.getTable().getCharacter(0).addStudent(new Student(0));
         game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
@@ -341,7 +341,7 @@ public class CharacterHandlerTest {
 
     @Test
     void useReplaceCharacter(){
-        game.getTable().setCharacter(0, CharacterType.REPLACE_STUDENT);
+        game.getTable().setCharacter(0, CharacterType.JESTER);
 
         List<Student> students = new LinkedList<>();
         students.add(new Student(4));

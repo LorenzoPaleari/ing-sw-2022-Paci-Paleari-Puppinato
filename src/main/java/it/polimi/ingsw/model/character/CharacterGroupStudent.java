@@ -13,8 +13,8 @@ import it.polimi.ingsw.model.table.Island;
 
 import java.util.*;
 
-//ADD_STUDENT_ISLAND
-//ADD_STUDENT_DINING
+//MONK
+//SPOILED_PRINCESS
 //REPLACE
 public class CharacterGroupStudent extends Character{
     private Bag bag;
