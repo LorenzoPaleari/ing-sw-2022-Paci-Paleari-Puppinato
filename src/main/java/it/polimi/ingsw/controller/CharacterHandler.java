@@ -13,11 +13,11 @@ import it.polimi.ingsw.server.VirtualView;
 
 public class CharacterHandler {
     private TurnController turnController;
-    private static Game game;
+    private Game game;
     private VirtualView virtualView;
-    private static Context professorContext;
+    private Context professorContext;
     private final Context motherNatureContext;
-    private static Context islandContext;
+    private Context islandContext;
 
     public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView){
         this.game = game;

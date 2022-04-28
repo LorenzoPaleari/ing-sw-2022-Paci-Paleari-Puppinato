@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.MotherNature;
+import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ControllerTest {
     private Controller controller;
+    private LobbyHandler lobbyHandler;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);
     Player player3= new Player("TEST3", TowerColor.GREY);
@@ -25,18 +27,18 @@ public class ControllerTest {
 
     @BeforeEach
     void setUp(){
+        lobbyHandler = new LobbyHandler();
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller));
+        controller.setVirtualView(new VirtualView(controller, lobbyHandler));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
-
-        MotherNature.getInstance().setPosition(0);
-
         game = controller.getGame();
+
+        game.getTable().getMotherNature().setPosition(0);
     }
 
     @AfterEach
@@ -151,7 +153,7 @@ public class ControllerTest {
         player2.getBoard().getTowerCourt().removeTower(3);
         player3.getBoard().getTowerCourt().removeTower(3);
 
-        Controller.winner();
+        controller.getTableHandler().winner();
         //String expected = player1 + " Has won the game\n";
         //assertEquals(expected, outContent.toString());
     }
@@ -165,7 +167,7 @@ public class ControllerTest {
         player2.getBoard().getTowerCourt().removeTower(4);
         player3.getBoard().getTowerCourt().removeTower(3);
 
-        Controller.winner();
+        controller.getTableHandler().winner();
         //String expected = "Draw between " +player1+ " and " +player2 + "\n";
         //assertEquals(expected, outContent.toString());
     }

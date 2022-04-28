@@ -20,7 +20,7 @@ public class Table {
     private List<Professor> professor;
 
     public Table(int numPlayer,boolean expert) {
-        motherNature = MotherNature.getInstance();
+        motherNature = new MotherNature();
         Factory factory = new Factory();
 
         bag=new Bag();
@@ -90,6 +90,10 @@ public class Table {
     public Island getIsland(int position)
     {
         return island.get(position);
+    }
+
+    public MotherNature getMotherNature() {
+        return motherNature;
     }
 
     public List<Island> getIsland() {

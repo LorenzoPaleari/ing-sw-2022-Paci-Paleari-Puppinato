@@ -25,18 +25,18 @@ import java.util.List;
 
 public class Controller {
     private final TurnController turnController;
-    private static Context professorContext;
+    private Context professorContext;
     private final ProfessorController professorControllerStandard;
     private final Context motherNatureContext;
     private final MotherNatureController motherNatureController;
-    private static Context islandContext;
+    private Context islandContext;
     private final IslandController islandController;
-    private static Game game;
+    private Game game;
     private BoardHandler boardHandler;
     private TableHandler tableHandler;
     private CharacterHandler characterHandler;
 
-    private static VirtualView virtualView;
+    private VirtualView virtualView;
 
     public Controller(){
         game = new Game();
@@ -188,38 +188,12 @@ public class Controller {
         }
         return null;
     }
-    public static void winner(){
-        Player winner1 = null;
-        Player winner2 = null;
-        int numTowers = 9;
-        int numProfessors = 0;
 
-        for (Player p: game.getPlayers()){
-            int nTowers = p.getBoard().getTowerCourt().getTower().size();
-            int nProfessors = p.getBoard().getProfessorTable().getProfessors().size();
-
-            if (numTowers > nTowers || (numTowers == nTowers && numProfessors < nProfessors)){
-                winner1 = p;
-                winner2 = null;
-                numProfessors = nProfessors;
-                numTowers = nTowers;
-            } else if (numTowers == nTowers && numProfessors == nProfessors){
-                winner2 = p;
-            }
-        }
-
-        game.endGame();
-
-        if(winner2 != null) {
-            virtualView.printWinner(winner1.getNickname(), winner2.getNickname());
-        }
-        else
-            virtualView.printWinner(winner1.getNickname(), null);
-    }
-
-    public static Game getGame() {
+    public Game getGame() {
         return game;
     }
 
-
+    public TableHandler getTableHandler() {
+        return tableHandler;
+    }
 }

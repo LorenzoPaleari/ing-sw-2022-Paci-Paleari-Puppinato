@@ -7,16 +7,19 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
+
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class VirtualView {
-    private ReentrantLock lock = new ReentrantLock();;
+    private ReentrantLock lock = new ReentrantLock();
+    private LobbyHandler lobbyHandler;
     private Controller controller;
     private List<ClientHandler> clientHandlers;
 
-    public VirtualView(Controller controller){
+    public VirtualView(Controller controller, LobbyHandler lobbyHandler){
         this.controller=controller;
+        this.lobbyHandler = lobbyHandler;
         clientHandlers= new LinkedList<>();
     }
 
@@ -51,14 +54,31 @@ public class VirtualView {
         Server.setMaxPlayer(numPlayer);
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
-        synchronized (this) {
-            this.notifyAll();
+        /*synchronized (controller) {
+            controller.notifyAll();
+        }*/
+        ClientHandler[] clientWaiting = lobbyHandler.getWaiting(controller);
+        if (clientWaiting != null) {
+            for (int i = 0; i < numPlayer - 1; i++)
+                clientWaiting[i].gameSetUpWake(false, null, lobbyHandler.getLobbyIndex(controller));
+
+            try {
+                synchronized (this) {
+                    this.wait(2000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            for (int i = numPlayer - 1; i < clientWaiting.length; i++)
+                clientWaiting[i].gameSetUpWake(true, lobbyHandler.getLobbies(), lobbyHandler.getLobbyIndex(controller));
         }
+
         clientHandlers.get(0).playerSetUp(false);
     }
 
     public void setUpPlayerInfo(String nickname, String playerNickname){
-        if (!controller.isNicknameUsed(nickname)) {
+        if (!lobbyHandler.isNicknameUsed(nickname)) {
             getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
 
             lock.lock();

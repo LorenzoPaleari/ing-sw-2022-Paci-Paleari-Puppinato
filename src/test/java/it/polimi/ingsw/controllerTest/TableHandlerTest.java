@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.MotherNature;
+import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ public class TableHandlerTest {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller));
+        controller.setVirtualView(new VirtualView(controller, new LobbyHandler()));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
@@ -47,7 +48,7 @@ public class TableHandlerTest {
         controller.useAssistant(8, player2);
         controller.useAssistant(9, player3);
 
-        MotherNature.getInstance().setPosition(0);
+        game.getTable().getMotherNature().setPosition(0);
 
     }
 
@@ -89,7 +90,7 @@ public class TableHandlerTest {
         assertEquals(game.getTable().getIsland(0).getIslandTower().size(), 3);
         game.getTable().mergeIsland(1);
         game.getTable().getIsland(game.getTable().getMotherPosition()).setMotherNature(false);
-        MotherNature.getInstance().setPosition(7);
+        game.getTable().getMotherNature().setPosition(7);
         game.getTable().getIsland(7).setMotherNature(true);
         assertEquals(game.getTable().getIsland(0).getIslandTower().size(), 5);
         for (int i = 0; i < 16; i++) {

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.messages;
+package it.polimi.ingsw.network.messages.setUp;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;

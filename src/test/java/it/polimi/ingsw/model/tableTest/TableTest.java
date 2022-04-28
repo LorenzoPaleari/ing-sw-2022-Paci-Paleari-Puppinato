@@ -64,7 +64,7 @@ class TableTest {
 
     @Test
     void moveMotherNature() {
-        MotherNature.getInstance().setPosition(9);
+        table.getMotherNature().setPosition(9);
         table.moveMotherNature(3);
         assertEquals(table.getMotherPosition(), 0);
         table.moveMotherNature(5);

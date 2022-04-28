@@ -20,9 +20,9 @@ import java.util.List;
 
 public class TableHandler {
     private TurnController turnController;
-    private VirtualView virtualView;
+    private static VirtualView virtualView;
     private static Game game;
-    private static Context professorContext;
+    private Context professorContext;
     private final ProfessorController professorControllerStandard;
     private final Context motherNatureContext;
     private final MotherNatureController motherNatureController;
@@ -89,11 +89,11 @@ public class TableHandler {
 
             for (Player p : game.getPlayers()){
                 if (p.getBoard().getTowerCourt().isEmpty())
-                    Controller.winner();
+                    winner();
             }
 
             if(game.getTable().getNumIsland() <= 3)
-                Controller.winner();
+                winner();
         }
     }
 
@@ -119,7 +119,7 @@ public class TableHandler {
 
         if (!game.getRound().nextActionTurn()){
             if (game.getRound().getLastRound().equals(true))
-                Controller.winner();
+                winner();
 
             try {
                 List<Student> students = table.getBag().withdrawStudent(game.getNumPlayer() * (game.getNumPlayer() + 1));
@@ -132,5 +132,34 @@ public class TableHandler {
                 game.getRound().endRound();
             }
         }
+    }
+
+    public static void winner(){
+        Player winner1 = null;
+        Player winner2 = null;
+        int numTowers = 9;
+        int numProfessors = 0;
+
+        for (Player p: game.getPlayers()){
+            int nTowers = p.getBoard().getTowerCourt().getTower().size();
+            int nProfessors = p.getBoard().getProfessorTable().getProfessors().size();
+
+            if (numTowers > nTowers || (numTowers == nTowers && numProfessors < nProfessors)){
+                winner1 = p;
+                winner2 = null;
+                numProfessors = nProfessors;
+                numTowers = nTowers;
+            } else if (numTowers == nTowers && numProfessors == nProfessors){
+                winner2 = p;
+            }
+        }
+
+        game.endGame();
+
+        if(winner2 != null) {
+            virtualView.printWinner(winner1.getNickname(), winner2.getNickname());
+        }
+        else
+            virtualView.printWinner(winner1.getNickname(), null);
     }
 }

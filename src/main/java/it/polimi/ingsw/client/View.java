@@ -13,6 +13,10 @@ public interface View {
      */
     void start();
 
+    void gameSetUp(List<String[]> lobbies);
+
+    void wakeUp(boolean fullGame, List<String[]> lobbies, int numLobby);
+
     void initialSetUp(boolean firstPlayer);
 
     void playerSetUp(boolean requestAgain);

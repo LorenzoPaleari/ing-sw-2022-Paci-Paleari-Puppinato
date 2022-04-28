@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.messages;
+package it.polimi.ingsw.network.messages.service;
 
 import it.polimi.ingsw.network.ACKMessage;
 import it.polimi.ingsw.network.MessageType;

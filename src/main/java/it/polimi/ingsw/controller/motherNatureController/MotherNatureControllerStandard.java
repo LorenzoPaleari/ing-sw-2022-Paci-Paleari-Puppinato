@@ -16,7 +16,7 @@ public class MotherNatureControllerStandard implements MotherNatureController{
         else
             numMoves = endPosition - initPosition;
 
-        if (numMoves > player.getLastUsed().getNumMovement())
+        if (player.getLastUsed() == null || numMoves > player.getLastUsed().getNumMovement())
             throw new ClientException(ErrorType.TOO_MUCH_MOVES);
 
             return numMoves;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.messages.ACK;
+import it.polimi.ingsw.network.messages.service.ACK;
 
 public class ACKControl extends Thread {
     private static boolean sendACK;

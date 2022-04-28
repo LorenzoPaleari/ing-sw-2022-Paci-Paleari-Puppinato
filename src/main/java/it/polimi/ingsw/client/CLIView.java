@@ -50,6 +50,67 @@ public class CLIView implements View{
     }
 
     @Override
+    public void gameSetUp(List<String[]> lobbies) {
+        boolean valid = false;
+        String response;
+
+        System.out.println("Vuoi cominciare una nuova partita? [Yes/No]:");
+        do {
+            valid = true;
+            response = scanner.nextLine();
+            response = response.toUpperCase();
+            if (!(response.equals("YES") || response.equals("NO"))){
+                valid = false;
+                System.out.println("Scelta non valida, prova di nuovo:");
+            }
+        } while (!valid);
+
+        if (response.equals("YES"))
+            serverHandler.setGame(true, -1);
+        else if (lobbies.size() == 0){
+            System.out.println("Non c'è nessuna Lobby, ne verrà creata una nuova");
+            serverHandler.setGame(true, -1);
+        }
+        else{
+            for(int i = 0; i < lobbies.size(); i++) {
+                System.out.print("Lobby" + (i + 1) + " : ");
+                for (int j = 0; j < lobbies.get(i).length; j++)
+                    System.out.print(lobbies.get(i)[j]);
+
+                System.out.println();
+            }
+
+            System.out.println("Inserisci il numero della lobby nella quale vuoi entrare:");
+            do {
+                valid = true;
+                int lobby = Integer.parseInt(scanner.nextLine());
+                if (lobby > lobbies.size() || lobby < 0) {
+                    System.out.println("Il numero inserito non è valido, riprova:");
+                    valid = false;
+                } else if (lobbies.get(lobby - 1)[0].equals("FULL")) {
+                    System.out.println("La lobby è piena, scegline un altra:");
+                    valid = false;
+                } else if(lobbies.get(lobby - 1)[0].equals("Starting... ")) {
+                    System.out.println("Waiting first player's game settings...");
+                    serverHandler.gameSetUpWake(lobby - 1);
+                } else
+                    serverHandler.setGame(false, lobby - 1);
+
+            } while (!valid);
+        }
+    }
+
+    @Override
+    public void wakeUp(boolean fullGame, List<String[]> lobbies, int lobby){
+        if(!fullGame)
+            serverHandler.setGame(false, lobby);
+        else{
+            System.out.println("La lobby si è riempita, prova di nuovo");
+            gameSetUp(lobbies);
+        }
+    }
+
+    @Override
     public void initialSetUp(boolean firstPlayer) {
         boolean expert= false;
         boolean valid1 = false;

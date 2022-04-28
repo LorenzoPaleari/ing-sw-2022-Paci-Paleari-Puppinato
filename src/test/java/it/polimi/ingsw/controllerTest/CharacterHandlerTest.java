@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.MotherNature;
+import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterHandlerTest {
+    private LobbyHandler lobbyHandler;
     private Controller controller;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);
@@ -30,17 +32,18 @@ public class CharacterHandlerTest {
 
     @BeforeEach
     void setUp(){
+        lobbyHandler = new LobbyHandler();
         controller = new Controller();
         controller.setNumPlayer(2);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller));
+        controller.setVirtualView(new VirtualView(controller, lobbyHandler));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
 
-        MotherNature.getInstance().setPosition(0);
-
         game = controller.getGame();
+
+        game.getTable().getMotherNature().setPosition(0);
 
         controller.useAssistant(0,player1);
         controller.useAssistant(5, player2);
@@ -140,7 +143,7 @@ public class CharacterHandlerTest {
 
         controller.chooseCloud(player1, 0);
         game.getRound().getTurn().resetRemainingMovements(0); //Forzo il movimento degli studenti
-        MotherNature.getInstance().setPosition(11);
+        game.getTable().getMotherNature().setPosition(11);
         game.getTable().getIsland(3).setMotherNature(false);
         game.getTable().getIsland(11).setMotherNature(true);
         player2.addCoin();
@@ -219,7 +222,7 @@ public class CharacterHandlerTest {
         controller.useStudentDining(player1, PawnColor.GREEN);
         game.getRound().nextActionTurn();
 
-        MotherNature.getInstance().setPosition(4);
+        game.getTable().getMotherNature().setPosition(4);
         game.getTable().getIsland(0).setMotherNature(false);
         game.getTable().getIsland(4).setMotherNature(true);
         player2.addCoin();

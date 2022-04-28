@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.messages.setUp.*;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -75,7 +76,9 @@ public class ServerHandler {
             output.reset();
         }
         catch(IOException e){
-            System.out.println("Errore");
+            ACKControl.setSendACK();
+            System.out.println("Server Unreachable");
+            endConnection();
         }
     }
 
@@ -97,6 +100,14 @@ public class ServerHandler {
 
     public void useAssistantRequest(int position){
         send(new UseAssistantRequest(position));
+    }
+
+    public void setGame(boolean newGame, int lobby){
+        send(new GameSetUp(newGame, lobby));
+    }
+
+    public void gameSetUpWake(int numLobby){
+        send(new GameSetUpWake(numLobby));
     }
 
     public void setPlayerInfo(String nickname){
