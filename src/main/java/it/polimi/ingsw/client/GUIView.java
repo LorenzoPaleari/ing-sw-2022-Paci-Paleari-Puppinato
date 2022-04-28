@@ -44,6 +44,11 @@ public class GUIView implements View {
     }
 
     @Override
+    public void printInterrupt(String nickname, String player) {
+
+    }
+
+    @Override
     public void printError(ClientException exception) {
 
     }

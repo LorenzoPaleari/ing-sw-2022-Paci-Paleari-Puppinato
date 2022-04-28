@@ -191,7 +191,13 @@ public class CLIView implements View{
                 System.out.println("It's a draw! You and " +winner1+ " have won the game");
             else
                 System.out.println("It's a draw! "+ winner1 +" and " +winner2+ " have won the game");
-
-
     }
+
+    @Override
+    public void printInterrupt(String nickname, String player) {
+        System.out.println("The game was interrupted, " + nickname + " disconnected from the server." );
+        serverHandler.endConnection();
+    }
+
+
 }

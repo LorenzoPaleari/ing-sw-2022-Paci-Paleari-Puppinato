@@ -25,13 +25,17 @@ public class ServerHandler {
             input = new ObjectInputStream(socket.getInputStream());
             System.out.println("socket = " +  socket);
             isConnected = true;
+            ACKControl ACKcontrol= new ACKControl(this);
+            ACKcontrol.start();
             listen();
         }
         catch(IOException e){
+            e.printStackTrace();
         }
 
 
     }
+
     public void listen(){
         while (isConnected) {
             try {
@@ -57,6 +61,7 @@ public class ServerHandler {
 
     public void endConnection() {
         try {
+            ACKControl.setSendACK();
             socket.close();
             isConnected = false;
         } catch (IOException e) {
@@ -105,4 +110,5 @@ public class ServerHandler {
     public void setPlayerColor(TowerColor color){
         send(new ColorSetUp(color));
     }
+
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ACKControl;
 import it.polimi.ingsw.client.ViewUtilities.GameInfo;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
@@ -11,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
+
+import static it.polimi.ingsw.client.ACKControl.setSendACK;
 
 
 public class ClientHandler extends Thread{
@@ -54,10 +57,16 @@ public class ClientHandler extends Thread{
                     ViewControllerMessage vcMessage = (ViewControllerMessage) message;
                     vcMessage.action(virtualView, playerNickname);
                 }
+                else if (message.getType() == MessageType.ACK) {
+                    System.out.println("ACK");
+                }
 
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
-                System.out.print("Error");
+                System.out.println( getPlayerNickname() + " has disconnected");
+
+                virtualView.printInterrupt(getPlayerNickname());
+                endConnection();
             }
         }
     }
@@ -103,7 +112,20 @@ public class ClientHandler extends Thread{
         send (new ErrorMessage(error));
     }
 
+    public void printInterrupt(String nickname, String player){
+        send (new InterruptedGameMessage(nickname, player));
+    }
+
     public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}
+
+    public void endConnection() {
+        try {
+            ACKControl.setSendACK();
+            socket.close();
+            isConnected = false;
+        } catch (IOException e) {
+        }
+    }
 }
 
 

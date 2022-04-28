@@ -26,5 +26,7 @@ public interface View {
     void printError(ClientException clientException);
 
     void printWinner(String winner1, String winner2, String nickname);
+
+    void printInterrupt(String nickname, String player);
 }
 

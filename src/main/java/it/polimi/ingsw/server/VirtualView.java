@@ -91,6 +91,14 @@ public class VirtualView {
             getClientHandlerByNickname(player).printError(exception);
     }
 
+    public void printInterrupt(String nickname){
+        for (ClientHandler c : clientHandlers) {
+            if (nickname.equals(c.getPlayerNickname())) ;
+            else
+                c.printInterrupt(nickname, c.getPlayerNickname());
+        }
+    }
+
     public void printWinner(String winner1, String winner2){
         for (ClientHandler c : clientHandlers)
             c.printWinner(winner1, winner2, c.getPlayerNickname());
