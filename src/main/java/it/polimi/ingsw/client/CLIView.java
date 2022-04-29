@@ -83,18 +83,26 @@ public class CLIView implements View{
             System.out.println("Inserisci il numero della lobby nella quale vuoi entrare:");
             do {
                 valid = true;
-                int lobby = Integer.parseInt(scanner.nextLine());
-                if (lobby > lobbies.size() || lobby < 0) {
+                String str = scanner.nextLine();
+                if(str != null && str.matches("[0-9]+")) {
+                    int lobby = Integer.parseInt(str);
+                    if (lobby > lobbies.size() || lobby <= 0) {
+                        System.out.println("Il numero inserito non è valido, riprova:");
+                        valid = false;
+                    } else if (lobbies.get(lobby - 1)[0].equals("FULL")) {
+                        System.out.println("La lobby è piena, scegline un altra:");
+                        valid = false;
+                    } else if (lobbies.get(lobby - 1)[0].equals("Starting... ")) {
+                        System.out.println("Waiting first player's game settings...");
+                        serverHandler.gameSetUpWake(lobby - 1);
+                    } else
+                        serverHandler.setGame(false, lobby - 1);
+                }
+                else {
                     System.out.println("Il numero inserito non è valido, riprova:");
                     valid = false;
-                } else if (lobbies.get(lobby - 1)[0].equals("FULL")) {
-                    System.out.println("La lobby è piena, scegline un altra:");
-                    valid = false;
-                } else if(lobbies.get(lobby - 1)[0].equals("Starting... ")) {
-                    System.out.println("Waiting first player's game settings...");
-                    serverHandler.gameSetUpWake(lobby - 1);
-                } else
-                    serverHandler.setGame(false, lobby - 1);
+                }
+
 
             } while (!valid);
         }
@@ -115,14 +123,20 @@ public class CLIView implements View{
         boolean expert= false;
         boolean valid1 = false;
         boolean valid2 = false;
-        int numPlayer;
+        int numPlayer = 0;
         do {
             System.out.print("Inserire il numero di giocatori [2..3]:  ");
-            numPlayer = Integer.parseInt(scanner.nextLine());
-            if (numPlayer<2 || numPlayer>3)
-                System.out.print("Hai sbagliato a inserire un numero... ");
+            String str = scanner.nextLine();
+            if(str != null && str.matches("[0-9]+")) {
+                numPlayer = Integer.parseInt(str);
+                if (numPlayer < 2 || numPlayer > 3)
+                    System.out.print("Hai sbagliato a inserire un numero... ");
+                else
+                    valid1 = true;
+            }
             else
-                valid1=true;
+                System.out.print("Hai sbagliato a inserire un numero... ");
+
 
         } while (!valid1);
         do {
