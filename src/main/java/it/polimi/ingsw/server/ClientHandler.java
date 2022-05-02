@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.network.messages.service.ErrorMessage;
+import it.polimi.ingsw.network.messages.service.InterruptedGameMessage;
 import it.polimi.ingsw.network.messages.setUp.*;
 
 import java.io.IOException;
@@ -25,15 +26,13 @@ public class ClientHandler extends Thread{
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
-    private boolean isConnected = false;
+    private boolean isConnected;
     private boolean firstPlayer;
 
     public ClientHandler(Socket socket, String playerNickname, LobbyHandler lobbyHandler){
         this.socket=socket;
         this.lobbyHandler = lobbyHandler;
-        //this.firstPlayer=firstPlayer;
         isConnected = true;
-        //this.virtualView=virtualView;
         this.playerNickname = playerNickname;
 
         try {
@@ -47,11 +46,6 @@ public class ClientHandler extends Thread{
         listen();
     }
     public void listen(){
-        //if (firstPlayer) {
-        //    initialSetUp();
-        //} else {
-        //    playerSetUp(false);
-        //}
         gameSetUp();
 
         while (isConnected) {
@@ -60,9 +54,6 @@ public class ClientHandler extends Thread{
                 if (message.getType() == MessageType.ViewController) {
                     ViewControllerMessage vcMessage = (ViewControllerMessage) message;
                     vcMessage.action(virtualView, playerNickname);
-                }
-                else if (message.getType() == MessageType.ACK) {
-                    //System.out.println("ACK");
                 } else if (message.getType() == MessageType.Lobby){
                     LobbyMessage lobbyMessage = (LobbyMessage) message;
                     lobbyMessage.action(lobbyHandler, this);

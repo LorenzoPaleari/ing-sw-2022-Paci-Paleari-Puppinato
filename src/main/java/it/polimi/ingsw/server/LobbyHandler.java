@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LobbyHandler {
-
+    private final Object lock = new Object();
     private List<ClientHandler[]> lobbies;
     private Map clientWaiting;
     private List<Controller> controllers;
@@ -25,9 +25,7 @@ public class LobbyHandler {
         ClientHandler[] clients = lobbies.get(lobbyNumber);
         ClientHandler[] clientHandlers = new ClientHandler[clients.length + 1];
 
-        for(int i = 0; i < clients.length; i++){
-            clientHandlers[i] = clients[i];
-        }
+        System.arraycopy(clients, 0, clientHandlers, 0, clients.length);
         clientHandlers[clients.length] = clientHandler;
 
         lobbies.set(lobbyNumber, clientHandlers);
@@ -79,32 +77,35 @@ public class LobbyHandler {
     }
 
     public synchronized void waiting(ClientHandler clientHandler, int numLobby){
-        ClientHandler[] temp = (ClientHandler[]) clientWaiting.get(numLobby);
-        if (temp == null) {
-            ClientHandler[] clientHandlers = {clientHandler};
-            clientWaiting.put(numLobby, clientHandlers);
-        } else {
-            int length = temp.length;
-            ClientHandler[] clientHandlers = new ClientHandler[length + 1];
-            for (int i = 0; i < length; i++)
-                clientHandlers[i] = temp[i];
+        synchronized (lock) {
+            ClientHandler[] temp = (ClientHandler[]) clientWaiting.get(numLobby);
+            if (temp == null) {
+                ClientHandler[] clientHandlers = {clientHandler};
+                clientWaiting.put(numLobby, clientHandlers);
+            } else {
+                int length = temp.length;
+                ClientHandler[] clientHandlers = new ClientHandler[length + 1];
+                System.arraycopy(temp, 0, clientHandlers, 0, length);
 
-            clientHandlers[length] = clientHandler;
-            clientWaiting.replace(numLobby, clientHandlers);
+                clientHandlers[length] = clientHandler;
+                clientWaiting.replace(numLobby, clientHandlers);
+            }
         }
     }
 
     public synchronized boolean isNicknameUsed(String nickName){
         for (ClientHandler[] c : lobbies)
-            for (int i = 0; i < c.length; i++)
-                if (c[i].getPlayerNickname().equals(nickName))
+            for (ClientHandler clientHandler : c)
+                if (clientHandler.getPlayerNickname().equals(nickName))
                     return true;
 
         return false;
     }
 
     public synchronized ClientHandler[] getWaiting(Controller controller){
-        return (ClientHandler[]) clientWaiting.get(controllers.indexOf(controller));
+        synchronized (lock) {
+            return (ClientHandler[]) clientWaiting.get(controllers.indexOf(controller));
+        }
     }
 
     public synchronized int getLobbyIndex(Controller controller){

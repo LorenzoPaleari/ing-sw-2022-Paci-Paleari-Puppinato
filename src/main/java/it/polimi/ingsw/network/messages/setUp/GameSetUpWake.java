@@ -4,10 +4,8 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.LobbyMessage;
 import it.polimi.ingsw.network.MessageType;
-import it.polimi.ingsw.network.ViewControllerMessage;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.LobbyHandler;
-import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 import java.util.List;

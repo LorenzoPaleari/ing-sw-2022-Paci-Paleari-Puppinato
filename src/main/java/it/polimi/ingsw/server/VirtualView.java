@@ -51,12 +51,8 @@ public class VirtualView {
     }
 
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
-        Server.setMaxPlayer(numPlayer);
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
-        /*synchronized (controller) {
-            controller.notifyAll();
-        }*/
         ClientHandler[] clientWaiting = lobbyHandler.getWaiting(controller);
         if (clientWaiting != null) {
             for (int i = 0; i < numPlayer - 1; i++)
@@ -113,8 +109,7 @@ public class VirtualView {
 
     public void printInterrupt(String nickname){
         for (ClientHandler c : clientHandlers) {
-            if (nickname.equals(c.getPlayerNickname())) ;
-            else
+            if (!nickname.equals(c.getPlayerNickname()))
                 c.printInterrupt(nickname, c.getPlayerNickname());
         }
     }

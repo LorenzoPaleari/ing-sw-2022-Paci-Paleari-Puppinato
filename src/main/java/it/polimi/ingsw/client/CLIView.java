@@ -13,6 +13,7 @@ import java.util.Scanner;
 import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 
 public class CLIView implements View{
+    private GameInfo gameInfo;
     private Scanner scanner;
     private ServerHandler serverHandler;
 
@@ -25,7 +26,7 @@ public class CLIView implements View{
     @Override
     public void start() {
         String serverIP;
-        boolean valid = false;
+        boolean valid;
 
         do {
             System.out.print("Enter the server IP [Press enter for default IP]: ");
@@ -51,7 +52,7 @@ public class CLIView implements View{
 
     @Override
     public void gameSetUp(List<String[]> lobbies) {
-        boolean valid = false;
+        boolean valid;
         String response;
 
         System.out.println("Vuoi cominciare una nuova partita? [Yes/No]:");
@@ -114,7 +115,7 @@ public class CLIView implements View{
     public void initialSetUp(boolean firstPlayer) {
         boolean expert= false;
         boolean valid1 = false;
-        boolean valid2 = false;
+        boolean valid2;
         int numPlayer;
         do {
             System.out.print("Inserire il numero di giocatori [2..3]:  ");
@@ -126,17 +127,15 @@ public class CLIView implements View{
 
         } while (!valid1);
         do {
+            valid2 = true;
             System.out.print("Vuoi giocare in expert mode? choose between yes or no: ");
             String expertString = scanner.nextLine();
             if ((expertString.equalsIgnoreCase("YES"))) {
                 expert = true;
-                valid2 = true;
-            } else if ((expertString.equalsIgnoreCase("NO"))){
-                expert = false;
-                valid2 = true;
-            }
-            else
+            } else if (!(expertString.equalsIgnoreCase("NO"))) {
                 System.out.print("Errore, hai sbagliato davvero nello scrivere 3 lettere... ");
+                valid2 = false;
+            }
         }while(!valid2);
 
         serverHandler.initialSetUp(numPlayer, expert);
@@ -144,7 +143,7 @@ public class CLIView implements View{
 
     @Override
     public void playerSetUp(boolean requestAgain) {
-        if (requestAgain == true) {
+        if (requestAgain) {
             System.out.print("Questo nickname è già stato preso, scegline un altro:  ");
         } else {
             System.out.print("Scegli un nickname:  ");
@@ -184,6 +183,7 @@ public class CLIView implements View{
 
     @Override
     public void printGameBoard(GameInfo gameInfo){
+        this.gameInfo = gameInfo;
         System.out.println("Sto funzionando");
         choseAction();
     }

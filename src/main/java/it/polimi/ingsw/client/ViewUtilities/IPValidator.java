@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.ViewUtilities;
 
 public class IPValidator {
-    private static String defaultIP = "127.0.0.1";
+    private final static String defaultIP = "127.0.0.1";
 
     public static boolean isCorrectIP(String serverIP){
         for (int i = 0; i < serverIP.length(); i++)
