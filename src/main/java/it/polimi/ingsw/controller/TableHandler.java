@@ -16,20 +16,21 @@ import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 import it.polimi.ingsw.server.VirtualView;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class TableHandler {
     private TurnController turnController;
-    private static VirtualView virtualView;
-    private static Game game;
+    private VirtualView virtualView;
+    private Game game;
     private Context professorContext;
     private final ProfessorController professorControllerStandard;
     private final Context motherNatureContext;
     private final MotherNatureController motherNatureController;
-    private static Context islandContext;
+    private Context islandContext;
     private final IslandController islandController;
 
-    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorController professorControllerStandard, MotherNatureController motherNatureController, IslandController islandController, VirtualView virtualView){
+    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorController professorControllerStandard, MotherNatureController motherNatureController, IslandController islandController, VirtualView virtualView) {
         this.game = game;
         this.virtualView = virtualView;
         this.turnController = turnController;
@@ -39,6 +40,9 @@ public class TableHandler {
         this.motherNatureController = motherNatureController;
         this.islandContext = islandContext;
         this.islandController = islandController;
+        try {
+            this.game.setMethodTable(getClass().getMethod("updateIsland", Island.class));
+        } catch (NoSuchMethodException ignored){}
     }
 
     public void useStudentIsland(Player player, PawnColor color, int position){
@@ -75,7 +79,7 @@ public class TableHandler {
         player.changeState(PlayerState.ENDTURN);
     }
 
-    public static void updateIsland(Island island){
+    public void updateIsland(Island island){
         if (island.isNoEntryTiles()){
             for (int i = 0; i < 3; i++)
                 if (game.getTable().getCharacter(i).getType().equals(CharacterType.GRANDMOTHER_HERBS)) {
@@ -134,7 +138,7 @@ public class TableHandler {
         }
     }
 
-    public static void winner(){
+    public void winner(){
         Player winner1 = null;
         Player winner2 = null;
         int numTowers = 9;

@@ -1,6 +1,15 @@
 package it.polimi.ingsw.controllerTest;
 
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.TableHandler;
+import it.polimi.ingsw.controller.TurnController;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
+import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -9,6 +18,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.MotherNature;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
@@ -28,10 +38,13 @@ public class CharacterHandlerTest {
     private Controller controller;
     Player player1 = new Player("TEST1", TowerColor.WHITE);
     Player player2= new Player("TEST2", TowerColor.BLACK);
+
+    TableHandler tableHandler;
+    BoardHandler boardHandler;
     private Game game;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws InterruptedException {
         lobbyHandler = new LobbyHandler();
         controller = new Controller();
         controller.setNumPlayer(2);
@@ -40,8 +53,12 @@ public class CharacterHandlerTest {
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
+        controller.gameStart();
 
         game = controller.getGame();
+
+        tableHandler = controller.getTableHandler();
+        boardHandler = controller.getBoardHandler();
 
         game.getTable().getMotherNature().setPosition(0);
 
@@ -56,12 +73,12 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void characterErrors(){
+    void characterErrors() throws NoSuchMethodException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.CENTAUR);
-        game.getTable().setCharacter(1, CharacterType.MAGIC_DELIVERY_MAN);
+        game.getTable().setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
+        game.getTable().setCharacter(1, CharacterType.MAGIC_DELIVERY_MAN, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         controller.useCharacter(player1, 0);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
@@ -88,11 +105,11 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useNoEntryTilesCharacter(){
+    void useNoEntryTilesCharacter() throws NoSuchMethodException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         for (int i = 0; i < 7; i++)
             for (Player p : game.getPlayers())
@@ -126,8 +143,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useAdd_MovesCharacter(){
-        game.getTable().setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN);
+    void useAdd_MovesCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         List<Tower> towers = new LinkedList<>();
         towers.add(new Tower(TowerColor.WHITE));
@@ -153,8 +170,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useNo_ColorCharacter(){
-        game.getTable().setCharacter(0, CharacterType.MUSHROOM_HUNTER);
+    void useNo_ColorCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.MUSHROOM_HUNTER, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         game.getRound().getTurn().resetRemainingMovements(0);
         game.getTable().getIsland(1).getIslandStudent().clear();
@@ -178,8 +195,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useControl_ProfessorCharacter(){
-        game.getTable().setCharacter(0, CharacterType.FARMER);
+    void useControl_ProfessorCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.FARMER, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         controller.useStudentDining(player1, PawnColor.GREEN);
@@ -195,8 +212,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useFake_Mother_NatureCharacter(){
-        game.getTable().setCharacter(0, CharacterType.HERALD);
+    void useFake_Mother_NatureCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.HERALD, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         player1.addCoin();
         player1.addCoin();
@@ -208,8 +225,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useMore_InfluenceCharacter(){
-        game.getTable().setCharacter(0, CharacterType.KNIGHT);
+    void useMore_InfluenceCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.KNIGHT, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         player1.getBoard().getEntrance().addStudent(new Student(0));
@@ -238,8 +255,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useExchangeCharacter(){
-        game.getTable().setCharacter(0, CharacterType.MINSTREL);
+    void useExchangeCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.MINSTREL, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         player1.getBoard().getEntrance().addStudent(new Student(0));
         player1.getBoard().getEntrance().addStudent(new Student(1));
@@ -266,8 +283,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useNo_TowerCharacter(){
-        game.getTable().setCharacter(0, CharacterType.CENTAUR);
+    void useNo_TowerCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         List<Tower> towers = new LinkedList<>();
         towers.addAll(player2.getBoard().getTowerCourt().removeTower(2));
@@ -292,8 +309,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useReturnCharacter(){
-        game.getTable().setCharacter(0, CharacterType.THIEF);
+    void useReturnCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.THIEF, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         player1.getBoard().getEntrance().addStudent(new Student(4));
         for (int i = 0; i < 3; i++)
@@ -318,8 +335,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useAdd_Student_DinningCharacter() throws BagIsEmptyException {
-        game.getTable().setCharacter(0, CharacterType.SPOILED_PRINCESS);
+    void useAdd_Student_DinningCharacter() throws BagIsEmptyException, NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.SPOILED_PRINCESS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         game.getTable().getCharacter(0).addStudent(new Student(0));
         game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
@@ -331,8 +348,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useAdd_Student_IslandCharacter() throws BagIsEmptyException {
-        game.getTable().setCharacter(0, CharacterType.MONK);
+    void useAdd_Student_IslandCharacter() throws BagIsEmptyException, NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.MONK, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         game.getTable().getCharacter(0).addStudent(new Student(0));
         game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
@@ -343,8 +360,8 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    void useReplaceCharacter(){
-        game.getTable().setCharacter(0, CharacterType.JESTER);
+    void useReplaceCharacter() throws NoSuchMethodException {
+        game.getTable().setCharacter(0, CharacterType.JESTER, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         List<Student> students = new LinkedList<>();
         students.add(new Student(4));

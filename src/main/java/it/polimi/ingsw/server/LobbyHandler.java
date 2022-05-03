@@ -3,9 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.controller.Controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LobbyHandler {
     private List<ClientHandler> allClientHandlers;
@@ -49,6 +47,13 @@ public class LobbyHandler {
         clientHandler.setFirstPlayer(true);
         controllers.get(controllers.size()-1).setVirtualView(virtualViews.get(virtualViews.size() - 1));
         virtualViews.get(virtualViews.size()-1).addClientHandler(clientHandler);
+
+        (new Thread(() -> {
+            try {
+                controllers.get(controllers.size() - 1).gameStart();
+            } catch (Exception ignored) {
+            }
+        })).start();
 
         clientHandler.initialSetUp();
     }

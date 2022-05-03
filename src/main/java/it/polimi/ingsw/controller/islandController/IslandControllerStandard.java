@@ -28,6 +28,11 @@ public class IslandControllerStandard implements IslandController {
     }
 
     @Override
+    public void setPlayer(Player player) {
+
+    }
+
+    @Override
     public void setNoColor(PawnColor noColor) {
 
     }

@@ -3,6 +3,8 @@ package it.polimi.ingsw.network.messages;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
@@ -27,6 +29,11 @@ public class WinnerMessage implements Serializable, ControllerViewMessage {
 
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
+
+    }
+
+    @Override
+    public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -11,6 +12,8 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Bag;
 import it.polimi.ingsw.model.table.Island;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 //MONK
@@ -20,12 +23,14 @@ public class CharacterGroupStudent extends Character{
     private Bag bag;
     private List<Student> student;
 
-    public CharacterGroupStudent (CharacterType type, Bag bag) {
+    private Method checkProfessor;
+
+    public CharacterGroupStudent (CharacterType type, Bag bag, Method checkProfessor) {
         super(type);
         this.bag=bag;
         student=new LinkedList<>();
         student.addAll(bag.initialSetup(type.hasStudent()));
-
+        this.checkProfessor = checkProfessor;
     }
 
     public Student removeStudent(PawnColor color){
@@ -52,9 +57,14 @@ public class CharacterGroupStudent extends Character{
     }
 
     @Override
-    public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException {
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
-        BoardHandler.checkProfessor(player, color);
+        Object[] objects = new Object[2];
+        objects[0] = player;
+        objects[1] = color;
+        try {
+            checkProfessor.invoke(boardHandler, objects);
+        } catch (InvocationTargetException | IllegalAccessException ignored) {}
         student.addAll(bag.withdrawStudent(1));
     }
     @Override
@@ -64,7 +74,7 @@ public class CharacterGroupStudent extends Character{
         student.addAll(bag.withdrawStudent(1));
     }
     @Override
-    public void activateCharacter(Player player, PawnColor[] color) { // replace
+    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) { // replace
         List<Student> list1 = new LinkedList<>();
         List<Student> list2 = new LinkedList<>();
         for(int i = 0; i < 3; i++){

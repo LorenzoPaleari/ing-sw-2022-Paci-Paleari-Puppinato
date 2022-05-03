@@ -9,10 +9,11 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.server.VirtualView;
 
 public class BoardHandler {
-    private static Game game;
+    private Game game;
     private VirtualView virtualView;
     private TurnController turnController;
     private static Context professorContext;
@@ -22,6 +23,9 @@ public class BoardHandler {
         this.virtualView = virtualView;
         this.professorContext = professorContext;
         this.turnController = turnController;
+        try {
+            this.game.setMethodBoard(getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
+        } catch (NoSuchMethodException ignored){}
     }
 
     public void useStudentDining(Player player, PawnColor color){
@@ -51,7 +55,7 @@ public class BoardHandler {
         }
     }
 
-    public static void checkProfessor(Player player, PawnColor color){
+    public void checkProfessor(Player player, PawnColor color){
         professorContext.professorControl(game, player, color);
     }
 }

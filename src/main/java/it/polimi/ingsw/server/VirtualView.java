@@ -57,17 +57,6 @@ public class VirtualView {
         lockColorSetUp(playerNickname);
     }
 
-    public void setUpPlayerInfo(String nickname, String playerNickname){
-        if (!lobbyHandler.isNicknameUsed(nickname)) {
-            getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
-
-            lock.lock();
-            getClientHandlerByNickname(nickname).colorSetUp();
-        } else {
-            getClientHandlerByNickname(playerNickname).playerSetUp(true);
-        }
-    }
-
     public void lockColorSetUp(String nickname){
         lock.lock();
         getClientHandlerByNickname(nickname).colorSetUp();

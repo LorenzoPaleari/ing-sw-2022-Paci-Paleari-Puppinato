@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 public class IslandControllerMoreInfluence implements IslandController {
-    private static Player player;
+    private Player player;
 
     public void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate){
         int MoreInfluence = 0;
@@ -36,7 +36,8 @@ public class IslandControllerMoreInfluence implements IslandController {
 
     }
 
-    public static void setPlayer(Player player) {
-        IslandControllerMoreInfluence.player = player;
+    @Override
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

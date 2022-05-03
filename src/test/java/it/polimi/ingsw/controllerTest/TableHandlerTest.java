@@ -1,6 +1,16 @@
 package it.polimi.ingsw.controllerTest;
 
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.TableHandler;
+import it.polimi.ingsw.controller.TurnController;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
+import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -10,6 +20,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.MotherNature;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
@@ -30,9 +41,10 @@ public class TableHandlerTest {
     Player player2 = new Player("TEST2", TowerColor.BLACK);
     Player player3 = new Player("TEST3", TowerColor.GREY);
     private Game game;
-
+    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller(), new LobbyHandler()));
+    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller(), new LobbyHandler()));
     @BeforeEach
-    void setUp() {
+    void setUp() throws InterruptedException {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
@@ -41,6 +53,7 @@ public class TableHandlerTest {
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
+        controller.gameStart();
 
         game = controller.getGame();
 
@@ -59,11 +72,11 @@ public class TableHandlerTest {
     }
 
     @Test
-    void moveMotherNature() {
+    void moveMotherNature() throws NoSuchMethodException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         game.getRound().getTurn().resetRemainingMovements(1);
         controller.moveMotherNature(player1, 1);
         //assertEquals("Before moving mother nature, please move all the students\n",outContent.toString());

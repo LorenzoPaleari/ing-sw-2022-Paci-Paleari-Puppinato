@@ -70,8 +70,7 @@ public class CLIView implements View{
             serverHandler.setGame(true, -1);
         else if (lobbies.size() == 0){
             serverHandler.refreshLobbies();
-        }
-        else{
+        } else{
             lobbySelection(lobbies);
         }
     }

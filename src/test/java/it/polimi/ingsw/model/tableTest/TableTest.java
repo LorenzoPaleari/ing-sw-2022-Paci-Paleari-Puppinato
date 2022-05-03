@@ -1,13 +1,29 @@
 package it.polimi.ingsw.model.tableTest;
 
+import it.polimi.ingsw.controller.BoardHandler;
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.TableHandler;
+import it.polimi.ingsw.controller.TurnController;
+import it.polimi.ingsw.controller.islandController.IslandContext;
+import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
+import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
+import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
+import it.polimi.ingsw.controller.professorController.ProfessorContext;
+import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
+import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.*;
+import it.polimi.ingsw.server.LobbyHandler;
+import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +34,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
     private Table table;
-
+    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller(), new LobbyHandler()));
+    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller(), new LobbyHandler()));
     @BeforeEach
-    void setUp() {
-        table= new Table(3, true);
+    void setUp() throws NoSuchMethodException {
+        table= new Table(3, true, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class), new IslandControllerMoreInfluence());
     }
     @AfterEach
     void tearDown(){
@@ -72,11 +89,11 @@ class TableTest {
     }
 
     @Test
-    void mergeIsland() throws BagIsEmptyException {
+    void mergeIsland() throws NoSuchMethodException {
         table.mergeIsland(0);
         assertEquals(table.getNumIsland(), 12, "no Island was merged");
 
-        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(), CharacterType.GRANDMOTHER_HERBS);
         List<Tower> test1= new LinkedList<>();
         test1.add(new Tower(TowerColor.BLACK));
@@ -121,18 +138,18 @@ class TableTest {
 
     }
     @Test
-    void setCharacter(){
-        table.setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN);
+    void setCharacter() throws NoSuchMethodException {
+        table.setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(), CharacterType.MAGIC_DELIVERY_MAN);
-        table.setCharacter(0, CharacterType.FARMER);
+        table.setCharacter(0, CharacterType.FARMER, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.FARMER);
-        table.setCharacter(0, CharacterType.KNIGHT);
+        table.setCharacter(0, CharacterType.KNIGHT, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.KNIGHT);
-        table.setCharacter(0, CharacterType.CENTAUR);
+        table.setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.CENTAUR);
-        table.setCharacter(0, CharacterType.SPOILED_PRINCESS);
+        table.setCharacter(0, CharacterType.SPOILED_PRINCESS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.SPOILED_PRINCESS);
-        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS);
+        table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.GRANDMOTHER_HERBS);
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.islandController.IslandContext;
 import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.controller.islandController.IslandControllerStandard;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
 import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.util.LinkedList;
@@ -31,14 +33,16 @@ public class Controller {
     private final MotherNatureController motherNatureController;
     private Context islandContext;
     private final IslandController islandController;
+    private IslandController islandControllerMoreInfluence;
     private Game game;
     private BoardHandler boardHandler;
     private TableHandler tableHandler;
     private CharacterHandler characterHandler;
-
     private VirtualView virtualView;
+    boolean canStart;
 
     public Controller(){
+        canStart = false;
         game = new Game();
         game.setExpertMode(false);
         turnController = new TurnController();
@@ -51,6 +55,7 @@ public class Controller {
 
         islandController = new IslandControllerStandard();
         islandContext = new IslandContext(islandController);
+        islandControllerMoreInfluence = new IslandControllerMoreInfluence();
     }
 
     public void setVirtualView(VirtualView virtualView) {
@@ -58,7 +63,7 @@ public class Controller {
 
         boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
         tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
-        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView);
+        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView, tableHandler, boardHandler, islandControllerMoreInfluence);
     }
 
     public void setNumPlayer(int num) {
@@ -72,8 +77,10 @@ public class Controller {
     public void addPlayer(Player player) {
         int remaining = game.addPlayer(player);
         if (remaining == 0) {
-            game.startGame();
-            virtualView.printGameBoard(game);
+            canStart = true;
+            synchronized (this) {
+                this.notify();
+            }
         }
     }
 
@@ -195,5 +202,22 @@ public class Controller {
 
     public TableHandler getTableHandler() {
         return tableHandler;
+    }
+
+    public void gameStart() throws InterruptedException {
+        synchronized (this){
+            while (!readyToStart())
+                this.wait();
+        }
+        game.startGame();
+        virtualView.printGameBoard(game);
+    }
+
+    private boolean readyToStart(){
+        return canStart;
+    }
+
+    public BoardHandler getBoardHandler() {
+        return boardHandler;
     }
 }

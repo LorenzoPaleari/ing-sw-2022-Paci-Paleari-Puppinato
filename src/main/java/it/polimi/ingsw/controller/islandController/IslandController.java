@@ -9,5 +9,7 @@ import it.polimi.ingsw.model.table.Island;
 public interface IslandController {
     void setNoColor(PawnColor noColor);
     void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate);
+
+    void setPlayer(Player player);
 }
 

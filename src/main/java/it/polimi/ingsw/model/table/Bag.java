@@ -20,9 +20,7 @@ public class Bag {
     }
 
     public LinkedList<Student> initialSetup(int quantity){
-        LinkedList<Student> draw = new LinkedList<>();
-
-        draw.addAll(student.subList(0, quantity));
+        LinkedList<Student> draw = new LinkedList<>(student.subList(0, quantity));
         student.subList(0, quantity).clear();
 
         return draw;

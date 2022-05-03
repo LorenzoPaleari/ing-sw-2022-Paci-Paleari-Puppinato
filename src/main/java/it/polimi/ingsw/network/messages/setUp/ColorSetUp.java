@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.ViewControllerMessage;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
@@ -39,5 +41,10 @@ public class ColorSetUp implements Serializable, ControllerViewMessage, ViewCont
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
         virtualView.setUpPlayerColor(chosenColor, playerNickname);
+    }
+
+    @Override
+    public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
+
     }
 }
