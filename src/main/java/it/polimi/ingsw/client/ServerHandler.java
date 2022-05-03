@@ -24,7 +24,6 @@ public class ServerHandler {
             socket = new Socket(serverIp, Server.PORT);
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
-            //System.out.println("socket = " +  socket);
             isConnected = true;
             ACKControl ACKcontrol= new ACKControl(this);
             ACKcontrol.start();
@@ -42,14 +41,6 @@ public class ServerHandler {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
                 message.action(view);
-                /*if (message.getType() == MessageType.ModelView) {
-                    ModelViewMessage mvMessage = (ModelViewMessage) message;
-                    mvMessage.action(view);
-                }
-                else if (message.getType() == MessageType.ControllerView) {
-                    ControllerViewMessage cvMessage = (ControllerViewMessage) message;
-                    cvMessage.action(view);
-                }*/
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
             }

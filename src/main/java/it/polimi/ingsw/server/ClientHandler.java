@@ -139,8 +139,8 @@ public class ClientHandler extends Thread{
         this.firstPlayer = firstPlayer;
     }
 
-    public void refreshLobbies(List<String[]> lobbies) {
-        send(new RefreshMessage(lobbies));
+    public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
+        send(new RefreshMessage(lobbies, firstLobby));
     }
 }
 

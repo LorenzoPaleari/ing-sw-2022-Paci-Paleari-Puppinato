@@ -18,6 +18,11 @@ public class GUIView implements View {
     }
 
     @Override
+    public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
+
+    }
+
+    @Override
     public void fullLobby(List<String[]> lobbies) {
 
     }
@@ -54,11 +59,6 @@ public class GUIView implements View {
 
     @Override
     public void printInterrupt(String nickname, String player) {
-
-    }
-
-    @Override
-    public void refreshLobbies(List<String[]> lobbies) {
 
     }
 

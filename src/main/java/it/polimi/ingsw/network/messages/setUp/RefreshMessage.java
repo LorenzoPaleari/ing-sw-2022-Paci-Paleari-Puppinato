@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.LobbyMessage;
 import it.polimi.ingsw.network.MessageType;
-import it.polimi.ingsw.network.ViewControllerMessage;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
@@ -16,12 +15,15 @@ public class RefreshMessage implements Serializable, LobbyMessage, ControllerVie
     MessageType type;
     List<String[]> lobbies;
 
+    boolean firstLobby = false;
+
     public RefreshMessage(){
         type = MessageType.Lobby;
     }
 
-    public RefreshMessage(List<String[]> lobbies){
+    public RefreshMessage(List<String[]> lobbies, boolean firstLobby){
         type = MessageType.ControllerView;
+        this.firstLobby = firstLobby;
         this.lobbies = lobbies;
     }
 
@@ -32,7 +34,7 @@ public class RefreshMessage implements Serializable, LobbyMessage, ControllerVie
 
     @Override
     public void action(View view) {
-        view.refreshLobbies(lobbies);
+        view.refreshLobbies(lobbies, firstLobby);
     }
 
     @Override

@@ -69,8 +69,7 @@ public class CLIView implements View{
         if (response.equals("YES"))
             serverHandler.setGame(true, -1);
         else if (lobbies.size() == 0){
-            System.out.println("Non c'è nessuna Lobby, ne verrà creata una nuova");
-            serverHandler.setGame(true, -1);
+            serverHandler.refreshLobbies();
         }
         else{
             lobbySelection(lobbies);
@@ -78,8 +77,12 @@ public class CLIView implements View{
     }
 
     @Override
-    public void refreshLobbies(List<String[]> lobbies) {
-        lobbySelection(lobbies);
+    public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
+        if (firstLobby){
+            System.out.println("Non c'è nessuna Lobby, ne verrà creata una nuova");
+            serverHandler.setGame(true, -1);
+        } else
+            lobbySelection(lobbies);
     }
 
     private void lobbySelection(List<String[]> lobbies) {

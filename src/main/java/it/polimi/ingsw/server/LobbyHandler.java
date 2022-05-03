@@ -87,7 +87,12 @@ public class LobbyHandler {
     }
 
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
-        clientHandler.refreshLobbies(getLobbies());
+        boolean firstLobby;
+        if (getLobbies().size() == 0)
+            firstLobby = true;
+        else
+            firstLobby = false;
+        clientHandler.refreshLobbies(getLobbies(), firstLobby);
     }
 
     public synchronized void setPlayerNickname(String nickname, ClientHandler clientHandler) {
