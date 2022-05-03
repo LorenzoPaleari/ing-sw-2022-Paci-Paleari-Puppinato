@@ -24,7 +24,7 @@ public class ServerHandler {
             socket = new Socket(serverIp, Server.PORT);
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
-            System.out.println("socket = " +  socket);
+            //System.out.println("socket = " +  socket);
             isConnected = true;
             ACKControl ACKcontrol= new ACKControl(this);
             ACKcontrol.start();
@@ -41,14 +41,15 @@ public class ServerHandler {
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
-                if (message.getType() == MessageType.ModelView) {
+                message.action(view);
+                /*if (message.getType() == MessageType.ModelView) {
                     ModelViewMessage mvMessage = (ModelViewMessage) message;
                     mvMessage.action(view);
                 }
                 else if (message.getType() == MessageType.ControllerView) {
                     ControllerViewMessage cvMessage = (ControllerViewMessage) message;
                     cvMessage.action(view);
-                }
+                }*/
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
             }
@@ -106,10 +107,6 @@ public class ServerHandler {
         send(new GameSetUp(newGame, lobby));
     }
 
-    public void gameSetUpWake(int numLobby){
-        send(new GameSetUpWake(numLobby));
-    }
-
     public void setPlayerInfo(String nickname){
         send(new PlayerSetUp(nickname));
     }
@@ -120,6 +117,10 @@ public class ServerHandler {
 
     public void setPlayerColor(TowerColor color){
         send(new ColorSetUp(color));
+    }
+
+    public void refreshLobbies(){
+        send(new RefreshMessage());
     }
 
 }

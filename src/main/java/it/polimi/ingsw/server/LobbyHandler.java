@@ -8,33 +8,36 @@ import java.util.List;
 import java.util.Map;
 
 public class LobbyHandler {
-    private final Object lock = new Object();
+    private List<ClientHandler> allClientHandlers;
     private List<ClientHandler[]> lobbies;
-    private Map clientWaiting;
     private List<Controller> controllers;
     private List<VirtualView> virtualViews;
 
     public LobbyHandler(){
-        clientWaiting = new HashMap<>();
+        allClientHandlers = new ArrayList<>();
         lobbies = new ArrayList<>();
         controllers = new ArrayList<>();
         virtualViews = new ArrayList<>();
     }
 
     public synchronized void addClient(int lobbyNumber, ClientHandler clientHandler) {
-        ClientHandler[] clients = lobbies.get(lobbyNumber);
-        ClientHandler[] clientHandlers = new ClientHandler[clients.length + 1];
+        if (controllers.get(lobbyNumber).getGame().getNumPlayer() == lobbies.get(lobbyNumber).length) {
+            clientHandler.gameSetUp(true);
+        } else {
+            ClientHandler[] clients = lobbies.get(lobbyNumber);
+            ClientHandler[] clientHandlers = new ClientHandler[clients.length + 1];
 
-        System.arraycopy(clients, 0, clientHandlers, 0, clients.length);
-        clientHandlers[clients.length] = clientHandler;
+            System.arraycopy(clients, 0, clientHandlers, 0, clients.length);
+            clientHandlers[clients.length] = clientHandler;
 
-        lobbies.set(lobbyNumber, clientHandlers);
+            lobbies.set(lobbyNumber, clientHandlers);
 
-        clientHandler.setFirstPlayer(false);
-        clientHandler.setVirtualView(virtualViews.get(lobbyNumber));
-        virtualViews.get(lobbyNumber).addClientHandler(clientHandler);
+            clientHandler.setFirstPlayer(false);
+            clientHandler.setVirtualView(virtualViews.get(lobbyNumber));
+            virtualViews.get(lobbyNumber).addClientHandler(clientHandler);
 
-        clientHandler.playerSetUp(false);
+            virtualViews.get(lobbyNumber).lockColorSetUp(clientHandler.getPlayerNickname());
+        }
     }
 
     public synchronized void newClient(ClientHandler clientHandler){
@@ -59,9 +62,8 @@ public class LobbyHandler {
                 temp[0] = "FULL";
                 lobbiesModified.add(temp);
             } else if (controllers.get(j).getGame().getNumPlayer() == -1) {
-                String[] temp = new String[2];
+                String[] temp = new String[1];
                 temp[0] = "Starting... ";
-                temp[1] = c[0].getPlayerNickname()+ " is choosing Game settings.";
                 lobbiesModified.add(temp);
             } else {
                 String[] temp = new String[c.length];
@@ -76,39 +78,26 @@ public class LobbyHandler {
         return lobbiesModified;
     }
 
-    public synchronized void waiting(ClientHandler clientHandler, int numLobby){
-        synchronized (lock) {
-            ClientHandler[] temp = (ClientHandler[]) clientWaiting.get(numLobby);
-            if (temp == null) {
-                ClientHandler[] clientHandlers = {clientHandler};
-                clientWaiting.put(numLobby, clientHandlers);
-            } else {
-                int length = temp.length;
-                ClientHandler[] clientHandlers = new ClientHandler[length + 1];
-                System.arraycopy(temp, 0, clientHandlers, 0, length);
-
-                clientHandlers[length] = clientHandler;
-                clientWaiting.replace(numLobby, clientHandlers);
-            }
-        }
-    }
-
     public synchronized boolean isNicknameUsed(String nickName){
-        for (ClientHandler[] c : lobbies)
-            for (ClientHandler clientHandler : c)
-                if (clientHandler.getPlayerNickname().equals(nickName))
+        for (ClientHandler c : allClientHandlers)
+                if (c.getPlayerNickname().equals(nickName))
                     return true;
 
         return false;
     }
 
-    public synchronized ClientHandler[] getWaiting(Controller controller){
-        synchronized (lock) {
-            return (ClientHandler[]) clientWaiting.get(controllers.indexOf(controller));
-        }
+    public synchronized void refreshLobbies(ClientHandler clientHandler) {
+        clientHandler.refreshLobbies(getLobbies());
     }
 
-    public synchronized int getLobbyIndex(Controller controller){
-        return controllers.indexOf(controller);
+    public synchronized void setPlayerNickname(String nickname, ClientHandler clientHandler) {
+        allClientHandlers.add(clientHandler);
+        if (!isNicknameUsed(nickname)) {
+            clientHandler.setPlayerNickname(nickname);
+
+            clientHandler.gameSetUp();
+        } else {
+            clientHandler.playerSetUp(true);
+        }
     }
 }

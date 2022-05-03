@@ -53,24 +53,8 @@ public class VirtualView {
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
-        ClientHandler[] clientWaiting = lobbyHandler.getWaiting(controller);
-        if (clientWaiting != null) {
-            for (int i = 0; i < numPlayer - 1; i++)
-                clientWaiting[i].gameSetUpWake(false, null, lobbyHandler.getLobbyIndex(controller));
 
-            try {
-                synchronized (this) {
-                    this.wait(2000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            for (int i = numPlayer - 1; i < clientWaiting.length; i++)
-                clientWaiting[i].gameSetUpWake(true, lobbyHandler.getLobbies(), lobbyHandler.getLobbyIndex(controller));
-        }
-
-        clientHandlers.get(0).playerSetUp(false);
+        lockColorSetUp(playerNickname);
     }
 
     public void setUpPlayerInfo(String nickname, String playerNickname){
@@ -82,6 +66,11 @@ public class VirtualView {
         } else {
             getClientHandlerByNickname(playerNickname).playerSetUp(true);
         }
+    }
+
+    public void lockColorSetUp(String nickname){
+        lock.lock();
+        getClientHandlerByNickname(nickname).colorSetUp();
     }
 
     public void setUpPlayerColor(TowerColor color, String playerNickname){

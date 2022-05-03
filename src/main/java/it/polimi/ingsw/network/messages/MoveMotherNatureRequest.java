@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.messages;
 
+import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.ViewControllerMessage;
 import it.polimi.ingsw.server.VirtualView;
@@ -18,6 +19,11 @@ public class MoveMotherNatureRequest implements Serializable, ViewControllerMess
     @Override
     public MessageType getType() {
         return type;
+    }
+
+    @Override
+    public void action(View view) {
+
     }
 
     @Override

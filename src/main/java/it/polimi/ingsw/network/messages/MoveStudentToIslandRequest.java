@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.messages;
 
+import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.ViewControllerMessage;
@@ -21,6 +22,11 @@ public class MoveStudentToIslandRequest implements Serializable, ViewControllerM
     @Override
     public MessageType getType() {
         return type;
+    }
+
+    @Override
+    public void action(View view) {
+
     }
 
     @Override

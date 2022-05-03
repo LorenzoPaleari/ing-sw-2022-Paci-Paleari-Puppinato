@@ -15,7 +15,7 @@ public interface View {
 
     void gameSetUp(List<String[]> lobbies);
 
-    void wakeUp(boolean fullGame, List<String[]> lobbies, int numLobby);
+    void fullLobby(List<String[]> lobbies);
 
     void initialSetUp(boolean firstPlayer);
 
@@ -32,5 +32,7 @@ public interface View {
     void printWinner(String winner1, String winner2, String nickname);
 
     void printInterrupt(String nickname, String player);
+
+    void refreshLobbies(List<String[]> lobbies);
 }
 

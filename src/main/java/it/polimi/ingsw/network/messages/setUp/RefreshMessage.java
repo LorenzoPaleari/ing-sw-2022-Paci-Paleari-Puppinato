@@ -10,25 +10,19 @@ import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class PlayerSetUp implements Serializable, ControllerViewMessage, LobbyMessage {
-    private MessageType type;
-    private String nickname;
-    private boolean requestAgain;
+public class RefreshMessage implements Serializable, LobbyMessage, ControllerViewMessage {
+    MessageType type;
+    List<String[]> lobbies;
 
-    public PlayerSetUp(boolean requestAgain){
-        this.requestAgain = requestAgain;
-        type = MessageType.ControllerView;
-    }
-
-    public PlayerSetUp(String nickname){
-        this.nickname=nickname;
+    public RefreshMessage(){
         type = MessageType.Lobby;
     }
 
-    @Override
-    public void action(View view) {
-        view.playerSetUp(requestAgain);
+    public RefreshMessage(List<String[]> lobbies){
+        type = MessageType.ControllerView;
+        this.lobbies = lobbies;
     }
 
     @Override
@@ -37,12 +31,17 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, LobbyMe
     }
 
     @Override
+    public void action(View view) {
+        view.refreshLobbies(lobbies);
+    }
+
+    @Override
     public void action(VirtualView virtualView, String playerNickname) {
-        //virtualView.setUpPlayerInfo(nickname, playerNickname);
+
     }
 
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
-        lobbyHandler.setPlayerNickname(nickname, clientHandler);
+        lobbyHandler.refreshLobbies(clientHandler);
     }
 }

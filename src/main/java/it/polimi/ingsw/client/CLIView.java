@@ -55,7 +55,7 @@ public class CLIView implements View{
         boolean valid;
         String response;
 
-        System.out.println("Vuoi cominciare una nuova partita? [Yes/No]:");
+        System.out.print("Vuoi cominciare una nuova partita? [Yes/No]:");
         do {
             valid = true;
             response = scanner.nextLine();
@@ -73,42 +73,82 @@ public class CLIView implements View{
             serverHandler.setGame(true, -1);
         }
         else{
-            for(int i = 0; i < lobbies.size(); i++) {
-                System.out.print("Lobby" + (i + 1) + " : ");
-                for (int j = 0; j < lobbies.get(i).length; j++)
-                    System.out.print(lobbies.get(i)[j]);
-
-                System.out.println();
-            }
-
-            System.out.println("Inserisci il numero della lobby nella quale vuoi entrare:");
-            do {
-                valid = true;
-                int lobby = Integer.parseInt(scanner.nextLine());
-                if (lobby > lobbies.size() || lobby < 0) {
-                    System.out.println("Il numero inserito non è valido, riprova:");
-                    valid = false;
-                } else if (lobbies.get(lobby - 1)[0].equals("FULL")) {
-                    System.out.println("La lobby è piena, scegline un altra:");
-                    valid = false;
-                } else if(lobbies.get(lobby - 1)[0].equals("Starting... ")) {
-                    System.out.println("Waiting first player's game settings...");
-                    serverHandler.gameSetUpWake(lobby - 1);
-                } else
-                    serverHandler.setGame(false, lobby - 1);
-
-            } while (!valid);
+            lobbySelection(lobbies);
         }
     }
 
     @Override
-    public void wakeUp(boolean fullGame, List<String[]> lobbies, int lobby){
-        if(!fullGame)
-            serverHandler.setGame(false, lobby);
-        else{
-            System.out.println("La lobby si è riempita, prova di nuovo");
-            gameSetUp(lobbies);
+    public void refreshLobbies(List<String[]> lobbies) {
+        lobbySelection(lobbies);
+    }
+
+    private void lobbySelection(List<String[]> lobbies) {
+        boolean valid;
+        printLobbies(lobbies);
+
+        do{
+            valid = true;
+            if (!checkForValidLobby(lobbies)){
+                System.out.print("Tutte le lobby sono piene o in creazione. Premi invio per refreshare oppure NewGame per iniziare una nuova partita:");
+                String lobby = scanner.nextLine();
+                if (lobby == "")
+                    serverHandler.refreshLobbies();
+                else if (lobby.toLowerCase().matches("newgame"))
+                    serverHandler.setGame(true, -1);
+                else {
+                    System.out.print("Il comando inserito non è valido, riprova.");
+                    valid = false;
+                }
+            } else {
+                System.out.print("Inserisci il numero della lobby nella quale vuoi entrare oppure premi invio per refreshare le lobby:");
+                String lobby = scanner.nextLine();
+                if (lobby == "")
+                    serverHandler.refreshLobbies();
+                else if (lobby.matches("[0-9]+")) {
+                    int numLobby = Integer.parseInt(lobby);
+                    if (numLobby > lobbies.size() || numLobby < 0) {
+                        System.out.print("Il numero inserito non è valido, riprova.");
+                        valid = false;
+                    } else if (lobbies.get(numLobby - 1)[0].equals("FULL")) {
+                        System.out.print("Il numero inserito corrisponde ad una Lobby piena, riprova.");
+                        valid = false;
+                    } else if (lobbies.get(numLobby - 1)[0].equals("Starting... ")) {
+                        System.out.print("Il numero inserito corrisponde ad una lobby in creazione, prova a refreshare.");
+                        valid = false;
+                    } else
+                        serverHandler.setGame(false, numLobby - 1);
+                }
+            }
+        } while (!valid);
+    }
+
+    private void printLobbies(List<String[]> lobbies) {
+        for(int i = 0; i < lobbies.size(); i++) {
+            if (!(lobbies.get(i)[0].equals("Starting... ") || lobbies.get(i)[0].equals("FULL"))) {
+                System.out.print("Lobby-" + (i + 1) + " : ");
+                for (int j = 0; j < lobbies.get(i).length; j++)
+                    if (j == 0)
+                        System.out.print(lobbies.get(i)[j]);
+                    else
+                        System.out.println(", "+ lobbies.get(i)[j]);
+            }
+
+            System.out.println();
         }
+    }
+
+    private boolean checkForValidLobby(List<String[]> lobbies){
+        for (String[] s : lobbies)
+            if (!(s[0].equals("Starting... ") || s[0].equals(("FULL"))))
+                return true;
+
+        return false;
+    }
+
+    @Override
+    public void fullLobby(List<String[]> lobbies){
+        System.out.println("La lobby si è riempita, prova di nuovo");
+        gameSetUp(lobbies);
     }
 
     @Override

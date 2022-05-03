@@ -46,17 +46,16 @@ public class ClientHandler extends Thread{
         listen();
     }
     public void listen(){
-        gameSetUp();
+        playerSetUp(false);
 
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
-                if (message.getType() == MessageType.ViewController) {
-                    ViewControllerMessage vcMessage = (ViewControllerMessage) message;
-                    vcMessage.action(virtualView, playerNickname);
-                } else if (message.getType() == MessageType.Lobby){
+                if (message.getType() == MessageType.Lobby){
                     LobbyMessage lobbyMessage = (LobbyMessage) message;
                     lobbyMessage.action(lobbyHandler, this);
+                } else {
+                    message.action(virtualView, playerNickname);
                 }
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
@@ -83,9 +82,10 @@ public class ClientHandler extends Thread{
         send(new GameSetUp(lobbyHandler.getLobbies()));
     }
 
-    public void gameSetUpWake(boolean fullGame, List<String[]> lobbies, int numLobby){
-        send(new GameSetUpWake(fullGame, lobbies, numLobby));
+    public void gameSetUp(boolean fullGame){
+        send(new GameSetUp(lobbyHandler.getLobbies(), fullGame));
     }
+
     public void initialSetUp(){
         send(new InitialSetUp(firstPlayer));
     }
@@ -137,6 +137,10 @@ public class ClientHandler extends Thread{
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
+    }
+
+    public void refreshLobbies(List<String[]> lobbies) {
+        send(new RefreshMessage(lobbies));
     }
 }
 
