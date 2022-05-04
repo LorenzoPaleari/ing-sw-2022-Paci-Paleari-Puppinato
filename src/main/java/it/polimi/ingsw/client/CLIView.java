@@ -158,14 +158,19 @@ public class CLIView implements View{
         boolean expert= false;
         boolean valid1 = false;
         boolean valid2;
-        int numPlayer;
+        int numPlayer=0;
         do {
             System.out.print("Inserire il numero di giocatori [2..3]:  ");
-            numPlayer = Integer.parseInt(scanner.nextLine());
-            if (numPlayer<2 || numPlayer>3)
-                System.out.print("Hai sbagliato a inserire un numero... ");
+            String str=scanner.nextLine();
+            if(str.matches("[0-9]+")) {
+                numPlayer = Integer.parseInt(str);
+                if (numPlayer < 2 || numPlayer > 3)
+                    System.out.print("Hai sbagliato a inserire un numero... ");
+                else
+                    valid1 = true;
+            }
             else
-                valid1=true;
+                System.out.print("Hai sbagliato a inserire un numero... ");
 
         } while (!valid1);
         do {
@@ -201,7 +206,7 @@ public class CLIView implements View{
         TowerColor color = null;
         if(tower.size() == 1){
             color = tower.get(0);
-            System.out.print("Il tuo colore sarà " + tower.get(0));
+            System.out.println("Il tuo colore sarà " + tower.get(0));
         }
         else {
             do {
@@ -232,40 +237,68 @@ public class CLIView implements View{
 
     @Override
     public void choseAction(){
+        do{
         System.out.print("Insert a command: ");
         int code = Integer.parseInt(scanner.nextLine());
-        switch (code){
+        switch (code) {
             case 1:
                 System.out.print("Insert the number of the cloud you want to chose: ");
-                int cloudPosition=Integer.parseInt(scanner.nextLine());
-                serverHandler.cloudChosenRequest(cloudPosition);
+                String strCloud=scanner.nextLine();
+                if (strCloud.matches("[0-9]+")){
+                    int cloudPosition = Integer.parseInt(strCloud);
+                    serverHandler.cloudChosenRequest(cloudPosition);
+                }
+                else
+                    System.out.println("Invalid Choice");
                 break;
             case 2:
-                System.out.print("Insert the number of movements of Mother Nature: ");
-                int endPosition=Integer.parseInt(scanner.nextLine());
-                serverHandler.moveMotherNatureRequest(endPosition);
+                System.out.print("Insert the Final position of Mother Nature: ");
+                String strPosition=scanner.nextLine();
+                if (strPosition.matches("[0-9]+")){
+                    int endPosition = Integer.parseInt(strPosition);
+                    serverHandler.moveMotherNatureRequest(endPosition);
+                }
+                else
+                    System.out.println("Invalid Choice");
                 break;
             case 3:
                 System.out.print("Insert the number of the island you want to chose: ");
-                int islandPosition=Integer.parseInt(scanner.nextLine());
-                System.out.print("Insert the color of the student you want to move: ");
-                String colorString= scanner.nextLine();
-                PawnColor color=lookup(colorString);
-                serverHandler.moveStudentToIslandRequest(islandPosition, color);
+                String strNumIsland=scanner.nextLine();
+                if (strNumIsland.matches("[0-9]+")){
+                    int islandPosition = Integer.parseInt(strNumIsland);
+                    System.out.print("Insert the color of the student you want to move: ");
+                    String colorString = scanner.nextLine();
+                    PawnColor color = lookup(colorString);
+                    if(color==null)
+                        System.out.print("This is not a valid color ");
+                    else
+                        serverHandler.moveStudentToIslandRequest(islandPosition, color);
+                }
+                else
+                    System.out.println("Invalid Choice");
                 break;
             case 4:
                 System.out.print("Insert the color of the student you want to move: ");
-                String colorString2= scanner.nextLine();
-                PawnColor color2=lookup(colorString2);
-                serverHandler.moveToDiningRoomRequest(color2);
+                String colorString2 = scanner.nextLine();
+                PawnColor color2 = lookup(colorString2);
+                if(color2==null)
+                    System.out.print("This is not a valid color ");
+                else
+                    serverHandler.moveToDiningRoomRequest(color2);
                 break;
             case 5:
                 System.out.print("Insert the position of the assistant card you want to use: ");
-                int position=Integer.parseInt(scanner.nextLine());
-                serverHandler.useAssistantRequest(position);
-                break;
+                String strAssistant=scanner.nextLine();
+                if (strAssistant.matches("[0-9]+")) {
+                    int position = Integer.parseInt(strAssistant);
+                    serverHandler.useAssistantRequest(position);
+                }
+                else
+                    System.out.println("Invalid Choice");
+                    break;
+            }
 
-        }
+        } while (true);
     }
 
     @Override
