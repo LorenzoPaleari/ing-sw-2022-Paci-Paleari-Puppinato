@@ -1,10 +1,9 @@
 package it.polimi.ingsw.network.messages.setUp;
 
 import it.polimi.ingsw.client.View;
-import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.ControllerViewMessage;
+import it.polimi.ingsw.network.LobbyMessage;
 import it.polimi.ingsw.network.MessageType;
-import it.polimi.ingsw.network.ViewControllerMessage;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
@@ -12,20 +11,20 @@ import it.polimi.ingsw.server.VirtualView;
 import java.io.Serializable;
 import java.util.List;
 
-public class ColorSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
-    private MessageType type;
-    List<TowerColor> towerColor;
-    TowerColor chosenColor;
+public class RefreshMessage implements Serializable, LobbyMessage, ControllerViewMessage {
+    MessageType type;
+    List<String[]> lobbies;
 
-    public ColorSetUp(List<TowerColor> towerColor){
-        type = MessageType.ControllerView;
-        this.towerColor = towerColor;
+    boolean firstLobby = false;
+
+    public RefreshMessage(){
+        type = MessageType.Lobby;
     }
 
-    public ColorSetUp(TowerColor color){
-        this.chosenColor=color;
-        type = MessageType.ViewController;
-
+    public RefreshMessage(List<String[]> lobbies, boolean firstLobby){
+        type = MessageType.ControllerView;
+        this.firstLobby = firstLobby;
+        this.lobbies = lobbies;
     }
 
     @Override
@@ -35,16 +34,16 @@ public class ColorSetUp implements Serializable, ControllerViewMessage, ViewCont
 
     @Override
     public void action(View view) {
-        view.colorSetUp(towerColor);
+        view.refreshLobbies(lobbies, firstLobby);
     }
 
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
-        virtualView.setUpPlayerColor(chosenColor, playerNickname);
+
     }
 
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
-
+        lobbyHandler.refreshLobbies(clientHandler);
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.network.messages.service.ErrorMessage;
+import it.polimi.ingsw.network.messages.service.InterruptedGameMessage;
 import it.polimi.ingsw.network.messages.setUp.*;
 
 import java.io.IOException;
@@ -25,15 +26,13 @@ public class ClientHandler extends Thread{
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
-    private boolean isConnected = false;
+    private boolean isConnected;
     private boolean firstPlayer;
 
     public ClientHandler(Socket socket, String playerNickname, LobbyHandler lobbyHandler){
         this.socket=socket;
         this.lobbyHandler = lobbyHandler;
-        //this.firstPlayer=firstPlayer;
         isConnected = true;
-        //this.virtualView=virtualView;
         this.playerNickname = playerNickname;
 
         try {
@@ -47,25 +46,16 @@ public class ClientHandler extends Thread{
         listen();
     }
     public void listen(){
-        //if (firstPlayer) {
-        //    initialSetUp();
-        //} else {
-        //    playerSetUp(false);
-        //}
-        gameSetUp();
+        playerSetUp(false);
 
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
-                if (message.getType() == MessageType.ViewController) {
-                    ViewControllerMessage vcMessage = (ViewControllerMessage) message;
-                    vcMessage.action(virtualView, playerNickname);
-                }
-                else if (message.getType() == MessageType.ACK) {
-                    //System.out.println("ACK");
-                } else if (message.getType() == MessageType.Lobby){
+                if (message.getType() == MessageType.Lobby){
                     LobbyMessage lobbyMessage = (LobbyMessage) message;
                     lobbyMessage.action(lobbyHandler, this);
+                } else {
+                    message.action(virtualView, playerNickname);
                 }
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
@@ -92,9 +82,10 @@ public class ClientHandler extends Thread{
         send(new GameSetUp(lobbyHandler.getLobbies()));
     }
 
-    public void gameSetUpWake(boolean fullGame, List<String[]> lobbies, int numLobby){
-        send(new GameSetUpWake(fullGame, lobbies, numLobby));
+    public void gameSetUp(boolean fullGame){
+        send(new GameSetUp(lobbyHandler.getLobbies(), fullGame));
     }
+
     public void initialSetUp(){
         send(new InitialSetUp(firstPlayer));
     }
@@ -146,6 +137,10 @@ public class ClientHandler extends Thread{
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
+    }
+
+    public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
+        send(new RefreshMessage(lobbies, firstLobby));
     }
 }
 

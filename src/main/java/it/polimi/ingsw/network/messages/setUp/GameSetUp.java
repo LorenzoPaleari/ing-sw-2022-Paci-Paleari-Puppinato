@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.LobbyMessage;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.LobbyHandler;
+import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,11 +16,18 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     List<String[]> lobbies;
 
     boolean newGame;
+
+    boolean fullGame = false;
     int lobby;
 
     public GameSetUp(List<String[]> lobbies){
         this.lobbies = lobbies;
         type = MessageType.ControllerView;
+    }
+
+    public GameSetUp(List<String[]> lobbies, boolean fullGame){
+        this.lobbies = lobbies;
+        this.fullGame = fullGame;
     }
 
     public GameSetUp(boolean newGame, int lobby){
@@ -35,7 +43,10 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
 
     @Override
     public void action(View view) {
-        view.gameSetUp(lobbies);
+        if (!fullGame)
+            view.gameSetUp(lobbies);
+        else
+            view.fullLobby(lobbies);
     }
 
     @Override
@@ -44,5 +55,9 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
             lobbyHandler.newClient(clientHandler);
         else
             lobbyHandler.addClient(lobby, clientHandler);
+    }
+
+    @Override
+    public void action(VirtualView virtualView, String playerNickname) {
     }
 }

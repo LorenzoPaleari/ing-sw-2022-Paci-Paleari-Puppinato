@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
+import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
@@ -19,10 +21,11 @@ public abstract class Character {
     public int getNumNoEntryTiles(){return -1;}
     public void returnNoEntryTiles(){};
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext){}
-    public void activateCharacter(Game game, Player player, PawnColor color, Context context) throws BagIsEmptyException {}
-    public void activateCharacter(Player player, PawnColor[] color){}
-    public void activateCharacter(Island island) throws ClientException {}
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException{}
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}
+    public void activateCharacter(Island island, TableHandler tableHandler) throws ClientException{}
+
+    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) {}
 
     public Character (CharacterType type){
         this.type=type;
@@ -46,7 +49,6 @@ public abstract class Character {
     }
 
     public void addStudent(Student s){}
-
 }
 
 

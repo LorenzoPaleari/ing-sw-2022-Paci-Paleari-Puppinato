@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class Game {
@@ -15,6 +17,10 @@ public class Game {
     private Table table;
     private Round round;
     private List<Player> player;
+
+    private Method updateIsland;
+    private Method checkProfessor;
+    private IslandController islandController;
 
     public Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<>();
@@ -37,7 +43,7 @@ public class Game {
     }
 
     public void startGame() {
-        table = new Table(numPlayer, expertMode);
+        table = new Table(numPlayer, expertMode, updateIsland, checkProfessor, islandController);
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
@@ -96,5 +102,13 @@ public class Game {
     private void setGameEnded() {
         gameEnded = true;
     }
+
+    public void setMethodTable(Method updateIsland) {
+        this.updateIsland = updateIsland;
+    }
+    public void setMethodBoard(Method checkProfessor) {
+        this.checkProfessor = checkProfessor;
+    }
+    public void setIslandController(IslandController islandController){this.islandController = islandController;}
 }
 

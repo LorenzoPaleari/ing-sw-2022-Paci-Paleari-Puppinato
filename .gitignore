@@ -1,6 +1,7 @@
 # IntelliJ files
 .idea/
 target/
+out/
 *.iml
 
 # MacOS files

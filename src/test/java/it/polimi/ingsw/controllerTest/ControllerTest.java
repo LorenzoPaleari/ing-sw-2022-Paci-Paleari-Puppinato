@@ -26,7 +26,7 @@ public class ControllerTest {
     private Game game;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws InterruptedException {
         lobbyHandler = new LobbyHandler();
         controller = new Controller();
         controller.setNumPlayer(3);
@@ -36,6 +36,7 @@ public class ControllerTest {
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
+        controller.gameStart();
         game = controller.getGame();
 
         game.getTable().getMotherNature().setPosition(0);

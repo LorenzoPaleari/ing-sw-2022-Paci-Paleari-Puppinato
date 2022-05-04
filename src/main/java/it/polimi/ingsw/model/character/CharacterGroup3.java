@@ -9,16 +9,22 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
 //KNIGHT
 //EXCHANGE
 public class CharacterGroup3 extends Character{
-    private IslandController island = new IslandControllerMoreInfluence();
+    private IslandController island;
+    private Method checkProfessor;
 
-    public CharacterGroup3 (CharacterType type) {
+    public CharacterGroup3 (CharacterType type, Method checkProfessor, IslandController island) {
         super(type);
+        this.checkProfessor = checkProfessor;
+        this.island = island;
     }
 
     @Override
@@ -27,7 +33,7 @@ public class CharacterGroup3 extends Character{
     }
 
     @Override
-    public void activateCharacter(Player player, PawnColor[] color) {
+    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) {
         List<Student> list1 = new LinkedList<>();
         List<Student> list2 = new LinkedList<>();
         //prima entrance, poi dining
@@ -46,7 +52,9 @@ public class CharacterGroup3 extends Character{
         player.getBoard().getEntrance().addStudent(list2);
         player.getBoard().getDiningRoom().addStudent(list1);
         for (Student s : list1)
-            BoardHandler.checkProfessor(player, s.getColor());
+            try {
+                checkProfessor.invoke(boardHandler, player, s.getColor());
+            } catch (InvocationTargetException | IllegalAccessException ignored) {}
     }
 
 }

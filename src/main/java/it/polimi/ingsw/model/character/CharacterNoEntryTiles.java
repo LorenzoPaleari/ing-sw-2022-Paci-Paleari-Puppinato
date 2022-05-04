@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -24,7 +25,7 @@ public class CharacterNoEntryTiles extends Character{
     }
 
     @Override
-    public void activateCharacter(Island island)throws ClientException {
+    public void activateCharacter(Island island, TableHandler tableHandler)throws ClientException {
         if ((numNoEntryTiles < 1 || island.isNoEntryTiles()))
             {throw new ClientException(ErrorType.NO_ENTRY_TILES_SET);}
         else {

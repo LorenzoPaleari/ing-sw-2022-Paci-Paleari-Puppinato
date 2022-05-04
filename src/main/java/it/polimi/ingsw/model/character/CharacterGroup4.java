@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerNoTower;
@@ -24,7 +25,7 @@ public class CharacterGroup4 extends Character{
     }
 
     @Override
-    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) {
         Professor prof = game.getTable().findProfessor(color);
         for (Player p: game.getPlayers()){
                 game.getTable().getBag().addStudent(p.getBoard().getDiningRoom().removeStudent(color, 3));

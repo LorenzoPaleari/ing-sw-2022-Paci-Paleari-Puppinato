@@ -29,7 +29,7 @@ public class BoardHandlerTest {
     private Game game;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws InterruptedException {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
@@ -38,6 +38,7 @@ public class BoardHandlerTest {
         controller.addPlayer(player1);
         controller.addPlayer(player2);
         controller.addPlayer(player3);
+        controller.gameStart();
 
         game = controller.getGame();
 

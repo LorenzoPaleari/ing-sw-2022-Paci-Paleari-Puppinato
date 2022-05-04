@@ -51,41 +51,15 @@ public class VirtualView {
     }
 
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
-        Server.setMaxPlayer(numPlayer);
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
-        /*synchronized (controller) {
-            controller.notifyAll();
-        }*/
-        ClientHandler[] clientWaiting = lobbyHandler.getWaiting(controller);
-        if (clientWaiting != null) {
-            for (int i = 0; i < numPlayer - 1; i++)
-                clientWaiting[i].gameSetUpWake(false, null, lobbyHandler.getLobbyIndex(controller));
 
-            try {
-                synchronized (this) {
-                    this.wait(2000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            for (int i = numPlayer - 1; i < clientWaiting.length; i++)
-                clientWaiting[i].gameSetUpWake(true, lobbyHandler.getLobbies(), lobbyHandler.getLobbyIndex(controller));
-        }
-
-        clientHandlers.get(0).playerSetUp(false);
+        lockColorSetUp(playerNickname);
     }
 
-    public void setUpPlayerInfo(String nickname, String playerNickname){
-        if (!lobbyHandler.isNicknameUsed(nickname)) {
-            getClientHandlerByNickname(playerNickname).setPlayerNickname(nickname);
-
-            lock.lock();
-            getClientHandlerByNickname(nickname).colorSetUp();
-        } else {
-            getClientHandlerByNickname(playerNickname).playerSetUp(true);
-        }
+    public void lockColorSetUp(String nickname){
+        lock.lock();
+        getClientHandlerByNickname(nickname).colorSetUp();
     }
 
     public void setUpPlayerColor(TowerColor color, String playerNickname){
@@ -113,8 +87,7 @@ public class VirtualView {
 
     public void printInterrupt(String nickname){
         for (ClientHandler c : clientHandlers) {
-            if (nickname.equals(c.getPlayerNickname())) ;
-            else
+            if (!nickname.equals(c.getPlayerNickname()))
                 c.printInterrupt(nickname, c.getPlayerNickname());
         }
     }

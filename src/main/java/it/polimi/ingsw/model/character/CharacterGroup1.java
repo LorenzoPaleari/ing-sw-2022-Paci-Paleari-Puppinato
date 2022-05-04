@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.character;
 
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
@@ -26,7 +27,7 @@ public class CharacterGroup1 extends Character{
     }
 
     @Override
-    public void activateCharacter(Game game, Player player, PawnColor color, Context context) {
+    public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) {
         islandController.setNoColor(color);
         context.changeContext(islandController);
     }

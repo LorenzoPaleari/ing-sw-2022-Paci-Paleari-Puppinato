@@ -15,7 +15,9 @@ public interface View {
 
     void gameSetUp(List<String[]> lobbies);
 
-    void wakeUp(boolean fullGame, List<String[]> lobbies, int numLobby);
+    void refreshLobbies(List<String[]> lobbies, boolean firstLobby);
+
+    void fullLobby(List<String[]> lobbies);
 
     void initialSetUp(boolean firstPlayer);
 

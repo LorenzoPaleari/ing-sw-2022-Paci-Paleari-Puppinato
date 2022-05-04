@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.model.table.Table;
 import it.polimi.ingsw.server.VirtualView;
 
 public class CharacterHandler {
@@ -18,14 +20,21 @@ public class CharacterHandler {
     private Context professorContext;
     private final Context motherNatureContext;
     private Context islandContext;
+    private TableHandler tableHandler;
+    private BoardHandler boardHandler;
+    private IslandController islandController;
 
-    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView){
+    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView, TableHandler tableHandler, BoardHandler boardHandler, IslandController islandController){
         this.game = game;
         this.virtualView = virtualView;
         this.turnController = turnController;
         this.professorContext = professorContext;
         this.motherNatureContext = motherNatureContext;
         this.islandContext = islandContext;
+        this.tableHandler = tableHandler;
+        this.boardHandler = boardHandler;
+        this.islandController = islandController;
+        this.game.setIslandController(islandController);
     }
 
     public void useCharacter(Player player, int characterPosition){
@@ -40,7 +49,7 @@ public class CharacterHandler {
         }
 
         if (character.getType().equals(CharacterType.KNIGHT))
-            IslandControllerMoreInfluence.setPlayer(player);
+            islandController.setPlayer(player);
         character.activateCharacter(professorContext, motherNatureContext, islandContext);
 
         game.getRound().getTurn().setUsedCharacter(true);
@@ -51,7 +60,7 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-            character.activateCharacter(game.getTable().getIsland(islandPosition));
+            character.activateCharacter(game.getTable().getIsland(islandPosition), tableHandler);
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
@@ -73,7 +82,7 @@ public class CharacterHandler {
         }
 
         try {
-            character.activateCharacter(game, player, color, islandContext);
+            character.activateCharacter(game, player, color, islandContext, boardHandler);
         } catch (BagIsEmptyException e) {
             game.getRound().setLastRound();
         } finally {
@@ -100,7 +109,7 @@ public class CharacterHandler {
             color[i] = PawnColor.getColor(colors[i]);
         }
 
-        character.activateCharacter(player, color);
+        character.activateCharacter(player, color,boardHandler);
 
         game.getRound().getTurn().setUsedCharacter(true);
     }

@@ -18,7 +18,12 @@ public class GUIView implements View {
     }
 
     @Override
-    public void wakeUp(boolean fullGame, List<String[]> lobbies, int numLobby) {
+    public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
+
+    }
+
+    @Override
+    public void fullLobby(List<String[]> lobbies) {
 
     }
 

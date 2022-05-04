@@ -1,10 +1,9 @@
 package it.polimi.ingsw.client;
 
-import java.io.*;
 import java.util.Scanner;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ServerHandler serverHandler = new ServerHandler();
         View view;

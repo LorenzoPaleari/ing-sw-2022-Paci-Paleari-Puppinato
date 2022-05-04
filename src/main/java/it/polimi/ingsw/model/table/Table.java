@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.table;
 
+import it.polimi.ingsw.controller.TableHandler;
+import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.character.Factory;
@@ -8,6 +10,7 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.pawns.Student;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class Table {
@@ -18,10 +21,12 @@ public class Table {
     private List<Character> character;
     private Bag bag;
     private List<Professor> professor;
+    private IslandController islandController;
 
-    public Table(int numPlayer,boolean expert) {
+    public Table(int numPlayer, boolean expert, Method islandUpdate, Method checkProfessor, IslandController islandController) {
         motherNature = new MotherNature();
         Factory factory = new Factory();
+        this.islandController = islandController;
 
         bag=new Bag();
 
@@ -62,13 +67,12 @@ public class Table {
             Collections.shuffle(type);
 
             for (int i = 0; i < 3; i++){
-                character.add(factory.getCharacter(type.get(i), bag));
+                character.add(factory.getCharacter(type.get(i), bag, islandUpdate, checkProfessor, islandController));
             }
         }
 
 
     }
-
 
     public void fillCloud(int numPlayer, List<Student> student){
         int init = 0;
@@ -200,9 +204,9 @@ public class Table {
         }
     }
 
-    public void setCharacter(int position, CharacterType type){
+    public void setCharacter(int position, CharacterType type, Method islandUpdate, Method checkProfessor){
         Factory factory = new Factory();
-        character.set(position,factory.getCharacter(type, bag));
+        character.set(position,factory.getCharacter(type, bag, islandUpdate, checkProfessor, islandController));
     }
 }
 

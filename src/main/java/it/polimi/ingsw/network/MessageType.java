@@ -9,8 +9,6 @@ public enum MessageType implements Serializable {
 
     ModelView,
 
-    ViewController,
-
-    ACK
+    ViewController
 
 }

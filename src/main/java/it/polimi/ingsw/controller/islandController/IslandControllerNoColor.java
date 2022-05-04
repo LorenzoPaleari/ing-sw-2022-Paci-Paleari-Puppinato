@@ -31,6 +31,11 @@ public class IslandControllerNoColor implements IslandController {
         }
     }
 
+    @Override
+    public void setPlayer(Player player) {
+
+    }
+
     public void setNoColor(PawnColor noColor) {
         this.noColor = noColor;
     }
