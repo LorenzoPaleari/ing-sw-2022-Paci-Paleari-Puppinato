@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Listener;
+package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.server.VirtualView;
 

@@ -20,9 +20,7 @@ import java.util.*;
 public class ClientHandler extends Thread{
     private Socket socket;
     private String playerNickname;
-
     private LobbyHandler lobbyHandler;
-
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
@@ -59,9 +57,11 @@ public class ClientHandler extends Thread{
                 }
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;
-                System.out.println( getPlayerNickname() + " has disconnected");
-
-                virtualView.printInterrupt(getPlayerNickname());
+                System.out.println(getPlayerNickname() + " has disconnected");
+                if (virtualView != null) {
+                    lobbyHandler.terminateLobby(virtualView);
+                    virtualView.printInterrupt(getPlayerNickname());
+                }
                 endConnection();
             }
         }
@@ -74,7 +74,13 @@ public class ClientHandler extends Thread{
             output.reset();
         }
         catch(IOException e){
-            System.out.println("Errore2");
+            System.out.println(getPlayerNickname() + "disconnected during Message sending");
+            isConnected = false;
+            if (virtualView != null) {
+                lobbyHandler.terminateLobby(virtualView);
+                virtualView.printInterrupt(getPlayerNickname());
+            }
+            endConnection();
         }
     }
 
@@ -116,15 +122,22 @@ public class ClientHandler extends Thread{
         send (new ErrorMessage(error));
     }
 
-    public void printInterrupt(String nickname, String player){
-        send (new InterruptedGameMessage(nickname, player));
+    public void printInterrupt(String nickname){
+        synchronized (this) {
+            send(new InterruptedGameMessage(nickname));
+            if (!nickname.equals(""))
+                endConnection();
+        }
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 
     public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}
 
     public void endConnection() {
         try {
-            ACKControl.setSendACK();
             socket.close();
             isConnected = false;
         } catch (IOException e) {

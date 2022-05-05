@@ -37,8 +37,7 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, LobbyMe
     }
 
     @Override
-    public void action(VirtualView virtualView, String playerNickname) {
-        //virtualView.setUpPlayerInfo(nickname, playerNickname);
+    public void action(VirtualView virtualView, String playerNickname) {;
     }
 
     @Override

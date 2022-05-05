@@ -14,15 +14,14 @@ public class InterruptedGameMessage  implements Serializable, ControllerViewMess
     private String player;
     private MessageType type;
 
-    public InterruptedGameMessage(String nickname, String player){
+    public InterruptedGameMessage(String nickname){
         this.nickname=nickname;
-        this.player=player;
         type = MessageType.ControllerView;
     }
 
     @Override
     public void action(View view) {
-        view.printInterrupt(nickname, player);
+        view.printInterrupt(nickname);
     }
 
     @Override

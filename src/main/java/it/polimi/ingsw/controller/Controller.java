@@ -20,7 +20,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.util.LinkedList;
@@ -189,12 +189,6 @@ public class Controller {
         characterHandler.useCharacter(player, characterPosition, islandPosition, color);
         game.getTable().getIsland(islandPosition).attach(modelListener);
 
-    }
-    public boolean isNicknameUsed(String nickname){
-        for (Player p: game.getPlayers()) {
-            if(p.getNickname().equals(nickname)) return true;
-        }
-        return false;
     }
 
     public Player getPlayerByNickname(String nickname){

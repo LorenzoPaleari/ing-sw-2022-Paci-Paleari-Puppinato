@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.*;
 

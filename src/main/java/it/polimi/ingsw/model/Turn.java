@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 
 public class Turn{
     private Player currentPlayer;

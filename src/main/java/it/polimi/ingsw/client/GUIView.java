@@ -58,7 +58,7 @@ public class GUIView implements View {
     }
 
     @Override
-    public void printInterrupt(String nickname, String player) {
+    public void printInterrupt(String nickname) {
 
     }
 

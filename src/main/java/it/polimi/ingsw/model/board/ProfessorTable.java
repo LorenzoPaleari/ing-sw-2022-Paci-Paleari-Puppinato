@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.LinkedList;
 

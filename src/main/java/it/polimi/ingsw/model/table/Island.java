@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.table;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.*;
 

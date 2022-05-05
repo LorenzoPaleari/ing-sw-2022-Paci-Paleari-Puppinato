@@ -33,6 +33,6 @@ public interface View {
 
     void printWinner(String winner1, String winner2, String nickname);
 
-    void printInterrupt(String nickname, String player);
+    void printInterrupt(String nickname);
 }
 

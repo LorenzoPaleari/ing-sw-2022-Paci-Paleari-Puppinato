@@ -89,8 +89,8 @@ public class VirtualView {
 
     public void printInterrupt(String nickname){
         for (ClientHandler c : clientHandlers) {
-            if (!nickname.equals(c.getPlayerNickname()))
-                c.printInterrupt(nickname, c.getPlayerNickname());
+            if (!nickname.equals(c.getPlayerNickname()) && c.isConnected())
+                c.printInterrupt(nickname);
         }
     }
 

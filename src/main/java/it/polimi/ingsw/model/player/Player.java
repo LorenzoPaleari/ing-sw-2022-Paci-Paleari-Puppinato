@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.pawns.Student;
-import it.polimi.ingsw.Listener.ModelListener;
+import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.*;
 
