@@ -134,7 +134,7 @@ public class CLIView implements View{
                 String expert = "Yes";
                 if (lobby[lobby.length - 1].equals("false"))
                     expert = "No";
-                System.out.println("\t NumPlayers: "+lobby[lobby.length - 2]+" - ExpertMode: " + expert);
+                System.out.print("\t\t NumPlayers: "+lobby[lobby.length - 2]+" - ExpertMode: " + expert);
                 System.out.println();
             }
         }
