@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.pawns.Student;
+import it.polimi.ingsw.Listener.ModelListener;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class Player {
     private PlayerState state;
     private Assistant lastUsed;
     private int numCoin;
+    private ModelListener modelListener=null;
 
     public  Player(String nickname, TowerColor color){
         this.nickname = nickname;
@@ -64,15 +66,26 @@ public class Player {
 
     public void addCoin() {
         numCoin += 1;
+        notifyView();
     }
 
     public void changeState(PlayerState state)
     {
         this.state=state;
+        if(state==PlayerState.ENDTURN)
+            notifyView();
     }
 
     public void addAssistant (int position)
     {
        lastUsed=deck.removeAssistant(position);
+    }
+    public void attach(ModelListener modelListener){this.modelListener=modelListener;}
+    public void notifyView() {
+        if (modelListener != null)
+            modelListener.update();
+    }
+    public void detach(){
+        modelListener=null;
     }
 }

@@ -23,6 +23,8 @@ public class VirtualView {
         clientHandlers= new LinkedList<>();
     }
 
+    public Controller getController() {return controller;}
+
     public void addClientHandler(ClientHandler clientHandler){
         clientHandlers.add(clientHandler);
     }

@@ -109,6 +109,7 @@ public class TableHandler {
             virtualView.printError(e, player.getNickname());
             return;
         }
+        System.out.println("Non ci devi arrivare");
 
         game.getRound().setCloudChosen(position);
 

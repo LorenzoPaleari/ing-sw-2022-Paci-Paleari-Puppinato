@@ -20,6 +20,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
+import it.polimi.ingsw.Listener.ModelListener;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.util.LinkedList;
@@ -39,6 +40,7 @@ public class Controller {
     private TableHandler tableHandler;
     private CharacterHandler characterHandler;
     private VirtualView virtualView;
+    private ModelListener modelListener;
     boolean canStart;
 
     public Controller(){
@@ -64,6 +66,7 @@ public class Controller {
         boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
         tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
         characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView, tableHandler, boardHandler, islandControllerMoreInfluence);
+        modelListener=new ModelListener(virtualView);
     }
 
     public void setNumPlayer(int num) {
@@ -176,11 +179,16 @@ public class Controller {
     }
 
     public void useCharacter(Player player, int characterPosition, int[] colors){
+        player.detach();
         characterHandler.useCharacter(player, characterPosition, colors);
+        player.attach(modelListener);
     }
 
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
+        game.getTable().getIsland(islandPosition).detach();
         characterHandler.useCharacter(player, characterPosition, islandPosition, color);
+        game.getTable().getIsland(islandPosition).attach(modelListener);
+
     }
     public boolean isNicknameUsed(String nickname){
         for (Player p: game.getPlayers()) {
@@ -205,12 +213,22 @@ public class Controller {
     }
 
     public void gameStart() throws InterruptedException {
-        synchronized (this){
+        synchronized (this) {
             while (!readyToStart())
                 this.wait();
+
+            game.startGame();
+            game.getRound().attach(modelListener);
+            for (Island i : game.getTable().getIsland()) {
+                i.attach(modelListener);
+            }
+            for (Player p : game.getPlayers()) {
+                p.attach(modelListener);
+                p.getBoard().getProfessorTable().attach(modelListener);
+            }
+            game.getRound().getTurn().attach(modelListener);
+
         }
-        game.startGame();
-        virtualView.printGameBoard(game);
     }
 
     private boolean readyToStart(){

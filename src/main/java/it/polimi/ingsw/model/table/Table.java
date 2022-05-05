@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.table;
 
-import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.character.Character;
@@ -83,7 +82,6 @@ public class Table {
             init = end;
             end += numPlayer + 1;
         }
-
         student.clear();
     }
 

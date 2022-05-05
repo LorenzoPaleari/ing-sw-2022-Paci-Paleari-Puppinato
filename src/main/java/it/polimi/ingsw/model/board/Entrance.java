@@ -25,11 +25,9 @@ public class Entrance {
     }
 
     public void addStudent(List<Student> s){
-
         student.addAll(s);
     }
     public void addStudent(Student s){
-
         student.add(s);
     }
 

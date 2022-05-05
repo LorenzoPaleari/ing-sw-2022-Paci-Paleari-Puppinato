@@ -1,6 +1,8 @@
 package it.polimi.ingsw.exceptions;
 
-public enum ErrorType {
+import java.io.Serializable;
+
+public enum ErrorType implements Serializable {
     ALREADY_CHOSEN_CLOUD(1, "This cloud has already been chosen, please select another"),
     ALREADY_USED_CHARACTER(2, "A character has already been used this turn"),
     GENERAL_SUPPLY_FINISHED(3, "There are no more coins, please try another action"),

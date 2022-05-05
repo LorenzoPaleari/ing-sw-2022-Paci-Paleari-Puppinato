@@ -64,7 +64,7 @@ public class TurnController {
     public void checkCorrectAction(Player player, PlayerState state) throws ClientException {
         if (!player.getState().equals(state)) {
             switch (player.getState()){
-                case WAIT: throw new ClientException(ErrorType.WRONG_PHASE);
+                case PLANNING: throw new ClientException(ErrorType.WRONG_PHASE);
                 case ACTION: throw new ClientException(ErrorType.WRONG_PHASE2);
                 case ENDTURN: throw new ClientException(ErrorType.WRONG_PHASE3);
             }

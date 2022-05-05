@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model.board;
 
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
-
-import java.util.LinkedList;
 import java.util.*;
-import java.util.Set;
 
 public class TowerCourt {
     private LinkedList<Tower> tower;

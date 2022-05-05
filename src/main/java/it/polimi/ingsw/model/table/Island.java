@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.table;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
+import it.polimi.ingsw.Listener.ModelListener;
 
 import java.util.*;
 
@@ -12,6 +13,7 @@ public class Island {
     private boolean motherNature;
     private boolean noEntryTiles;
     private List<Tower> islandTower;
+    private ModelListener modelListener=null;
 
    public Island()
     {
@@ -71,9 +73,9 @@ public class Island {
         return colorsCount;
     }
 
-    public void addStudent(Student s)
-    {
+    public void addStudent(Student s) {
         islandStudent.add(s);
+        notifyView();
     }
 
     public List<Tower> removeTower(){
@@ -86,4 +88,12 @@ public class Island {
        islandTower.addAll(tower);
     }
 
+    public void attach(ModelListener modelListener){this.modelListener=modelListener;}
+    public void notifyView() {
+        if (modelListener != null)
+            modelListener.update();
+    }
+    public void detach(){
+       modelListener=null;
+   }
 }

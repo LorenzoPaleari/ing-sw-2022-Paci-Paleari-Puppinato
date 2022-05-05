@@ -110,5 +110,6 @@ public class Game {
         this.checkProfessor = checkProfessor;
     }
     public void setIslandController(IslandController islandController){this.islandController = islandController;}
+
 }
 

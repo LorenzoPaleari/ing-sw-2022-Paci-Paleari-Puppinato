@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.player.Player;
+import it.polimi.ingsw.Listener.ModelListener;
+
 import java.util.*;
 
 public class Round {
@@ -12,6 +14,7 @@ public class Round {
     private int numTurnDone;
     private Turn turn;
     private Boolean lastRound;
+    private ModelListener modelListener=null;
 
     public void setLastRound() {
         lastRound = true;
@@ -60,6 +63,7 @@ public class Round {
             turn.updatePlayer(p);
             turn.resetRemainingMovements(playerSequenceAscend.size() + 1);
             p.changeState(PlayerState.ACTION);
+            notifyView();
             return true;
         }
     }
@@ -95,6 +99,7 @@ public class Round {
         turn.resetRemainingMovements(playerSequence.size()+ 1);
 
         numTurnDone = 0;
+        notifyView();
     }
 
     public boolean nextPlanningTurn(){
@@ -108,6 +113,7 @@ public class Round {
             turn.updatePlayer(p);
             p.changeState(PlayerState.PLANNING);
             numTurnDone += 1;
+            notifyView();
             return true;
         }
     }
@@ -117,6 +123,7 @@ public class Round {
         cloudChosen.clear();
         turn.updatePlayer(playerSequence.get(0));
         playerSequence.get(0).changeState(PlayerState.PLANNING);
+        notifyView();
     }
 
     public Player getNextPlayer(Player p){
@@ -124,6 +131,13 @@ public class Round {
             return playerSequence.get(0);
         else
             return playerSequence.get(1 + playerSequence.indexOf(p));
+
+
     }
 
+    public void attach(ModelListener modelListener){this.modelListener=modelListener;}
+    public void notifyView() {
+        if (modelListener != null)
+            modelListener.update();
+    }
 }

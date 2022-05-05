@@ -7,6 +7,7 @@ import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -231,14 +232,17 @@ public class CLIView implements View{
     @Override
     public void printGameBoard(GameInfo gameInfo){
         this.gameInfo = gameInfo;
-        System.out.println("Sto funzionando");
+        scanner.close();
+        System.out.print("Sto funzionando");
         choseAction();
     }
 
     @Override
     public void choseAction(){
-        do{
+        scanner= new Scanner(System.in);
+        System.out.println("");
         System.out.print("Insert a command: ");
+
         int code = Integer.parseInt(scanner.nextLine());
         switch (code) {
             case 1:
@@ -249,17 +253,17 @@ public class CLIView implements View{
                     serverHandler.cloudChosenRequest(cloudPosition);
                 }
                 else
-                    System.out.println("Invalid Choice");
+                    System.out.println("Invalid Choice  \n");
                 break;
             case 2:
-                System.out.print("Insert the Final position of Mother Nature: ");
+                System.out.print("Insert the final position of Mother Nature: ");
                 String strPosition=scanner.nextLine();
                 if (strPosition.matches("[0-9]+")){
                     int endPosition = Integer.parseInt(strPosition);
                     serverHandler.moveMotherNatureRequest(endPosition);
                 }
                 else
-                    System.out.println("Invalid Choice");
+                    System.out.println("Invalid Choice \n");
                 break;
             case 3:
                 System.out.print("Insert the number of the island you want to chose: ");
@@ -275,14 +279,14 @@ public class CLIView implements View{
                         serverHandler.moveStudentToIslandRequest(islandPosition, color);
                 }
                 else
-                    System.out.println("Invalid Choice");
+                    System.out.println("Invalid Choice \n");
                 break;
             case 4:
                 System.out.print("Insert the color of the student you want to move: ");
                 String colorString2 = scanner.nextLine();
                 PawnColor color2 = lookup(colorString2);
                 if(color2==null)
-                    System.out.print("This is not a valid color ");
+                    System.out.print("This is not a valid color \n");
                 else
                     serverHandler.moveToDiningRoomRequest(color2);
                 break;
@@ -294,11 +298,10 @@ public class CLIView implements View{
                     serverHandler.useAssistantRequest(position);
                 }
                 else
-                    System.out.println("Invalid Choice");
+                    System.out.println("Invalid Choice \n");
                     break;
             }
 
-        } while (true);
     }
 
     @Override
