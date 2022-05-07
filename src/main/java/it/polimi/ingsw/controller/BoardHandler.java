@@ -9,14 +9,13 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.server.VirtualView;
 
 public class BoardHandler {
     private Game game;
     private VirtualView virtualView;
     private TurnController turnController;
-    private static Context professorContext;
+    private Context professorContext;
 
     public BoardHandler(Game game, TurnController turnController, Context professorContext, VirtualView virtualView){
         this.game = game;
@@ -50,7 +49,7 @@ public class BoardHandler {
             try {
                 game.getTable().withdrawCoin();
                 player.addCoin();
-            } catch (GeneralSupplyFinishedException e){
+            } catch (GeneralSupplyFinishedException ignored){
             }
         }
     }

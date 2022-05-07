@@ -20,8 +20,7 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     boolean fullGame = false;
     int lobby;
 
-    public GameSetUp(List<String[]> lobbies){
-        this.lobbies = lobbies;
+    public GameSetUp(){
         type = MessageType.ControllerView;
     }
 
@@ -44,7 +43,7 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     @Override
     public void action(View view) {
         if (!fullGame)
-            view.gameSetUp(lobbies);
+            view.gameSetUp();
         else
             view.fullLobby(lobbies);
     }

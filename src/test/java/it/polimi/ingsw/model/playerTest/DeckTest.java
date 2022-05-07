@@ -25,8 +25,7 @@ class DeckTest {
     }
     @Test
     void removeAssistant() {
-        Assistant assistant1= null;
-        assistant1 = deck.removeAssistant(7);
+        Assistant assistant1 = deck.removeAssistant(7);
         for (Assistant a: deck.getAssistant()){
             assertNotEquals(a.getWeight(), 8);
         }

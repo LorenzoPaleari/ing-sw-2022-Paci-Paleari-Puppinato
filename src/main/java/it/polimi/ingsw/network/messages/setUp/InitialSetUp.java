@@ -12,13 +12,11 @@ import java.io.Serializable;
 
 public class InitialSetUp implements Serializable, ControllerViewMessage, ViewControllerMessage {
     private MessageType type;
-    private boolean firstPlayer;
     private int numPlayer;
     private boolean expert;
 
-    public InitialSetUp(boolean firstPlayer){
+    public InitialSetUp(){
         type = MessageType.ControllerView;
-        this.firstPlayer = firstPlayer;
     }
 
     public InitialSetUp(int numPlayer, boolean expert){
@@ -35,7 +33,7 @@ public class InitialSetUp implements Serializable, ControllerViewMessage, ViewCo
 
     @Override
     public void action(View view) {
-        view.initialSetUp(firstPlayer);
+        view.initialSetUp();
     }
 
     @Override

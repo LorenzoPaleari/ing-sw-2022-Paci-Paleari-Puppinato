@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ACKControl;
-import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
@@ -18,14 +17,14 @@ import java.util.*;
 
 
 public class ClientHandler extends Thread{
-    private Socket socket;
+    private final Socket socket;
     private String playerNickname;
-    private LobbyHandler lobbyHandler;
+    private final LobbyHandler lobbyHandler;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private VirtualView virtualView;
     private boolean isConnected;
-    private boolean firstPlayer;
+
 
     public ClientHandler(Socket socket, String playerNickname, LobbyHandler lobbyHandler){
         this.socket=socket;
@@ -85,7 +84,7 @@ public class ClientHandler extends Thread{
     }
 
     public void gameSetUp(){
-        send(new GameSetUp(lobbyHandler.getLobbies()));
+        send(new GameSetUp());
     }
 
     public void gameSetUp(boolean fullGame){
@@ -93,7 +92,7 @@ public class ClientHandler extends Thread{
     }
 
     public void initialSetUp(){
-        send(new InitialSetUp(firstPlayer));
+        send(new InitialSetUp());
     }
 
     public void playerSetUp(boolean requestAgain){
@@ -146,10 +145,6 @@ public class ClientHandler extends Thread{
 
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
-    }
-
-    public void setFirstPlayer(boolean firstPlayer) {
-        this.firstPlayer = firstPlayer;
     }
 
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {

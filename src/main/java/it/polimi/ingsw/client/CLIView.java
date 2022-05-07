@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ViewUtilities.GameInfo;
-import it.polimi.ingsw.client.ViewUtilities.IPValidator;
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
+import it.polimi.ingsw.client.viewUtilities.IPValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -50,7 +50,7 @@ public class CLIView implements View{
     }
 
     @Override
-    public void gameSetUp(List<String[]> lobbies) {
+    public void gameSetUp() {
         boolean valid;
         String response;
 
@@ -95,7 +95,7 @@ public class CLIView implements View{
                 serverHandler.refreshLobbies();
             else if (lobby.toLowerCase().matches("newgame"))
                 serverHandler.setGame(true, -1);
-            else if (lobby.matches("[0-9]+")) {
+            else if (lobby.matches("\\d+")) {
                 int numLobby = Integer.parseInt(lobby);
                 if (numLobby > lobbySize || numLobby < 0) {
                     System.out.print("Il numero inserito non è valido, riprova.");
@@ -152,11 +152,11 @@ public class CLIView implements View{
     @Override
     public void fullLobby(List<String[]> lobbies){
         System.out.println("La lobby si è riempita, prova di nuovo");
-        gameSetUp(lobbies);
+        gameSetUp();
     }
 
     @Override
-    public void initialSetUp(boolean firstPlayer) {
+    public void initialSetUp() {
         boolean expert= false;
         boolean valid1 = false;
         boolean valid2;
@@ -164,7 +164,7 @@ public class CLIView implements View{
         do {
             System.out.print("Inserire il numero di giocatori [2..3]:  ");
             String str=scanner.nextLine();
-            if(str.matches("[0-9]+")) {
+            if(str.matches("\\d+")) {
                 numPlayer = Integer.parseInt(str);
                 if (numPlayer < 2 || numPlayer > 3)
                     System.out.print("Hai sbagliato a inserire un numero... ");
@@ -247,7 +247,7 @@ public class CLIView implements View{
             case 1:
                 System.out.print("Insert the number of the cloud you want to chose: ");
                 String strCloud=scanner.nextLine();
-                if (strCloud.matches("[0-9]+")){
+                if (strCloud.matches("\\d+")){
                     int cloudPosition = Integer.parseInt(strCloud);
                     serverHandler.cloudChosenRequest(cloudPosition);
                 }
@@ -257,7 +257,7 @@ public class CLIView implements View{
             case 2:
                 System.out.print("Insert the final position of Mother Nature: ");
                 String strPosition=scanner.nextLine();
-                if (strPosition.matches("[0-9]+")){
+                if (strPosition.matches("\\d+")){
                     int endPosition = Integer.parseInt(strPosition);
                     serverHandler.moveMotherNatureRequest(endPosition);
                 }
@@ -267,7 +267,7 @@ public class CLIView implements View{
             case 3:
                 System.out.print("Insert the number of the island you want to chose: ");
                 String strNumIsland=scanner.nextLine();
-                if (strNumIsland.matches("[0-9]+")){
+                if (strNumIsland.matches("\\d+")){
                     int islandPosition = Integer.parseInt(strNumIsland);
                     System.out.print("Insert the color of the student you want to move: ");
                     String colorString = scanner.nextLine();
@@ -292,7 +292,7 @@ public class CLIView implements View{
             case 5:
                 System.out.print("Insert the position of the assistant card you want to use: ");
                 String strAssistant=scanner.nextLine();
-                if (strAssistant.matches("[0-9]+")) {
+                if (strAssistant.matches("\\d+")) {
                     int position = Integer.parseInt(strAssistant);
                     serverHandler.useAssistantRequest(position);
                 }

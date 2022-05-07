@@ -8,13 +8,13 @@ import it.polimi.ingsw.model.player.Player;
 public class ProfessorContext extends Context {
     private ProfessorController strategy;
 
-    public ProfessorContext(ProfessorController strat){
-        strategy = strat;
+    public ProfessorContext(ProfessorController strategy){
+        this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(ProfessorController strat){
-        strategy = strat;
+    public void changeContext(ProfessorController strategy){
+        this.strategy = strategy;
     }
 
     @Override

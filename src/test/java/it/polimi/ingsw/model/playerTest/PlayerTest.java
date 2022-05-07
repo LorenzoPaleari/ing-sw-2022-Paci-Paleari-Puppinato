@@ -64,8 +64,7 @@ class PlayerTest {
         test.add(new Student(1));
         test.add(new Student(0));
         player.setUp(test,true,3);
-        Assistant assistant= null;
-        assistant=player.getDeck().getAssistant(0);
+        Assistant assistant = player.getDeck().getAssistant(0);
         player.addAssistant(0);
         assertEquals(player.getLastUsed(), assistant);
     }

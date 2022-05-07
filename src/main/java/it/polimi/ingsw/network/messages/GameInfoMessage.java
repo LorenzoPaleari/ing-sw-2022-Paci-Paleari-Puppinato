@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
-import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.ModelViewMessage;
 import it.polimi.ingsw.server.ClientHandler;

@@ -16,8 +16,7 @@ public class Game {
     private int numPlayer = -1;
     private Table table;
     private Round round;
-    private List<Player> player;
-
+    private final List<Player> player;
     private Method updateIsland;
     private Method checkProfessor;
     private IslandController islandController;

@@ -137,7 +137,7 @@ public class Controller {
             }
         }
 
-        if (value == true && size == 2 && game.getRound().getNumTurnDone() == 2) {
+        if (value && size == 2 && game.getRound().getNumTurnDone() == 2) {
             value = false;
             for (Assistant a : player.getDeck().getAssistant())
                 if (!weights.contains(a.getWeight())) {

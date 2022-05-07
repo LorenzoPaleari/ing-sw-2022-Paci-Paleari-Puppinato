@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
-import java.util.LinkedList;
 import java.util.*;
 
 public class Entrance {

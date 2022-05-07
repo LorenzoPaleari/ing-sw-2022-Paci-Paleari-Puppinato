@@ -34,8 +34,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
     private Table table;
-    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller(), new LobbyHandler()));
-    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller(), new LobbyHandler()));
+    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller()));
+    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller()));
     @BeforeEach
     void setUp() throws NoSuchMethodException {
         table= new Table(3, true, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class), new IslandControllerMoreInfluence());
@@ -68,7 +68,6 @@ class TableTest {
         assertEquals(table.getGeneralSupply(), 16);
         table.addCoin(3);
         assertEquals(table.getGeneralSupply(), 19);
-        ;
     }
 
     @Test

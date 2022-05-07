@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.TableHandler;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;

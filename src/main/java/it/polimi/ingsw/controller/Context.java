@@ -11,9 +11,9 @@ import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 
 public abstract class Context {
-    public void changeContext(IslandController strat){}
-    public void changeContext(MotherNatureController strat){}
-    public void changeContext(ProfessorController strat){}
+    public void changeContext(IslandController strategy){}
+    public void changeContext(MotherNatureController strategy){}
+    public void changeContext(ProfessorController strategy){}
 
     public boolean conquerIsland(Island island, Game game){
         return false;

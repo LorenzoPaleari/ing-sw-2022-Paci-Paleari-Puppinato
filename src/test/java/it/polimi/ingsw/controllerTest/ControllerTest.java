@@ -31,7 +31,7 @@ public class ControllerTest {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller, lobbyHandler));
+        controller.setVirtualView(new VirtualView(controller));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
@@ -147,7 +147,7 @@ public class ControllerTest {
         // So, you can normally call, print(items);
         // I will assume items is already initialized properly.
         // Now you have to validate the output. Let's say items had 1 element.
-        // With name as FirstElement and number as 1. String expectedOutput = "Name: FirstElement\nNumber: 1"
+        // With name as FirstElement and number than 1. String expectedOutput = "Name: FirstElement\nNumber: 1"
         // Notice the \n for new line. // Do the actual assertion. assertEquals(expectedOutput, outContent.toString());
 
         player1.getBoard().getTowerCourt().removeTower(4);

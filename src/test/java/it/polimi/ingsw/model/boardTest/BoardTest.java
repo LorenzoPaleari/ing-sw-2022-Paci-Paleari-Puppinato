@@ -18,7 +18,7 @@ class BoardTest {
     private LinkedList<Student> stud;
     @BeforeEach
     void setUp() {
-        stud = new LinkedList<Student>();
+        stud = new LinkedList<>();
         stud.add(new Student(0));
         stud.add(new Student(1));
         stud.add(new Student(1));

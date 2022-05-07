@@ -9,13 +9,13 @@ import it.polimi.ingsw.model.table.Island;
 public class IslandContext extends Context {
     private IslandController strategy;
 
-    public IslandContext(IslandController strat){
-        strategy = strat;
+    public IslandContext(IslandController strategy){
+        this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(IslandController strat) {
-        strategy = strat;
+    public void changeContext(IslandController strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class IslandContext extends Context {
         if (playerCandidate == null)
             return false;
 
-        if (color == null){
+        if (owner == null){
             island.addTower(playerCandidate.getBoard().getTowerCourt().removeTower(1));
             return true;
         }

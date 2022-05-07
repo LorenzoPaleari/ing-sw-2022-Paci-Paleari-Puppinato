@@ -62,9 +62,9 @@ class RoundTest {
 
     @Test
     void endPlanningPhase() {
-        player.get(0).setUp(new LinkedList<Student>(), false, 3);
-        player.get(1).setUp(new LinkedList<Student>(), false, 3);
-        player.get(2).setUp(new LinkedList<Student>(), false, 3);
+        player.get(0).setUp(new LinkedList<>(), false, 3);
+        player.get(1).setUp(new LinkedList<>(), false, 3);
+        player.get(2).setUp(new LinkedList<>(), false, 3);
         player.get(0).addAssistant(4);
         player.get(1).addAssistant(2);
         player.get(2).addAssistant(5);

@@ -8,13 +8,13 @@ import it.polimi.ingsw.model.table.Table;
 public class MotherNatureContext extends Context {
     private MotherNatureController strategy;
 
-    public MotherNatureContext(MotherNatureController strat){
-        strategy = strat;
+    public MotherNatureContext(MotherNatureController strategy){
+        this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(MotherNatureController strat){
-        strategy = strat;
+    public void changeContext(MotherNatureController strategy){
+        this.strategy = strategy;
     }
 
     @Override

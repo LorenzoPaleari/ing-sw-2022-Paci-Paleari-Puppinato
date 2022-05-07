@@ -36,9 +36,7 @@ public class BagTest {
         for (int i=0; i<5; i++){
             assertEquals(color[i], 24);
         }
-        List<Student> test1 = new LinkedList<>(bag.withdrawStudent(120));
-        assertThrows(BagIsEmptyException.class, ()-> {
-           bag.withdrawStudent(1);
-        });
+        bag.withdrawStudent(120);
+        assertThrows(BagIsEmptyException.class, ()-> bag.withdrawStudent(1));
     }
 }

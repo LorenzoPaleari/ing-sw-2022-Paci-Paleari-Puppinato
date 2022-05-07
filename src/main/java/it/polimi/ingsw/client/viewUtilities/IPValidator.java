@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.ViewUtilities;
+package it.polimi.ingsw.client.viewUtilities;
 
 public class IPValidator {
     private final static String defaultIP = "127.0.0.1";

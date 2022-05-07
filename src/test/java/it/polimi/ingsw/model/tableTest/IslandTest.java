@@ -34,10 +34,6 @@ class IslandTest {
     }
 
     @Test
-    void getWeight() {
-    }
-
-    @Test
     void setNoEntryTiles() {
         boolean noEntryTiles=true;
         island.setNoEntryTiles(true);

@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.character;
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;

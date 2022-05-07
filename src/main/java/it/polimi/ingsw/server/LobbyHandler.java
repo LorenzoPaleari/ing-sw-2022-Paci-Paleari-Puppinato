@@ -33,7 +33,6 @@ public class LobbyHandler {
 
             lobbies.set(lobby, clientHandlers);
 
-            clientHandler.setFirstPlayer(false);
             clientHandler.setVirtualView(virtualViews.get(lobby));
             virtualViews.get(lobby).addClientHandler(clientHandler);
 
@@ -55,9 +54,8 @@ public class LobbyHandler {
         ClientHandler[] clientHandlers = {clientHandler};
         lobbies.add(clientHandlers);
         controllers.add(new Controller());
-        virtualViews.add(new VirtualView(controllers.get(controllers.size() - 1), this));
+        virtualViews.add(new VirtualView(controllers.get(controllers.size() - 1)));
         clientHandler.setVirtualView(virtualViews.get(virtualViews.size() - 1));
-        clientHandler.setFirstPlayer(true);
         controllers.get(controllers.size()-1).setVirtualView(virtualViews.get(virtualViews.size() - 1));
         virtualViews.get(virtualViews.size()-1).addClientHandler(clientHandler);
 

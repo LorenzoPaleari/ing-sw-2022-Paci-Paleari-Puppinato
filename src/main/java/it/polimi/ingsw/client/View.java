@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
@@ -13,13 +13,13 @@ public interface View {
      */
     void start();
 
-    void gameSetUp(List<String[]> lobbies);
+    void gameSetUp();
 
     void refreshLobbies(List<String[]> lobbies, boolean firstLobby);
 
     void fullLobby(List<String[]> lobbies);
 
-    void initialSetUp(boolean firstPlayer);
+    void initialSetUp();
 
     void playerSetUp(boolean requestAgain);
 

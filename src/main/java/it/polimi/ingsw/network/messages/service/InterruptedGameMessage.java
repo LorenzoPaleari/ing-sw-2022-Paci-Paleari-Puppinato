@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 public class InterruptedGameMessage  implements Serializable, ControllerViewMessage {
     private String nickname;
-    private String player;
     private MessageType type;
 
     public InterruptedGameMessage(String nickname){

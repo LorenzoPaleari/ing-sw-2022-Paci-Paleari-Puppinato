@@ -5,7 +5,6 @@ import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.controller.islandController.IslandController;
 import it.polimi.ingsw.controller.islandController.IslandControllerNoTower;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.board.Board;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;

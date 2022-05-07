@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.ViewUtilities.GameInfo;
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
@@ -13,13 +13,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class VirtualView {
     private ReentrantLock lock = new ReentrantLock();
-    private LobbyHandler lobbyHandler;
     private Controller controller;
     private List<ClientHandler> clientHandlers;
 
-    public VirtualView(Controller controller, LobbyHandler lobbyHandler){
+    public VirtualView(Controller controller){
         this.controller=controller;
-        this.lobbyHandler = lobbyHandler;
         clientHandlers= new LinkedList<>();
     }
 

@@ -19,7 +19,7 @@ public abstract class Character {
     private boolean used;
     public int count(PawnColor pawnColor){return -1;}
     public int getNumNoEntryTiles(){return -1;}
-    public void returnNoEntryTiles(){};
+    public void returnNoEntryTiles(){}
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext){}
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException{}
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}

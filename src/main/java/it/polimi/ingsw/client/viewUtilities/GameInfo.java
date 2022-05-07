@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.ViewUtilities;
+package it.polimi.ingsw.client.viewUtilities;
 
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -10,19 +10,17 @@ import it.polimi.ingsw.model.table.Island;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.List;
 
 public class GameInfo implements Serializable {
     private String[][] players;
     private int[] playersInfo = new int[2]; //Indexes of the currentTurnPlayer and the frontPlayer
-
     private int remainingMoves;
     private int[] islandSize;
     private int motherNaturePosition;
 
     private Integer[] diningStudents;
     private Integer[] entranceStudents;
-    private String[] professors = new String[5];
+    private String[] professors;
     private int[] boardTower;
 
     private Integer[] islandStudents;
@@ -97,6 +95,7 @@ public class GameInfo implements Serializable {
         diningStudents = new Integer[5*numPlayer];
         entranceStudents = new Integer[5*numPlayer];
         boardTower = new int[numPlayer];
+        professors = new String[] {"","","","",""};
 
         islandStudents = new Integer[numIsland * 5];
         islandTowers = new int [numIsland];
@@ -122,7 +121,7 @@ public class GameInfo implements Serializable {
     }
 
     public String[] getPlayersName(){
-        String[] names = null;
+        String[] names = new String[players.length];
         for(int i = 0; i < players.length; i++){
             names[i] = players[i][0];
         }
@@ -130,7 +129,7 @@ public class GameInfo implements Serializable {
     }
 
     public String[] getPlayersTowerColor(){
-        String[] colors = null;
+        String[] colors = new String[players.length];
         for(int i = 0; i < players.length; i++){
             colors[i] = players[i][1];
         }
@@ -154,15 +153,26 @@ public class GameInfo implements Serializable {
     }
 
     public Integer[] getEntranceStudents(String nickname){
+        return getIntegers(nickname, 1);
+    }
+
+    private Integer[] getIntegers(String nickname, int from) {
         Integer[] students = new Integer[5];
         int numPlayer = 0;
         for(int i = 0; i < players.length; i++){
             if(players[i][0].equals(nickname)) numPlayer = i;
         }
         int cont = 0;
-        for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
-            students[cont] = entranceStudents[j];
-            cont++;
+        if (from == 1)
+            for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
+                students[cont] = entranceStudents[j];
+                cont++;
+            }
+        else {
+            for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
+                students[cont] = diningStudents[j];
+                cont++;
+            }
         }
         return students;
     }
@@ -180,18 +190,7 @@ public class GameInfo implements Serializable {
     }
 
     public Integer[] getDiningStudents(String nickname){
-        Integer[] students = new Integer[5];
-        int numPlayer = 0;
-        for(int i = 0; i < players.length; i++){
-            if(players[i][0].equals(nickname)) numPlayer = i;
-        }
-        int cont = 0;
-        for(int j = numPlayer*5; j < (numPlayer+1)*5; j++){
-            students[cont] = diningStudents[j];
-            cont++;
-        }
-        return students;
-
+        return getIntegers(nickname, -1);
     }
 
     public Integer[] getStudentsOnIsland(int numIsland){
@@ -209,8 +208,12 @@ public class GameInfo implements Serializable {
         else return TowerColor.getColor(islandTowers[numIsland]);
     }
 
-    public CharacterType[] getCharacter(){
-        return character;
-    }
+    public int[] getProfessors(String nickName) {
+        int[] colors = {-1,-1,-1,-1,-1};
+        for (int i = 0; i < 5; i++)
+            if (professors[i].equals(nickName))
+                colors[i] = 1;
 
+        return colors;
+    }
 }

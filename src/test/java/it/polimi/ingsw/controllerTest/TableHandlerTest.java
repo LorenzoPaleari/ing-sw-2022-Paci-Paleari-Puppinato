@@ -41,14 +41,14 @@ public class TableHandlerTest {
     Player player2 = new Player("TEST2", TowerColor.BLACK);
     Player player3 = new Player("TEST3", TowerColor.GREY);
     private Game game;
-    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller(), new LobbyHandler()));
-    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller(), new LobbyHandler()));
+    private TableHandler tableHandler = new TableHandler(new TurnController(), new Game(), new IslandContext(new IslandControllerNoColor()), new ProfessorContext(new ProfessorControllerStandard()), new MotherNatureContext(new MotherNatureControllerModified()), new ProfessorControllerStandard(), new MotherNatureControllerModified(), new IslandControllerNoColor(), new VirtualView(new Controller()));
+    private BoardHandler boardHandler = new BoardHandler(new Game(), new TurnController(), new MotherNatureContext(new MotherNatureControllerStandard()), new VirtualView(new Controller()));
     @BeforeEach
     void setUp() throws InterruptedException {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller, new LobbyHandler()));
+        controller.setVirtualView(new VirtualView(controller));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
@@ -183,7 +183,7 @@ public class TableHandlerTest {
         game.getRound().getTurn().resetRemainingMovements(0);
         controller.moveMotherNature(player2, 3);
         controller.chooseCloud(player2,0);
-        //assertEquals("This cloud has already been chose, please select another\n",outContent.toString());
+        //assertEquals("This cloud has already been chosen, please select another\n",outContent.toString());
         outContent.reset();
         controller.useAssistant(6, player2);
         //assertEquals("Devi scegliere una Nuvola\n", outContent.toString());

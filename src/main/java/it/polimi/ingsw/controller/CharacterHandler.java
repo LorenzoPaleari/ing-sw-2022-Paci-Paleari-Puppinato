@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
@@ -10,7 +9,6 @@ import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
-import it.polimi.ingsw.model.table.Table;
 import it.polimi.ingsw.server.VirtualView;
 
 public class CharacterHandler {
@@ -45,7 +43,7 @@ public class CharacterHandler {
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException e){
+        } catch (GeneralSupplyFinishedException ignored){
         }
 
         if (character.getType().equals(CharacterType.KNIGHT))
@@ -64,7 +62,7 @@ public class CharacterHandler {
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException e){
+        } catch (GeneralSupplyFinishedException ignored){
         }
 
         game.getRound().getTurn().setUsedCharacter(true);
@@ -78,7 +76,7 @@ public class CharacterHandler {
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException e){
+        } catch (GeneralSupplyFinishedException ignored){
         }
 
         try {
@@ -98,7 +96,7 @@ public class CharacterHandler {
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException e){
+        } catch (GeneralSupplyFinishedException ignored){
         }
 
         PawnColor[] color;
@@ -122,7 +120,7 @@ public class CharacterHandler {
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException e){
+        } catch (GeneralSupplyFinishedException ignored){
         }
 
         try {

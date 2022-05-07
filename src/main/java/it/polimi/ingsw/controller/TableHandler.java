@@ -16,7 +16,6 @@ import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 import it.polimi.ingsw.server.VirtualView;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class TableHandler {
