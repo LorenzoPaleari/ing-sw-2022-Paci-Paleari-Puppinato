@@ -17,6 +17,7 @@ public class GameInfo implements Serializable {
     private int remainingMoves;
     private int[] islandSize;
     private int motherNaturePosition;
+    private int numberOfPlayer;
 
     private Integer[] diningStudents;
     private Integer[] entranceStudents;
@@ -89,7 +90,7 @@ public class GameInfo implements Serializable {
 
     private void init(int numPlayer, int numIsland, boolean expertMode){
         players = new String[numPlayer][2];
-
+        numberOfPlayer=numPlayer;
         islandSize = new int[numIsland];
 
         diningStudents = new Integer[5*numPlayer];
@@ -118,6 +119,9 @@ public class GameInfo implements Serializable {
         }
 
         return -1;
+    }
+    public int getNumPlayer(){
+        return numberOfPlayer;
     }
 
     public String[] getPlayersName(){

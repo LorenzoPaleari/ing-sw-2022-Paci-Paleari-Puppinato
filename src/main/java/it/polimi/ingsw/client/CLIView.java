@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import java.util.List;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.model.enumerations.PawnColor.getColor;
 import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 
 public class CLIView implements View{
@@ -241,63 +242,96 @@ public class CLIView implements View{
     public void choseAction(){
         System.out.println();
         System.out.print("Insert a command: ");
+        boolean valid=false;
 
         int code = Integer.parseInt(scanner.nextLine());
         switch (code) {
             case 1:
-                System.out.print("Insert the number of the cloud you want to chose: ");
-                String strCloud=scanner.nextLine();
-                if (strCloud.matches("\\d+")){
-                    int cloudPosition = Integer.parseInt(strCloud);
-                    serverHandler.cloudChosenRequest(cloudPosition);
-                }
-                else
-                    System.out.println("Invalid Choice  \n");
+                do {
+                    System.out.print("Insert the number of the cloud you want to chose: ");
+                    String strCloud = scanner.nextLine();
+                    if (strCloud.matches("\\d+")) {
+                        int cloudPosition = Integer.parseInt(strCloud);
+                        if(cloudPosition<0 || cloudPosition>gameInfo.getNumPlayer())
+                            System.out.println("Invalid Cloud Number \n");
+                        else {
+                            serverHandler.cloudChosenRequest(cloudPosition);
+                            valid = true;
+                        }
+                    } else
+                        System.out.println("Invalid Choice  \n");
+                }while(!valid);
                 break;
             case 2:
-                System.out.print("Insert the final position of Mother Nature: ");
-                String strPosition=scanner.nextLine();
-                if (strPosition.matches("\\d+")){
-                    int endPosition = Integer.parseInt(strPosition);
-                    serverHandler.moveMotherNatureRequest(endPosition);
-                }
-                else
-                    System.out.println("Invalid Choice \n");
+                do {
+                    System.out.print("Insert the final position of Mother Nature: ");
+                    String strPosition = scanner.nextLine();
+                    if (strPosition.matches("\\d+")) {
+                        int endPosition = Integer.parseInt(strPosition);
+                        serverHandler.moveMotherNatureRequest(endPosition);
+                        valid=true;
+                    } else
+                        System.out.println("Invalid Choice \n");
+                }while(!valid);
                 break;
             case 3:
-                System.out.print("Insert the number of the island you want to chose: ");
-                String strNumIsland=scanner.nextLine();
-                if (strNumIsland.matches("\\d+")){
-                    int islandPosition = Integer.parseInt(strNumIsland);
-                    System.out.print("Insert the color of the student you want to move: ");
-                    String colorString = scanner.nextLine();
-                    PawnColor color = lookup(colorString);
-                    if(color==null)
-                        System.out.print("This is not a valid color ");
-                    else
-                        serverHandler.moveStudentToIslandRequest(islandPosition, color);
-                }
-                else
-                    System.out.println("Invalid Choice \n");
+                do {
+                    System.out.print("Insert the number of the island you want to chose: ");
+                    String strNumIsland = scanner.nextLine();
+                    if (strNumIsland.matches("\\d+")) {
+                        int islandPosition = Integer.parseInt(strNumIsland);
+                        System.out.print("Insert the color of the student you want to move: ");
+                        String colorString = scanner.nextLine();
+                        PawnColor color = lookup(colorString);
+                        if (color == null)
+                            System.out.print("This is not a valid color \n");
+                        else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[color.getIndex()] == 0) {
+                            System.out.print("You don't have this student \n");
+                        } else {
+                            serverHandler.moveStudentToIslandRequest(islandPosition, color);
+                            valid = true;
+                        }
+                    } else
+                        System.out.println("Invalid Choice \n");
+                }while(!valid);
                 break;
             case 4:
-                System.out.print("Insert the color of the student you want to move: ");
-                String colorString2 = scanner.nextLine();
-                PawnColor color2 = lookup(colorString2);
-                if(color2==null)
-                    System.out.print("This is not a valid color \n");
-                else
-                    serverHandler.moveToDiningRoomRequest(color2);
+                do {
+                    System.out.print("Insert the color of the student you want to move: ");
+                    String colorString2 = scanner.nextLine();
+                    PawnColor color2 = lookup(colorString2);
+                    if (color2 == null)
+                        System.out.print("This is not a valid color \n");
+                    else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[color2.getIndex()] == 0) {
+                        System.out.print("You don't have this student \n");
+                    } else {
+                        serverHandler.moveToDiningRoomRequest(color2);
+                        valid=true;
+                    }
+                }while(!valid);
                 break;
             case 5:
-                System.out.print("Insert the position of the assistant card you want to use: ");
-                String strAssistant=scanner.nextLine();
-                if (strAssistant.matches("\\d+")) {
-                    int position = Integer.parseInt(strAssistant);
-                    serverHandler.useAssistantRequest(position);
-                }
-                else
-                    System.out.println("Invalid Choice \n");
+                do {
+                    System.out.print("Insert the position of the assistant card you want to use: ");
+                    String strAssistant = scanner.nextLine();
+                    if (strAssistant.matches("\\d+")) {
+                        int position = Integer.parseInt(strAssistant);
+                        serverHandler.useAssistantRequest(position);
+                        valid=true;
+                    } else
+                        System.out.println("Invalid Choice \n");
+                }while(!valid);
+                break;
+            case 6: // solo temporaneo, non usare
+                do {
+                    System.out.print("Insert the position of the character card you want to use: ");
+                    String strCharacter = scanner.nextLine();
+                    if (strCharacter.matches("\\d+")) {
+                        int position = Integer.parseInt(strCharacter);
+                        valid=true;
+                    } else
+                        System.out.println("Invalid Choice \n");
+                }while(!valid);
                 break;
             }
 
