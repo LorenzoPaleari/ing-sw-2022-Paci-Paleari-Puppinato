@@ -33,7 +33,7 @@ public class BoardHandlerTest {
         controller = new Controller();
         controller.setNumPlayer(3);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller));
+        controller.setVirtualView(new VirtualView(controller, new LobbyHandler()));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
@@ -65,7 +65,7 @@ public class BoardHandlerTest {
     }
 
     @Test
-    void useStudentDining() {
+    void useStudentDining() throws IOException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 

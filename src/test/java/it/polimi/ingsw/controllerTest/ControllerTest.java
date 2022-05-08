@@ -94,9 +94,6 @@ public class ControllerTest {
 
     @Test
     void useAssistant2(){
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         controller.useAssistant(3, player2);
         assertEquals(null, player2.getLastUsed());
 
@@ -141,8 +138,6 @@ public class ControllerTest {
 
     @Test
     void winner(){
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
         // After this all System.out.println() statements will come to outContent stream.
         // So, you can normally call, print(items);
         // I will assume items is already initialized properly.
@@ -161,9 +156,6 @@ public class ControllerTest {
 
     @Test
     void winner2(){
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         player1.getBoard().getTowerCourt().removeTower(4);
         player2.getBoard().getTowerCourt().removeTower(4);
         player3.getBoard().getTowerCourt().removeTower(3);

@@ -49,7 +49,7 @@ public class CharacterHandlerTest {
         controller = new Controller();
         controller.setNumPlayer(2);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller));
+        controller.setVirtualView(new VirtualView(controller, lobbyHandler));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
@@ -88,7 +88,7 @@ public class CharacterHandlerTest {
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
         outContent.reset();
 
-        int[] colors = new int[1];
+        int colors[] = new int[1];
         colors[0] = 1;
         controller.useCharacter(player1, 0, colors);
         //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
@@ -101,7 +101,7 @@ public class CharacterHandlerTest {
         player1.addCoin();
         controller.useCharacter(player1, 1);
         controller.useCharacter(player1, 1);
-        //assertEquals("È già stato usato un personaggio in questo turno\n", outContent.toString());
+        //assertEquals("E' già stato usato un personaggio in questo turno\n", outContent.toString());
     }
 
     @Test
@@ -152,7 +152,7 @@ public class CharacterHandlerTest {
         controller.moveMotherNature(player1, 3);
         //assertEquals(0, game.getTable().getMotherPosition()); //Non si è mossa
 
-        controller.useCharacter(player1, 0);  //Testo che io possa muovere madre natura di TRE caselle e non solo di 1
+        controller.useCharacter(player1, 0);  //Testo che io possa muovere madre natura di 3 caselle e non solo di 1
         controller.moveMotherNature(player1, 5);  //Errore
         game.getTable().getIsland(3).addTower(towers);
         controller.moveMotherNature(player1, 3);
@@ -267,7 +267,7 @@ public class CharacterHandlerTest {
         controller.useStudentDining(player1, PawnColor.YELLOW);
         controller.useStudentDining(player1, PawnColor.PINK);
 
-        int[] colors = new int[4];
+        int colors[] = new int[4];
         colors[0] = 0;  //Entrance -> Dining
         colors[1] = 1;
         colors[2] = 2;  //Dining -> Entrance
@@ -286,7 +286,8 @@ public class CharacterHandlerTest {
     void useNo_TowerCharacter() throws NoSuchMethodException {
         game.getTable().setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
-        List<Tower> towers = new LinkedList<>(player2.getBoard().getTowerCourt().removeTower(2));
+        List<Tower> towers = new LinkedList<>();
+        towers.addAll(player2.getBoard().getTowerCourt().removeTower(2));
         game.getTable().getIsland(1).addTower(towers);
         game.getTable().getIsland(1).getIslandStudent().clear();
 
@@ -371,7 +372,7 @@ public class CharacterHandlerTest {
         player1.getBoard().getEntrance().addStudent(new Student(3));
         player1.getBoard().getEntrance().addStudent(new Student(3));
 
-        int[] colors = new int[6];
+        int colors[] = new int[6];
         colors[0] = 3;
         colors[1] = 3;
         colors[2] = -1;

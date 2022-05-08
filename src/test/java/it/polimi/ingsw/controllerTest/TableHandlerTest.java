@@ -21,15 +21,12 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
-import it.polimi.ingsw.model.table.MotherNature;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,18 +70,16 @@ public class TableHandlerTest {
 
     @Test
     void moveMotherNature() throws NoSuchMethodException {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
+        int pos = game.getTable().getMotherNature().getPosition();
         game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         game.getRound().getTurn().resetRemainingMovements(1);
         controller.moveMotherNature(player1, 1);
-        //assertEquals("Before moving mother nature, please move all the students\n",outContent.toString());
-        outContent.reset();
+        assertEquals(pos, game.getTable().getMotherNature().getPosition());
+
         game.getRound().getTurn().resetRemainingMovements(0);
         controller.moveMotherNature(player1, 8);
-        //assertEquals("You can't go so far with your Assistant, please choose another Island\n",outContent.toString());
-        outContent.reset();
+        assertEquals(pos, game.getTable().getMotherNature().getPosition());
 
         game.getTable().getIsland(1).setNoEntryTiles(true);
         controller.moveMotherNature(player1, 1);
@@ -116,14 +111,10 @@ public class TableHandlerTest {
         assertEquals(game.getTable().getIsland(1).getIslandStudent().size(), 0);
         assertEquals(player2.getBoard().getTowerCourt().getTower().size(), 0);
         //assertEquals(player2+" Has won the game\n", outContent.toString());
-        outContent.reset();
     }
 
     @Test
     void updateIsland() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         List<Tower> test = new LinkedList<>();
         test.add(new Tower(TowerColor.WHITE));
         for (int i = 0; i <5; i++) {
@@ -162,13 +153,9 @@ public class TableHandlerTest {
         player3.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
         controller.moveMotherNature(player3, 3);
         //assertEquals(player1+" Has won the game\n", outContent.toString());
-        outContent.reset();
     }
     @Test
     void chooseCloud() throws BagIsEmptyException {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         List<Tower> test = new LinkedList<>();
         test.add(new Tower(TowerColor.GREY));
         game.getTable().getIsland(8).addTower(test);
@@ -184,10 +171,10 @@ public class TableHandlerTest {
         controller.moveMotherNature(player2, 3);
         controller.chooseCloud(player2,0);
         //assertEquals("This cloud has already been chosen, please select another\n",outContent.toString());
-        outContent.reset();
+
         controller.useAssistant(6, player2);
         //assertEquals("Devi scegliere una Nuvola\n", outContent.toString());
-        outContent.reset();
+
         controller.chooseCloud(player2,1);
         game.getRound().getTurn().resetRemainingMovements(0);
         controller.moveMotherNature(player3, 4);
@@ -212,15 +199,13 @@ public class TableHandlerTest {
         controller.moveMotherNature(player3, 6);
         controller.chooseCloud(player3,2);
         //assertEquals(player3+" Has won the game\n", outContent.toString());
-        outContent.reset();
     }
 
     @Test
     void useStudentIsland(){
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
         PawnColor color= player1.getBoard().getEntrance().getStudent().get(0).getColor();
+        Island island = game.getTable().getIsland(0);
         game.getRound().getTurn().resetRemainingMovements(1);
         controller.useStudentIsland(player1, color, 0);
         assertEquals(player1.getBoard().getEntrance().getStudent().size(), 8);
@@ -230,5 +215,6 @@ public class TableHandlerTest {
         PawnColor color2= player1.getBoard().getEntrance().getStudent().get(3).getColor();
         controller.useStudentIsland(player1, color2, 0);
         //assertEquals("You have already moved all the student, please move Mother Nature\n",outContent.toString());
+        assertEquals(island, game.getTable().getIsland(0));
     }
 }
