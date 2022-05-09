@@ -6,10 +6,13 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
-
 import java.lang.reflect.Method;
 import java.util.*;
 
+/**
+ * Main class of the model.
+ * Contains the references to the Players, Table, Round and Turn
+ */
 public class Game {
     private boolean expertMode;
     private boolean gameEnded;
@@ -21,10 +24,21 @@ public class Game {
     private Method checkProfessor;
     private IslandController islandController;
 
+    /**
+     * Constructor.
+     * initialize  only the List of players.
+     *
+     * Full initialization of the class take place, when all
+     * the players joined the game, in function startGame()
+     */
     public Game(){  //We make the constructor private, so no one else can create new instances...
         player = new LinkedList<>();
     }
 
+    /**
+     * Sets the number of players for the current Game.
+     * @param num
+     */
     public void setNumPlayer(int num){
         numPlayer = num;
     }

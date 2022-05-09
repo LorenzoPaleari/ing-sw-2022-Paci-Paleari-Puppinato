@@ -121,6 +121,15 @@ public class Controller {
         }
     }
 
+    /**
+     * Check if the assistant is already used in that turn by other players,
+     * if the assistant played was the only option available do nothing
+     * if the player has other assistants to play throws an exception
+     *
+     * @param weight The weight of the assistant card chosen
+     * @param player The player that has called the action: useAssistant
+     * @throws ClientException When the player try to use the same assistant of others
+     */
     private void sameAssistant(int weight, Player player) throws ClientException {
         boolean value = false;
         List<Integer> weights = new LinkedList<>();

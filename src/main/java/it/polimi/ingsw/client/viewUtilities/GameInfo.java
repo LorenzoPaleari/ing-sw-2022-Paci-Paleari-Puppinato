@@ -29,7 +29,7 @@ public class GameInfo implements Serializable {
 
     private CharacterType[] character;
     private int[] characterCost;
-    private int[] characterInfo; //The first 5 are the eventual student, the sixth is the number of NoEntryTiles
+    private int[][] characterInfo; //The first 5 are the eventual student, the sixth is the number of NoEntryTiles
 
     public GameInfo(Game game, String frontPlayer){
         init(game.getNumPlayer(), game.getTable().getNumIsland(), game.isExpertMode());
@@ -81,9 +81,9 @@ public class GameInfo implements Serializable {
             for(int i = 0; i < 3; i++) {
                 character[i] = game.getTable().getCharacter(i).getType();
                 characterCost[i] = game.getTable().getCharacter(i).getPrice();
-                characterInfo[5] = game.getTable().getCharacter(i).getNumNoEntryTiles();
+                characterInfo[i][5] = game.getTable().getCharacter(i).getNumNoEntryTiles();
                 for (PawnColor pawnColor : PawnColor.values())
-                    characterInfo[pawnColor.getIndex()] = game.getTable().getCharacter(i).count(pawnColor);
+                    characterInfo[i][pawnColor.getIndex()] = game.getTable().getCharacter(i).count(pawnColor);
             }
         }
     }
@@ -104,7 +104,7 @@ public class GameInfo implements Serializable {
         if (expertMode) {
             character = new CharacterType[3];
             characterCost = new int[3];
-            characterInfo = new int[6];
+            characterInfo = new int[3][6];
         }
     }
 

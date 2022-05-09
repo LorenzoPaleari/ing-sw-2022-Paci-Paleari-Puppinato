@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.ViewUtilities;
+package it.polimi.ingsw.client.viewUtilities;
 
 public enum Symbols
 {

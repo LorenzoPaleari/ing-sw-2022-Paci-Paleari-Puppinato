@@ -49,7 +49,7 @@ public class CharacterHandlerTest {
         controller = new Controller();
         controller.setNumPlayer(2);
         controller.setExpertMode(true);
-        controller.setVirtualView(new VirtualView(controller, lobbyHandler));
+        controller.setVirtualView(new VirtualView(controller));
 
         controller.addPlayer(player1);
         controller.addPlayer(player2);
