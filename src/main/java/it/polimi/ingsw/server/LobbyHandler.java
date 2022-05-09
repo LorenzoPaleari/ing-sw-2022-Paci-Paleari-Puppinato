@@ -121,7 +121,9 @@ public class LobbyHandler {
 
     public synchronized void terminateLobby(VirtualView virtualView) {
         int index = virtualViews.indexOf(virtualView);
-        controllers.get(index).getGame().endGame();
-        allClientHandlers.removeAll((List.of(lobbies.get(index))));
+        if (index != -1) {
+            controllers.get(index).getGame().endGame();
+            allClientHandlers.removeAll((List.of(lobbies.get(index))));
+        }
     }
 }

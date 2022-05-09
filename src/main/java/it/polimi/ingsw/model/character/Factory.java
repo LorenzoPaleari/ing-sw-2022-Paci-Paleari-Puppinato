@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.character;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.table.Bag;
 
 import java.lang.reflect.Method;
 
 public class Factory {
-    public  Character getCharacter (CharacterType type, Bag bag, Method updateIsland, Method checkProfessor, IslandController island) {
+    public  Character getCharacter (CharacterType type, Bag bag, Method updateIsland, Method checkProfessor, IslandStrategy island) {
         Character character;
         if(type.equals(CharacterType.MAGIC_DELIVERY_MAN) || type.equals(CharacterType.MUSHROOM_HUNTER))
             character =new CharacterGroup1(type);

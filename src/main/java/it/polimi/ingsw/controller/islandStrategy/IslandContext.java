@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.islandController;
+package it.polimi.ingsw.controller.islandStrategy;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.model.Game;
@@ -7,14 +7,14 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
 public class IslandContext extends Context {
-    private IslandController strategy;
+    private IslandStrategy strategy;
 
-    public IslandContext(IslandController strategy){
+    public IslandContext(IslandStrategy strategy){
         this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(IslandController strategy) {
+    public void changeContext(IslandStrategy strategy) {
         this.strategy = strategy;
     }
 

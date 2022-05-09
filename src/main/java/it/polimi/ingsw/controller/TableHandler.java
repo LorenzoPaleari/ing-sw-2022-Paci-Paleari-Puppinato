@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
-import it.polimi.ingsw.controller.professorController.ProfessorController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategy;
+import it.polimi.ingsw.controller.professorStrategy.ProfessorStrategy;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
@@ -23,22 +23,22 @@ public class TableHandler {
     private VirtualView virtualView;
     private Game game;
     private Context professorContext;
-    private final ProfessorController professorControllerStandard;
+    private final ProfessorStrategy professorStrategyStandard;
     private final Context motherNatureContext;
-    private final MotherNatureController motherNatureController;
+    private final MotherNatureStrategy motherNatureStrategy;
     private Context islandContext;
-    private final IslandController islandController;
+    private final IslandStrategy islandStrategy;
 
-    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorController professorControllerStandard, MotherNatureController motherNatureController, IslandController islandController, VirtualView virtualView) {
+    public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorStrategy professorStrategyStandard, MotherNatureStrategy motherNatureStrategy, IslandStrategy islandStrategy, VirtualView virtualView) {
         this.game = game;
         this.virtualView = virtualView;
         this.turnController = turnController;
-        this.professorControllerStandard = professorControllerStandard;
+        this.professorStrategyStandard = professorStrategyStandard;
         this.professorContext = professorContext;
         this.motherNatureContext = motherNatureContext;
-        this.motherNatureController = motherNatureController;
+        this.motherNatureStrategy = motherNatureStrategy;
         this.islandContext = islandContext;
-        this.islandController = islandController;
+        this.islandStrategy = islandStrategy;
         try {
             this.game.setMethodTable(getClass().getMethod("updateIsland", Island.class));
         } catch (NoSuchMethodException ignored){}
@@ -116,9 +116,9 @@ public class TableHandler {
         List<Student> student = table.getCloud(position).removeAllStudent();
         player.getBoard().getEntrance().addStudent(student);
 
-        professorContext.changeContext(professorControllerStandard);
-        islandContext.changeContext(islandController);
-        motherNatureContext.changeContext(motherNatureController);
+        professorContext.changeContext(professorStrategyStandard);
+        islandContext.changeContext(islandStrategy);
+        motherNatureContext.changeContext(motherNatureStrategy);
         game.getRound().getTurn().setUsedCharacter(false);
 
         if (!game.getRound().nextActionTurn()){

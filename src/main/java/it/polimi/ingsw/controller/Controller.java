@@ -1,15 +1,15 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.islandController.IslandContext;
-import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.islandController.IslandControllerMoreInfluence;
-import it.polimi.ingsw.controller.islandController.IslandControllerStandard;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureContext;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerStandard;
-import it.polimi.ingsw.controller.professorController.ProfessorContext;
-import it.polimi.ingsw.controller.professorController.ProfessorController;
-import it.polimi.ingsw.controller.professorController.ProfessorControllerStandard;
+import it.polimi.ingsw.controller.islandStrategy.IslandContext;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategyKnight;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategyStandard;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureContext;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategy;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategyStandard;
+import it.polimi.ingsw.controller.professorStrategy.ProfessorContext;
+import it.polimi.ingsw.controller.professorStrategy.ProfessorStrategy;
+import it.polimi.ingsw.controller.professorStrategy.ProfessorStrategyStandard;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 
@@ -29,12 +29,12 @@ import java.util.List;
 public class Controller {
     private final TurnController turnController;
     private Context professorContext;
-    private final ProfessorController professorControllerStandard;
+    private final ProfessorStrategy professorStrategyStandard;
     private final Context motherNatureContext;
-    private final MotherNatureController motherNatureController;
+    private final MotherNatureStrategy motherNatureStrategy;
     private Context islandContext;
-    private final IslandController islandController;
-    private IslandController islandControllerMoreInfluence;
+    private final IslandStrategy islandStrategy;
+    private IslandStrategy islandStrategyMoreInfluence;
     private Game game;
     private BoardHandler boardHandler;
     private TableHandler tableHandler;
@@ -49,23 +49,23 @@ public class Controller {
         game.setExpertMode(false);
         turnController = new TurnController();
 
-        professorControllerStandard = new ProfessorControllerStandard();
-        professorContext = new ProfessorContext(professorControllerStandard);
+        professorStrategyStandard = new ProfessorStrategyStandard();
+        professorContext = new ProfessorContext(professorStrategyStandard);
 
-        motherNatureController = new MotherNatureControllerStandard();
-        motherNatureContext = new MotherNatureContext(motherNatureController);
+        motherNatureStrategy = new MotherNatureStrategyStandard();
+        motherNatureContext = new MotherNatureContext(motherNatureStrategy);
 
-        islandController = new IslandControllerStandard();
-        islandContext = new IslandContext(islandController);
-        islandControllerMoreInfluence = new IslandControllerMoreInfluence();
+        islandStrategy = new IslandStrategyStandard();
+        islandContext = new IslandContext(islandStrategy);
+        islandStrategyMoreInfluence = new IslandStrategyKnight();
     }
 
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
 
         boardHandler = new BoardHandler(game, turnController, professorContext, virtualView);
-        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorControllerStandard, motherNatureController, islandController, virtualView);
-        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView, tableHandler, boardHandler, islandControllerMoreInfluence);
+        tableHandler = new TableHandler(turnController, game, professorContext, motherNatureContext, islandContext, professorStrategyStandard, motherNatureStrategy, islandStrategy, virtualView);
+        characterHandler = new CharacterHandler(turnController, game, professorContext, motherNatureContext, islandContext, virtualView, tableHandler, boardHandler, islandStrategyMoreInfluence);
         modelListener=new ModelListener(virtualView);
     }
 

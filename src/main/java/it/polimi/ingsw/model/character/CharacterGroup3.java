@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
@@ -17,10 +17,10 @@ import java.util.List;
 //KNIGHT
 //EXCHANGE
 public class CharacterGroup3 extends Character{
-    private IslandController island;
+    private IslandStrategy island;
     private Method checkProfessor;
 
-    public CharacterGroup3 (CharacterType type, Method checkProfessor, IslandController island) {
+    public CharacterGroup3 (CharacterType type, Method checkProfessor, IslandStrategy island) {
         super(type);
         this.checkProfessor = checkProfessor;
         this.island = island;

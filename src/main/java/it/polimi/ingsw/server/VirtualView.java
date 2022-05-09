@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
@@ -48,6 +49,26 @@ public class VirtualView {
 
     public void useAssistant(int position, String playerNickname){
         controller.useAssistant(position, controller.getPlayerByNickname(playerNickname));
+    }
+
+    public void useCharacter(int[] colors, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, colors);
+    }
+
+    public void useCharacter(int islandPosition, PawnColor color , int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, islandPosition, color);
+    }
+
+    public void useCharacter(PawnColor color, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, color);
+    }
+
+    public void useCharacter(int islandPosition, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, islandPosition);
+    }
+
+    public void useCharacter(int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition);
     }
 
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){

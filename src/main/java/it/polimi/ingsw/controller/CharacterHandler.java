@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
@@ -20,9 +20,9 @@ public class CharacterHandler {
     private Context islandContext;
     private TableHandler tableHandler;
     private BoardHandler boardHandler;
-    private IslandController islandController;
+    private IslandStrategy islandStrategy;
 
-    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView, TableHandler tableHandler, BoardHandler boardHandler, IslandController islandController){
+    public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView, TableHandler tableHandler, BoardHandler boardHandler, IslandStrategy islandStrategy){
         this.game = game;
         this.virtualView = virtualView;
         this.turnController = turnController;
@@ -31,8 +31,8 @@ public class CharacterHandler {
         this.islandContext = islandContext;
         this.tableHandler = tableHandler;
         this.boardHandler = boardHandler;
-        this.islandController = islandController;
-        this.game.setIslandController(islandController);
+        this.islandStrategy = islandStrategy;
+        this.game.setIslandController(islandStrategy);
     }
 
     public void useCharacter(Player player, int characterPosition){
@@ -47,7 +47,7 @@ public class CharacterHandler {
         }
 
         if (character.getType().equals(CharacterType.KNIGHT))
-            islandController.setPlayer(player);
+            islandStrategy.setPlayer(player);
         character.activateCharacter(professorContext, motherNatureContext, islandContext);
 
         game.getRound().getTurn().setUsedCharacter(true);
