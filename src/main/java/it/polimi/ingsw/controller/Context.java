@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
-import it.polimi.ingsw.controller.professorController.ProfessorController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategy;
+import it.polimi.ingsw.controller.professorStrategy.ProfessorStrategy;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -11,9 +11,9 @@ import it.polimi.ingsw.model.table.Island;
 import it.polimi.ingsw.model.table.Table;
 
 public abstract class Context {
-    public void changeContext(IslandController strategy){}
-    public void changeContext(MotherNatureController strategy){}
-    public void changeContext(ProfessorController strategy){}
+    public void changeContext(IslandStrategy strategy){}
+    public void changeContext(MotherNatureStrategy strategy){}
+    public void changeContext(ProfessorStrategy strategy){}
 
     public boolean conquerIsland(Island island, Game game){
         return false;

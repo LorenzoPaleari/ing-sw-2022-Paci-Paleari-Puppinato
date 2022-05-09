@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.motherNatureController;
+package it.polimi.ingsw.controller.motherNatureStrategy;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.exceptions.ClientException;
@@ -6,14 +6,14 @@ import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
 public class MotherNatureContext extends Context {
-    private MotherNatureController strategy;
+    private MotherNatureStrategy strategy;
 
-    public MotherNatureContext(MotherNatureController strategy){
+    public MotherNatureContext(MotherNatureStrategy strategy){
         this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(MotherNatureController strategy){
+    public void changeContext(MotherNatureStrategy strategy){
         this.strategy = strategy;
     }
 

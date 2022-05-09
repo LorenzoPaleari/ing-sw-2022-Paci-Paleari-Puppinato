@@ -2,8 +2,8 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.islandController.IslandControllerNoTower;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategyCentaur;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -13,7 +13,7 @@ import it.polimi.ingsw.model.player.Player;
 //CENTAUR
 //RETURN
 public class CharacterGroup4 extends Character{
-    private IslandController island = new IslandControllerNoTower();
+    private IslandStrategy island = new IslandStrategyCentaur();
     public CharacterGroup4 (CharacterType type){
         super(type);
     }

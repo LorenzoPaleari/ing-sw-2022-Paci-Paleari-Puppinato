@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
+import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;

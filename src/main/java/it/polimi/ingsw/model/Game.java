@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
@@ -22,7 +22,7 @@ public class Game {
     private final List<Player> player;
     private Method updateIsland;
     private Method checkProfessor;
-    private IslandController islandController;
+    private IslandStrategy islandStrategy;
 
     /**
      * Constructor.
@@ -56,7 +56,7 @@ public class Game {
     }
 
     public void startGame() {
-        table = new Table(numPlayer, expertMode, updateIsland, checkProfessor, islandController);
+        table = new Table(numPlayer, expertMode, updateIsland, checkProfessor, islandStrategy);
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
@@ -122,7 +122,7 @@ public class Game {
     public void setMethodBoard(Method checkProfessor) {
         this.checkProfessor = checkProfessor;
     }
-    public void setIslandController(IslandController islandController){this.islandController = islandController;}
+    public void setIslandController(IslandStrategy islandStrategy){this.islandStrategy = islandStrategy;}
 
 }
 

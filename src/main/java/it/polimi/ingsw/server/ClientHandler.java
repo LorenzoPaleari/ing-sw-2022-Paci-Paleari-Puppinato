@@ -55,11 +55,13 @@ public class ClientHandler extends Thread{
                     message.action(virtualView, playerNickname);
                 }
             } catch (IOException | ClassNotFoundException e) {
-                isConnected = false;
                 System.out.println(getPlayerNickname() + " has disconnected");
-                if (virtualView != null) {
-                    lobbyHandler.terminateLobby(virtualView);
-                    virtualView.printInterrupt(getPlayerNickname());
+                if (isConnected){
+                    isConnected = false;
+                    if (virtualView != null) {
+                        lobbyHandler.terminateLobby(virtualView);
+                        virtualView.printInterrupt(getPlayerNickname());
+                    }
                 }
                 endConnection();
             }
@@ -131,6 +133,10 @@ public class ClientHandler extends Thread{
 
     public boolean isConnected() {
         return isConnected;
+    }
+
+    public void setDisconnected() {
+        isConnected = false;
     }
 
     public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}

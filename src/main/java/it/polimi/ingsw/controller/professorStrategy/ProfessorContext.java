@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.professorController;
+package it.polimi.ingsw.controller.professorStrategy;
 
 import it.polimi.ingsw.controller.Context;
 import it.polimi.ingsw.model.Game;
@@ -6,14 +6,14 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 
 public class ProfessorContext extends Context {
-    private ProfessorController strategy;
+    private ProfessorStrategy strategy;
 
-    public ProfessorContext(ProfessorController strategy){
+    public ProfessorContext(ProfessorStrategy strategy){
         this.strategy = strategy;
     }
 
     @Override
-    public void changeContext(ProfessorController strategy){
+    public void changeContext(ProfessorStrategy strategy){
         this.strategy = strategy;
     }
 

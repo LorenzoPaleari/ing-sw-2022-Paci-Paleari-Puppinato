@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.table;
 
-import it.polimi.ingsw.controller.islandController.IslandController;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.character.Factory;
@@ -20,12 +20,12 @@ public class Table {
     private List<Character> character;
     private Bag bag;
     private List<Professor> professor;
-    private IslandController islandController;
+    private IslandStrategy islandStrategy;
 
-    public Table(int numPlayer, boolean expert, Method islandUpdate, Method checkProfessor, IslandController islandController) {
+    public Table(int numPlayer, boolean expert, Method islandUpdate, Method checkProfessor, IslandStrategy islandStrategy) {
         motherNature = new MotherNature();
         Factory factory = new Factory();
-        this.islandController = islandController;
+        this.islandStrategy = islandStrategy;
 
         bag=new Bag();
 
@@ -66,7 +66,7 @@ public class Table {
             Collections.shuffle(type);
 
             for (int i = 0; i < 3; i++){
-                character.add(factory.getCharacter(type.get(i), bag, islandUpdate, checkProfessor, islandController));
+                character.add(factory.getCharacter(type.get(i), bag, islandUpdate, checkProfessor, islandStrategy));
             }
         }
 
@@ -204,7 +204,7 @@ public class Table {
 
     public void setCharacter(int position, CharacterType type, Method islandUpdate, Method checkProfessor){
         Factory factory = new Factory();
-        character.set(position,factory.getCharacter(type, bag, islandUpdate, checkProfessor, islandController));
+        character.set(position,factory.getCharacter(type, bag, islandUpdate, checkProfessor, islandStrategy));
     }
 }
 

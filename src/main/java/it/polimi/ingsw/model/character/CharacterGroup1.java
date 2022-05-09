@@ -2,10 +2,10 @@ package it.polimi.ingsw.model.character;
 
 import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Context;
-import it.polimi.ingsw.controller.islandController.IslandController;
-import it.polimi.ingsw.controller.islandController.IslandControllerNoColor;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureController;
-import it.polimi.ingsw.controller.motherNatureController.MotherNatureControllerModified;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
+import it.polimi.ingsw.controller.islandStrategy.IslandStrategyMushroomHunter;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategy;
+import it.polimi.ingsw.controller.motherNatureStrategy.MotherNatureStrategyMagicDeliveryMan;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
@@ -15,8 +15,8 @@ import it.polimi.ingsw.model.player.Player;
 //MUSHROOM_HUNTER
 public class CharacterGroup1 extends Character{
 
-    private IslandController islandController= new IslandControllerNoColor();
-    private MotherNatureController motherNature = new MotherNatureControllerModified();
+    private IslandStrategy islandStrategy = new IslandStrategyMushroomHunter();
+    private MotherNatureStrategy motherNature = new MotherNatureStrategyMagicDeliveryMan();
 
     public CharacterGroup1 (CharacterType type){
         super(type);
@@ -28,7 +28,7 @@ public class CharacterGroup1 extends Character{
 
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) {
-        islandController.setNoColor(color);
-        context.changeContext(islandController);
+        islandStrategy.setNoColor(color);
+        context.changeContext(islandStrategy);
     }
 }
