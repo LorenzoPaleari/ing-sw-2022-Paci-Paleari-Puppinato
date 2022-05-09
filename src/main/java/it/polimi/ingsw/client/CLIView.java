@@ -4,9 +4,11 @@ import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.ErrorType;
+import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -238,101 +240,34 @@ public class CLIView implements View{
             choseAction();
     }
 
+
     @Override
     public void choseAction(){
         System.out.println();
         System.out.print("Insert a command: ");
-        boolean valid=false;
-
         int code = Integer.parseInt(scanner.nextLine());
         switch (code) {
             case 1:
-                do {
-                    System.out.print("Insert the number of the cloud you want to chose: ");
-                    String strCloud = scanner.nextLine();
-                    if (strCloud.matches("\\d+")) {
-                        int cloudPosition = Integer.parseInt(strCloud);
-                        if(cloudPosition<0 || cloudPosition>gameInfo.getNumPlayer())
-                            System.out.println("Invalid Cloud Number \n");
-                        else {
-                            serverHandler.cloudChosenRequest(cloudPosition);
-                            valid = true;
-                        }
-                    } else
-                        System.out.println("Invalid Choice  \n");
-                }while(!valid);
+                correctCloud();
                 break;
             case 2:
-                do {
-                    System.out.print("Insert the final position of Mother Nature: ");
-                    String strPosition = scanner.nextLine();
-                    if (strPosition.matches("\\d+")) {
-                        int endPosition = Integer.parseInt(strPosition);
-                        serverHandler.moveMotherNatureRequest(endPosition);
-                        valid=true;
-                    } else
-                        System.out.println("Invalid Choice \n");
-                }while(!valid);
+                int endPosition=correctIslandInput();
+                serverHandler.moveMotherNatureRequest(endPosition);
                 break;
             case 3:
-                do {
-                    System.out.print("Insert the number of the island you want to chose: ");
-                    String strNumIsland = scanner.nextLine();
-                    if (strNumIsland.matches("\\d+")) {
-                        int islandPosition = Integer.parseInt(strNumIsland);
-                        System.out.print("Insert the color of the student you want to move: ");
-                        String colorString = scanner.nextLine();
-                        PawnColor color = lookup(colorString);
-                        if (color == null)
-                            System.out.print("This is not a valid color \n");
-                        else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[color.getIndex()] == 0) {
-                            System.out.print("You don't have this student \n");
-                        } else {
-                            serverHandler.moveStudentToIslandRequest(islandPosition, color);
-                            valid = true;
-                        }
-                    } else
-                        System.out.println("Invalid Choice \n");
-                }while(!valid);
+                int islandPosition=correctIslandInput();
+                PawnColor color = getColor(correctEntranceColor(1).get(0));
+                serverHandler.moveStudentToIslandRequest(islandPosition, color);
                 break;
             case 4:
-                do {
-                    System.out.print("Insert the color of the student you want to move: ");
-                    String colorString2 = scanner.nextLine();
-                    PawnColor color2 = lookup(colorString2);
-                    if (color2 == null)
-                        System.out.print("This is not a valid color \n");
-                    else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[color2.getIndex()] == 0) {
-                        System.out.print("You don't have this student \n");
-                    } else {
-                        serverHandler.moveToDiningRoomRequest(color2);
-                        valid=true;
-                    }
-                }while(!valid);
+                PawnColor color2 = getColor(correctEntranceColor(1).get(0));
+                serverHandler.moveToDiningRoomRequest(color2);
                 break;
             case 5:
-                do {
-                    System.out.print("Insert the position of the assistant card you want to use: ");
-                    String strAssistant = scanner.nextLine();
-                    if (strAssistant.matches("\\d+")) {
-                        int position = Integer.parseInt(strAssistant);
-                        serverHandler.useAssistantRequest(position);
-                        valid=true;
-                    } else
-                        System.out.println("Invalid Choice \n");
-                }while(!valid);
+                correctAssistant();
                 break;
-            case 6: // solo temporaneo, non usare
-                do {
-                    System.out.print("Insert the position of the character card you want to use: ");
-                    String strCharacter = scanner.nextLine();
-                    if (strCharacter.matches("\\d+")) {
-                        int position = Integer.parseInt(strCharacter);
-                        valid=true;
-                    } else
-                        System.out.println("Invalid Choice \n");
-                }while(!valid);
-                break;
+            case 6:
+                correctCharacter();
             }
 
     }
@@ -376,5 +311,173 @@ public class CLIView implements View{
         }
     }
 
+    private int correctIslandInput(){
+        boolean correct=false;
+        int islandPosition=0;
+        do {
+            System.out.print("Insert the number of the island you want to chose: ");
+            String strNumIsland = scanner.nextLine();
+            if (strNumIsland.matches("\\d+")) {
+                islandPosition = Integer.parseInt(strNumIsland);
+                if(islandPosition >0 && islandPosition<=gameInfo.getNumIsland())
+                    correct=true;
+            } else
+                System.out.println("Invalid Island number \n");
+        } while (!correct);
+        return islandPosition-1;
+    }
+    private List<Integer> correctEntranceColor(int maxRequest){
+        int correct=0;
+        List<Integer> colors= new ArrayList<>();
+        int [] color = {0,0,0,0,0};
+        do{
+            System.out.print("Insert the color of a student you want to move from the entrance: ");
+            String colorString = scanner.nextLine();
+            if (lookup(colorString) == null)
+                System.out.print("This is not a valid color \n");
+            else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+                System.out.print("You don't have enough student of this color \n");
+            else {
+                correct++;
+                colors.add(lookup(colorString).getIndex());
+                color[lookup(colorString).getIndex()]++;
+            }
+        } while (correct<maxRequest);
+        return colors;
+    }
 
+    private List<Integer> correctCharacterColor(int position, int maxRequest){
+        int correct=0;
+        List<Integer> colors= new ArrayList<>();
+        int [] color = {0,0,0,0,0};
+        do{
+            System.out.print("Insert the color of a student you want to move from the character card: ");
+            String colorString = scanner.nextLine();
+            if (lookup(colorString) == null)
+                System.out.print("This is not a valid color \n");
+            else if (gameInfo.getCharacterInfo(position)[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+                System.out.print("The card doesn't have this student \n");
+            else {
+                correct++;
+                colors.add(lookup(colorString).getIndex());
+                color[lookup(colorString).getIndex()]++;
+            }
+        } while (correct<maxRequest);
+        return colors;
+    }
+
+    private List<Integer> correctDiningColor(int maxRequest){
+        int correct=0;
+        List<Integer> colors= new ArrayList<>();
+        int [] color = {0,0,0,0,0};
+        do{
+            System.out.print("Insert the color of a student you want to move from the entrance: ");
+            String colorString = scanner.nextLine();
+            if (lookup(colorString) == null)
+                System.out.print("This is not a valid color \n");
+            else if (gameInfo.getDiningStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+                System.out.print("You don't have this student \n");
+            else {
+                correct++;
+                colors.add(lookup(colorString).getIndex());
+                color[lookup(colorString).getIndex()]++;
+            }
+        } while (correct<maxRequest);
+        return colors;
+    }
+
+    private void correctAssistant() {
+        boolean correct=false;
+        do {
+            System.out.print("Insert the position of the assistant card you want to use: ");
+            String strAssistant = scanner.nextLine();
+            if (strAssistant.matches("\\d+")) {
+                int position = Integer.parseInt(strAssistant);
+                if (position > 0 && position <= 10) {
+                    serverHandler.useAssistantRequest(position-1);
+                    correct = true;
+                } else System.out.println("Invalid Assistant Choice \n");
+            } else
+                System.out.println("Invalid Choice \n");
+        } while (!correct);
+    }
+
+    private void correctCloud() {
+        boolean correct=false;
+        do {
+            System.out.print("Insert the number of the cloud you want to chose: ");
+            String strCloud = scanner.nextLine();
+            if (strCloud.matches("\\d+")) {
+                int cloudPosition = Integer.parseInt(strCloud);
+                if (cloudPosition < 1 || cloudPosition > gameInfo.getNumPlayer())
+                    System.out.println("Invalid Cloud Number \n");
+                else {
+                    serverHandler.cloudChosenRequest(cloudPosition - 1);
+                    correct = true;
+                }
+            } else
+                System.out.println("Invalid Choice  \n");
+        } while (!correct);
+    }
+
+    private void correctCharacter(){
+        boolean valid=false;
+        do {
+            System.out.print("Insert the position of the character card you want to use: ");
+            String strCharacter = scanner.nextLine();
+            if (strCharacter.matches("\\d+")) {
+                int position = Integer.parseInt(strCharacter);
+                if(position>0 && position<=3) {
+                    position--;
+                    CharacterType type = gameInfo.getCharacter(position);
+                    if (type == CharacterType.CENTAUR || type == CharacterType.KNIGHT || type == CharacterType.MAGIC_DELIVERY_MAN || type == CharacterType.FARMER) {
+                        serverHandler.useCharacterRequest(position);
+                    } else if (type == CharacterType.HERALD || type == CharacterType.GRANDMOTHER_HERBS) {
+                        serverHandler.useCharacterRequest(correctIslandInput(), position);
+                    } else if (type == CharacterType.SPOILED_PRINCESS || type == CharacterType.THIEF || type == CharacterType.MUSHROOM_HUNTER) {
+                        if (type == CharacterType.SPOILED_PRINCESS) {
+                            serverHandler.useCharacterRequest(getColor(correctCharacterColor(position,1).get(0)), position);
+                        } else {
+                            boolean correct = false;
+                            do {
+                                System.out.print("Insert a color: ");
+                                String colorString = scanner.nextLine();
+                                PawnColor color = lookup(colorString);
+                                if (color == null)
+                                    System.out.print("This is not a valid color \n");
+                                else {
+                                    serverHandler.useCharacterRequest(color, position);
+                                    correct = true;
+                                }
+                            } while (!correct);
+                        }
+                    } else if (type == CharacterType.JESTER || type == CharacterType.MINSTREL) {
+                        List<Integer> tmpColors= new ArrayList<>();
+                        int [] colors;
+                        if (type == CharacterType.JESTER) {
+                            colors= new int [6];
+                            tmpColors.addAll(correctEntranceColor(3));
+                            tmpColors.addAll(correctCharacterColor(position, 3));
+                            for (int i=0; i<6; i++)
+                                colors[i]=tmpColors.get(i);
+
+                        } else {
+                            colors = new int[4];
+                            tmpColors.addAll(correctEntranceColor(2));
+                            tmpColors.addAll(correctDiningColor(2));
+                            for (int i = 0; i < 6; i++)
+                                colors[i] = tmpColors.get(i);
+                        }
+                        serverHandler.useCharacterRequest(colors, position);
+                    } else {
+                        serverHandler.useCharacterRequest(correctIslandInput(), getColor(correctCharacterColor(position,1).get(0)), position);
+                    }
+                    valid = true;
+                }
+                else
+                    System.out.println("Invalid Choice \n");
+            } else
+                System.out.println("Invalid Choice \n");
+        }while(!valid);
+    }
 }

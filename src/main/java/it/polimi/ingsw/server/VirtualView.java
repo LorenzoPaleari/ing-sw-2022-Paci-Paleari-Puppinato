@@ -50,6 +50,26 @@ public class VirtualView {
         controller.useAssistant(position, controller.getPlayerByNickname(playerNickname));
     }
 
+    public void useCharacter(int[] colors, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, colors);
+    }
+
+    public void useCharacter(int islandPosition, PawnColor color , int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, islandPosition, color);
+    }
+
+    public void useCharacter(PawnColor color, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, color);
+    }
+
+    public void useCharacter(int islandPosition, int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition, islandPosition);
+    }
+
+    public void useCharacter(int characterPosition, String playerNickname){
+        controller.useCharacter(controller.getPlayerByNickname(playerNickname), characterPosition);
+    }
+
     public void setUpGameInfo(int numPlayer, boolean expert, String playerNickname){
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);

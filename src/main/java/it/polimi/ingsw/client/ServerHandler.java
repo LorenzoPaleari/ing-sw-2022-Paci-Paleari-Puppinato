@@ -94,6 +94,16 @@ public class ServerHandler {
         send(new UseAssistantRequest(position));
     }
 
+    public void useCharacterRequest(int characterPosition){send(new UseCharacterRequest(characterPosition));}
+
+    public void useCharacterRequest(int islandPosition, int characterPosition){send(new UseCharacterRequest(islandPosition, characterPosition));}
+
+    public void useCharacterRequest(int islandPosition, PawnColor color, int characterPosition){send(new UseCharacterRequest(islandPosition, color,characterPosition));}
+
+    public void useCharacterRequest(PawnColor color, int characterPosition){send(new UseCharacterRequest(color, characterPosition));}
+
+    public void useCharacterRequest(int[] color, int characterPosition){send(new UseCharacterRequest(color, characterPosition));}
+
     public void setGame(boolean newGame, int lobby){
         send(new GameSetUp(newGame, lobby));
     }
