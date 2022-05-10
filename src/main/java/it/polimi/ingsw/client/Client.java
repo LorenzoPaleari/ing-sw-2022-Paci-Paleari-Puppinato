@@ -1,5 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.cli.CLIView;
+import it.polimi.ingsw.client.gui.GUIView;
+import javafx.application.Application;
+
 import java.util.Scanner;
 
 public class Client {
@@ -17,7 +21,8 @@ public class Client {
                 view.start();
                 incorrect = false;
             } else if ((selection.equalsIgnoreCase("GUI"))) {
-                //view = new GuiView();
+                view = new GUIView();
+                Application.launch(GUIView.class);
                 incorrect = false;
             } else {
                 System.out.println("Invalid choice. Try again.");

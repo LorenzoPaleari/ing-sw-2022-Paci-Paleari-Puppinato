@@ -1,5 +1,7 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.ServerHandler;
+import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
 import it.polimi.ingsw.exceptions.ClientException;
@@ -15,7 +17,7 @@ import java.util.Scanner;
 import static it.polimi.ingsw.model.enumerations.PawnColor.getColor;
 import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 
-public class CLIView implements View{
+public class CLIView implements View {
     private GameInfo gameInfo;
     private Scanner scanner;
     private ServerHandler serverHandler;
@@ -57,7 +59,7 @@ public class CLIView implements View{
         boolean valid;
         String response;
 
-        System.out.print("Vuoi cominciare una nuova partita? [Yes/No]:");
+        System.out.print("Vuoi cominciare una nuova partita? \u001b[31m♥ [Yes/No]:");
         do {
             valid = true;
             response = scanner.nextLine().toUpperCase();
