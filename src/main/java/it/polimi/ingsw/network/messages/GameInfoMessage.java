@@ -10,9 +10,11 @@ import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 
-public class GameInfoMessage implements Serializable, ModelViewMessage {
+public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable {
     private MessageType type;
     private GameInfo gameInfo;
+    private View view;
+    public Thread thread = null;
 
     public GameInfoMessage(GameInfo gameInfo){
         this.gameInfo = gameInfo;
@@ -21,6 +23,12 @@ public class GameInfoMessage implements Serializable, ModelViewMessage {
 
     @Override
     public void action(View view) {
+        this.view = view;
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void run(){
         view.printGameBoard(gameInfo);
     }
 

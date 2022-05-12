@@ -237,9 +237,25 @@ public class CLIView implements View {
     @Override
     public void printGameBoard(GameInfo gameInfo){
         this.gameInfo = gameInfo;
+        threadScanner = new Scanner(System.in);
+        System.out.print(AnsiGraphics.CLEAR);
         System.out.print("Sto funzionando");
         if (gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer()))
             choseAction();
+        else
+            bufferClearer();
+    }
+
+    private void bufferClearer() {
+        InputStreamReader control = new InputStreamReader(System.in);
+        while (true) {
+            try {
+                if (control.ready())
+                    threadScanner.nextLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
@@ -247,7 +263,7 @@ public class CLIView implements View {
     public void choseAction(){
         System.out.println();
         System.out.print("Insert a command: ");
-        int code = Integer.parseInt(scanner.nextLine());
+        int code = Integer.parseInt(threadScanner.nextLine());
         switch (code) {
             case 1:
                 correctCloud();
@@ -318,7 +334,7 @@ public class CLIView implements View {
         int islandPosition=0;
         do {
             System.out.print("Insert the number of the island you want to chose: ");
-            String strNumIsland = scanner.nextLine();
+            String strNumIsland = threadScanner.nextLine();
             if (strNumIsland.matches("\\d+")) {
                 islandPosition = Integer.parseInt(strNumIsland);
                 if(islandPosition >0 && islandPosition<=gameInfo.getNumIsland())
@@ -334,7 +350,7 @@ public class CLIView implements View {
         int [] color = {0,0,0,0,0};
         do{
             System.out.print("Insert the color of a student you want to move from the entrance: ");
-            String colorString = scanner.nextLine();
+            String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
             else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
@@ -354,7 +370,7 @@ public class CLIView implements View {
         int [] color = {0,0,0,0,0};
         do{
             System.out.print("Insert the color of a student you want to move from the character card: ");
-            String colorString = scanner.nextLine();
+            String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
             else if (gameInfo.getCharacterInfo(position)[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
@@ -374,7 +390,7 @@ public class CLIView implements View {
         int [] color = {0,0,0,0,0};
         do{
             System.out.print("Insert the color of a student you want to move from the entrance: ");
-            String colorString = scanner.nextLine();
+            String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
             else if (gameInfo.getDiningStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
@@ -392,7 +408,7 @@ public class CLIView implements View {
         boolean correct=false;
         do {
             System.out.print("Insert the position of the assistant card you want to use: ");
-            String strAssistant = scanner.nextLine();
+            String strAssistant = threadScanner.nextLine();
             if (strAssistant.matches("\\d+")) {
                 int position = Integer.parseInt(strAssistant);
                 if (position > 0 && position <= 10) {
@@ -408,7 +424,7 @@ public class CLIView implements View {
         boolean correct=false;
         do {
             System.out.print("Insert the number of the cloud you want to chose: ");
-            String strCloud = scanner.nextLine();
+            String strCloud = threadScanner.nextLine();
             if (strCloud.matches("\\d+")) {
                 int cloudPosition = Integer.parseInt(strCloud);
                 if (cloudPosition < 1 || cloudPosition > gameInfo.getNumPlayer())
@@ -426,7 +442,7 @@ public class CLIView implements View {
         boolean valid=false;
         do {
             System.out.print("Insert the position of the character card you want to use: ");
-            String strCharacter = scanner.nextLine();
+            String strCharacter = threadScanner.nextLine();
             if (strCharacter.matches("\\d+")) {
                 int position = Integer.parseInt(strCharacter);
                 if(position>0 && position<=3) {
