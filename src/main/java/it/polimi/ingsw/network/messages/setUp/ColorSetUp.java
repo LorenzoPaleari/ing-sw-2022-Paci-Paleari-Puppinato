@@ -47,4 +47,9 @@ public class ColorSetUp implements Serializable, ControllerViewMessage, ViewCont
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
+
+    @Override
+    public Thread getThread() {
+        return null;
+    }
 }

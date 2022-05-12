@@ -43,6 +43,11 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
     }
 
     @Override
+    public Thread getThread() {
+        return thread;
+    }
+
+    @Override
     public MessageType getType() {
         return type;
     }

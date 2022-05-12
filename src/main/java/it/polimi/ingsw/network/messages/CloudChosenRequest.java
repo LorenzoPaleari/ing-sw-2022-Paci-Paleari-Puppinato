@@ -36,4 +36,9 @@ public class CloudChosenRequest implements Serializable, ViewControllerMessage {
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
+
+    @Override
+    public Thread getThread() {
+        return null;
+    }
 }

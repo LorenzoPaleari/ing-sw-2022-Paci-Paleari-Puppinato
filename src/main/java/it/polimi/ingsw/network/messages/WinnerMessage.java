@@ -38,6 +38,11 @@ public class WinnerMessage implements Serializable, ControllerViewMessage {
     }
 
     @Override
+    public Thread getThread() {
+        return null;
+    }
+
+    @Override
     public MessageType getType() {
         return type;
     }

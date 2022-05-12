@@ -46,4 +46,9 @@ public class RefreshMessage implements Serializable, LobbyMessage, ControllerVie
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
         lobbyHandler.refreshLobbies(clientHandler);
     }
+
+    @Override
+    public Thread getThread() {
+        return null;
+    }
 }

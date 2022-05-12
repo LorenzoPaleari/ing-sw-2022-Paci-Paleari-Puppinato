@@ -57,6 +57,11 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     }
 
     @Override
+    public Thread getThread() {
+        return null;
+    }
+
+    @Override
     public void action(VirtualView virtualView, String playerNickname) {
     }
 }

@@ -45,4 +45,9 @@ public class InitialSetUp implements Serializable, ControllerViewMessage, ViewCo
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
+
+    @Override
+    public Thread getThread() {
+        return null;
+    }
 }

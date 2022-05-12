@@ -32,6 +32,11 @@ public class InterruptedGameMessage  implements Serializable, ControllerViewMess
     }
 
     @Override
+    public Thread getThread() {
+        return null;
+    }
+
+    @Override
     public MessageType getType() {
         return type;
     }

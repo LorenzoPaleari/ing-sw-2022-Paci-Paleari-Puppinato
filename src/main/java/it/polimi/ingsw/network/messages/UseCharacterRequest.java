@@ -64,6 +64,11 @@ public class UseCharacterRequest implements Serializable, ViewControllerMessage 
     }
 
     @Override
+    public Thread getThread() {
+        return null;
+    }
+
+    @Override
     public void action(VirtualView virtualView, String playerNickname) {
         if(colors!=null)
             virtualView.useCharacter(colors, characterPosition, playerNickname);

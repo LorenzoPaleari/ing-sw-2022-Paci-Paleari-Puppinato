@@ -15,4 +15,6 @@ public interface GenericMessage {
     void action(VirtualView virtualView, String playerNickname);
 
     void action(LobbyHandler lobbyHandler, ClientHandler clientHandler);
+
+    Thread getThread();
 }
