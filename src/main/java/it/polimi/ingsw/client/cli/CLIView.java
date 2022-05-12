@@ -118,16 +118,16 @@ public class CLIView implements View {
         int j = 0;
         int i;
         for (i = 0; j!=numLobby; i++)
-            if (!lobbies.get(i)[0].equals("Starting... "))
+            if (lobbies.get(i).length < 6)
                 j++;
 
-        return i;
+        return i - 1;
     }
 
     private int printLobbies(List<String[]> lobbies) {
         int k = 0;
         for (String[] lobby : lobbies) {
-            if (!lobby[0].equals("Starting... ")) {
+            if (lobby.length < 6) {
                 k++;
                 System.out.print("Lobby-" + (k) + " : ");
                 for (int j = 0; j < lobby.length - 2; j++)
@@ -148,7 +148,7 @@ public class CLIView implements View {
 
     private boolean checkForValidLobby(List<String[]> lobbies){
         for (String[] s : lobbies)
-            if (!(s[0].equals("Starting... ")))
+            if (s.length < 6)
                 return true;
 
         return false;

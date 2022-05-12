@@ -19,35 +19,24 @@ public class LobbyHandler {
     }
 
     public synchronized void addClient(int lobbyNumber, ClientHandler clientHandler) {
-        int lobby = count(lobbyNumber);
-        if (controllers.get(lobby).getGame().isGameEnded()){
+        if (controllers.get(lobbyNumber).getGame().isGameEnded()){
             clientHandler.printInterrupt("");
-        } else if (controllers.get(lobby).getGame().getNumPlayer() == lobbies.get(lobby).length) {
+        } else if (controllers.get(lobbyNumber).getGame().getNumPlayer() == lobbies.get(lobbyNumber).length) {
             clientHandler.gameSetUp(true);
         } else {
-            ClientHandler[] clients = lobbies.get(lobby);
+            ClientHandler[] clients = lobbies.get(lobbyNumber);
             ClientHandler[] clientHandlers = new ClientHandler[clients.length + 1];
 
             System.arraycopy(clients, 0, clientHandlers, 0, clients.length);
             clientHandlers[clients.length] = clientHandler;
 
-            lobbies.set(lobby, clientHandlers);
+            lobbies.set(lobbyNumber, clientHandlers);
 
-            clientHandler.setVirtualView(virtualViews.get(lobby));
-            virtualViews.get(lobby).addClientHandler(clientHandler);
+            clientHandler.setVirtualView(virtualViews.get(lobbyNumber));
+            virtualViews.get(lobbyNumber).addClientHandler(clientHandler);
 
-            virtualViews.get(lobby).lockColorSetUp(clientHandler.getPlayerNickname());
+            virtualViews.get(lobbyNumber).lockColorSetUp(clientHandler.getPlayerNickname());
         }
-    }
-
-    private int count(int lobbyNumber) {
-        int j = 0;
-        int i;
-        for (i = 0; j!=lobbyNumber; i++)
-            if (!(controllers.get(i).getGame().isGameEnded() || lobbies.get(i).length == controllers.get(i).getGame().getNumPlayer()))
-                j++;
-
-        return i - 1;
     }
 
     public synchronized void newClient(ClientHandler clientHandler){
@@ -73,10 +62,14 @@ public class LobbyHandler {
         List<String[]> lobbiesModified = new ArrayList<>();
         for (ClientHandler[] c : lobbies){
             if (controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer() == -1 && !controllers.get(lobbies.indexOf(c)).getGame().isGameEnded()) {
-                String[] temp = new String[1];
-                temp[0] = "Starting... ";
+                String[] temp = new String[6];
+                temp[5] = "Starting... ";
                 lobbiesModified.add(temp);
-            } else if (!(controllers.get(lobbies.indexOf(c)).getGame().isGameEnded() || c.length == controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer())){
+            } else if (controllers.get(lobbies.indexOf(c)).getGame().isGameEnded() || c.length == controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer()) {
+                String[] temp = new String[6];
+                temp[5] = "NOT AVAILABLE";
+                lobbiesModified.add(temp);
+            } else {
                 String[] temp = new String[c.length + 2];
 
                 for (int i = 0; i < c.length; i++)
@@ -100,12 +93,14 @@ public class LobbyHandler {
     }
 
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
-        if (getLobbies().size() == 0) {
-            clientHandler.refreshLobbies(getLobbies(), true);
-            return;
-        }
+        List<String[]> lobbies = getLobbies();
+        for (String[] s : lobbies)
+            if (s.length < 6 || s[5].equals("Starting... ")){
+                clientHandler.refreshLobbies(lobbies, false);
+                return;
+            }
 
-        clientHandler.refreshLobbies(getLobbies(), false);
+        clientHandler.refreshLobbies(null, true);
     }
 
     public synchronized void setPlayerNickname(String nickname, ClientHandler clientHandler) {
@@ -119,11 +114,13 @@ public class LobbyHandler {
         }
     }
 
-    public synchronized void terminateLobby(VirtualView virtualView) {
+    public synchronized void terminateLobby(VirtualView virtualView, ClientHandler clientHandler) {
         int index = virtualViews.indexOf(virtualView);
         if (index != -1) {
             controllers.get(index).getGame().endGame();
             allClientHandlers.removeAll((List.of(lobbies.get(index))));
+        } else {
+            allClientHandlers.remove(clientHandler);
         }
     }
 }

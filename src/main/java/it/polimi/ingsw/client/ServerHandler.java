@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
@@ -12,6 +13,7 @@ import java.net.Socket;
 
 public class ServerHandler {
     private Socket socket;
+    private GameInfoMessage currentMessage;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private View view;
@@ -40,6 +42,12 @@ public class ServerHandler {
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
+                if (message instanceof GameInfoMessage) {
+                    if (currentMessage != null){
+                        currentMessage.thread.interrupt();}
+
+                    currentMessage = (GameInfoMessage) message;
+                }
                 message.action(view);
             } catch (IOException | ClassNotFoundException e) {
                 isConnected = false;

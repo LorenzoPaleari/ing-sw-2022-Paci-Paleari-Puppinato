@@ -15,7 +15,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
-
 public class ClientHandler extends Thread{
     private final Socket socket;
     private String playerNickname;
@@ -58,10 +57,10 @@ public class ClientHandler extends Thread{
                 System.out.println(getPlayerNickname() + " has disconnected");
                 if (isConnected){
                     isConnected = false;
-                    if (virtualView != null) {
-                        lobbyHandler.terminateLobby(virtualView);
+
+                    lobbyHandler.terminateLobby(virtualView, this);
+                    if (virtualView != null)
                         virtualView.printInterrupt(getPlayerNickname());
-                    }
                 }
                 endConnection();
             }
@@ -77,8 +76,8 @@ public class ClientHandler extends Thread{
         catch(IOException e){
             System.out.println(getPlayerNickname() + "disconnected during Message sending");
             isConnected = false;
+            lobbyHandler.terminateLobby(virtualView, this);
             if (virtualView != null) {
-                lobbyHandler.terminateLobby(virtualView);
                 virtualView.printInterrupt(getPlayerNickname());
             }
             endConnection();
