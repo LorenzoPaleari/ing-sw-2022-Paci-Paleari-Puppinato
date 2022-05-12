@@ -20,7 +20,7 @@ public class LobbyHandler {
 
     public synchronized void addClient(int lobbyNumber, ClientHandler clientHandler) {
         if (controllers.get(lobbyNumber).getGame().isGameEnded()){
-            clientHandler.printInterrupt("");
+            clientHandler.printInterrupt("", true);
         } else if (controllers.get(lobbyNumber).getGame().getNumPlayer() == lobbies.get(lobbyNumber).length) {
             clientHandler.gameSetUp(true);
         } else {
@@ -35,7 +35,7 @@ public class LobbyHandler {
             clientHandler.setVirtualView(virtualViews.get(lobbyNumber));
             virtualViews.get(lobbyNumber).addClientHandler(clientHandler);
 
-            virtualViews.get(lobbyNumber).lockColorSetUp(clientHandler.getPlayerNickname());
+            virtualViews.get(lobbyNumber).colorSetUp(clientHandler.getPlayerNickname());
         }
     }
 

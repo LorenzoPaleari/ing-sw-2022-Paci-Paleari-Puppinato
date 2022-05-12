@@ -16,8 +16,10 @@ public class ColorSetUp implements Serializable, ControllerViewMessage, ViewCont
     private MessageType type;
     List<TowerColor> towerColor;
     TowerColor chosenColor;
+    private boolean requestAgain;
 
-    public ColorSetUp(List<TowerColor> towerColor){
+    public ColorSetUp(List<TowerColor> towerColor, boolean requestAgain){
+        this.requestAgain=requestAgain;
         type = MessageType.ControllerView;
         this.towerColor = towerColor;
     }
@@ -35,7 +37,7 @@ public class ColorSetUp implements Serializable, ControllerViewMessage, ViewCont
 
     @Override
     public void action(View view) {
-        view.colorSetUp(towerColor);
+        view.colorSetUp(towerColor, requestAgain);
     }
 
     @Override

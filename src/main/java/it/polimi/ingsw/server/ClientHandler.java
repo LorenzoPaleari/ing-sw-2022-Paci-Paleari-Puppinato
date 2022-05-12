@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.ACKControl;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
@@ -15,7 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread implements NetworkHandler{
     private final Socket socket;
     private String playerNickname;
     private final LobbyHandler lobbyHandler;
@@ -34,8 +35,12 @@ public class ClientHandler extends Thread{
         try {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
+            socket.setSoTimeout(25000);
         } catch (IOException e) {
         }
+
+        ACKControl ACKcontrol= new ACKControl(this, true);
+        ACKcontrol.start();
     }
 
     public void run(){
@@ -67,20 +72,22 @@ public class ClientHandler extends Thread{
         }
     }
 
-    public void send(GenericMessage message) {
-        try{
-            output.writeUnshared(message);
-            output.flush();
-            output.reset();
-        }
-        catch(IOException e){
-            System.out.println(getPlayerNickname() + "disconnected during Message sending");
-            isConnected = false;
-            lobbyHandler.terminateLobby(virtualView, this);
-            if (virtualView != null) {
-                virtualView.printInterrupt(getPlayerNickname());
+    public synchronized void send(GenericMessage message) {
+        if(isConnected){
+            try {
+                output.writeUnshared(message);
+                output.flush();
+                output.reset();
             }
-            endConnection();
+            catch(IOException e){
+                System.out.println(getPlayerNickname() + "disconnected during Message sending");
+                isConnected = false;
+                lobbyHandler.terminateLobby(virtualView, this);
+                if (virtualView != null) {
+                    virtualView.printInterrupt(getPlayerNickname());
+                }
+                endConnection();
+            }
         }
     }
 
@@ -100,10 +107,10 @@ public class ClientHandler extends Thread{
         send(new PlayerSetUp(requestAgain));
     }
 
-    public void colorSetUp(){
+    public void colorSetUp(boolean requestAgain){
         List<TowerColor> towerColor;
         towerColor = virtualView.getAvailableColor();
-        send(new ColorSetUp(towerColor));
+        send(new ColorSetUp(towerColor, requestAgain));
     }
 
     public String getPlayerNickname() {
@@ -122,15 +129,11 @@ public class ClientHandler extends Thread{
         send (new ErrorMessage(error));
     }
 
-    public void printInterrupt(String nickname){
-        synchronized (this) {
-            send(new InterruptedGameMessage(nickname));
-            if (!nickname.equals(""))
-                endConnection();
-        }
+    public void printInterrupt(String nickname, boolean notEntered){
+        send(new InterruptedGameMessage(nickname, notEntered));
     }
 
-    public boolean isConnected() {
+    public boolean connectionAlive() {
         return isConnected;
     }
 

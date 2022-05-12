@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
-import it.polimi.ingsw.controller.BoardHandler;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.Game;
@@ -10,10 +9,8 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
 
 import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class VirtualView {
-    private ReentrantLock lock = new ReentrantLock();
     private Controller controller;
     private List<ClientHandler> clientHandlers;
 
@@ -75,17 +72,18 @@ public class VirtualView {
         controller.setExpertMode(expert);
         controller.setNumPlayer(numPlayer);
 
-        lockColorSetUp(playerNickname);
+        colorSetUp(playerNickname);
     }
 
-    public void lockColorSetUp(String nickname){
-        lock.lock();
-        getClientHandlerByNickname(nickname).colorSetUp();
+    public void colorSetUp(String nickname){
+        getClientHandlerByNickname(nickname).colorSetUp(false);
     }
 
-    public void setUpPlayerColor(TowerColor color, String playerNickname){
-        controller.addPlayer(new Player(playerNickname, color));
-        lock.unlock();
+    public synchronized void setUpPlayerColor(TowerColor color, String playerNickname){
+        if(getAvailableColor().contains(color))
+            controller.addPlayer(new Player(playerNickname, color));
+        else
+            getClientHandlerByNickname(playerNickname).colorSetUp(true);
     }
 
     public ClientHandler getClientHandlerByNickname(String nickname){
@@ -107,9 +105,10 @@ public class VirtualView {
     }
 
     public void printInterrupt(String nickname){
-        for (ClientHandler c : clientHandlers) {
-            if (!nickname.equals(c.getPlayerNickname()) && c.isConnected())
-                c.printInterrupt(nickname);
+        for (ClientHandler c : clientHandlers)
+            if (!nickname.equals(c.getPlayerNickname()) && c.connectionAlive()) {
+                c.printInterrupt(nickname, false);
+                c.setDisconnected();
         }
     }
 

@@ -91,7 +91,7 @@ public class GUIView extends Application implements View {
     }
 
     @Override
-    public void colorSetUp(List<TowerColor> tower) {
+    public void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
 
     }
 
@@ -111,7 +111,17 @@ public class GUIView extends Application implements View {
     }
 
     @Override
-    public void printInterrupt(String nickname) {
+    public void printInterrupt(String nickname, boolean notEntered) {
+
+    }
+
+    @Override
+    public void newGame() {
+
+    }
+
+    @Override
+    public void printServerDown() {
 
     }
 

@@ -23,7 +23,7 @@ public interface View {
 
     void playerSetUp(boolean requestAgain);
 
-    void colorSetUp(List<TowerColor> tower);
+    void colorSetUp(List<TowerColor> tower, boolean requestAgain);
 
     void printGameBoard(GameInfo gameInfo);
 
@@ -33,6 +33,10 @@ public interface View {
 
     void printWinner(String winner1, String winner2, String nickname);
 
-    void printInterrupt(String nickname);
+    void printInterrupt(String nickname, boolean notEntered);
+
+    void newGame();
+
+    void printServerDown();
 }
 

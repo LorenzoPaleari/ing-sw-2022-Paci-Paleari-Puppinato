@@ -5,15 +5,16 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.messages.service.InterruptedGameMessage;
 import it.polimi.ingsw.network.messages.setUp.*;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
 import java.net.Socket;
 
-public class ServerHandler {
+public class ServerHandler implements NetworkHandler {
     private Socket socket;
-    private GameInfoMessage currentMessage;
+    private GenericMessage currentMessage;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private View view;
@@ -27,12 +28,13 @@ public class ServerHandler {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             isConnected = true;
-            ACKControl ACKcontrol= new ACKControl(this);
+            socket.setSoTimeout(25000);
+            ACKControl ACKcontrol= new ACKControl(this, false);
             ACKcontrol.start();
             listen();
         }
         catch(IOException e){
-            e.printStackTrace();
+            System.out.print("Connection refused, server may be offline");
         }
 
 
@@ -42,17 +44,28 @@ public class ServerHandler {
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
-                if (message instanceof GameInfoMessage) {
-                    if (currentMessage != null){
-                        currentMessage.thread.interrupt();}
+                if(message instanceof InterruptedGameMessage)
+                   isConnected=false;
 
-                    currentMessage = (GameInfoMessage) message;
+                if (currentMessage != null && currentMessage.getThread() != null){
+                    currentMessage.getThread().interrupt();
                 }
+                currentMessage = message;
+
                 message.action(view);
             } catch (IOException | ClassNotFoundException e) {
-                isConnected = false;
+                isConnected=false;
+                view.printServerDown();
+                endConnection();
             }
         }
+    }
+
+    public void setDisconnected(){
+        isConnected=false;
+    }
+    public boolean connectionAlive() {
+        return isConnected;
     }
 
     public void setView(View view){
@@ -62,23 +75,26 @@ public class ServerHandler {
 
     public void endConnection() {
         try {
-            ACKControl.setSendACK();
-            socket.close();
             isConnected = false;
+            socket.close();
+
         } catch (IOException e) {
         }
+        view.newGame();
     }
 
     public void send(GenericMessage message) {
-        try{
-            output.writeUnshared(message);
-            output.flush();
-            output.reset();
-        }
-        catch(IOException e){
-            ACKControl.setSendACK();
-            System.out.println("Server Unreachable");
-            endConnection();
+        if(isConnected) {
+            try {
+                output.writeUnshared(message);
+                output.flush();
+                output.reset();
+            } catch (IOException e) {
+                isConnected=false;
+                view.printServerDown();
+
+                endConnection();
+            }
         }
     }
 

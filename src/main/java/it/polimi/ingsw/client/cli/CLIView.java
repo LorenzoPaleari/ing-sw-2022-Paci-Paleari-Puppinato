@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ServerHandler;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
@@ -10,6 +11,8 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +23,9 @@ import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 public class CLIView implements View {
     private GameInfo gameInfo;
     private Scanner scanner;
+    private Scanner threadScanner;
     private ServerHandler serverHandler;
+    private Object lock= new Object();
 
 
     public CLIView(ServerHandler serverHandler){
@@ -55,7 +60,7 @@ public class CLIView implements View {
     }
 
     @Override
-    public void gameSetUp() {
+    public synchronized void gameSetUp() {
         boolean valid;
         String response;
 
@@ -85,7 +90,7 @@ public class CLIView implements View {
             lobbySelection(lobbies);
     }
 
-    private void lobbySelection(List<String[]> lobbies) {
+    private synchronized void lobbySelection(List<String[]> lobbies) {
         boolean valid;
         int lobbySize = printLobbies(lobbies);
 
@@ -161,7 +166,7 @@ public class CLIView implements View {
     }
 
     @Override
-    public void initialSetUp() {
+    public synchronized void initialSetUp() {
         boolean expert= false;
         boolean valid1 = false;
         boolean valid2;
@@ -196,7 +201,7 @@ public class CLIView implements View {
     }
 
     @Override
-    public void playerSetUp(boolean requestAgain) {
+    public synchronized void playerSetUp(boolean requestAgain) {
         if (requestAgain) {
             System.out.print("Questo nickname è già stato preso, scegline un altro:  ");
         } else {
@@ -208,7 +213,7 @@ public class CLIView implements View {
     }
 
     @Override
-    public void colorSetUp(List<TowerColor> tower) {
+    public synchronized void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
         boolean valid=false;
         TowerColor color = null;
         if(tower.size() == 1){
@@ -238,7 +243,7 @@ public class CLIView implements View {
     public void printGameBoard(GameInfo gameInfo){
         this.gameInfo = gameInfo;
         threadScanner = new Scanner(System.in);
-        System.out.print(AnsiGraphics.CLEAR);
+        //System.out.print(AnsiGraphics.CLEAR);
         System.out.print("Sto funzionando");
         if (gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer()))
             choseAction();
@@ -260,7 +265,7 @@ public class CLIView implements View {
 
 
     @Override
-    public void choseAction(){
+    public synchronized void choseAction(){
         System.out.println();
         System.out.print("Insert a command: ");
         int code = Integer.parseInt(threadScanner.nextLine());
@@ -287,7 +292,6 @@ public class CLIView implements View {
             case 6:
                 correctCharacter();
             }
-
     }
 
     @Override
@@ -319,14 +323,37 @@ public class CLIView implements View {
     }
 
     @Override
-    public void printInterrupt(String nickname) {
-        if (nickname.equals("")){
+    public synchronized void printInterrupt(String nickname, boolean notEntered) {
+        if (notEntered){
             System.out.println("The game was interrupted just before your entrance, please choose another Lobby.");
             serverHandler.refreshLobbies();
         }else{
-            System.out.println("The game was interrupted, " + nickname + " disconnected from the server.");
-            serverHandler.endConnection();
+            serverHandler.setDisconnected();
+            System.out.println("The game was interrupted, " + nickname + " disconnected from the server.");serverHandler.endConnection();
         }
+    }
+
+    @Override
+    public synchronized void newGame() {
+        boolean valid2;
+
+        do {
+            valid2 = true;
+            System.out.println("Would you like to start a new game? [Yes/No]: ");
+            String expertString = scanner.nextLine();
+            if ((expertString.equalsIgnoreCase("YES"))) {
+                Client.main(null);
+            } else if (!(expertString.equalsIgnoreCase("NO"))) {
+                System.out.print("Errore, hai sbagliato davvero nello scrivere 3 lettere... ");
+                valid2 = false;
+            }
+        }while(!valid2);
+
+    }
+
+    @Override
+    public synchronized void printServerDown() {
+        System.out.println("Server Unreachable");
     }
 
     private int correctIslandInput(){
@@ -339,6 +366,8 @@ public class CLIView implements View {
                 islandPosition = Integer.parseInt(strNumIsland);
                 if(islandPosition >0 && islandPosition<=gameInfo.getNumIsland())
                     correct=true;
+                else
+                    System.out.println("Invalid Island number \n");
             } else
                 System.out.println("Invalid Island number \n");
         } while (!correct);
@@ -353,7 +382,7 @@ public class CLIView implements View {
             String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
-            else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+            else if (gameInfo.getEntranceStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] < color[lookup(colorString).getIndex()]+1)
                 System.out.print("You don't have enough student of this color \n");
             else {
                 correct++;
@@ -373,7 +402,7 @@ public class CLIView implements View {
             String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
-            else if (gameInfo.getCharacterInfo(position)[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+            else if (gameInfo.getCharacterInfo(position)[lookup(colorString).getIndex()] < color[lookup(colorString).getIndex()]+1)
                 System.out.print("The card doesn't have this student \n");
             else {
                 correct++;
@@ -393,7 +422,7 @@ public class CLIView implements View {
             String colorString = threadScanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
-            else if (gameInfo.getDiningStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] >= color[lookup(colorString).getIndex()]+1)
+            else if (gameInfo.getDiningStudents(gameInfo.getCurrentPlayer())[lookup(colorString).getIndex()] < color[lookup(colorString).getIndex()]+1)
                 System.out.print("You don't have this student \n");
             else {
                 correct++;

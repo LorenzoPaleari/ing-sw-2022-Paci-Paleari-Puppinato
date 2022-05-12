@@ -12,15 +12,17 @@ import java.io.Serializable;
 public class InterruptedGameMessage  implements Serializable, ControllerViewMessage {
     private String nickname;
     private MessageType type;
+    private boolean notEntered;
 
-    public InterruptedGameMessage(String nickname){
+    public InterruptedGameMessage(String nickname, boolean notEntered){
         this.nickname=nickname;
         type = MessageType.ControllerView;
+        this.notEntered=notEntered;
     }
 
     @Override
     public void action(View view) {
-        view.printInterrupt(nickname);
+        view.printInterrupt(nickname, notEntered );
     }
 
     @Override

@@ -17,7 +17,8 @@ public class Server {
             serverSocket = new ServerSocket(PORT);
         }
         catch(Exception e){
-            System.out.println("Server is not started");
+            System.out.println("Server not started correctly");
+            return;
         }
         System.out.println("Server successfully started");
         active = true;
