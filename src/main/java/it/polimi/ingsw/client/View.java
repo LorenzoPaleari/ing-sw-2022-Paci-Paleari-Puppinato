@@ -29,14 +29,18 @@ public interface View {
 
     void choseAction();
 
+    void bufferClearer();
+
     void printError(ClientException clientException);
 
     void printWinner(String winner1, String winner2, String nickname);
 
     void printInterrupt(String nickname, boolean notEntered);
 
-    void newGame();
+    void newGame(String nickname);
 
     void printServerDown();
+
+    void stopClearer();
 }
 

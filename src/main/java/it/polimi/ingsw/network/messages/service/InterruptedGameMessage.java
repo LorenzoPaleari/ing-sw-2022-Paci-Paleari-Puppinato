@@ -3,21 +3,28 @@ package it.polimi.ingsw.network.messages.service;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.ControllerViewMessage;
 import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.ModelViewMessage;
 import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.LobbyHandler;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 
-public class InterruptedGameMessage  implements Serializable, ControllerViewMessage {
+public class InterruptedGameMessage  implements Serializable, ControllerViewMessage, ModelViewMessage {
     private String nickname;
     private MessageType type;
     private boolean notEntered;
 
-    public InterruptedGameMessage(String nickname, boolean notEntered){
-        this.nickname=nickname;
+    public InterruptedGameMessage(String nickname, boolean notEntered) {
+        this.nickname = nickname;
         type = MessageType.ControllerView;
-        this.notEntered=notEntered;
+        this.notEntered = notEntered;
+    }
+
+    public InterruptedGameMessage(String nickname){
+        type = MessageType.ModelView;
+        this.nickname = nickname;
+        this.notEntered = false;
     }
 
     @Override
@@ -31,11 +38,6 @@ public class InterruptedGameMessage  implements Serializable, ControllerViewMess
 
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
-    }
-
-    @Override
-    public Thread getThread() {
-        return null;
     }
 
     @Override

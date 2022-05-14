@@ -37,9 +37,4 @@ public class MoveMotherNatureRequest implements Serializable, ViewControllerMess
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
-
-    @Override
-    public Thread getThread() {
-        return null;
-    }
 }

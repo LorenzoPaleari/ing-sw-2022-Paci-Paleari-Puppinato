@@ -81,10 +81,12 @@ public class ClientHandler extends Thread implements NetworkHandler{
             }
             catch(IOException e){
                 System.out.println(getPlayerNickname() + "disconnected during Message sending");
-                isConnected = false;
-                lobbyHandler.terminateLobby(virtualView, this);
-                if (virtualView != null) {
-                    virtualView.printInterrupt(getPlayerNickname());
+                if (isConnected){
+                    isConnected = false;
+
+                    lobbyHandler.terminateLobby(virtualView, this);
+                    if (virtualView != null)
+                        virtualView.printInterrupt(getPlayerNickname());
                 }
                 endConnection();
             }
@@ -130,7 +132,10 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     public void printInterrupt(String nickname, boolean notEntered){
-        send(new InterruptedGameMessage(nickname, notEntered));
+        if (notEntered)
+            send(new InterruptedGameMessage(nickname, true));
+        else
+            send(new InterruptedGameMessage(nickname));
     }
 
     public boolean connectionAlive() {

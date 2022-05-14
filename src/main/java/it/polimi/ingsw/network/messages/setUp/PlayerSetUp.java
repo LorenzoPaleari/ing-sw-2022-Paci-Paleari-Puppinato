@@ -43,9 +43,4 @@ public class PlayerSetUp implements Serializable, ControllerViewMessage, LobbyMe
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
         lobbyHandler.setPlayerNickname(nickname, clientHandler);
     }
-
-    @Override
-    public Thread getThread() {
-        return null;
-    }
 }

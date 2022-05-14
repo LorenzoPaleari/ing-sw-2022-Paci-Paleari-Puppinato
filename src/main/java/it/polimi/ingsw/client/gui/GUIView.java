@@ -116,7 +116,7 @@ public class GUIView extends Application implements View {
     }
 
     @Override
-    public void newGame() {
+    public void newGame(String nickname) {
 
     }
 
@@ -126,11 +126,20 @@ public class GUIView extends Application implements View {
     }
 
     @Override
-    public void printError(ClientException exception) {
+    public void stopClearer() {
 
     }
 
     @Override
+    public void bufferClearer() {
+
+    }
+
+    @Override
+    public void printError(ClientException exception) {
+
+    }
+
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/fxml/gameSetup.fxml"));

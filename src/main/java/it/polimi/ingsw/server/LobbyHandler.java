@@ -85,6 +85,9 @@ public class LobbyHandler {
     }
 
     public synchronized boolean isNicknameUsed(String nickName){
+        if (nickName.equals(""))
+            return true;
+
         for (ClientHandler c : allClientHandlers)
                 if (c.getPlayerNickname().equals(nickName))
                     return true;

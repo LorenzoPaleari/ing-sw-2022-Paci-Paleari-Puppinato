@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
@@ -14,7 +13,7 @@ import java.net.Socket;
 
 public class ServerHandler implements NetworkHandler {
     private Socket socket;
-    private GenericMessage currentMessage;
+    private GameInfoMessage currentMessage;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private View view;
@@ -44,26 +43,34 @@ public class ServerHandler implements NetworkHandler {
         while (isConnected) {
             try {
                 GenericMessage message = (GenericMessage) input.readObject();
-                if(message instanceof InterruptedGameMessage)
-                   isConnected=false;
-
-                if (currentMessage != null && currentMessage.getThread() != null){
-                    currentMessage.getThread().interrupt();
+                if(message instanceof InterruptedGameMessage && message.getType().equals(MessageType.ModelView)) {
+                    isConnected = false;
+                    endConnection();
                 }
-                currentMessage = message;
+
+                if (message instanceof GameInfoMessage){
+                    if (currentMessage != null && currentMessage.thread != null) {
+                        Thread.sleep(500);
+                        view.stopClearer();
+                        currentMessage.thread.interrupt();
+                    }
+                    currentMessage = (GameInfoMessage) message;
+                }
 
                 message.action(view);
             } catch (IOException | ClassNotFoundException e) {
-                isConnected=false;
-                view.printServerDown();
+                if (isConnected) {
+                    isConnected = false;
+                    view.printServerDown();
+                }
+
                 endConnection();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    public void setDisconnected(){
-        isConnected=false;
-    }
     public boolean connectionAlive() {
         return isConnected;
     }
@@ -75,12 +82,10 @@ public class ServerHandler implements NetworkHandler {
 
     public void endConnection() {
         try {
-            isConnected = false;
             socket.close();
-
+            isConnected = false;
         } catch (IOException e) {
         }
-        view.newGame();
     }
 
     public void send(GenericMessage message) {
@@ -90,8 +95,10 @@ public class ServerHandler implements NetworkHandler {
                 output.flush();
                 output.reset();
             } catch (IOException e) {
-                isConnected=false;
-                view.printServerDown();
+                if (isConnected) {
+                    isConnected = false;
+                    view.printServerDown();
+                }
 
                 endConnection();
             }

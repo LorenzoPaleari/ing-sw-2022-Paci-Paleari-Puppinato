@@ -24,12 +24,18 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
     @Override
     public void action(View view) {
         this.view = view;
-        thread = new Thread(this);
-        thread.start();
+        if (!gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer())) {
+            thread = new Thread(this);
+            thread.start();
+        } else {
+            view.printGameBoard(gameInfo);
+            view.choseAction();
+        }
     }
 
     public void run(){
         view.printGameBoard(gameInfo);
+        view.bufferClearer();
     }
 
     @Override
@@ -40,11 +46,6 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
-    }
-
-    @Override
-    public Thread getThread() {
-        return thread;
     }
 
     @Override
