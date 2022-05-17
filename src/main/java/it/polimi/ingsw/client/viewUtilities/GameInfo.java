@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Professor;
+import it.polimi.ingsw.model.player.Assistant;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
@@ -24,6 +25,8 @@ public class GameInfo implements Serializable {
     private Integer[] entranceStudents;
     private String[] professors;
     private int[] boardTower;
+    private Integer[] assistants;
+    private int[] lastUsed;
 
     private Integer[] islandStudents;
     private int[] islandTowers;
@@ -40,8 +43,8 @@ public class GameInfo implements Serializable {
             players[i][1] = String.valueOf(game.getPlayers().get(i).getTowerColor());
         }
 
-        playersInfo[0] = playerPosition(game.getRound().getTurn().getCurrentPlayer().getNickname(), game.getPlayers());
-        playersInfo[1] = playerPosition(frontPlayer, game.getPlayers());
+        playersInfo[0] = playerPosition(game.getRound().getTurn().getCurrentPlayer().getNickname());
+        playersInfo[1] = playerPosition(frontPlayer);
         motherNaturePosition = game.getTable().getMotherPosition();
 
         remainingMoves = game.getRound().getTurn().getRemainingMovements();
@@ -51,6 +54,7 @@ public class GameInfo implements Serializable {
 
         List<Integer> tempListEntrance = new ArrayList<>();
         List<Integer> tempListDining = new ArrayList<>();
+        List<Integer> tempAssistant = new ArrayList<>();
         int index = 0;
         for(Player p : game.getPlayers()){
             tempListEntrance.addAll(index*5, Arrays.asList(p.getBoard().getEntrance().countAll()));
@@ -59,11 +63,16 @@ public class GameInfo implements Serializable {
                 professors[prof.getColor().getIndex()] = p.getNickname();
             }
             boardTower[index] = p.getBoard().getTowerCourt().getTower().size();
+            lastUsed[index] = p.getLastUsed().getWeight();
+            if (p.getNickname().equals(getFrontPlayer()))
+                for (Assistant a : p.getDeck().getAssistant())
+                    tempAssistant.add(a.getWeight());
 
             index++;
         }
         entranceStudents = tempListEntrance.toArray(entranceStudents);
         diningStudents = tempListDining.toArray(diningStudents);
+        assistants = tempAssistant.toArray(assistants);
 
         List<Integer> tempIslandList = new ArrayList<>();
         index = 0;
@@ -99,6 +108,7 @@ public class GameInfo implements Serializable {
         entranceStudents = new Integer[5*numPlayer];
         boardTower = new int[numPlayer];
         professors = new String[] {"","","","",""};
+        lastUsed = new int[3];
 
         islandStudents = new Integer[numIsland * 5];
         islandTowers = new int [numIsland];
@@ -110,11 +120,9 @@ public class GameInfo implements Serializable {
         }
     }
 
-    private int playerPosition(String nickname, List<Player> players){
-        int index = 0;
-
-        for (Player p : players){
-            if (p.getNickname().equals(nickname))
+    private int playerPosition(String nickname){
+        for (int index = 0; index < numberOfPlayer; index++ ){
+            if (players[index][0].equals(nickname))
                 return index;
 
             index++;
@@ -234,5 +242,13 @@ public class GameInfo implements Serializable {
                 colors[i] = 1;
 
         return colors;
+    }
+
+    public int[] getLastUsed(String nickName){
+        return lastUsed;
+    }
+
+    public Integer[] getAssistants(){
+        return assistants;
     }
 }
