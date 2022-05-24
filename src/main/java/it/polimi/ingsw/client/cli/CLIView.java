@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -339,11 +340,11 @@ public class CLIView implements View {
         int code = Integer.parseInt(scanner.nextLine());
         switch (code) {
             case 1:
-                correctCloud();
+                correctAssistant();
                 break;
             case 2:
-                int endPosition=correctIslandInput();
-                serverHandler.moveMotherNatureRequest(endPosition);
+                PawnColor color2 = getColor(correctEntranceColor(1).get(0));
+                serverHandler.moveToDiningRoomRequest(color2);
                 break;
             case 3:
                 int islandPosition=correctIslandInput();
@@ -351,15 +352,22 @@ public class CLIView implements View {
                 serverHandler.moveStudentToIslandRequest(islandPosition, color);
                 break;
             case 4:
-                PawnColor color2 = getColor(correctEntranceColor(1).get(0));
-                serverHandler.moveToDiningRoomRequest(color2);
+                int endPosition=correctIslandInput();
+                serverHandler.moveMotherNatureRequest(endPosition);
                 break;
             case 5:
-                correctAssistant();
+                printCharacterDescription();
+                choseAction();
                 break;
             case 6:
                 correctCharacter();
-            }
+                break;
+            case 7:
+                correctCloud();
+                break;
+            default:
+                choseAction();
+        }
     }
 
     @Override
@@ -433,6 +441,11 @@ public class CLIView implements View {
         System.out.print(AnsiGraphics.createMenu());
         System.out.print(AnsiGraphics.setTitle("GAME ENDED"));
         System.out.print(AnsiGraphics.putText(" > Server Unreachable.", true, true));
+    }
+
+    private void printCharacterDescription(){
+        for(int i=1;i<4; i++)
+            System.out.println("Character "+i+" is: "+gameInfo.getCharacter(i-1).getText().toString() + ", " + gameInfo.getCharacter(i-1).getDescription().toString());
     }
 
     private int correctIslandInput(){
@@ -515,12 +528,12 @@ public class CLIView implements View {
     private void correctAssistant() {
         boolean correct=false;
         do {
-            System.out.print("Insert the position of the assistant card you want to use: ");
+            System.out.print("Insert the number of the assistant card you want to use: ");
             String strAssistant = scanner.nextLine();
             if (strAssistant.matches("\\d+")) {
-                int position = Integer.parseInt(strAssistant);
-                if (position > 0 && position <= 10) {
-                    serverHandler.useAssistantRequest(position-1);
+                int weight = Integer.parseInt(strAssistant);
+                if (Arrays.asList(gameInfo.getAssistants()).contains(weight)) {
+                    serverHandler.useAssistantRequest(weight);
                     correct = true;
                 } else System.out.println("Invalid Assistant Choice \n");
             } else
