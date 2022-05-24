@@ -14,7 +14,7 @@ public class Player {
     private Board board;
     private Deck deck;
     private PlayerState state;
-    private Assistant lastUsed;
+    private Assistant lastUsed = null;
     private int numCoin;
     private ModelListener modelListener=null;
 

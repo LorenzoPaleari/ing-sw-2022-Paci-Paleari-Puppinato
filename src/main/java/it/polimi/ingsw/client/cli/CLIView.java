@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -268,13 +269,17 @@ public class CLIView implements View {
     @Override
     public synchronized void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
         boolean valid=false;
+        String colorText;
         TowerColor color = null;
         System.out.print(AnsiGraphics.setTitle("COLOR SELECTION"));
         if(tower.size() == 1){
             color = tower.get(0);
+            colorText = tower.get(0).getText();
+            if (colorText.equals("BLACK"))
+                colorText = "BLUE";
             if (requestAgain)
                 System.out.print(AnsiGraphics.putText("  > All color has already been assigned", true, true));
-            System.out.print(AnsiGraphics.putText("  > Your color will be " + tower.get(0), true, false));
+            System.out.print(AnsiGraphics.putText("  > Your color will be " + colorText, true, false));
             synchronized (this){
                 try{
                     this.wait(3000);
@@ -285,16 +290,23 @@ public class CLIView implements View {
         else {
             StringBuilder string = new StringBuilder();
             string.append(" > Insert a color ");
-            for (TowerColor t : tower)
-                string.append(t.toString()).append(" ");
+            for (TowerColor t : tower) {
+                if (t.equals(TowerColor.BLACK))
+                    string.append("BLUE ");
+                else
+                    string.append(t).append(" ");
+            }
             System.out.print(AnsiGraphics.putText(string.toString(), false, true));
             if (requestAgain)
                 System.out.print(AnsiGraphics.putText("  > The previous color was already taken", true, false));
             do {
                 String colorString = scanner.nextLine().toUpperCase();
-                if (tower.contains(TowerColor.getColor(colorString))) {
+                if (!colorString.equalsIgnoreCase("BLACK") && (tower.contains(TowerColor.getColor(colorString)) || colorString.equalsIgnoreCase("BLUE"))) {
                     valid = true;
-                    color = TowerColor.getColor(colorString);
+                    if (colorString.equals("BLUE"))
+                        color = TowerColor.BLACK;
+                    else
+                        color = TowerColor.getColor(colorString);
                 } else {
                     System.out.print(AnsiGraphics.putText("  > You inserted a wrong color, try again", true, false));
                 }
@@ -311,8 +323,8 @@ public class CLIView implements View {
     @Override
     public void printGameBoard(GameInfo gameInfo){
         this.gameInfo = gameInfo;
-        System.out.print("\n"+AnsiGraphics.CLEAR);
-        System.out.print("Sto funzionando");
+        System.out.print("\n\n\n"+AnsiGraphics.CLEAR);
+        System.out.print(AnsiGraphics.createGame(gameInfo));
     }
 
     public void bufferClearer() {
@@ -335,39 +347,49 @@ public class CLIView implements View {
 
     @Override
     public synchronized void choseAction(){
-        System.out.println();
-        System.out.print("Insert a command: ");
-        int code = Integer.parseInt(scanner.nextLine());
-        switch (code) {
-            case 1:
-                correctAssistant();
-                break;
-            case 2:
-                PawnColor color2 = getColor(correctEntranceColor(1).get(0));
-                serverHandler.moveToDiningRoomRequest(color2);
-                break;
-            case 3:
-                int islandPosition=correctIslandInput();
-                PawnColor color = getColor(correctEntranceColor(1).get(0));
-                serverHandler.moveStudentToIslandRequest(islandPosition, color);
-                break;
-            case 4:
-                int endPosition=correctIslandInput();
-                serverHandler.moveMotherNatureRequest(endPosition);
-                break;
-            case 5:
-                printCharacterDescription();
-                choseAction();
-                break;
-            case 6:
-                correctCharacter();
-                break;
-            case 7:
-                correctCloud();
-                break;
-            default:
-                choseAction();
-        }
+        boolean valid;
+        int action;
+        do {
+            valid = true;
+            System.out.print("Insert a command: ");
+            String code = scanner.nextLine();
+            action = 0;
+            if (code.matches("\\d+"))
+                action = Integer.parseInt(code);
+            else
+                System.out.println("You must insert a number");
+
+            switch (action) {
+                case 1:
+                    correctAssistant();
+                    break;
+                case 2:
+                    PawnColor color2 = getColor(correctEntranceColor(1).get(0));
+                    serverHandler.moveToDiningRoomRequest(color2);
+                    break;
+                case 3:
+                    int islandPosition = correctIslandInput();
+                    PawnColor color = getColor(correctEntranceColor(1).get(0));
+                    serverHandler.moveStudentToIslandRequest(islandPosition, color);
+                    break;
+                case 4:
+                    int endPosition = correctIslandInput();
+                    serverHandler.moveMotherNatureRequest(endPosition);
+                    break;
+                case 5:
+                    printCharacterDescription();
+                    valid = false;
+                    break;
+                case 6:
+                    correctCharacter();
+                    break;
+                case 7:
+                    correctCloud();
+                    break;
+                default:
+                    valid = false;
+            }
+        }while (!valid);
     }
 
     @Override
@@ -465,6 +487,7 @@ public class CLIView implements View {
         } while (!correct);
         return islandPosition-1;
     }
+
     private List<Integer> correctEntranceColor(int maxRequest){
         int correct=0;
         List<Integer> colors= new ArrayList<>();
@@ -533,7 +556,7 @@ public class CLIView implements View {
             if (strAssistant.matches("\\d+")) {
                 int weight = Integer.parseInt(strAssistant);
                 if (Arrays.asList(gameInfo.getAssistants()).contains(weight)) {
-                    serverHandler.useAssistantRequest(weight);
+                    serverHandler.useAssistantRequest(weight-1);
                     correct = true;
                 } else System.out.println("Invalid Assistant Choice \n");
             } else
