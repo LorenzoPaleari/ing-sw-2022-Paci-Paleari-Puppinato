@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.board;
 
+import it.polimi.ingsw.listeners.ModelListener;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 
@@ -8,9 +9,12 @@ import java.util.List;
 
 public class DiningRoom {
     private LinkedList<Student> student;
+    private ModelListener modelListener;
+    private boolean listen;
 
     public DiningRoom() {
         student = new LinkedList<>();
+        listen = false;
     }
 
     public LinkedList<Student> getStudent() {
@@ -31,6 +35,7 @@ public class DiningRoom {
     }
     public void addStudent(Student s){
         student.addLast(s);
+        notifyView();
     }
 
     public void addStudent(List<Student> s){
@@ -70,4 +75,15 @@ public class DiningRoom {
 
         return colorsCount;
     }
+
+    public void attach(ModelListener modelListener){this.modelListener=modelListener;
+    listen = true;}
+    public void notifyView() {
+        if (listen)
+            modelListener.update();
+    }
+    public void detach(){
+        listen=false;
+    }
+    public void reattach(){listen = true;}
 }

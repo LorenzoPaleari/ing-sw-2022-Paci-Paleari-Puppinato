@@ -108,13 +108,14 @@ public class VirtualView {
         for (ClientHandler c : clientHandlers)
             if (!nickname.equals(c.getPlayerNickname()) && c.connectionAlive()) {
                 c.printInterrupt(nickname, false);
-                c.setDisconnected();
         }
     }
 
     public void printWinner(String winner1, String winner2){
-        for (ClientHandler c : clientHandlers)
+        for (ClientHandler c : clientHandlers) {
             c.printWinner(winner1, winner2, c.getPlayerNickname());
+            c.setDisconnected();
+        }
     }
 
 }

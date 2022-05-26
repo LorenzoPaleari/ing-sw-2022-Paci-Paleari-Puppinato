@@ -12,7 +12,6 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -381,7 +380,8 @@ public class CLIView implements View {
                     valid = false;
                     break;
                 case 6:
-                    correctCharacter();
+                    if (!correctCharacter())
+                        valid = false;
                     break;
                 case 7:
                     correctCloud();
@@ -395,7 +395,7 @@ public class CLIView implements View {
     @Override
     public void printError(ClientException exception){
         if (exception.getErrorType().equals(ErrorType.NOT_ENOUGH_MONEY))
-            System.out.println(exception.getErrorType().getErrorText() + exception.getPrice());
+            System.out.println(exception.getErrorType().getErrorText() + exception.getPrice() + ")");
         else if (exception.getErrorType().equals(ErrorType.MAX_STUDENT_REACHED))
             System.out.println(exception.getErrorType().getErrorText() + exception.getPawnColor());
         else
@@ -405,19 +405,23 @@ public class CLIView implements View {
 
     @Override
     public void printWinner(String winner1, String winner2, String nickname) {
+        serverHandler.endConnection();
         if(winner2==null){
             if(winner1.equals(nickname))
-                System.out.println("You have won");
+                System.out.print(AnsiGraphics.finalMessages("you have won!!!"));
             else
-                System.out.println(winner1+" has won");
+                System.out.print(AnsiGraphics.finalMessages(winner1+" has won"));
         }
-        else
+        else{
             if(winner1.equals(nickname))
-                System.out.println("It's a draw! You and " +winner2+ " have won the game");
+                System.out.print(AnsiGraphics.finalMessages("It's a draw! You and " +winner2+ " have won the game"));
             else if(winner2.equals(nickname))
-                System.out.println("It's a draw! You and " +winner1+ " have won the game");
+                System.out.print(AnsiGraphics.finalMessages("It's a draw! You and " +winner1+ " have won the game"));
             else
-                System.out.println("It's a draw! "+ winner1 +" and " +winner2+ " have won the game");
+                System.out.print(AnsiGraphics.finalMessages("It's a draw! "+ winner1 +" and " +winner2+ " have won the game"));
+        }
+        scanner.nextLine();
+        newGame("");
     }
 
     @Override
@@ -432,9 +436,6 @@ public class CLIView implements View {
             }
             serverHandler.refreshLobbies();
         }else{
-            System.out.print(AnsiGraphics.getTitle()+ "\n");
-            System.out.print(AnsiGraphics.createMenu());
-            System.out.print(AnsiGraphics.setTitle("GAME ENDED"));
             newGame(nickname);
         }
     }
@@ -443,8 +444,12 @@ public class CLIView implements View {
     public void newGame(String nickname) {
         boolean valid2;
 
+        System.out.print(AnsiGraphics.getTitle()+ "\n");
+        System.out.print(AnsiGraphics.createMenu());
+        System.out.print(AnsiGraphics.setTitle("GAME ENDED"));
         System.out.print(AnsiGraphics.putText(" > Would you like to start a new game? [Yes/No]", false, true));
-        System.out.print(AnsiGraphics.putText("  > The game was interrupted, " + nickname + " disconnected from the server.", true, false));
+        if (!nickname.equals(""))
+            System.out.print(AnsiGraphics.putText("  > The game was interrupted, " + nickname + " disconnected from the server.", true, false));
         do {
             valid2 = true;
             String expertString = scanner.nextLine();
@@ -466,8 +471,12 @@ public class CLIView implements View {
     }
 
     private void printCharacterDescription(){
+        if (!gameInfo.isExpertMode()){
+            System.out.println("You can do that only in expert mode");
+            return;
+        }
         for(int i=1;i<4; i++)
-            System.out.println("Character "+i+" is: "+gameInfo.getCharacter(i-1).getText().toString() + ", " + gameInfo.getCharacter(i-1).getDescription().toString());
+            System.out.println("Character "+i+" is: "+ gameInfo.getCharacter(i-1).getText() + ", " + gameInfo.getCharacter(i-1).getDescription());
     }
 
     private int correctIslandInput(){
@@ -533,7 +542,7 @@ public class CLIView implements View {
         List<Integer> colors= new ArrayList<>();
         int [] color = {0,0,0,0,0};
         do{
-            System.out.print("Insert the color of a student you want to move from the entrance: ");
+            System.out.print("Insert the color of a student you want to move from the dining: ");
             String colorString = scanner.nextLine();
             if (lookup(colorString) == null)
                 System.out.print("This is not a valid color \n");
@@ -556,7 +565,7 @@ public class CLIView implements View {
             if (strAssistant.matches("\\d+")) {
                 int weight = Integer.parseInt(strAssistant);
                 if (Arrays.asList(gameInfo.getAssistants()).contains(weight)) {
-                    serverHandler.useAssistantRequest(weight-1);
+                    serverHandler.useAssistantRequest(Arrays.asList(gameInfo.getAssistants()).indexOf(weight));
                     correct = true;
                 } else System.out.println("Invalid Assistant Choice \n");
             } else
@@ -582,8 +591,12 @@ public class CLIView implements View {
         } while (!correct);
     }
 
-    private void correctCharacter(){
+    private boolean correctCharacter(){
         boolean valid=false;
+        if (!gameInfo.isExpertMode()){
+            System.out.println("You can do that only in expert mode");
+            return false;
+        }
         do {
             System.out.print("Insert the position of the character card you want to use: ");
             String strCharacter = scanner.nextLine();
@@ -592,11 +605,11 @@ public class CLIView implements View {
                 if(position>0 && position<=3) {
                     position--;
                     CharacterType type = gameInfo.getCharacter(position);
-                    if (type == CharacterType.CENTAUR || type == CharacterType.KNIGHT || type == CharacterType.MAGIC_DELIVERY_MAN || type == CharacterType.FARMER) {
+                    if (type == CharacterType.CENTAUR || type == CharacterType.KNIGHT || type == CharacterType.MAGIC_DELIVERY_MAN || type == CharacterType.FARMER)
                         serverHandler.useCharacterRequest(position);
-                    } else if (type == CharacterType.HERALD || type == CharacterType.GRANDMOTHER_HERBS) {
+                    else if (type == CharacterType.HERALD || type == CharacterType.GRANDMOTHER_HERBS)
                         serverHandler.useCharacterRequest(correctIslandInput(), position);
-                    } else if (type == CharacterType.SPOILED_PRINCESS || type == CharacterType.THIEF || type == CharacterType.MUSHROOM_HUNTER) {
+                    else if (type == CharacterType.SPOILED_PRINCESS || type == CharacterType.THIEF || type == CharacterType.MUSHROOM_HUNTER) {
                         if (type == CharacterType.SPOILED_PRINCESS) {
                             serverHandler.useCharacterRequest(getColor(correctCharacterColor(position,1).get(0)), position);
                         } else {
@@ -641,5 +654,6 @@ public class CLIView implements View {
             } else
                 System.out.println("Invalid Choice \n");
         }while(!valid);
+        return true;
     }
 }

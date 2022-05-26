@@ -35,6 +35,7 @@ public class GameInfo implements Serializable {
     private Integer[] cloudStudents;
 
     private CharacterType[] character;
+    private int[] characterCost;
     private boolean expertMode;
     private int[] playersCoin;
     private Integer[][] characterInfo; //The first 5 are the eventual student, the sixth is the number of NoEntryTiles
@@ -110,6 +111,7 @@ public class GameInfo implements Serializable {
         if (game.isExpertMode()){
             for(int i = 0; i < 3; i++) {
                 character[i] = game.getTable().getCharacter(i).getType();
+                characterCost[i] = game.getTable().getCharacter(i).getPrice();
                 characterInfo[i][5] = game.getTable().getCharacter(i).getNumNoEntryTiles();
                 for (PawnColor pawnColor : PawnColor.values())
                     characterInfo[i][pawnColor.getIndex()] = game.getTable().getCharacter(i).count(pawnColor);
@@ -139,6 +141,7 @@ public class GameInfo implements Serializable {
         if (expertMode) {
             character = new CharacterType[3];
             characterInfo = new Integer[3][6];
+            characterCost = new int[3];
         }
     }
 
@@ -173,6 +176,10 @@ public class GameInfo implements Serializable {
 
     public Integer [] getCharacterInfo(int position){
         return characterInfo [position];
+    }
+
+    public int getCharacterCost(int number) {
+        return characterCost[number];
     }
 
     public String[] getPlayersName(){

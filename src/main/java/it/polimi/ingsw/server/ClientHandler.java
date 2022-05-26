@@ -144,6 +144,8 @@ public class ClientHandler extends Thread implements NetworkHandler{
 
     public void setDisconnected() {
         isConnected = false;
+        lobbyHandler.terminateLobby(virtualView, this);
+        endConnection();
     }
 
     public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}

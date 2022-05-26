@@ -73,31 +73,34 @@ public class TableHandler {
 
         game.getTable().moveMotherNature(numMoves);
 
-        updateIsland(game.getTable().getIsland(game.getTable().getMotherPosition()));
-
-        player.changeState(PlayerState.ENDTURN);
+        if (!updateIsland(game.getTable().getIsland(game.getTable().getMotherPosition())))
+            player.changeState(PlayerState.ENDTURN);
     }
 
-    public void updateIsland(Island island){
+    public boolean updateIsland(Island island){
         if (island.isNoEntryTiles()){
             for (int i = 0; i < 3; i++)
                 if (game.getTable().getCharacter(i).getType().equals(CharacterType.GRANDMOTHER_HERBS)) {
                     game.getTable().getCharacter(i).returnNoEntryTiles();
                     island.setNoEntryTiles(false);
-                    return;
+                    return false;
                 }
         }
         else if(islandContext.conquerIsland(island , game)) {
             game.getTable().mergeIsland(game.getTable().getMotherPosition());
 
-            for (Player p : game.getPlayers()){
-                if (p.getBoard().getTowerCourt().isEmpty())
+            for (Player p : game.getPlayers())
+                if (p.getBoard().getTowerCourt().isEmpty()) {
                     winner();
-            }
+                    return true;
+                }
 
-            if(game.getTable().getNumIsland() <= 3)
+            if(game.getTable().getNumIsland() <= 3) {
                 winner();
+                return true;
+            }
         }
+        return false;
     }
 
     public void chooseCloud(Player player, int position){
@@ -121,8 +124,10 @@ public class TableHandler {
         game.getRound().getTurn().setUsedCharacter(false);
 
         if (!game.getRound().nextActionTurn()){
-            if (game.getRound().getLastRound().equals(true))
+            if (game.getRound().getLastRound().equals(true)) {
                 winner();
+                return;
+            }
 
             try {
                 List<Student> students = table.getBag().withdrawStudent(game.getNumPlayer() * (game.getNumPlayer() + 1));

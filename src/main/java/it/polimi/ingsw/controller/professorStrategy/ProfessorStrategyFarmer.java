@@ -11,7 +11,7 @@ public class ProfessorStrategyFarmer implements ProfessorStrategy {
         Professor prof = game.getTable().findProfessor(color);
         Board playerBoard = player.getBoard();
 
-        if (playerBoard.getDiningRoom().count(color) >= prof.getNumStudent()){
+        if (playerBoard.getDiningRoom().count(color)+1 >= prof.getNumStudent()){
             for (Player p : game.getPlayers()){
                 p.getBoard().getProfessorTable().removeProfessor(prof);
             }

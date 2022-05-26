@@ -48,26 +48,33 @@ public class ServerHandler implements NetworkHandler {
                     endConnection();
                 }
 
+                stopBufferClearer();
+
                 if (message instanceof GameInfoMessage){
-                    if (currentMessage != null && currentMessage.thread != null) {
-                        Thread.sleep(500);
-                        view.stopClearer();
-                        currentMessage.thread.interrupt();
-                    }
                     currentMessage = (GameInfoMessage) message;
                 }
 
                 message.action(view);
             } catch (IOException | ClassNotFoundException e) {
                 if (isConnected) {
-                    isConnected = false;
                     view.printServerDown();
+                    isConnected = false;
                 }
 
                 endConnection();
+            }
+        }
+    }
+
+    private void stopBufferClearer() {
+        if (currentMessage != null && currentMessage.thread != null) {
+            try {
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            view.stopClearer();
+            currentMessage.thread.interrupt();
         }
     }
 
@@ -82,9 +89,10 @@ public class ServerHandler implements NetworkHandler {
 
     public void endConnection() {
         try {
-            socket.close();
             isConnected = false;
-        } catch (IOException e) {
+            stopBufferClearer();
+            socket.close();
+        } catch (IOException ignored) {
         }
     }
 

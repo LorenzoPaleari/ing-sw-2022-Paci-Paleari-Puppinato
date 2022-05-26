@@ -40,18 +40,18 @@ public class BoardHandler {
             return;
         }
 
-        Student student = board.getEntrance().removeStudent(color);
-        board.getDiningRoom().addStudent(student);
-
         checkProfessor(player, color);
 
-        if (game.isExpertMode() && board.getDiningRoom().count(color) % 3 == 0) {
+        if (game.isExpertMode() && (board.getDiningRoom().count(color) + 1) % 3 == 0) {
             try {
                 game.getTable().withdrawCoin();
                 player.addCoin();
             } catch (GeneralSupplyFinishedException ignored){
             }
         }
+
+        Student student = board.getEntrance().removeStudent(color);
+        board.getDiningRoom().addStudent(student);
     }
 
     public void checkProfessor(Player player, PawnColor color){

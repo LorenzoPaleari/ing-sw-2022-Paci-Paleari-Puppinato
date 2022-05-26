@@ -24,7 +24,6 @@ public class ProfessorTable {
 
     public void addProfessor(Professor p){
         professors.addLast(p);
-        notifyView();
     }
 
     public Professor find(PawnColor color){
@@ -33,10 +32,5 @@ public class ProfessorTable {
                 return p;
             }
         return null;
-    }
-    public void attach(ModelListener modelListener){this.modelListener=modelListener;}
-    public void notifyView() {
-        if (modelListener != null)
-            modelListener.update();
     }
 }

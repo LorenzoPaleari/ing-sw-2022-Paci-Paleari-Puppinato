@@ -66,7 +66,6 @@ public class Player {
 
     public void addCoin() {
         numCoin += 1;
-        notifyView();
     }
 
     public void changeState(PlayerState state)
@@ -84,8 +83,5 @@ public class Player {
     public void notifyView() {
         if (modelListener != null)
             modelListener.update();
-    }
-    public void detach(){
-        modelListener=null;
     }
 }

@@ -11,17 +11,6 @@ import static org.fusesource.jansi.internal.Kernel32.*;
 public enum AnsiGraphics
 {
     ANSI_RESET ("\u001B[m"),
-
-    ANSI_WHITE("\u001B[37m"),
-    ANSI_RED("\u001B[31m"),
-    ANSI_GREEN("\u001B[32m"),
-    ANSI_YELLOW("\u001B[33m"),
-    ANSI_BLUE("\u001B[34m"),
-    ANSI_PURPLE("\u001B[35m"),
-    ANSI_CYAN("\u001B[36m"),
-
-    ANSI_BLACK("\u001b[30m"),
-
     ANSI_BRIGHT_WHITE("\u001B[97m"),
     ANSI_BRIGHT_RED("\u001B[91m"),
     ANSI_BRIGHT_GREEN("\u001B[92m"),
@@ -31,15 +20,6 @@ public enum AnsiGraphics
     ANSI_BRIGHT_CYAN("\u001B[96m"),
     ANSI_BRIGHT_GREY("\u001b[90m"),
     ANSI_BRIGHT_ORANGE("\u001b[38;5;208m"),
-
-    ANSI_BG_WHITE("\u001B[47m"),
-    ANSI_BG_RED("\u001B[41m"),
-    ANSI_BG_GREEN("\u001b[42m"),
-    ANSI_BG_YELLOW("\u001B[43m"),
-    ANSI_BG_BLUE("\u001B[44m"),
-    ANSI_BG_PURPLE("\u001B[45m"),
-    ANSI_BG_CYAN("\u001B[46m"),
-
     STUDENT("\u25CF"),
     PROFESSOR("\u265B"),
     MOTHER_NATURE("\u058E"),
@@ -61,8 +41,6 @@ public enum AnsiGraphics
     SINGLE_UPRIGHT_ANGLE("\u256E"),
     DOUBLE_H_SINGLE_V_UP("\u2564"),
     DOUBLE_H_SINGLE_V_DOWN("\u2567"),
-    //SINGLE_H_SINGLE_V_UP("\u252C"),
-    //SINGLE_H_SINGLE_V_DOWN("\u2534"),
     SINGLE_V_SINGLE_H_LEFT("\u251C"),
     SINGLE_V_SINGLE_H_RIGHT("\u2524"),
     SINGLE_DIAGONAL_POSITIVE("\u2571"),
@@ -117,7 +95,7 @@ public enum AnsiGraphics
         if (height >= 18)
             downShift = height/3 - 5;
 
-        System.out.print(CLEAR +""+RESET);
+        System.out.print(setPosition(300, 800) + CLEAR +""+RESET);
         String center[] = new String[6];
         for (int i = 0; i < 5; i++)
             center[i] = "\u001b["+(downShift + i)+";"+rightShift+"H";
@@ -248,7 +226,7 @@ public enum AnsiGraphics
 
         if (gameInfo.isExpertMode())
             for (int i = 0; i < 3; i++)
-                game.append(character(7+i*10, 18+leftOffside, gameInfo.getCharacter(i).getPrice(), gameInfo.getCharacterInfo(i), i+1));
+                game.append(character(7+i*10, 18+leftOffside, gameInfo.getCharacterCost(i), gameInfo.getCharacterInfo(i), i+1));
         game.append(islands(gameInfo, 12, 37+leftOffside));
         for (int i = 0; i < gameInfo.getNumPlayer(); i++)
             game.append(cloud(gameInfo, 16, leftOffside+54+i*15+ (gameInfo.getNumPlayer()+1)%2*8,i));
@@ -275,16 +253,16 @@ public enum AnsiGraphics
         if (gameInfo.getFrontPlayer().equals(gameInfo.getCurrentPlayer()))
             turn = "YOUR";
         game.append(setPosition(42, 12+leftOffside)).append(colored(0, "IT'S "+turn+" TURN!"));
-        game.append(setPosition(44, 7+leftOffside)).append(colored(0, "STUDENT MOVES REMAINING: "+ gameInfo.getRemainingMoves()));
+        game.append(setPosition(44, 11+leftOffside)).append(colored(0, "MOVABLE STUDENTS: "+ gameInfo.getRemainingMoves()));
 
-        game.append(setPosition(38, 124+leftOffside)).append(colored(4, "COMMAND INFO"));
-        game.append(setPosition(40, 124+leftOffside)).append(colored(4, "1: Assistant Selection"));
-        game.append(setPosition(41, 124+leftOffside)).append(colored(4, "2: Move student to dining"));
-        game.append(setPosition(42, 124+leftOffside)).append(colored(4, "3: Move student to island"));
-        game.append(setPosition(43, 124+leftOffside)).append(colored(4, "4: Move mother nature"));
-        game.append(setPosition(44, 124+leftOffside)).append(colored(4, "5: Character infos"));
-        game.append(setPosition(45, 124+leftOffside)).append(colored(4, "6: Character selection"));
-        game.append(setPosition(46, 124+leftOffside)).append(colored(4, "7: Cloud selection"));
+        game.append(setPosition(39, 124+leftOffside)).append(colored(4, "COMMAND INFO"));
+        game.append(setPosition(41, 124+leftOffside)).append(colored(4, "1: Assistant Selection"));
+        game.append(setPosition(42, 124+leftOffside)).append(colored(4, "2: Move student to dining"));
+        game.append(setPosition(43, 124+leftOffside)).append(colored(4, "3: Move student to island"));
+        game.append(setPosition(44, 124+leftOffside)).append(colored(4, "4: Move mother nature"));
+        game.append(setPosition(45, 124+leftOffside)).append(colored(4, "5: Character infos (Expert mode)"));
+        game.append(setPosition(46, 124+leftOffside)).append(colored(4, "6: Character selection (Expert mode)"));
+        game.append(setPosition(47, 124+leftOffside)).append(colored(4, "7: Cloud selection"));
 
         game.append(setPosition(49,0));
         return game.toString();
@@ -311,7 +289,7 @@ public enum AnsiGraphics
         int color;
         for (int i = 0; i < 5; i++)
             if (gameInfo.getProfessors()[i] == 0)
-                islands.append(setPosition(vPosition+2, hPosition+35+i*2)).append(colored(i, PROFESSOR.escape));
+                islands.append(setPosition(vPosition+2, hPosition+33+i*3)).append(colored(i, PROFESSOR.escape));
         for (int i = 0; i < gameInfo.getNumIsland(); i++){
             color = gameInfo.getTowersOnIsland(i);
             if (gameInfo.getIslandSize(i) == 1) {
@@ -511,17 +489,18 @@ public enum AnsiGraphics
         structure.append(setPosition(vPosition+5, hPosition+3)).append(number+1);
         if (color!=-1)
             structure.append(setPosition(vPosition+5, hPosition+9)).append(colored(color ,TOWER.escape));
-        if (number == gameInfo.getMotherNaturePosition())
-            structure.append(setPosition(vPosition+5, hPosition+6)).append(colored(8, MOTHER_NATURE.escape));
         int index = 0;
-        if (stud)
+        if (stud) {
+            if (number == gameInfo.getMotherNaturePosition())
+                structure.append(setPosition(vPosition+5, hPosition+6)).append(colored(8, MOTHER_NATURE.escape));
             if (gameInfo.hasNoEntryTile(number))
-                structure.append(setPosition(vPosition+5, hPosition+6)).append(NO_ENTRY_TILE);
-           for (Integer student : gameInfo.getStudentsOnIsland(number)) {
-               if (student != 0)
-                   structure.append(setPosition(vPosition+2 + index/2 - index/4, hPosition+3+index*3 - index/2*6 + index/4*6)).append(student).append(colored(index, STUDENT.escape));
-               index++;
-           }
+                structure.append(setPosition(vPosition + 5, hPosition + 6)).append(NO_ENTRY_TILE);
+            for (Integer student : gameInfo.getStudentsOnIsland(number)) {
+                if (student != 0)
+                    structure.append(setPosition(vPosition + 2 + index / 2 - index / 4, hPosition + 3 + index * 3 - index / 2 * 6 + index / 4 * 6)).append(student).append(colored(index, STUDENT.escape));
+                index++;
+            }
+        }
         return structure;
     }
     private static StringBuilder perimeter(int vPosition, int hPosition, int length, int height, String graphicType){
@@ -582,6 +561,9 @@ public enum AnsiGraphics
             line.append(SINGLE_HORIZONTAL_LINE);
         }
         return line.append(setPosition(vPosition, horizontal)).append(getAnsiCharacter("SINGLE", "v_single_H_right"));
+    }
+    public static String finalMessages(String text){
+        return setPosition(23, width/2 - text.length()/2) + colored(1, text.toUpperCase()) + setPosition(24, width/2 - 23/2) + colored(1, "PRESS ENTER TO CONTINUE");
     }
 
     private static String setPosition(int v, int h){

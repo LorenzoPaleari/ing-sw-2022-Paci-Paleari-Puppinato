@@ -57,7 +57,9 @@ public class CharacterGroupStudent extends Character{
 
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException {
+        player.getBoard().getDiningRoom().detach();
         player.getBoard().getDiningRoom().addStudent(removeStudent(color)); //add_student_dining
+        player.getBoard().getDiningRoom().reattach();
         Object[] objects = new Object[2];
         objects[0] = player;
         objects[1] = color;

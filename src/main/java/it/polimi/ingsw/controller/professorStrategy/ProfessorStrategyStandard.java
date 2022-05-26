@@ -11,8 +11,8 @@ public class ProfessorStrategyStandard implements ProfessorStrategy {
         Professor prof = game.getTable().findProfessor(color);
         Board playerBoard = player.getBoard();
 
-        if (playerBoard.getDiningRoom().count(color) > prof.getNumStudent()){
-            prof.setNumStudent(playerBoard.getDiningRoom().count(color));
+        if (playerBoard.getDiningRoom().count(color)+1 > prof.getNumStudent()){
+            prof.setNumStudent(playerBoard.getDiningRoom().count(color)+1);
             for (Player p : game.getPlayers()){
                 p.getBoard().getProfessorTable().removeProfessor(prof);
             }

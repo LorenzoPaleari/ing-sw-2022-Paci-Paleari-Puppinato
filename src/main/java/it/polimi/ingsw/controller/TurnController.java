@@ -16,7 +16,9 @@ public class TurnController {
         if(game.getRound().getTurn().isUsedCharacter())
             throw new ClientException(ErrorType.ALREADY_USED_CHARACTER);
 
-        checkPermission(game.getRound().getTurn(), player, PlayerState.ACTION);
+        checkCorrectTurn(game.getRound().getTurn(), player);
+        if (player.getState().equals(PlayerState.PLANNING))
+            throw new ClientException(ErrorType.WRONG_PHASE);
 
         enoughMoney(player, costo);
 

@@ -188,9 +188,9 @@ public class Controller {
     }
 
     public void useCharacter(Player player, int characterPosition, int[] colors){
-        player.detach();
+        player.getBoard().getDiningRoom().detach();
         characterHandler.useCharacter(player, characterPosition, colors);
-        player.attach(modelListener);
+        player.getBoard().getDiningRoom().reattach();
     }
 
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
@@ -227,7 +227,7 @@ public class Controller {
             }
             for (Player p : game.getPlayers()) {
                 p.attach(modelListener);
-                p.getBoard().getProfessorTable().attach(modelListener);
+                p.getBoard().getDiningRoom().attach(modelListener);
             }
             game.getRound().getTurn().attach(modelListener);
 
