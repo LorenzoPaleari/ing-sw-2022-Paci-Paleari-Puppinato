@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DiningRoomTest{
     private DiningRoom diningRoom;
@@ -48,15 +48,15 @@ public class DiningRoomTest{
 
     @Test
     void isEmpty() {
-        assertEquals(true, diningRoom.isEmpty());
+        assertTrue(diningRoom.isEmpty());
         diningRoom.addStudent(new Student(0));
-        assertEquals(false, diningRoom.isEmpty());
+        assertFalse(diningRoom.isEmpty());
 
     }
 
     @Test
     void find() {
-        assertEquals(null, diningRoom.find(PawnColor.BLUE));
+        assertNull(diningRoom.find(PawnColor.BLUE));
         Student s = new Student(4);
         diningRoom.addStudent(s);
 
@@ -68,8 +68,13 @@ public class DiningRoomTest{
         assertEquals(0, diningRoom.count(PawnColor.BLUE));
         diningRoom.addStudent(new Student(4));
         diningRoom.addStudent(new Student(4));
-        assertEquals(2, diningRoom.count(PawnColor.BLUE));
+        diningRoom.addStudent(new Student(0));
+        diningRoom.addStudent(new Student(1));
+        diningRoom.addStudent(new Student(3));
+        diningRoom.addStudent(new Student(4));
+        int[] counting = {1,1,0,1,3};
+        for (int i = 0; i < 5; i++)
+            assertEquals(counting[i], diningRoom.countAll()[i]);
     }
-
 
 }

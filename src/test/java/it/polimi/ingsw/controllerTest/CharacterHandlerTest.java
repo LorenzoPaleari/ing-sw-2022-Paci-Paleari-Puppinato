@@ -108,9 +108,13 @@ public class CharacterHandlerTest {
                 p.addCoin();
         //Aggiungo abbastanza monete da poter usare i personaggi quante volte desidero
 
+        assertEquals(4, game.getTable().getCharacter(0).getNumNoEntryTiles());
+
         controller.useCharacter(player1, 0, 0);
         assertTrue(game.getTable().getIsland(0).isNoEntryTiles());
         assertEquals(3, game.getTable().getCharacter(0).getPrice());
+
+        assertEquals(3, game.getTable().getCharacter(0).getNumNoEntryTiles());
 
         //Esaurisco le carte NoEntryTiles
         game.getRound().nextActionTurn();
@@ -142,7 +146,7 @@ public class CharacterHandlerTest {
         towers.add(new Tower(TowerColor.WHITE));
         game.getRound().getTurn().resetRemainingMovements(0); //Forzo il movimento degli studenti
         controller.moveMotherNature(player1, 3);
-        //assertEquals(0, game.getTable().getMotherPosition()); //Non si è mossa
+        assertEquals(0, game.getTable().getMotherPosition()); //Non si è mossa
 
         controller.useCharacter(player1, 0);  //Testo che io possa muovere madre natura di 3 caselle e non solo di 1
         controller.moveMotherNature(player1, 5);  //Errore
@@ -331,6 +335,7 @@ public class CharacterHandlerTest {
         game.getTable().setCharacter(0, CharacterType.SPOILED_PRINCESS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         game.getTable().getCharacter(0).addStudent(new Student(0));
+        assertTrue(1 <= game.getTable().getCharacter(0).count(PawnColor.GREEN));
         game.getTable().getBag().withdrawStudent(game.getTable().getBag().getStudent().size());
         player1.addCoin();
 

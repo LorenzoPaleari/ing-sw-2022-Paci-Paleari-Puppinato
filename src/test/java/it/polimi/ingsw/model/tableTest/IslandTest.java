@@ -90,4 +90,24 @@ class IslandTest {
         assertEquals(island.removeTower(), test);
 
     }
+
+    @Test
+    void countAll() {
+        island.addStudent(new Student(0));
+        island.addStudent(new Student(2));
+        island.addStudent(new Student(0));
+        island.addStudent(new Student(2));
+        island.addStudent(new Student(0));
+        island.addStudent(new Student(2));
+        island.addStudent(new Student(1));
+        island.addStudent(new Student(1));
+        island.addStudent(new Student(4));
+        island.addStudent(new Student(4));
+        island.addStudent(new Student(4));
+        island.addStudent(new Student(4));
+        Integer[] integers = {3, 2, 3, 0, 4};
+        for (int i = 0; i < 5; i++)
+            assertEquals(island.countAll()[i], integers[i]);
+
+    }
 }

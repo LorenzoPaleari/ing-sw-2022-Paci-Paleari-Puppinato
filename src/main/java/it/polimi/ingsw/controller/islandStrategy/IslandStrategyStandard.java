@@ -23,6 +23,8 @@ public class IslandStrategyStandard implements IslandStrategy {
             if (TempInfluence > MoreInfluence){
                 MoreInfluence = TempInfluence;
                 playerCandidate[0] = p.getNickname();
+            } else if (TempInfluence == MoreInfluence) {
+                playerCandidate[0] = "";
             }
         }
     }

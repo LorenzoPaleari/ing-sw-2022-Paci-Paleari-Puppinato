@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
+import it.polimi.ingsw.client.viewUtilities.LobbyValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -116,14 +117,14 @@ public class CLIView implements View {
         boolean valid;
         boolean valid2;
         int starting = 0;
-        if (!checkForValidLobby(lobbies))
+        if (!LobbyValidator.checkForValidLobby(lobbies))
             System.out.print(AnsiGraphics.putText(" > There are some lobby starting. Press Enter to refresh or type \"NewGame\" to create a lobby", false, true));
         else
             System.out.print(AnsiGraphics.putText(" > Insert the number of the lobby, press Enter to refresh or type \"NewGame\" to create a lobby", false, true));
 
         do {
             valid2 = true;
-            if (checkForValidLobby(lobbies))
+            if (LobbyValidator.checkForValidLobby(lobbies))
                 AnsiGraphics.clean();
             int lobbySize = lobbyCounter(lobbies);
             printLobbies(lobbies, starting);
@@ -146,7 +147,7 @@ public class CLIView implements View {
                         System.out.print(AnsiGraphics.putText("  > Inserted number don't correspond to any Lobby, try again", true, false));
                         valid = false;
                     } else {
-                        serverHandler.setGame(false, validLobbyCount(numLobby, lobbies));
+                        serverHandler.setGame(false, LobbyValidator.validLobbyCount(numLobby, lobbies));
                     }
                 } else {
                     System.out.print(AnsiGraphics.putText("  > You haven't inserted a positive number, try again", true, false));
@@ -154,19 +155,6 @@ public class CLIView implements View {
                 }
             } while (!valid);
         } while (!valid2);
-    }
-
-    private int validLobbyCount(int numLobby, List<String[]> lobbies){
-        int j = 0;
-        int i;
-        for (i = 0; j!=numLobby; i++)
-            if (lobbies.get(i).length < 6)
-                j++;
-
-        if (i == 0)
-            i++;
-
-        return i - 1;
     }
 
     private int lobbyCounter(List<String[]> lobbies){
@@ -180,7 +168,7 @@ public class CLIView implements View {
 
     private void printLobbies(List<String[]> lobbies, int starting) {
         int k = starting;
-        int i = validLobbyCount(starting, lobbies);
+        int i = LobbyValidator.validLobbyCount(starting, lobbies);
         int maxLength = 30;
         StringBuilder base = new StringBuilder();
         while(k < Math.min(7+starting, lobbyCounter(lobbies))) {
@@ -207,14 +195,6 @@ public class CLIView implements View {
             System.out.print(AnsiGraphics.putText("  > ... type [Prev] to go back", false, false));
         else if (lobbyCounter(lobbies) > 7)
             System.out.print(AnsiGraphics.putText("  > ... type [Prev/Next] to move through lobbies", false, false));
-    }
-
-    private boolean checkForValidLobby(List<String[]> lobbies){
-        for (String[] s : lobbies)
-            if (s.length < 6)
-                return true;
-
-        return false;
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class EntranceTest{
         LinkedList<Student> stud;
@@ -49,10 +50,23 @@ public class EntranceTest{
 
         @Test
         void find() {
-                assertEquals(null, entrance.find(PawnColor.GREEN));
+                assertNull(entrance.find(PawnColor.GREEN));
                 Student temp = new Student(4);
                 entrance.addStudent(temp);
                 assertEquals(temp, entrance.find(PawnColor.BLUE));
+        }
+
+        @Test
+        void countAll(){
+                entrance.addStudent(new Student(4));
+                entrance.addStudent(new Student(4));
+                entrance.addStudent(new Student(0));
+                entrance.addStudent(new Student(1));
+                entrance.addStudent(new Student(3));
+                entrance.addStudent(new Student(4));
+                int[] counting = {1,1,0,1,3};
+                for (int i = 0; i < 5; i++)
+                        assertEquals(counting[i], entrance.countAll()[i]);
         }
 
 

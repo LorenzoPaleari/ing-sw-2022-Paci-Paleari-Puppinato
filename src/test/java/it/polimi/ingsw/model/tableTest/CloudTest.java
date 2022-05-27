@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.table.Cloud;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,5 +47,24 @@ class CloudTest {
 
         cloud.addStudent(test);
         assertEquals(cloud.removeAllStudent(), test);
+    }
+
+    @Test
+    void countAll(){
+        List<Student> test= new LinkedList<>();
+        test.add(new Student(1));
+        test.add(new Student(1));
+        test.add(new Student(0));
+        test.add(new Student(2));
+        test.add(new Student(2));
+        test.add(new Student(2));
+        test.add(new Student(2));
+        test.add(new Student(4));
+        test.add(new Student(4));
+        cloud.addStudent(test);
+        int[] counting = {1,2,4,0,2};
+        for (int i = 0; i < 5; i++){
+            assertEquals(counting[i], cloud.countAll()[i]);
+        }
     }
 }

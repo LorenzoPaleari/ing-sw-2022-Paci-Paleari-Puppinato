@@ -36,7 +36,7 @@ public enum TowerColor {
 
     public static TowerColor getColor(String color){
         for (TowerColor t : TowerColor.values())
-            if(t.toString().equals(color))
+            if(t.toString().equals(color.toUpperCase()))
                 return t;
         return null;
     }
