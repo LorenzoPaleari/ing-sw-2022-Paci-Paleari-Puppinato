@@ -150,4 +150,15 @@ class TableTest {
         table.setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         assertEquals(table.getCharacter(0).getType(),CharacterType.GRANDMOTHER_HERBS);
     }
+
+    @Test
+    void generalCharacter() throws NoSuchMethodException {
+        table.setCharacter(0, CharacterType.MAGIC_DELIVERY_MAN, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
+        assertEquals(-1, table.getCharacter(0).getNumNoEntryTiles());
+        assertEquals(-1, table.getCharacter(0).count(PawnColor.BLUE));
+        table.getCharacter(0).returnNoEntryTiles();
+        assertEquals(-1, table.getCharacter(0).getNumNoEntryTiles());
+        table.getCharacter(0).addStudent(new Student(0));
+        assertEquals(-1, table.getCharacter(0).count(PawnColor.GREEN));
+    }
 }

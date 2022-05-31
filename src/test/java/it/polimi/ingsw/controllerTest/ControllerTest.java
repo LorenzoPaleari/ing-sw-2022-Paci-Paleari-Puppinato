@@ -50,14 +50,20 @@ public class ControllerTest {
 
     @Test
     void setNumPlayer(){
-        controller.setNumPlayer(3);
-        assertEquals(3, game.getNumPlayer());
+        controller.setNumPlayer(2);
+        assertEquals(2, game.getNumPlayer());
     }
 
     @Test
     void setExpertMode(){
         controller.setExpertMode(false);
         assertFalse(game.isExpertMode());
+    }
+
+    @Test
+    void getPlayerByNickname(){
+        assertEquals(player1, controller.getPlayerByNickname("TEST1"));
+        assertNull(controller.getPlayerByNickname("CIAO"));
     }
 
     @Test
@@ -69,7 +75,7 @@ public class ControllerTest {
 
         assertEquals(player3, game.getPlayers().get(2));
         assertEquals(PlayerState.PLANNING, game.getPlayers().get(0).getState());
-        assertTrue(4 == player1.getDeck().getAssistant(3).getWeight());
+        assertEquals(4, player1.getDeck().getAssistant(3).getWeight());
     }
 
     @Test
@@ -82,8 +88,8 @@ public class ControllerTest {
         controller.useAssistant(6, player1);
         assertEquals(7, player1.getLastUsed().getWeight());
 
-        //controller.useAssistant(6, player2);
-        //assertEquals(null, player2.getLastUsed());
+        controller.useAssistant(6, player2);
+        assertNull(player2.getLastUsed());
 
         controller.useAssistant(3, player2);
         assertEquals(4, player2.getLastUsed().getWeight());
@@ -95,7 +101,7 @@ public class ControllerTest {
     @Test
     void useAssistant2(){
         controller.useAssistant(3, player2);
-        assertEquals(null, player2.getLastUsed());
+        assertNull(player2.getLastUsed());
 
         controller.moveMotherNature(player1, 3);
         assertEquals(0, game.getTable().getMotherPosition());
@@ -138,20 +144,12 @@ public class ControllerTest {
 
     @Test
     void winner(){
-        // After this all System.out.println() statements will come to outContent stream.
-        // So, you can normally call, print(items);
-        // I will assume items is already initialized properly.
-        // Now you have to validate the output. Let's say items had 1 element.
-        // With name as FirstElement and number than 1. String expectedOutput = "Name: FirstElement\nNumber: 1"
-        // Notice the \n for new line. // Do the actual assertion. assertEquals(expectedOutput, outContent.toString());
-
         player1.getBoard().getTowerCourt().removeTower(4);
         player2.getBoard().getTowerCourt().removeTower(3);
         player3.getBoard().getTowerCourt().removeTower(3);
 
         controller.getTableHandler().winner();
-        //String expected = player1 + " Has won the game\n";
-        //assertEquals(expected, outContent.toString());
+        assertTrue(game.isGameEnded());
     }
 
     @Test
@@ -161,8 +159,7 @@ public class ControllerTest {
         player3.getBoard().getTowerCourt().removeTower(3);
 
         controller.getTableHandler().winner();
-        //String expected = "Draw between " +player1+ " and " +player2 + "\n";
-        //assertEquals(expected, outContent.toString());
+        assertTrue(game.isGameEnded());
     }
 
 }

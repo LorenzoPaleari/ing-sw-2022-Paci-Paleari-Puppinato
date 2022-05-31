@@ -7,6 +7,7 @@ import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.pawns.Tower;
@@ -66,44 +67,40 @@ public class CharacterHandlerTest {
 
     @Test
     void characterErrors() throws NoSuchMethodException {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         game.getTable().setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         game.getTable().setCharacter(1, CharacterType.MAGIC_DELIVERY_MAN, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
         controller.useCharacter(player1, 0);
-        //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
-        outContent.reset();
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(1, player1.getNumCoin());
 
         controller.useCharacter(player1, 0, PawnColor.BLUE);
-        //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
-        outContent.reset();
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(1, player1.getNumCoin());
 
-        int colors[] = new int[1];
+        int[] colors = new int[1];
         colors[0] = 1;
         controller.useCharacter(player1, 0, colors);
-        //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
-        outContent.reset();
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(1, player1.getNumCoin());
 
+        player1.changeState(PlayerState.PLANNING);
         controller.useCharacter(player1, 0, 6, PawnColor.BLUE);
-        //assertEquals("You don't have enough money to use this character (Cost = 3)\n", outContent.toString());
-        outContent.reset();
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(1, player1.getNumCoin());
 
-        player1.addCoin();
+        player1.changeState(PlayerState.ENDTURN);
         controller.useCharacter(player1, 1);
+        assertTrue(game.getRound().getTurn().isUsedCharacter());
         controller.useCharacter(player1, 1);
-        //assertEquals("E' già stato usato un personaggio in questo turno\n", outContent.toString());
+        assertEquals(0, player1.getNumCoin());
     }
 
     @Test
     void useNoEntryTilesCharacter() throws NoSuchMethodException {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 10; i++)
             for (Player p : game.getPlayers())
                 p.addCoin();
         //Aggiungo abbastanza monete da poter usare i personaggi quante volte desidero
@@ -113,29 +110,34 @@ public class CharacterHandlerTest {
         controller.useCharacter(player1, 0, 0);
         assertTrue(game.getTable().getIsland(0).isNoEntryTiles());
         assertEquals(3, game.getTable().getCharacter(0).getPrice());
-
         assertEquals(3, game.getTable().getCharacter(0).getNumNoEntryTiles());
 
-        //Esaurisco le carte NoEntryTiles
+
         game.getRound().nextActionTurn();
+        controller.useCharacter(player1, 0, 4);
+
+        //Esaurisco le carte NoEntryTiles
         controller.useCharacter(player2, 0, 3);
         game.getRound().nextActionTurn();
         game.getRound().endRound();
-        assertEquals("", outContent.toString());
+
         controller.useAssistant(4,player1);
         controller.useAssistant(2, player2);
         controller.useCharacter(player2, 0, 1);
         game.getRound().nextActionTurn();
         controller.useCharacter(player1, 0, 2);
 
-        assertEquals("", outContent.toString());
         game.getRound().nextActionTurn();
         game.getRound().endRound();
         controller.useAssistant(6, player2);
         controller.useAssistant(1, player1);
 
         controller.useCharacter(player1, 0, 5);
-       // assertEquals("You don't have any other No Entry Tile left or the chosen island has already one No Entry Tile on\n", outContent.toString());
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(6, player1.getNumCoin());
+        controller.useCharacter(player1, 0, 0);
+        assertFalse(game.getRound().getTurn().isUsedCharacter());
+        assertEquals(6, player1.getNumCoin());
     }
 
     @Test
@@ -263,7 +265,7 @@ public class CharacterHandlerTest {
         controller.useStudentDining(player1, PawnColor.YELLOW);
         controller.useStudentDining(player1, PawnColor.PINK);
 
-        int colors[] = new int[4];
+        int[] colors = new int[4];
         colors[0] = 0;  //Entrance -> Dining
         colors[1] = 1;
         colors[2] = 2;  //Dining -> Entrance
@@ -282,8 +284,7 @@ public class CharacterHandlerTest {
     void useNo_TowerCharacter() throws NoSuchMethodException {
         game.getTable().setCharacter(0, CharacterType.CENTAUR, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
 
-        List<Tower> towers = new LinkedList<>();
-        towers.addAll(player2.getBoard().getTowerCourt().removeTower(2));
+        List<Tower> towers = new LinkedList<>(player2.getBoard().getTowerCourt().removeTower(2));
         game.getTable().getIsland(1).addTower(towers);
         game.getTable().getIsland(1).getIslandStudent().clear();
 
@@ -369,7 +370,7 @@ public class CharacterHandlerTest {
         player1.getBoard().getEntrance().addStudent(new Student(3));
         player1.getBoard().getEntrance().addStudent(new Student(3));
 
-        int colors[] = new int[6];
+        int[] colors = new int[6];
         colors[0] = 3;
         colors[1] = 3;
         colors[2] = -1;

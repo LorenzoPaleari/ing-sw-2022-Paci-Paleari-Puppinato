@@ -69,7 +69,6 @@ public class TableHandlerTest {
 
     @Test
     void moveMotherNature() throws NoSuchMethodException {
-
         int pos = game.getTable().getMotherNature().getPosition();
         game.getTable().setCharacter(0, CharacterType.GRANDMOTHER_HERBS, tableHandler.getClass().getMethod("updateIsland", Island.class), boardHandler.getClass().getMethod("checkProfessor", Player.class, PawnColor.class));
         game.getRound().getTurn().resetRemainingMovements(1);
@@ -109,7 +108,7 @@ public class TableHandlerTest {
         controller.moveMotherNature(player2, 1);
         assertEquals(game.getTable().getIsland(1).getIslandStudent().size(), 0);
         assertEquals(player2.getBoard().getTowerCourt().getTower().size(), 0);
-        //assertEquals(player2+" Has won the game\n", outContent.toString());
+        assertTrue(game.isGameEnded());
     }
 
     @Test
@@ -151,7 +150,7 @@ public class TableHandlerTest {
         game.getRound().getTurn().resetRemainingMovements(0);
         player3.getBoard().getProfessorTable().addProfessor(game.getTable().findProfessor(PawnColor.GREEN));
         controller.moveMotherNature(player3, 3);
-        //assertEquals(player1+" Has won the game\n", outContent.toString());
+        assertTrue(game.isGameEnded());
     }
     @Test
     void chooseCloud() throws BagIsEmptyException {
@@ -169,10 +168,10 @@ public class TableHandlerTest {
         game.getRound().getTurn().resetRemainingMovements(0);
         controller.moveMotherNature(player2, 3);
         controller.chooseCloud(player2,0);
-        //assertEquals("This cloud has already been chosen, please select another\n",outContent.toString());
+        assertEquals(PlayerState.ENDTURN, player2.getState());
 
         controller.useAssistant(6, player2);
-        //assertEquals("Devi scegliere una Nuvola\n", outContent.toString());
+        assertEquals(9, player2.getLastUsed().getWeight());
 
         controller.chooseCloud(player2,1);
         game.getRound().getTurn().resetRemainingMovements(0);
@@ -197,12 +196,11 @@ public class TableHandlerTest {
         game.getRound().getTurn().resetRemainingMovements(0);
         controller.moveMotherNature(player3, 6);
         controller.chooseCloud(player3,2);
-        //assertEquals(player3+" Has won the game\n", outContent.toString());
+        assertTrue(game.isGameEnded());
     }
 
     @Test
     void useStudentIsland(){
-
         PawnColor color= player1.getBoard().getEntrance().getStudent().get(0).getColor();
         Island island = game.getTable().getIsland(0);
         game.getRound().getTurn().resetRemainingMovements(1);
@@ -212,8 +210,10 @@ public class TableHandlerTest {
         assertEquals(game.getTable().getIsland(0).getIslandStudent().size(),1);
         assertEquals(game.getTable().getIsland(0).getIslandStudent().get(0).getColor(),color);
         PawnColor color2= player1.getBoard().getEntrance().getStudent().get(3).getColor();
+        int countBefore = game.getTable().getIsland(0).countStudent(color2);
         controller.useStudentIsland(player1, color2, 0);
-        //assertEquals("You have already moved all the student, please move Mother Nature\n",outContent.toString());
+        assertEquals(countBefore, game.getTable().getIsland(0).countStudent(color2));
+        assertEquals(0, game.getRound().getTurn().getRemainingMovements());
         assertEquals(island, game.getTable().getIsland(0));
     }
 }

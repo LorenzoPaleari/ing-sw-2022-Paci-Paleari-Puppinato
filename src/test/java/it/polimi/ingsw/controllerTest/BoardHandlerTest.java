@@ -65,22 +65,18 @@ public class BoardHandlerTest {
     }
 
     @Test
-    void useStudentDining() throws IOException {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
+    void useStudentDining() {
         List<Student> students = new LinkedList<>();
         for (int i = 0; i < 10; i ++)
             students.add(new Student(2));      //The color yellow line is full, after it will throw an error
         player1.getBoard().getDiningRoom().addStudent(students);
 
         controller.useStudentDining(player1, PawnColor.YELLOW);
-        //assertEquals("You've reached the maximum number of YELLOW student\n", outContent.toString());
-        outContent.reset();
+        assertEquals(10, player1.getBoard().getDiningRoom().count(PawnColor.YELLOW));
+        assertEquals(4, game.getRound().getTurn().getRemainingMovements());
 
         controller.useAssistant(3, player1);
-        //assertEquals("Devi spostare gli studenti o muovere madre natura\n", outContent.toString());
-        outContent.reset();
+        assertEquals(1, player1.getLastUsed().getWeight());
 
         controller.useStudentDining(player1, PawnColor.GREEN);
         controller.useStudentDining(player1, PawnColor.BLUE);
@@ -90,14 +86,14 @@ public class BoardHandlerTest {
         assertEquals(2, player1.getNumCoin());
 
         controller.useStudentDining(player1, PawnColor.GREEN);
-        //assertEquals("You have already moved all the student, please move Mother Nature\n", outContent.toString());
-        outContent.reset();
+        assertEquals(1, player1.getBoard().getDiningRoom().count(PawnColor.GREEN));
 
         game.getRound().nextActionTurn(); //Forzo il prossimo turno
         game.getTable().addCoin(-16);  //Tolgo tutte le monete rimaste
         controller.useStudentDining(player3, PawnColor.GREEN);
         controller.useStudentDining(player3, PawnColor.GREEN);
         controller.useStudentDining(player3, PawnColor.GREEN);
-        //assertEquals("You can't go so far with your Assistant, please choose another Island\n", outContent.toString());
+        assertEquals(1, player3.getNumCoin());
+        assertEquals(0, game.getTable().getMotherPosition());
     }
 }

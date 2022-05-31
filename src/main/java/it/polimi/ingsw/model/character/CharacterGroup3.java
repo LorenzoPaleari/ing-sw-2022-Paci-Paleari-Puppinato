@@ -32,7 +32,7 @@ public class CharacterGroup3 extends Character{
     }
 
     @Override
-    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) {
+    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) throws InvocationTargetException, IllegalAccessException {
         List<Student> list1 = new LinkedList<>();
         List<Student> list2 = new LinkedList<>();
         //prima entrance, poi dining
@@ -49,14 +49,12 @@ public class CharacterGroup3 extends Character{
             }
         }
         player.getBoard().getEntrance().addStudent(list2);
-        //player.getBoard().getDiningRoom().addStudent(list1);
         for (Student s : list1) {
             if (player.getBoard().getDiningRoom().count(s.getColor()) % 3 == 0)
                 player.addCoin();
-            try {
-                checkProfessor.invoke(boardHandler, player, s.getColor());
-            } catch (InvocationTargetException | IllegalAccessException ignored) {
-            }
+
+            checkProfessor.invoke(boardHandler, player, s.getColor());
+
             player.getBoard().getDiningRoom().addStudent(s);
         }
     }

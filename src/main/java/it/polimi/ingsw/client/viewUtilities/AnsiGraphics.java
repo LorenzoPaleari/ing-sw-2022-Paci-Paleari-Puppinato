@@ -8,6 +8,9 @@ import java.util.*;
 import static org.fusesource.jansi.internal.CLibrary.ioctl;
 import static org.fusesource.jansi.internal.Kernel32.*;
 
+/**
+ * Contains all the Terminal Graphical Elements
+ */
 public enum AnsiGraphics
 {
     ANSI_RESET ("\u001B[m"),
@@ -60,6 +63,11 @@ public enum AnsiGraphics
         this.escape = escape;
     }
 
+    /**
+     * Get the Width and Height of the terminal,
+     * store the information inside variables
+     * @return if the screen is large enough to show the graphics
+     */
     private static boolean setDimensions(){
         width = AnsiConsole.getTerminalWidth();
 
@@ -88,6 +96,10 @@ public enum AnsiGraphics
         return (width > 120);
     }
 
+    /**
+     * Create the title with AnsiCode
+     * @return the String to print
+     */
     public static String getTitle(){
         int rightShift = 1, downShift = 1;
         if (setDimensions())

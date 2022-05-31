@@ -12,6 +12,8 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
+import java.lang.reflect.InvocationTargetException;
+
 public abstract class Character {
 
     private  CharacterType type;
@@ -24,8 +26,7 @@ public abstract class Character {
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException{}
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}
     public void activateCharacter(Island island, TableHandler tableHandler) throws ClientException{}
-
-    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) {}
+    public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) throws InvocationTargetException, IllegalAccessException{}
 
     public Character (CharacterType type){
         this.type=type;

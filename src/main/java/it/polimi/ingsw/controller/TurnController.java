@@ -12,7 +12,7 @@ import it.polimi.ingsw.model.player.Player;
 
 public class TurnController {
 
-    public void checkCharacter(Game game, Player player, int costo, Character character) throws ClientException, GeneralSupplyFinishedException {
+    public void checkCharacter(Game game, Player player, int costo, Character character) throws ClientException {
         if(game.getRound().getTurn().isUsedCharacter())
             throw new ClientException(ErrorType.ALREADY_USED_CHARACTER);
 
@@ -21,12 +21,17 @@ public class TurnController {
             throw new ClientException(ErrorType.WRONG_PHASE);
 
         enoughMoney(player, costo);
+    }
 
+    public void updateCharacter(Game game, Player player, int costo, Character character) {
         player.removeCoin(costo);
         game.getTable().addCoin(costo);
 
         if (!character.isUsed()) {
-            game.getTable().withdrawCoin();
+            try {
+                game.getTable().withdrawCoin();
+            } catch (GeneralSupplyFinishedException ignored) {
+            }
             character.firstUse();
         }
     }

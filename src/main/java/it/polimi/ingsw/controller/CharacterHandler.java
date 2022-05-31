@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.exceptions.BagIsEmptyException;
 import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.character.Character;
@@ -37,14 +38,8 @@ public class CharacterHandler {
 
     public void useCharacter(Player player, int characterPosition){
         Character character = game.getTable().getCharacter(characterPosition);
-
-        try {
-            turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (ClientException e) {
-            virtualView.printError(e, player.getNickname());
+        if (characterControls(player, character))
             return;
-        } catch (GeneralSupplyFinishedException ignored){
-        }
 
         if (character.getType().equals(CharacterType.KNIGHT))
             islandStrategy.setPlayer(player);
@@ -58,26 +53,26 @@ public class CharacterHandler {
 
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
-            character.activateCharacter(game.getTable().getIsland(islandPosition), tableHandler);
         } catch (ClientException e) {
             virtualView.printError(e, player.getNickname());
             return;
-        } catch (GeneralSupplyFinishedException ignored){
         }
+
+        try {
+            character.activateCharacter(game.getTable().getIsland(islandPosition), tableHandler);
+        } catch (ClientException e) {
+            return;
+        }
+
+        turnController.updateCharacter(game, player, character.getPrice(), character);
 
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
-
-        try {
-            turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (ClientException e) {
-            virtualView.printError(e, player.getNickname());
+        if (characterControls(player, character))
             return;
-        } catch (GeneralSupplyFinishedException ignored){
-        }
 
         try {
             character.activateCharacter(game, player, color, islandContext, boardHandler);
@@ -90,14 +85,8 @@ public class CharacterHandler {
 
     public void useCharacter(Player player, int characterPosition, int[] colors){
         Character character = game.getTable().getCharacter(characterPosition);
-
-        try {
-            turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (ClientException e) {
-            virtualView.printError(e, player.getNickname());
+        if (characterControls(player, character))
             return;
-        } catch (GeneralSupplyFinishedException ignored){
-        }
 
         PawnColor[] color;
         int size = colors.length;
@@ -107,21 +96,17 @@ public class CharacterHandler {
             color[i] = PawnColor.getColor(colors[i]);
         }
 
-        character.activateCharacter(player, color,boardHandler);
+        try {
+            character.activateCharacter(player, color, boardHandler);
+        } catch (Exception ignored){}
 
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
-
-        try {
-            turnController.checkCharacter(game, player, character.getPrice(), character);
-        } catch (ClientException e) {
-            virtualView.printError(e, player.getNickname());
+        if (characterControls(player, character))
             return;
-        } catch (GeneralSupplyFinishedException ignored){
-        }
 
         try {
             character.activateCharacter(game.getTable().getIsland(islandPosition), color);
@@ -130,5 +115,17 @@ public class CharacterHandler {
         } finally {
             game.getRound().getTurn().setUsedCharacter(true);
         }
+    }
+
+    public boolean characterControls(Player player, Character character){
+        try {
+            turnController.checkCharacter(game, player, character.getPrice(), character);
+        } catch (ClientException e) {
+            virtualView.printError(e, player.getNickname());
+            return true;
+        }
+
+        turnController.updateCharacter(game, player, character.getPrice(), character);
+        return false;
     }
 }
