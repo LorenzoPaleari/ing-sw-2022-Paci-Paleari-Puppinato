@@ -2,54 +2,59 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ServerHandler;
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.client.gui.scene.SceneController;
+import it.polimi.ingsw.client.gui.scene.StartController;
+import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.desktop.AppForegroundListener;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class GUIView extends Application implements View {
+public class GUIView implements View {
+
     private GameInfo gameInfo;
     private ServerHandler serverHandler;
     private Scanner scanner;
+
+    private SceneController sceneController;
+
+    public GUIView(ServerHandler serverHandler){
+        this.serverHandler = serverHandler;
+    }
+
     @Override
     public void start() {
-        String serverIP;
-        boolean valid;
 
-        do {
-            System.out.print("Enter the server IP [Press enter for default IP]: ");
-            serverIP = scanner.nextLine();
 
-            if (serverIP.equals("")){
-                valid = true;
-                serverIP = IPValidator.getDefaultIP();
-                System.out.println(" > Default server IP has been chosen, " + serverIP);
-            } else {
-                if (!IPValidator.isCorrectIP(serverIP)){
-                    valid = false;
-                    System.out.println(" > Server IP not valid. Please try again.");
-                } else {
-                    valid = true;
-                }
-            }
-        } while (!valid);
-
-        serverHandler.initConnection(serverIP);
     }
 
     @Override
     public void gameSetUp() {
-        boolean valid;
+
+        System.out.print("Vuoi cominciare una nuova partita? \u001b[31m♥ [Yes/No]:");
+        /*boolean valid;
         String response;
 
 
@@ -67,12 +72,23 @@ public class GUIView extends Application implements View {
             serverHandler.setGame(true, -1);
         else {
             serverHandler.refreshLobbies();
-        }
+        }*/
     }
 
     @Override
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
-
+        if (firstLobby) {
+            System.out.println("There isn't any lobby, we will create one just for you");
+            synchronized (this) {
+                try {
+                    this.wait(3000);
+                } catch (InterruptedException ignored) {
+                }
+            }
+            serverHandler.setGame(true, -1);
+            //} else{
+            //  lobbySelection(lobbies);
+        }
     }
 
     @Override
@@ -87,7 +103,7 @@ public class GUIView extends Application implements View {
 
     @Override
     public void playerSetUp(boolean requestAgain) {
-
+        //se req again falso crea controller e setta scena, altrimenti no
     }
 
     @Override
@@ -140,14 +156,6 @@ public class GUIView extends Application implements View {
 
     }
 
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(
-                getClass().getResource("/fxml/gameSetup.fxml"));
-        Scene sc = new Scene(root);
-        primaryStage.setScene(sc);
-        primaryStage.sizeToScene();
-        primaryStage.show();
-    }
 
     public void buttonClicked(ActionEvent actionEvent) {
     }

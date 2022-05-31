@@ -1,34 +1,40 @@
 package it.polimi.ingsw.client.gui.scene;
 
-import it.polimi.ingsw.listeners.ViewListener;
+import it.polimi.ingsw.client.ServerHandler;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class GameSetupController extends ViewListener implements GenericSceneController{
+public class GameSetupController implements GenericSceneController{
+
+    private ServerHandler serverHandler;
     @FXML
-    private TextField serverIpField;
+    private Button yesBtn;
 
     @FXML
-    private Button joinBtn;
+    private Button noBtn;
 
-    @FXML
-    public void initialize() {
-        joinBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onJoinBtnClick);
+    public GameSetupController(ServerHandler serverHandler1){
+        serverHandler = serverHandler1;
     }
 
-    /**
-     * Handle click on Join button.
-     *
-     * @param event the mouse click event.
-     */
-    private void onJoinBtnClick(Event event) {
-        System.out.println(serverIpField.getText());
-        joinBtn.setText(serverIpField.getText());
-        //serverHandler.initConnection(serverIpField.getText());
-        //new Thread(() -> notifyObserver(obs -> obs.onUpdateNickname(nickname))).start();
+
+    @FXML
+    public void initialize(){
+        yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onYesBtnClick);
+        noBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNoBtnClick);
+
     }
 
+    @FXML
+    private void onYesBtnClick(Event event) {
+        serverHandler.setGame(true, -1);
+
+    }
+
+    @FXML
+    private void onNoBtnClick(Event event) {
+        serverHandler.refreshLobbies();
+    }
 }
