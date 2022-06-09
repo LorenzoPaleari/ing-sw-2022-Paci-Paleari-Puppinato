@@ -43,18 +43,33 @@ public class Game {
         numPlayer = num;
     }
 
+    /**
+     * Gets the number of players for the current Game.
+     * @return
+     */
     public int getNumPlayer() {
         return numPlayer;
     }
 
+    /**
+     * Gets true if the game is in expert mode, otherwise false
+     * @return
+     */
     public boolean isExpertMode() {
         return expertMode;
     }
 
+    /**
+     * Sets the game mode
+     * @param expertMode
+     */
     public void setExpertMode(boolean expertMode) {
         this.expertMode = expertMode;
     }
 
+    /**
+     * Initialize the game, setting the quantity of towers for each player
+     */
     public void startGame() {
         table = new Table(numPlayer, expertMode, updateIsland, checkProfessor, islandStrategy);
         round = new Round(player);
@@ -73,23 +88,43 @@ public class Game {
         }
     }
 
+    /**
+     * Adds a new player
+     * @param player
+     * @return
+     */
     public int addPlayer(Player player) {
         this.player.add(player);
         return (numPlayer - this.player.size());
     }
 
+    /**
+     * Gets the current round
+     * @return
+     */
     public Round getRound(){
         return round;
     }
 
+    /**
+     * Gets the list of players
+     * @return
+     */
     public List<Player> getPlayers() {
         return player;
     }
 
+    /**
+     * Gets the table
+     * @return
+     */
     public Table getTable() {
         return table;
     }
 
+    /**
+     * Sets the end of the game
+     */
     public void endGame(){
         for (Player p: player)
             p.changeState(PlayerState.WAIT);
@@ -97,6 +132,11 @@ public class Game {
         setGameEnded();
     }
 
+    /**
+     * Checks if the nickname is already used
+     * @param nick
+     * @return
+     */
     public boolean isNicknameUsed(String nick){
         boolean value = false;
         for (Player p : player){
@@ -108,20 +148,41 @@ public class Game {
         return value;
     }
 
+    /**
+     * Gets true if the game is ended
+     * @return
+     */
     public boolean isGameEnded() {
         return gameEnded;
     }
 
+    /**
+     * Sets gameEnded
+     */
     private void setGameEnded() {
         gameEnded = true;
     }
 
+    /**
+     *
+     * @param updateIsland
+     */
     public void setMethodTable(Method updateIsland) {
         this.updateIsland = updateIsland;
     }
+
+    /**
+     *
+     * @param checkProfessor
+     */
     public void setMethodBoard(Method checkProfessor) {
         this.checkProfessor = checkProfessor;
     }
+
+    /**
+     *
+     * @param islandStrategy
+     */
     public void setIslandController(IslandStrategy islandStrategy){this.islandStrategy = islandStrategy;}
 
 }

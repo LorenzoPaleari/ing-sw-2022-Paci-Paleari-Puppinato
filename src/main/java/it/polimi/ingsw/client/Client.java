@@ -9,6 +9,7 @@ import javafx.application.Application;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.util.Scanner;
+import java.util.logging.Level;
 
 public class Client {
     public static void main(String[] args) {
@@ -41,3 +42,27 @@ public class Client {
 
     }
 }
+/*
+    public static void main(String[] args) {
+        boolean cliParam = false;
+        AnsiConsole.systemInstall();
+        Scanner scanner = new Scanner(System.in);
+        ServerHandler serverHandler = new ServerHandler();
+        View view = null;
+
+        for (String arg : args) {
+            if (arg.equals("--cli") || arg.equals("-c")) {
+                cliParam = true;
+                break;
+            }
+        }
+        if (cliParam) {
+            view = new CLIView(serverHandler);
+            serverHandler.setView(view);
+            view.start();
+        } else {
+            Application.launch(JavaFXInit.class);
+        }
+    }
+}
+*/

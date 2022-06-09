@@ -14,12 +14,20 @@ public class Round {
     private int numTurnDone;
     private Turn turn;
     private Boolean lastRound;
-    private ModelListener modelListener=null;
+    private ModelListener modelListener = null;
 
+    /**
+     * Sets lastRound
+     */
     public void setLastRound() {
         lastRound = true;
     }
 
+    /**
+     * Constructor
+     * Initialize the turn, the player sequence, cloud chosen and num turns done
+     * @param player
+     */
     public Round(List<Player> player) {
         turn = new Turn(player.get(0));
         playerSequence = new LinkedList<>(player);
@@ -30,26 +38,50 @@ public class Round {
         lastRound = false;
     }
 
+    /**
+     * Gets the current turn
+     * @return
+     */
     public Turn getTurn(){
         return turn;
     }
 
+    /**
+     * Gets the elements inside the chosen cloud
+     * @return
+     */
     public List<Integer> getCloudChosen() {
         return cloudChosen;
     }
 
+    /**
+     * Sets the chosen cloud
+     * @param cloudChosen
+     */
     public void setCloudChosen(int cloudChosen) {
         this.cloudChosen.add(cloudChosen);
     }
 
+    /**
+     * Gets last round
+     * @return
+     */
     public Boolean getLastRound() {
         return lastRound;
     }
 
+    /**
+     * Gets num turns done
+     * @return
+     */
     public int getNumTurnDone() {
         return numTurnDone;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean nextActionTurn(){
         int index = playerSequenceAscend.indexOf(turn.getCurrentPlayer());
         turn.getCurrentPlayer().changeState(PlayerState.WAIT);
@@ -68,6 +100,9 @@ public class Round {
         }
     }
 
+    /**
+     *
+     */
     public void endPlanningPhase(){
         int assistenteBasso = 11;
         playerSequenceAscend.clear();
@@ -102,6 +137,10 @@ public class Round {
         notifyView();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean nextPlanningTurn(){
         int index = playerSequence.indexOf(turn.getCurrentPlayer());
         turn.getCurrentPlayer().changeState(PlayerState.WAIT);
@@ -118,6 +157,9 @@ public class Round {
         }
     }
 
+    /**
+     *
+     */
     public void endRound(){
         numTurnDone = 0;
         cloudChosen.clear();
@@ -126,6 +168,11 @@ public class Round {
         notifyView();
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     public Player getNextPlayer(Player p){
         if (playerSequence.indexOf(p) + 1 == playerSequence.size())
             return playerSequence.get(0);
@@ -135,7 +182,15 @@ public class Round {
 
     }
 
+    /**
+     *
+     * @param modelListener
+     */
     public void attach(ModelListener modelListener){this.modelListener=modelListener;}
+
+    /**
+     *
+     */
     public void notifyView() {
         if (modelListener != null)
             modelListener.update();
