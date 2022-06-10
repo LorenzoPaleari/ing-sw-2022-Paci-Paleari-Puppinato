@@ -12,6 +12,9 @@ import it.polimi.ingsw.model.pawns.Student;
 import java.lang.reflect.Method;
 import java.util.*;
 
+/**
+ * The table contains all the islands, the clouds, the amount of money available, the Character card and the professors when none has gained them yet.
+ */
 public class Table {
     private int generalSupply;
     private MotherNature motherNature;
@@ -22,6 +25,14 @@ public class Table {
     private List<Professor> professor;
     private IslandStrategy islandStrategy;
 
+    /**
+     * Instantiates this table and the elements it contains.
+     * @param numPlayer the number of player that joined the game.
+     * @param expert true only if the game is played in expert mode.
+     * @param islandUpdate
+     * @param checkProfessor
+     * @param islandStrategy
+     */
     public Table(int numPlayer, boolean expert, Method islandUpdate, Method checkProfessor, IslandStrategy islandStrategy) {
         motherNature = new MotherNature();
         Factory factory = new Factory();
@@ -73,6 +84,12 @@ public class Table {
 
     }
 
+    /**
+     * Adds, according to the number of players, the specified students to each cloud.
+     * The number of students present on each cloud is numPlayer+1.
+     * @param numPlayer the number of player in the game.
+     * @param student the list of student to add containing numPlayer*(numPlayer+1) students.
+     */
     public void fillCloud(int numPlayer, List<Student> student){
         int init = 0;
         int end = numPlayer + 1;
@@ -85,48 +102,101 @@ public class Table {
         student.clear();
     }
 
+    /**
+     * Gets the reference of the bag.
+     * @return the reference of the bag.
+     */
     public Bag getBag() {
         return bag;
     }
 
+    /**
+     * Returns the island at the specified position.
+     * @param position the index of the cloud to return.
+     * @return the island at the specified position.
+     */
     public Island getIsland(int position)
     {
         return island.get(position);
     }
 
+    /**
+     * Gets the reference of Mother Nature.
+     * @return the reference of the Mother Nature.
+     */
     public MotherNature getMotherNature() {
         return motherNature;
     }
 
+    /**
+     * Gets the list of islands present on this table.
+     * @return the list of islands present on this table.
+     */
     public List<Island> getIsland() {
         return island;
     }
 
+    /**
+     * Gets the position of the island where is present Mother Nature.
+     * @return the position of the island where is present Mother Nature.
+     */
     public int getMotherPosition(){
         return motherNature.getPosition();
     }
 
+    /**
+     * Gets the number of islands present on this table.
+     * @return the number of islands present on this table.
+     */
     public int getNumIsland () {return island.size();}
 
+    /**
+     * Returns the Character card at the specified position.
+     * @param position the index of the Character card to return.
+     * @return the Character card at the specified position.
+     */
     public Character getCharacter(int position) {
         return character.get(position);
     }
 
+    /**
+     * Gets the number of coins available on this table.
+     * @return the number of coins available on this table.
+     */
     public int getGeneralSupply() {
         return generalSupply;
     }
 
+    /**
+     * Returns the cloud at the specified position.
+     * @param position the index of the cloud to return.
+     * @return the cloud at the specified position.
+     */
     public Cloud getCloud(int position){
         return cloud.get(position);
     }
 
+    /**
+     * Adds the specified number of coins at the general supply.
+     * @param numCoin the number of coins to add.
+     */
     public void addCoin(int numCoin) {generalSupply=generalSupply+numCoin;}
 
+    /**
+     * Decreases the amount of money available in the general supply by one unit.
+     * @throws GeneralSupplyFinishedException if the number of coins to remove is zero.
+     */
     public void withdrawCoin() throws GeneralSupplyFinishedException {
         if (generalSupply == 0) throw new GeneralSupplyFinishedException();
         generalSupply -= 1;
     }
 
+    /**
+     * Returns the professor of the color specified if present on this table.
+     * The professor is present on this table until any player has the majority of the students of the professor's color in his dining room.
+     * @param color the color of teh professor to find.
+     * @return the professor of the color specified, if present on this table, otherwise it returns null.
+     */
     public Professor findProfessor(PawnColor color) {
         Professor temp = null;
         for(Professor p: professor)
@@ -138,6 +208,11 @@ public class Table {
 
         return temp;
     }
+
+    /**
+     * Changes the position o mother nature by the specified value.
+     * @param moves the number of moves.
+     */
     public void moveMotherNature(int moves){
         island.get(getMotherPosition()).setMotherNature(false);
         if (moves + getMotherPosition() > getNumIsland() - 1)
@@ -148,6 +223,14 @@ public class Table {
         island.get(getMotherPosition()).setMotherNature(true);
     }
 
+    /**
+     * Checks if the island at the specified position could be merged with the previous or with the next.
+     * If there is the possibility to merge two adjacent islands, moves all the pawns and tower present on the island with the lower position between them
+     * to the other island (if the islands to merge are the first and the last, it removes the pawns and the towers from the last island), then removes the empty island from
+     * this table, updates the weight of the remaining island and eventually returns any "no entry" tile present.
+     *
+     * @param position the position of the island to check.
+     */
     public void mergeIsland (int position) {
         int positionNext;
         int positionPrev;
