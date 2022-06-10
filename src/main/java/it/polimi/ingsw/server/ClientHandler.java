@@ -16,6 +16,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
+/**
+ * communicates with the serverHandler
+ */
 public class ClientHandler extends Thread implements NetworkHandler{
     private final Socket socket;
     private String playerNickname;
@@ -25,7 +28,13 @@ public class ClientHandler extends Thread implements NetworkHandler{
     private VirtualView virtualView;
     private boolean isConnected;
 
-
+    /**
+     * Constructor
+     * Sets the socket, the lobby handler, the player nickname and the ack control
+     * @param socket the socket
+     * @param playerNickname the player nickname
+     * @param lobbyHandler the lobby handler
+     */
     public ClientHandler(Socket socket, String playerNickname, LobbyHandler lobbyHandler){
         this.socket=socket;
         this.lobbyHandler = lobbyHandler;
@@ -43,9 +52,16 @@ public class ClientHandler extends Thread implements NetworkHandler{
         ACKcontrol.start();
     }
 
+    /**
+     * starts listening
+     */
     public void run(){
         listen();
     }
+
+    /**
+     * listens and prints status messages
+     */
     public void listen(){
         playerSetUp(false);
 
@@ -72,6 +88,10 @@ public class ClientHandler extends Thread implements NetworkHandler{
         }
     }
 
+    /**
+     * sends message
+     * @param message the message to be sent
+     */
     public synchronized void send(GenericMessage message) {
         if(isConnected){
             try {
@@ -93,44 +113,83 @@ public class ClientHandler extends Thread implements NetworkHandler{
         }
     }
 
+    /**
+     * sends gamesetup message
+     */
     public void gameSetUp(){
         send(new GameSetUp());
     }
 
+    /**
+     *
+     * @param fullGame
+     */
     public void gameSetUp(boolean fullGame){
         send(new GameSetUp(lobbyHandler.getLobbies(), fullGame));
     }
 
+    /**
+     *
+     */
     public void initialSetUp(){
         send(new InitialSetUp());
     }
 
+    /**
+     *
+     * @param requestAgain
+     */
     public void playerSetUp(boolean requestAgain){
         send(new PlayerSetUp(requestAgain));
     }
 
+    /**
+     * sets the tower color
+     * @param requestAgain
+     */
     public void colorSetUp(boolean requestAgain){
         List<TowerColor> towerColor;
         towerColor = virtualView.getAvailableColor();
         send(new ColorSetUp(towerColor, requestAgain));
     }
 
+    /**
+     * gets player nickname
+     * @return
+     */
     public String getPlayerNickname() {
         return playerNickname;
     }
 
+    /**
+     * sets player nickname
+     * @param playerNickname
+     */
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
     }
 
+    /**
+     *
+     * @param gameInfo
+     */
     public void printGameBoard(GameInfo gameInfo){
         send(new GameInfoMessage(gameInfo));
     }
 
+    /**
+     *
+     * @param error
+     */
     public void printError(ClientException error){
         send (new ErrorMessage(error));
     }
 
+    /**
+     *
+     * @param nickname
+     * @param notEntered
+     */
     public void printInterrupt(String nickname, boolean notEntered){
         if (notEntered)
             send(new InterruptedGameMessage(nickname, true));
@@ -138,18 +197,36 @@ public class ClientHandler extends Thread implements NetworkHandler{
             send(new InterruptedGameMessage(nickname));
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean connectionAlive() {
         return isConnected;
     }
 
+    /**
+     *
+     */
     public void setDisconnected() {
         isConnected = false;
         lobbyHandler.terminateLobby(virtualView, this);
         endConnection();
     }
 
-    public void printWinner(String winner1, String winner2, String nickname){send(new WinnerMessage(winner1, winner2, nickname));}
+    /**
+     *
+     * @param winner1
+     * @param winner2
+     * @param nickname
+     */
+    public void printWinner(String winner1, String winner2, String nickname){
+        send(new WinnerMessage(winner1, winner2, nickname));
+    }
 
+    /**
+     * closes the connection
+     */
     public void endConnection() {
         try {
             socket.close();
@@ -158,10 +235,19 @@ public class ClientHandler extends Thread implements NetworkHandler{
         }
     }
 
+    /**
+     * sets the virtual view
+     * @param virtualView
+     */
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
 
+    /**
+     *
+     * @param lobbies
+     * @param firstLobby
+     */
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
         send(new RefreshMessage(lobbies, firstLobby));
     }

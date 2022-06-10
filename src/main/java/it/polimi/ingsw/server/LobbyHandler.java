@@ -5,12 +5,19 @@ import it.polimi.ingsw.controller.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * manages the lobbies
+ */
 public class LobbyHandler {
     private List<ClientHandler> allClientHandlers;
     private List<ClientHandler[]> lobbies;
     private List<Controller> controllers;
     private List<VirtualView> virtualViews;
 
+    /**
+     * Constructor
+     * sets client handlers, the lobby list, the controllers and virtual views
+     */
     public LobbyHandler(){
         allClientHandlers = new ArrayList<>();
         lobbies = new ArrayList<>();
@@ -18,6 +25,11 @@ public class LobbyHandler {
         virtualViews = new ArrayList<>();
     }
 
+    /**
+     * adds a client to the lobby
+     * @param lobbyNumber
+     * @param clientHandler
+     */
     public synchronized void addClient(int lobbyNumber, ClientHandler clientHandler) {
         if (controllers.get(lobbyNumber).getGame().isGameEnded()){
             clientHandler.printInterrupt("", true);
@@ -39,6 +51,10 @@ public class LobbyHandler {
         }
     }
 
+    /**
+     * adds a new client handler
+     * @param clientHandler
+     */
     public synchronized void newClient(ClientHandler clientHandler){
         ClientHandler[] clientHandlers = {clientHandler};
         lobbies.add(clientHandlers);
@@ -58,6 +74,10 @@ public class LobbyHandler {
         clientHandler.initialSetUp();
     }
 
+    /**
+     * gets the list of the lobbies
+     * @return
+     */
     public synchronized List<String[]> getLobbies(){
         List<String[]> lobbiesModified = new ArrayList<>();
         for (ClientHandler[] c : lobbies){
@@ -84,6 +104,11 @@ public class LobbyHandler {
         return lobbiesModified;
     }
 
+    /**
+     * checks if the given nickname is already used
+     * @param nickName
+     * @return
+     */
     public synchronized boolean isNicknameUsed(String nickName){
         if (nickName.equals(""))
             return true;
@@ -95,6 +120,10 @@ public class LobbyHandler {
         return false;
     }
 
+    /**
+     * refreshes the lobby list
+     * @param clientHandler
+     */
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
         List<String[]> lobbies = getLobbies();
         for (String[] s : lobbies)
@@ -106,6 +135,11 @@ public class LobbyHandler {
         clientHandler.refreshLobbies(null, true);
     }
 
+    /**
+     * sets the player nickname
+     * @param nickname
+     * @param clientHandler
+     */
     public synchronized void setPlayerNickname(String nickname, ClientHandler clientHandler) {
         allClientHandlers.add(clientHandler);
         if (!isNicknameUsed(nickname)) {
@@ -117,6 +151,11 @@ public class LobbyHandler {
         }
     }
 
+    /**
+     * removes the lobby with the indicated virtual view
+     * @param virtualView
+     * @param clientHandler
+     */
     public synchronized void terminateLobby(VirtualView virtualView, ClientHandler clientHandler) {
         int index = virtualViews.indexOf(virtualView);
         if (index != -1) {

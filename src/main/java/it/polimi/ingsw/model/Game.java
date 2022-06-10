@@ -37,7 +37,7 @@ public class Game {
 
     /**
      * Sets the number of players for the current Game.
-     * @param num
+     * @param num the number of players
      */
     public void setNumPlayer(int num){
         numPlayer = num;
@@ -45,7 +45,7 @@ public class Game {
 
     /**
      * Gets the number of players for the current Game.
-     * @return
+     * @return the number of players
      */
     public int getNumPlayer() {
         return numPlayer;
@@ -53,7 +53,7 @@ public class Game {
 
     /**
      * Gets true if the game is in expert mode, otherwise false
-     * @return
+     * @return if the game is in expert mode
      */
     public boolean isExpertMode() {
         return expertMode;
@@ -61,7 +61,7 @@ public class Game {
 
     /**
      * Sets the game mode
-     * @param expertMode
+     * @param expertMode true or false depending on the game mode
      */
     public void setExpertMode(boolean expertMode) {
         this.expertMode = expertMode;
@@ -90,8 +90,8 @@ public class Game {
 
     /**
      * Adds a new player
-     * @param player
-     * @return
+     * @param player the new player
+     * @return the number of the new player
      */
     public int addPlayer(Player player) {
         this.player.add(player);
@@ -100,7 +100,7 @@ public class Game {
 
     /**
      * Gets the current round
-     * @return
+     * @return current round
      */
     public Round getRound(){
         return round;
@@ -108,7 +108,7 @@ public class Game {
 
     /**
      * Gets the list of players
-     * @return
+     * @return the list of players
      */
     public List<Player> getPlayers() {
         return player;
@@ -116,7 +116,7 @@ public class Game {
 
     /**
      * Gets the table
-     * @return
+     * @return the table
      */
     public Table getTable() {
         return table;
@@ -134,8 +134,8 @@ public class Game {
 
     /**
      * Checks if the nickname is already used
-     * @param nick
-     * @return
+     * @param nick the nickname to be checked
+     * @return true or false
      */
     public boolean isNicknameUsed(String nick){
         boolean value = false;
@@ -150,7 +150,7 @@ public class Game {
 
     /**
      * Gets true if the game is ended
-     * @return
+     * @return true or false
      */
     public boolean isGameEnded() {
         return gameEnded;
@@ -164,24 +164,24 @@ public class Game {
     }
 
     /**
-     *
-     * @param updateIsland
+     * sets the updateIsland
+     * @param updateIsland the updateIsland
      */
     public void setMethodTable(Method updateIsland) {
         this.updateIsland = updateIsland;
     }
 
     /**
-     *
-     * @param checkProfessor
+     * sets the checkProfessor
+     * @param checkProfessor the checkProfessor
      */
     public void setMethodBoard(Method checkProfessor) {
         this.checkProfessor = checkProfessor;
     }
 
     /**
-     *
-     * @param islandStrategy
+     * sets the islandStrategy
+     * @param islandStrategy the islandStrategy
      */
     public void setIslandController(IslandStrategy islandStrategy){this.islandStrategy = islandStrategy;}
 

@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.pawns.Student;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Diningroom class
+ */
 public class DiningRoom {
     private LinkedList<Student> student;
     private ModelListener modelListener;
@@ -22,8 +25,8 @@ public class DiningRoom {
     }
 
     /**
-     * gets the student list
-     * @return
+     * gets the students list
+     * @return the students list
      */
     public LinkedList<Student> getStudent() {
         return student;
@@ -31,9 +34,9 @@ public class DiningRoom {
 
     /**
      * Removes numstudent of the color indicated from the list
-     * @param color
-     * @param numStudent
-     * @return
+     * @param color the color of the student to be removed
+     * @param numStudent the number of students to be removed
+     * @return the removed students
      */
     public List<Student> removeStudent(PawnColor color, int numStudent){
         List<Student> list = new LinkedList<>();
@@ -49,7 +52,7 @@ public class DiningRoom {
 
     /**
      * adds a student to the list
-     * @param s
+     * @param s the new student
      */
     public void addStudent(Student s){
         student.addLast(s);
@@ -58,7 +61,7 @@ public class DiningRoom {
 
     /**
      * adds a list of students to the list
-     * @param s
+     * @param s the list of students
      */
     public void addStudent(List<Student> s){
         student.addAll(s);
@@ -66,7 +69,7 @@ public class DiningRoom {
 
     /**
      * returns true if the student list is empty
-     * @return
+     * @return true if the student list is empty
      */
     public boolean isEmpty(){
         return student.size() == 0;
@@ -74,8 +77,8 @@ public class DiningRoom {
 
     /**
      * returns a student of the indicated color
-     * @param color
-     * @return
+     * @param color the color of the student to be found
+     * @return the student found
      */
     public Student find(PawnColor color){
         Student temp;
@@ -90,8 +93,8 @@ public class DiningRoom {
 
     /**
      * counts the students of the indicated color
-     * @param c
-     * @return
+     * @param c the color
+     * @return the number of student of that color
      */
     public int count(PawnColor c){
         int count = 0;
@@ -105,7 +108,7 @@ public class DiningRoom {
 
     /**
      * returns a list with the count of all the students
-     * @return
+     * @return list with the count of all the students
      */
     public Integer[] countAll() {
         Integer[] colorsCount = new Integer[5];
@@ -117,8 +120,8 @@ public class DiningRoom {
     }
 
     /**
-     *
-     * @param modelListener
+     * attach the model listener
+     * @param modelListener the model listener to be attached
      */
     public void attach(ModelListener modelListener){
         this.modelListener=modelListener;

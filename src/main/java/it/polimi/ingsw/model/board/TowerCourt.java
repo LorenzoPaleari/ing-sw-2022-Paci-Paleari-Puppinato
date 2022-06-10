@@ -4,14 +4,17 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Tower;
 import java.util.*;
 
+/**
+ * Tower court class
+ */
 public class TowerCourt {
     private LinkedList<Tower> tower;
 
     /**
      * Constructor
      * Initialize the number of towers and the color
-     * @param numTower
-     * @param towerColor
+     * @param numTower the number of towers
+     * @param towerColor the color of the towers
      */
     public TowerCourt(int numTower, TowerColor towerColor) {
         tower = new LinkedList<>();
@@ -21,7 +24,7 @@ public class TowerCourt {
 
     /**
      * returns true if the tower list is empty
-     * @return
+     * @return true if the tower list is empty
      */
     public boolean isEmpty(){
         return tower.isEmpty();
@@ -29,7 +32,7 @@ public class TowerCourt {
 
     /**
      * returns the list of towers
-     * @return
+     * @return the list of towers
      */
     public LinkedList<Tower> getTower() {
         return tower;
@@ -37,8 +40,8 @@ public class TowerCourt {
 
     /**
      * removes the indicated number of towers from the list
-     * @param numT
-     * @return
+     * @param numT number of towers to be removed
+     * @return the indicated number of towers from the list
      */
     public LinkedList<Tower> removeTower(int numT){
         LinkedList<Tower> drawOut = new LinkedList<>();
@@ -55,7 +58,7 @@ public class TowerCourt {
 
     /**
      * adds a list of towers to the list
-     * @param tower
+     * @param tower the list of towers
      */
     public void addTower(List<Tower> tower){
         this.tower.addAll(tower);

@@ -6,6 +6,9 @@ import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.LinkedList;
 
+/**
+ * Professor Table class
+ */
 public class ProfessorTable {
     private LinkedList<Professor> professors;
 
@@ -21,7 +24,7 @@ public class ProfessorTable {
 
     /**
      * Returns the professors list
-     * @return
+     * @return the professors list
      */
     public LinkedList<Professor> getProfessors() {
         return professors;
@@ -29,7 +32,7 @@ public class ProfessorTable {
 
     /**
      * removes a professor from the list
-     * @param p
+     * @param p the professor to be removed
      */
     public void removeProfessor(Professor p){
         professors.remove(p);
@@ -37,7 +40,7 @@ public class ProfessorTable {
 
     /**
      * adds a professor to the list
-     * @param p
+     * @param p the professor to be added
      */
     public void addProfessor(Professor p){
         professors.addLast(p);
@@ -45,8 +48,8 @@ public class ProfessorTable {
 
     /**
      * find a professor of the indicated color
-     * @param color
-     * @return
+     * @param color the color to be found
+     * @return the professor of the given color
      */
     public Professor find(PawnColor color){
         for(Professor p: professors)

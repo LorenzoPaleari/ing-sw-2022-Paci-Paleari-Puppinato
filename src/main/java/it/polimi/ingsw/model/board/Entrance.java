@@ -5,13 +5,16 @@ import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.*;
 
+/**
+ * entrance class
+ */
 public class Entrance {
     private LinkedList<Student> student;
 
     /**
      * Constructor
      * Initialize the students list
-     * @param stud
+     * @param stud the list of students
      */
     public Entrance(LinkedList<Student> stud) {
         this.student = stud;
@@ -19,7 +22,7 @@ public class Entrance {
 
     /**
      * Gets the students list
-     * @return
+     * @return the students list
      */
     public LinkedList<Student> getStudent() {
         return student;
@@ -27,8 +30,8 @@ public class Entrance {
 
     /**
      * Removes a student of the indicated color
-     * @param c
-     * @return
+     * @param c the color of the student to be removed
+     * @return the student of the given color
      */
     public Student removeStudent(PawnColor c){
         Student temp;
@@ -39,7 +42,7 @@ public class Entrance {
 
     /**
      * adds a list of students to the list student
-     * @param s
+     * @param s the list of students
      */
     public void addStudent(List<Student> s){
         student.addAll(s);
@@ -47,7 +50,7 @@ public class Entrance {
 
     /**
      * adds a student to the list student
-     * @param s
+     * @param s the student to be added
      */
     public void addStudent(Student s){
         student.add(s);
@@ -55,8 +58,8 @@ public class Entrance {
 
     /**
      * returns a student of the indicated color
-     * @param color
-     * @return
+     * @param color the student color to be found
+     * @return the student of the requested color
      */
     public Student find (PawnColor color){
         for(Student s : student)
@@ -66,7 +69,7 @@ public class Entrance {
 
     /**
      * returns a list with the count of all the students
-     * @return
+     * @return a list with the count of all the students
      */
     public Integer[] countAll() {
         int count;

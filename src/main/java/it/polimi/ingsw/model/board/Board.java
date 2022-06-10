@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.pawns.Student;
 
 import java.util.LinkedList;
 
+/**
+ * Board class
+ */
 public class Board {
     private final Entrance entrance;
     private final DiningRoom diningRoom;
@@ -15,9 +18,9 @@ public class Board {
      *  Constructor
      *  Initialize the entrance, the dining room and the professor table
      *  Sets the number of towers depending of the number of players
-     * @param student
-     * @param numPlayer
-     * @param towerColor
+     * @param student the list of students
+     * @param numPlayer the num of players
+     * @param towerColor the tower color
      */
     public Board(LinkedList<Student> student, int numPlayer, TowerColor towerColor){
         entrance = new Entrance(student);
@@ -31,13 +34,13 @@ public class Board {
 
     /**
      * Gets the entrance
-     * @return
+     * @return the entrance
      */
     public Entrance getEntrance() {return entrance;}
 
     /**
      * Gets the dining room
-     * @return
+     * @return the dining room
      */
     public DiningRoom getDiningRoom() {
         return diningRoom;
@@ -45,7 +48,7 @@ public class Board {
 
     /**
      * Gets the professor table
-     * @return
+     * @return the professor table
      */
     public ProfessorTable getProfessorTable() {
         return professorTable;
@@ -53,7 +56,7 @@ public class Board {
 
     /**
      * Gets the tower court
-     * @return
+     * @return the tower court
      */
     public TowerCourt getTowerCourt() {
         return towercourt;

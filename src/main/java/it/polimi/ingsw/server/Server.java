@@ -4,7 +4,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * server class
+ */
 public class Server {
     public static final int PORT = 8080;
     public static Server server;
@@ -12,6 +14,10 @@ public class Server {
     private static LobbyHandler lobbyHandler;
     private static boolean active = false;
 
+    /**
+     * main class for the server
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             serverSocket = new ServerSocket(PORT);
@@ -27,6 +33,9 @@ public class Server {
         server.acceptPlayer();
     }
 
+    /**
+     * creates a new client handler and accepts the new player
+     */
     public void acceptPlayer() {
         int numPlayer=0;
         while(active){

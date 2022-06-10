@@ -6,6 +6,9 @@ import it.polimi.ingsw.listeners.ModelListener;
 
 import java.util.*;
 
+/**
+ * round class
+ */
 public class Round {
     private List<Player> playerSequence;
     private List<Player> playerSequenceAscend;
@@ -26,7 +29,7 @@ public class Round {
     /**
      * Constructor
      * Initialize the turn, the player sequence, cloud chosen and num turns done
-     * @param player
+     * @param player the list of players
      */
     public Round(List<Player> player) {
         turn = new Turn(player.get(0));
@@ -40,7 +43,7 @@ public class Round {
 
     /**
      * Gets the current turn
-     * @return
+     * @return the current turn
      */
     public Turn getTurn(){
         return turn;
@@ -48,7 +51,7 @@ public class Round {
 
     /**
      * Gets the elements inside the chosen cloud
-     * @return
+     * @return the list of elements inside the chosen cloud
      */
     public List<Integer> getCloudChosen() {
         return cloudChosen;
@@ -56,7 +59,7 @@ public class Round {
 
     /**
      * Sets the chosen cloud
-     * @param cloudChosen
+     * @param cloudChosen the number of the cloud
      */
     public void setCloudChosen(int cloudChosen) {
         this.cloudChosen.add(cloudChosen);
@@ -64,7 +67,7 @@ public class Round {
 
     /**
      * Gets last round
-     * @return
+     * @return if this is the last round
      */
     public Boolean getLastRound() {
         return lastRound;
@@ -158,7 +161,7 @@ public class Round {
     }
 
     /**
-     *
+     * sets the parameters to end the round
      */
     public void endRound(){
         numTurnDone = 0;
@@ -169,9 +172,9 @@ public class Round {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * gets the next player
+     * @param p the current player
+     * @return the next player
      */
     public Player getNextPlayer(Player p){
         if (playerSequence.indexOf(p) + 1 == playerSequence.size())
@@ -183,8 +186,8 @@ public class Round {
     }
 
     /**
-     *
-     * @param modelListener
+     * attach the modelListener to the round
+     * @param modelListener the modelListeners
      */
     public void attach(ModelListener modelListener){this.modelListener=modelListener;}
 

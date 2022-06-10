@@ -3,6 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.listeners.ModelListener;
 
+/**
+ * turn class
+ */
 public class Turn{
     private Player currentPlayer;
     private int remainingMovements;
@@ -12,7 +15,7 @@ public class Turn{
     /**
      * Constructor
      * Sets the current player
-     * @param player
+     * @param player the player
      */
     public Turn(Player player){
         usedCharacter = false;
@@ -21,7 +24,7 @@ public class Turn{
 
     /**
      * Gets current player
-     * @return
+     * @return the current player
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -29,7 +32,7 @@ public class Turn{
 
     /**
      * Gets remaining moves
-     * @return
+     * @return the remaining moves
      */
     public int getRemainingMovements() {
         return remainingMovements;
@@ -37,7 +40,7 @@ public class Turn{
 
     /**
      * Reset remaining moves
-     * @param num
+     * @param num the remaining moves
      */
     public void resetRemainingMovements(int num) {
         remainingMovements = num;
@@ -45,7 +48,7 @@ public class Turn{
 
     /**
      * Sets used character
-     * @param usedCharacter
+     * @param usedCharacter the used character
      */
     public void setUsedCharacter(boolean usedCharacter) {
         this.usedCharacter = usedCharacter;
@@ -55,7 +58,7 @@ public class Turn{
 
     /**
      * Returns true if a character has been used
-     * @return
+     * @return true if a character has been used
      */
     public boolean isUsedCharacter() {
         return usedCharacter;
@@ -63,7 +66,7 @@ public class Turn{
 
     /**
      * Sets the new current player
-     * @param p
+     * @param p the current player
      */
     public void updatePlayer(Player p){
         currentPlayer = p;
@@ -76,9 +79,8 @@ public class Turn{
         remainingMovements -= 1;
     }
 
-    /**
-     *
-     * @param modelListener
+    /** attached the modelListener to the turn
+     * @param modelListener to be attached
      */
     public void attach(ModelListener modelListener){
         this.modelListener=modelListener;
