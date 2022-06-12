@@ -18,6 +18,9 @@ import it.polimi.ingsw.server.VirtualView;
 
 import java.util.List;
 
+/**
+ * Table handler class
+ */
 public class TableHandler {
     private TurnController turnController;
     private VirtualView virtualView;
@@ -29,6 +32,18 @@ public class TableHandler {
     private Context islandContext;
     private final IslandStrategy islandStrategy;
 
+    /**
+     * Constructor
+     * @param turnController
+     * @param game
+     * @param professorContext
+     * @param motherNatureContext
+     * @param islandContext
+     * @param professorStrategyStandard
+     * @param motherNatureStrategy
+     * @param islandStrategy
+     * @param virtualView
+     */
     public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorStrategy professorStrategyStandard, MotherNatureStrategy motherNatureStrategy, IslandStrategy islandStrategy, VirtualView virtualView) {
         this.game = game;
         this.virtualView = virtualView;
@@ -44,6 +59,12 @@ public class TableHandler {
         } catch (NoSuchMethodException ignored){}
     }
 
+    /**
+     * removes the student from the entrance and adds it to the island
+     * @param player the current player
+     * @param color the student color
+     * @param position the island position
+     */
     public void useStudentIsland(Player player, PawnColor color, int position){
         Round round = game.getRound();
 
@@ -59,6 +80,11 @@ public class TableHandler {
         game.getTable().getIsland(position).addStudent(student);
     }
 
+    /**
+     * moves mother nature
+     * @param player the current player
+     * @param endPosition the new mother nature position
+     */
     public void moveMotherNature(Player player, int endPosition) {
         int numMoves;
 
@@ -77,6 +103,11 @@ public class TableHandler {
             player.changeState(PlayerState.ENDTURN);
     }
 
+    /**
+     * updated the islands, checks for merging and winner
+     * @param island the current island
+     * @return true if there is a winner
+     */
     public boolean updateIsland(Island island){
         if (island.isNoEntryTiles()){
             for (int i = 0; i < 3; i++)
@@ -103,6 +134,11 @@ public class TableHandler {
         return false;
     }
 
+    /**
+     * takes the students from the chosen cloud and adds them to the player entrance
+     * @param player the current player
+     * @param position the cloud position
+     */
     public void chooseCloud(Player player, int position){
         try {
             turnController.checkPermission(game.getRound().getTurn(), player, PlayerState.ENDTURN);
@@ -142,6 +178,9 @@ public class TableHandler {
         }
     }
 
+    /**
+     * checks if there is a winner
+     */
     public void winner(){
         Player winner1 = null;
         Player winner2 = null;

@@ -11,12 +11,23 @@ import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.server.VirtualView;
 
+/**
+ * Board handler class
+ */
 public class BoardHandler {
     private Game game;
     private VirtualView virtualView;
     private TurnController turnController;
     private Context professorContext;
 
+    /**
+     * Constructor
+     * Initialize the board
+     * @param game the current game
+     * @param turnController the turn controller
+     * @param professorContext the professor context
+     * @param virtualView the virtual view
+     */
     public BoardHandler(Game game, TurnController turnController, Context professorContext, VirtualView virtualView){
         this.game = game;
         this.virtualView = virtualView;
@@ -27,6 +38,11 @@ public class BoardHandler {
         } catch (NoSuchMethodException ignored){}
     }
 
+    /**
+     * Uses a student on the dining
+     * @param player the current player
+     * @param color the student color
+     */
     public void useStudentDining(Player player, PawnColor color){
         Round round = game.getRound();
         Board board = player.getBoard();
@@ -54,6 +70,11 @@ public class BoardHandler {
         board.getDiningRoom().addStudent(student);
     }
 
+    /**
+     * checks the professor
+     * @param player the current player
+     * @param color the professor color
+     */
     public void checkProfessor(Player player, PawnColor color){
         professorContext.professorControl(game, player, color);
     }

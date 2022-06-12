@@ -26,6 +26,9 @@ import it.polimi.ingsw.server.VirtualView;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Controller class
+ */
 public class Controller {
     private final TurnController turnController;
     private Context professorContext;
@@ -43,6 +46,10 @@ public class Controller {
     private ModelListener modelListener;
     boolean canStart;
 
+    /**
+     * Constructor
+     * Initialize the controller, the turn controller, professor, mother nature and island strategy and context
+     */
     public Controller(){
         canStart = false;
         game = new Game();
@@ -60,6 +67,10 @@ public class Controller {
         islandStrategyMoreInfluence = new IslandStrategyKnight();
     }
 
+    /**
+     * sets the virtual view
+     * @param virtualView the virtual view
+     */
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
 
@@ -69,14 +80,26 @@ public class Controller {
         modelListener=new ModelListener(virtualView);
     }
 
+    /**
+     * sets the number of players
+     * @param num the number of players
+     */
     public void setNumPlayer(int num) {
         game.setNumPlayer(num);
     }
 
+    /**
+     * sets the expert mode
+     * @param bool true if expert
+     */
     public void setExpertMode(boolean bool){
         game.setExpertMode(bool);
     }
 
+    /**
+     * adds a player to the game
+     * @param player the player to be added
+     */
     public void addPlayer(Player player) {
         int remaining = game.addPlayer(player);
         if (remaining == 0) {
@@ -87,6 +110,10 @@ public class Controller {
         }
     }
 
+    /**
+     * gets the tower colors available
+     * @return the tower colors available
+     */
     public List<TowerColor> getAvailableColor(){
         List<TowerColor> colors = new LinkedList<>();
         colors.add(TowerColor.WHITE);
@@ -100,6 +127,11 @@ public class Controller {
         return colors;
     }
 
+    /**
+     * uses the assistant
+     * @param position the assistant position
+     * @param player the current player
+     */
     public void useAssistant(int position, Player player){
         Round round = game.getRound();
         int weight = player.getDeck().getAssistant(position).getWeight();
@@ -159,40 +191,91 @@ public class Controller {
             throw new ClientException(ErrorType.SAME_ASSISTANT);
     }
 
+    /**
+     * uses the student on dining
+     * @param player the current player
+     * @param color the student color
+     */
     public void useStudentDining(Player player, PawnColor color){
         boardHandler.useStudentDining(player, color);
     }
 
+    /**
+     * uses the student on island
+     * @param player the current player
+     * @param color the student color
+     * @param position the island position
+     */
     public void useStudentIsland(Player player, PawnColor color, int position){
         tableHandler.useStudentIsland(player, color, position);
     }
 
+    /**
+     * moves mother nature
+     * @param player the current player
+     * @param endPosition the end position of mother nature
+     */
     public void moveMotherNature(Player player, int endPosition) {
         tableHandler.moveMotherNature(player, endPosition);
     }
 
+    /**
+     * choose cloud
+     * @param player the current player
+     * @param position the current position
+     */
     public void chooseCloud(Player player, int position){
         tableHandler.chooseCloud(player, position);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     */
     public void useCharacter(Player player, int characterPosition){
         characterHandler.useCharacter(player, characterPosition);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param islandPosition the island position
+     */
     public void useCharacter(Player player, int characterPosition, int islandPosition){
         characterHandler.useCharacter(player, characterPosition, islandPosition);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param color the student color
+     */
     public void useCharacter(Player player, int characterPosition, PawnColor color){
         characterHandler.useCharacter(player, characterPosition, color);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param colors the colors array
+     */
     public void useCharacter(Player player, int characterPosition, int[] colors){
         player.getBoard().getDiningRoom().detach();
         characterHandler.useCharacter(player, characterPosition, colors);
         player.getBoard().getDiningRoom().reattach();
     }
 
+    /**
+     *  uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param islandPosition the island position
+     * @param color the student color
+     */
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
         game.getTable().getIsland(islandPosition).detach();
         characterHandler.useCharacter(player, characterPosition, islandPosition, color);
@@ -200,6 +283,11 @@ public class Controller {
 
     }
 
+    /**
+     * gets the player by nickname
+     * @param nickname the player nickname
+     * @return the player with the given nickname
+     */
     public Player getPlayerByNickname(String nickname){
         for (Player p: game.getPlayers()){
             if(p.getNickname().equals(nickname)) return p;
@@ -207,14 +295,26 @@ public class Controller {
         return null;
     }
 
+    /**
+     * gets the game
+     * @return the game
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * gets the table handler
+     * @return the table handler
+     */
     public TableHandler getTableHandler() {
         return tableHandler;
     }
 
+    /**
+     * starts the game
+     * @throws InterruptedException
+     */
     public void gameStart() throws InterruptedException {
         synchronized (this) {
             while (!readyToStart())
@@ -234,10 +334,18 @@ public class Controller {
         }
     }
 
+    /**
+     * gets true if the game is ready to start
+     * @return true if the game is ready to start
+     */
     private boolean readyToStart(){
         return canStart;
     }
 
+    /**
+     * gets the board handler
+     * @return the board handler
+     */
     public BoardHandler getBoardHandler() {
         return boardHandler;
     }

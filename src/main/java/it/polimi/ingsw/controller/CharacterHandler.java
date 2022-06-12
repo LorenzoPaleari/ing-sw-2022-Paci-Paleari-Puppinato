@@ -12,6 +12,9 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.server.VirtualView;
 
+/**
+ * Character handler
+ */
 public class CharacterHandler {
     private TurnController turnController;
     private Game game;
@@ -23,6 +26,19 @@ public class CharacterHandler {
     private BoardHandler boardHandler;
     private IslandStrategy islandStrategy;
 
+    /**
+     * Constructor
+     * Initialize the components
+     * @param turnController
+     * @param game
+     * @param professorContext
+     * @param motherNatureContext
+     * @param islandContext
+     * @param virtualView
+     * @param tableHandler
+     * @param boardHandler
+     * @param islandStrategy
+     */
     public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView, TableHandler tableHandler, BoardHandler boardHandler, IslandStrategy islandStrategy){
         this.game = game;
         this.virtualView = virtualView;
@@ -36,6 +52,11 @@ public class CharacterHandler {
         this.game.setIslandController(islandStrategy);
     }
 
+    /**
+     *  uses the character
+     * @param player the current player
+     * @param characterPosition  the character position
+     */
     public void useCharacter(Player player, int characterPosition){
         Character character = game.getTable().getCharacter(characterPosition);
         if (characterControls(player, character))
@@ -48,6 +69,12 @@ public class CharacterHandler {
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param islandPosition the island position
+     */
     public void useCharacter(Player player, int characterPosition, int islandPosition){
         Character character = game.getTable().getCharacter(characterPosition);
 
@@ -69,6 +96,12 @@ public class CharacterHandler {
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param color the pawn color
+     */
     public void useCharacter(Player player, int characterPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
         if (characterControls(player, character))
@@ -83,6 +116,12 @@ public class CharacterHandler {
         }
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param colors the array of colors
+     */
     public void useCharacter(Player player, int characterPosition, int[] colors){
         Character character = game.getTable().getCharacter(characterPosition);
         if (characterControls(player, character))
@@ -103,6 +142,13 @@ public class CharacterHandler {
         game.getRound().getTurn().setUsedCharacter(true);
     }
 
+    /**
+     * uses the character
+     * @param player the current player
+     * @param characterPosition the character position
+     * @param islandPosition the island position
+     * @param color the pawncolor
+     */
     public void useCharacter(Player player, int characterPosition, int islandPosition, PawnColor color){
         Character character = game.getTable().getCharacter(characterPosition);
         if (characterControls(player, character))
@@ -117,6 +163,12 @@ public class CharacterHandler {
         }
     }
 
+    /**
+     * checks and updates characters
+     * @param player the current player
+     * @param character the character you want to use
+     * @return true if everything is okay
+     */
     public boolean characterControls(Player player, Character character){
         try {
             turnController.checkCharacter(game, player, character.getPrice(), character);
