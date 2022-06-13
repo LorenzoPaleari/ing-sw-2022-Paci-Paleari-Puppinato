@@ -7,9 +7,20 @@ import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
+/**
+ * Knight strategy
+ */
 public class IslandStrategyKnight implements IslandStrategy {
     private Player player;
 
+    /**
+     * calculates influence
+     * @param island the current island
+     * @param game the current game
+     * @param owner
+     * @param color the tower color
+     * @param playerCandidate
+     */
     public void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate){
         int MoreInfluence = 0;
         for (Player p : game.getPlayers()){
@@ -32,12 +43,18 @@ public class IslandStrategyKnight implements IslandStrategy {
             }
         }
     }
-
+    /**
+     * sets color to avoid
+     * @param noColor pawn color to avoid
+     */
     @Override
     public void setNoColor(PawnColor noColor) {
 
     }
-
+    /**
+     * sets the player
+     * @param player the player to be set
+     */
     @Override
     public void setPlayer(Player player) {
         this.player = player;

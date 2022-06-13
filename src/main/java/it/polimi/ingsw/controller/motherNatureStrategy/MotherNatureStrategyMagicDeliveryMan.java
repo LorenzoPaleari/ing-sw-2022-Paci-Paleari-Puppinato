@@ -5,8 +5,18 @@ import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Table;
 
+/**
+ * Mother Nature Strategy Magic Delivery Man class
+ */
 public class MotherNatureStrategyMagicDeliveryMan implements MotherNatureStrategy {
-
+    /**
+     * checks mother nature movements
+     * @param table the current table
+     * @param endPosition the end mother nature position
+     * @param player the current player
+     * @return num moves
+     * @throws ClientException
+     */
     public int checkMotherNature(Table table, int endPosition, Player player) throws ClientException {
         int numMoves;
 

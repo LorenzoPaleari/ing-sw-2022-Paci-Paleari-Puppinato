@@ -6,18 +6,35 @@ import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
 
+/**
+ * Island Context class
+ */
 public class IslandContext extends Context {
     private IslandStrategy strategy;
 
+    /**
+     * Constructor
+     * @param strategy the strategy
+     */
     public IslandContext(IslandStrategy strategy){
         this.strategy = strategy;
     }
 
+    /**
+     * changes context
+     * @param strategy ths island strategy
+     */
     @Override
     public void changeContext(IslandStrategy strategy) {
         this.strategy = strategy;
     }
 
+    /**
+     * conquers an island
+     * @param island the current island
+     * @param game the current game
+     * @return true if it is everything ok
+     */
     @Override
     public boolean conquerIsland(Island island, Game game){
         boolean value = false;
