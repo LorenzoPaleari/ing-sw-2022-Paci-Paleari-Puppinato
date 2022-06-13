@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.enumerations;
 
+/**
+ * Character type enum
+ */
 public enum CharacterType {
     MONK(1, "MONK", "Take 1 student from this card and place it on an Island of your choice."),
     FARMER(2,"FARMER", "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them."),
@@ -38,14 +41,26 @@ public enum CharacterType {
         return name;
     }
 
+    /**
+     * gets the character description
+     * @return the character description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * gets the character price
+     * @return the character price
+     */
     public int getPrice() {
         return price;
     }
 
+    /**
+     * returns the number of students for this character
+     * @return the number of students for this character
+     */
     public int hasStudent(){
         int value = 0;
 
@@ -58,6 +73,10 @@ public enum CharacterType {
         return value;
     }
 
+    /**
+     * name to string
+     * @return name to string
+     */
     @Override
     public String toString() {
         return name;

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.enumerations;
 
+/**
+ * Tower color enum
+ */
 public enum TowerColor {
     WHITE("WHITE", 0), BLACK("BLACK", 1), GREY("GREY", 2);
 
@@ -24,12 +27,19 @@ public enum TowerColor {
     public String getText() {
         return text;
     }
-
+    /**
+     * Returns the text of the player state.
+     * @return a String containing the text of the tower color.
+     */
     @Override
     public String toString() {
         return text;
     }
 
+    /**
+     * gets the index
+     * @return the index
+     */
     public Integer getIndex(){
         return index;
     }
@@ -41,6 +51,11 @@ public enum TowerColor {
         return null;
     }
 
+    /**
+     * gets the tower color from the given number
+     * @param color the color number
+     * @return the tower color from the given number
+     */
     public static TowerColor getColor(int color){
         for (TowerColor t : TowerColor.values())
             if(t.index.equals(color))

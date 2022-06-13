@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.enumerations;
 
+/**
+ * Player state enum
+ */
 public enum PlayerState {
     PLANNING("PLANNING"), ACTION("ACTION"), WAIT("WAIT"), ENDTURN("END TURN");
 
@@ -23,6 +26,10 @@ public enum PlayerState {
         return text;
     }
 
+    /**
+     * Returns the text of the player state.
+     * @return a String containing the text of the player state.
+     */
     @Override
     public String toString() {
         return text;

@@ -2,6 +2,9 @@ package it.polimi.ingsw.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * Error type enum
+ */
 public enum ErrorType implements Serializable {
     ALREADY_CHOSEN_CLOUD("This cloud has already been chosen, please select another"),
     ALREADY_USED_CHARACTER("A character has already been used this turn"),
@@ -18,10 +21,18 @@ public enum ErrorType implements Serializable {
     WRONG_PHASE3("You have to choose a cloud");
     private final String errorText;
 
+    /**
+     * Constructor
+     * @param errorText the error text
+     */
     ErrorType (String errorText){
         this.errorText = errorText;
     }
 
+    /**
+     * gets error text
+     * @return the error text
+     */
     public String getErrorText() {
         return errorText;
     }
