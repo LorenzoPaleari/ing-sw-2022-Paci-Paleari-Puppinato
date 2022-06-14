@@ -15,15 +15,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-//MONK
-//SPOILED_PRINCESS
-//REPLACE
+
+
+/**
+ * Character group student
+ * MONK
+ * SPOILED_PRINCESS
+ * REPLACE
+ */
 public class CharacterGroupStudent extends Character{
     private Bag bag;
     private List<Student> student;
 
     private Method checkProfessor;
 
+    /**
+     * Constructor
+     * @param type the character type
+     * @param bag the bag
+     * @param checkProfessor the check professor method
+     */
     public CharacterGroupStudent (CharacterType type, Bag bag, Method checkProfessor) {
         super(type);
         this.bag=bag;
@@ -32,12 +43,22 @@ public class CharacterGroupStudent extends Character{
         this.checkProfessor = checkProfessor;
     }
 
+    /**
+     * removes and returns student from the list
+     * @param color the student color
+     * @return the student of the given color
+     */
     public Student removeStudent(PawnColor color){
         Student s = findStudent(color);
         student.remove(s);
         return s;
     }
 
+    /**
+     * returns student from the list
+     * @param color the student color
+     * @return the student of the given color
+     */
     public Student findStudent(PawnColor color){
         Student stud = null;
 
@@ -50,11 +71,24 @@ public class CharacterGroupStudent extends Character{
         return stud;
     }
 
+    /**
+     * adds the student s to the list
+     * @param s the student to be added
+     */
     @Override
     public void addStudent(Student s) {
         student.add(0, s);
     }
 
+    /**
+     * activate character
+     * @param game the current game
+     * @param player the current player
+     * @param color the pawn color
+     * @param context the context
+     * @param boardHandler the board handler
+     * @throws BagIsEmptyException
+     */
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException {
         Object[] objects = new Object[2];
@@ -69,12 +103,26 @@ public class CharacterGroupStudent extends Character{
         player.getBoard().getDiningRoom().reattach();
         student.addAll(bag.withdrawStudent(1));
     }
+
+    /**
+     * activate character
+     * @param island the current island
+     * @param color the pawn color
+     * @throws BagIsEmptyException
+     */
     @Override
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException {
         island.addStudent(removeStudent(color)); //add_student_islands
 
         student.addAll(bag.withdrawStudent(1));
     }
+
+    /**
+     * activate character
+     * @param player the current player
+     * @param color the list of pawn color
+     * @param boardHandler the board handler
+     */
     @Override
     public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) { // replace
         List<Student> list1 = new LinkedList<>();
@@ -92,6 +140,11 @@ public class CharacterGroupStudent extends Character{
 
     }
 
+    /**
+     * counts the student of the given color
+     * @param pawnColor the pawn color
+     * @return the number of student of the given color
+     */
     @Override
     public int count(PawnColor pawnColor){
         int count = 0;

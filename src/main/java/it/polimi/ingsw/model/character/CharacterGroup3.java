@@ -14,23 +14,48 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-//KNIGHT
-//EXCHANGE
+
+
+/**
+ * Character group 3 class
+ * KNIGHT
+ * EXCHANGE
+ */
 public class CharacterGroup3 extends Character{
     private IslandStrategy island;
     private Method checkProfessor;
 
+    /**
+     * Constructor
+     * @param type the character type
+     * @param checkProfessor the check professor method
+     * @param island the island strategy
+     */
     public CharacterGroup3 (CharacterType type, Method checkProfessor, IslandStrategy island) {
         super(type);
         this.checkProfessor = checkProfessor;
         this.island = island;
     }
 
+    /**
+     * activate character
+     * @param professorContext the professor context
+     * @param motherNatureContext the mother nature context
+     * @param islandContext the island context
+     */
     @Override
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         islandContext.changeContext(island);
     }
 
+    /**
+     * activate character
+     * @param player the current player
+     * @param color the list of pawn color
+     * @param boardHandler the board handler
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     @Override
     public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) throws InvocationTargetException, IllegalAccessException {
         List<Student> list1 = new LinkedList<>();

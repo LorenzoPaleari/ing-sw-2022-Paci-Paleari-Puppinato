@@ -6,7 +6,19 @@ import it.polimi.ingsw.model.table.Bag;
 
 import java.lang.reflect.Method;
 
+/**
+ * Factory pattern Class
+ */
 public class Factory {
+    /**
+     * Get character
+     * @param type the character type
+     * @param bag the current bag
+     * @param updateIsland the upload island method
+     * @param checkProfessor the check professor method
+     * @param island the island strategy
+     * @return the character
+     */
     public  Character getCharacter (CharacterType type, Bag bag, Method updateIsland, Method checkProfessor, IslandStrategy island) {
         Character character;
         if(type.equals(CharacterType.MAGIC_DELIVERY_MAN) || type.equals(CharacterType.MUSHROOM_HUNTER))

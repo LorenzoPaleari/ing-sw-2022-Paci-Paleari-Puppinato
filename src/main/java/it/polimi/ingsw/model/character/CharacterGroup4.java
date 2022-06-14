@@ -10,19 +10,38 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Player;
 
-//CENTAUR
-//RETURN
+
+
+/**
+ * Character group 4
+ * CENTAUR
+ * RETURN
+ */
 public class CharacterGroup4 extends Character{
     private IslandStrategy island = new IslandStrategyCentaur();
     public CharacterGroup4 (CharacterType type){
         super(type);
     }
 
+    /**
+     * activate character
+     * @param professorContext the professor context
+     * @param motherNatureContext the mother nature context
+     * @param islandContext the island context
+     */
     @Override
     public void activateCharacter(Context professorContext, Context motherNatureContext, Context islandContext) {
         islandContext.changeContext(island);
     }
 
+    /**
+     * activate character
+     * @param game the current game
+     * @param player the current player
+     * @param color the pawn color
+     * @param context the context
+     * @param boardHandler the board handler
+     */
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) {
         Professor prof = game.getTable().findProfessor(color);
