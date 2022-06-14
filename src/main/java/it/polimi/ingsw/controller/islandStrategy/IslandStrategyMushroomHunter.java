@@ -59,6 +59,6 @@ public class IslandStrategyMushroomHunter implements IslandStrategy {
      */
     @Override
     public void setNoColor(PawnColor noColor) {
-
+        this.noColor = noColor;
     }
 }
