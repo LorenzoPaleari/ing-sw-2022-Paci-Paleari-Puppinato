@@ -10,17 +10,28 @@ import it.polimi.ingsw.server.VirtualView;
 
 import java.io.Serializable;
 
+/**
+ * Game info message
+ */
 public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable {
     private MessageType type;
     private GameInfo gameInfo;
     private View view;
     public Thread thread = null;
 
+    /**
+     * Constructor
+     * @param gameInfo the game info
+     */
     public GameInfoMessage(GameInfo gameInfo){
         this.gameInfo = gameInfo;
         type = MessageType.ModelView;
     }
 
+    /**
+     * action
+     * @param view the view
+     */
     @Override
     public void action(View view) {
         this.view = view;
@@ -33,21 +44,38 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
         }
     }
 
+    /**
+     * prints the game board
+     */
     public void run(){
         view.printGameBoard(gameInfo);
         view.bufferClearer();
     }
 
+    /**
+     * action
+     * @param virtualView the virtual view
+     * @param playerNickname the player nickname
+     */
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
 
     }
 
+    /**
+     * action
+     * @param lobbyHandler the lobby handler
+     * @param clientHandler the client handler
+     */
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
 
     }
 
+    /**
+     * gets the message type
+     * @return the message type
+     */
     @Override
     public MessageType getType() {
         return type;
