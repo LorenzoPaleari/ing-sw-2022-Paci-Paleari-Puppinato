@@ -11,6 +11,9 @@ import it.polimi.ingsw.server.VirtualView;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Game setup class
+ */
 public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMessage {
     MessageType type;
     List<String[]> lobbies;
@@ -20,26 +23,49 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     boolean fullGame = false;
     int lobby;
 
+    /**
+     * Constructor
+     * Initialize the message type
+     */
     public GameSetUp(){
         type = MessageType.ControllerView;
     }
 
+    /**
+     * Constructor
+     * Initialize the lobbies and the boolean full game
+     * @param lobbies the list of lobbies
+     * @param fullGame
+     */
     public GameSetUp(List<String[]> lobbies, boolean fullGame){
         this.lobbies = lobbies;
         this.fullGame = fullGame;
     }
 
+    /**
+     * Constructor
+     * @param newGame the new game boolean
+     * @param lobby the number of lobby
+     */
     public GameSetUp(boolean newGame, int lobby){
         type = MessageType.Lobby;
         this.newGame = newGame;
         this.lobby = lobby;
     }
 
+    /**
+     * Gets the message type
+     * @return the message type
+     */
     @Override
     public MessageType getType() {
         return type;
     }
 
+    /**
+     * action
+     * @param view the view
+     */
     @Override
     public void action(View view) {
         if (!fullGame)
@@ -48,6 +74,11 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
             view.fullLobby(lobbies);
     }
 
+    /**
+     * action
+     * @param lobbyHandler the lobby handler
+     * @param clientHandler the client handler
+     */
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
         if (newGame)
@@ -56,7 +87,11 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
             lobbyHandler.addClient(lobby, clientHandler);
     }
 
-
+    /**
+     * action
+     * @param virtualView the virtual view
+     * @param playerNickname the player nickname
+     */
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
     }
