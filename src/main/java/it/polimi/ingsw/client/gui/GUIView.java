@@ -2,11 +2,14 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ServerHandler;
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.client.gui.scene.GameSetupController;
+import it.polimi.ingsw.client.gui.scene.NicknameController;
 import it.polimi.ingsw.client.gui.scene.SceneController;
 import it.polimi.ingsw.client.gui.scene.StartController;
 import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
+import it.polimi.ingsw.client.viewUtilities.LobbyValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
@@ -36,6 +39,9 @@ public class GUIView implements View {
 
     private GameInfo gameInfo;
     private ServerHandler serverHandler;
+    private GameSetupController gameSetupController;
+
+    private NicknameController nicknameController;
     private Scanner scanner;
 
     private SceneController sceneController;
@@ -52,22 +58,9 @@ public class GUIView implements View {
 
     @Override
     public void gameSetUp() {
-
-        System.out.print("Vuoi cominciare una nuova partita? \u001b[31m♥ [Yes/No]:");
-        /*boolean valid;
-        String response;
-
-
-        System.out.print("Vuoi cominciare una nuova partita? \u001b[31m♥ [Yes/No]:");
-        do {
-            valid = true;
-            response = scanner.nextLine().toUpperCase();
-            if (!(response.equals("YES") || response.equals("NO"))){
-                valid = false;
-                System.out.print("Scelta non valida, prova di nuovo: ");
-            }
-        } while (!valid);
-
+        gameSetupController = new GameSetupController(serverHandler);
+        Platform.runLater(() -> SceneController.changeRootPane(gameSetupController, "gameSetup.fxml"));
+        /*
         if (response.equals("YES"))
             serverHandler.setGame(true, -1);
         else {
@@ -77,23 +70,20 @@ public class GUIView implements View {
 
     @Override
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
-        if (firstLobby) {
+        /*if (firstLobby) {
             System.out.println("There isn't any lobby, we will create one just for you");
-            synchronized (this) {
-                try {
-                    this.wait(3000);
-                } catch (InterruptedException ignored) {
-                }
+
             }
             serverHandler.setGame(true, -1);
             //} else{
             //  lobbySelection(lobbies);
-        }
+        }*/
     }
 
     @Override
     public void fullLobby(List<String[]> lobbies) {
-
+        gameSetupController.errorMessage("Errore");
+        serverHandler.refreshLobbies();
     }
 
     @Override
@@ -103,7 +93,11 @@ public class GUIView implements View {
 
     @Override
     public void playerSetUp(boolean requestAgain) {
-        //se req again falso crea controller e setta scena, altrimenti no
+        if (!requestAgain) {
+            nicknameController = new NicknameController(serverHandler);
+            Platform.runLater(() -> SceneController.changeRootPane(nicknameController, "nickname.fxml"));
+        } else
+            nicknameController.errorMessage("This nickname has already been taken, please try again");
     }
 
     @Override
@@ -156,7 +150,12 @@ public class GUIView implements View {
 
     }
 
+    private int lobbyCounter(List<String[]> lobbies){
+        int count = 0;
+        for (String[] s : lobbies)
+            if (s.length < 6)
+                count++;
 
-    public void buttonClicked(ActionEvent actionEvent) {
+        return count;
     }
 }

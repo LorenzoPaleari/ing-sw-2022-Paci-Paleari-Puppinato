@@ -42,15 +42,19 @@ public class StartController extends ViewListener implements GenericSceneControl
         if (serverIP.equals("")){
             serverIP = IPValidator.getDefaultIP();
             valid = true;
-        } else {
-            if (!IPValidator.isCorrectIP(serverIP)) {
+        } else if (!IPValidator.isCorrectIP(serverIP)) {
                 errorLabel.setText("Server IP not valid. Please try again.");
                 errorLabel.setVisible(true);
-            }
         }
+        else valid = true;
         if(valid){
-            SceneController.setActiveScene(event);
-            serverHandler.initConnection(serverIP);
+            String finalServerIP = serverIP;
+            (new Thread(() -> {
+                try {
+                    serverHandler.initConnection(finalServerIP);
+                } catch (Exception ignored) {
+                }
+            })).start();
         }
 
 

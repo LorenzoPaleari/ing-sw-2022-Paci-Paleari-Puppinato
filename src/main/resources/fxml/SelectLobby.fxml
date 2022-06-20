@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="menuBackground" stylesheets="@../css/selectLobby.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Group>
+            <children>
+                <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="289.0" prefWidth="447.0">
+                    <children>
+                        <Text layoutX="101.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Lobby" textAlignment="CENTER" wrappingWidth="244.8154296875">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                        <ChoiceBox fx:id="lobbySelector" layoutX="149.0" layoutY="127.0" prefWidth="150.0" visible="false" />
+                        <Label fx:id="infoLabel" layoutX="221.0" layoutY="40.0" prefHeight="17.0" prefWidth="4.0" />
+                        <Button fx:id="joinBtn" layoutX="40.0" layoutY="57.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Join">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </children>
+        </Group>
+    </children>
+</StackPane>

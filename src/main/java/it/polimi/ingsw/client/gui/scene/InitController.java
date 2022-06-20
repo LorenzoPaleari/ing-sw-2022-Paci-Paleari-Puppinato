@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.scene;
 
 import it.polimi.ingsw.client.ServerHandler;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,7 +31,7 @@ public class InitController implements GenericSceneController{
     @FXML
     private void onStartBtnClick(Event event) {
         SceneController.setActiveScene(event);
-        SceneController.changeRootPane(new StartController(serverHandler), "start.fxml");
+        Platform.runLater(() -> SceneController.changeRootPane(new StartController(serverHandler), "start.fxml"));
     }
 
     @FXML

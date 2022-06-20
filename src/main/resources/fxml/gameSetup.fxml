@@ -2,6 +2,9 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
@@ -11,23 +14,29 @@
    <children>
       <Group>
          <children>
-            <AnchorPane layoutX="20.0" layoutY="1.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="289.0" prefWidth="447.0">
                <children>
-                  <Text layoutX="14.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to start a new game?" textAlignment="CENTER" wrappingWidth="244.8154296875">
+                  <Text layoutX="101.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to start a new game?" textAlignment="CENTER" wrappingWidth="244.8154296875">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Button fx:id="yesBtn" layoutX="76.0" layoutY="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Yes">
+                  <Button fx:id="yesBtn" layoutX="40.0" layoutY="57.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Yes">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="noBtn" layoutX="76.0" layoutY="126.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="No">
+                  <Button fx:id="noBtn" layoutX="285.0" layoutY="57.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="No">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <ChoiceBox fx:id="lobbySelector" layoutX="149.0" layoutY="127.0" prefWidth="150.0" visible="false" />
+                  <Label fx:id="infoLabel" layoutX="221.0" layoutY="40.0" prefHeight="17.0" prefWidth="4.0" />
+                  <RadioButton fx:id="radio2" layoutX="71.0" layoutY="180.0" mnemonicParsing="false" selected="true" text="2" />
+                  <RadioButton fx:id="radio3" layoutX="118.0" layoutY="180.0" mnemonicParsing="false" text="3" />
+                  <RadioButton fx:id="expertYes" layoutX="71.0" layoutY="205.0" mnemonicParsing="false" selected="true" text="Yes" />
+                  <RadioButton fx:id="expertNo" layoutX="118.0" layoutY="205.0" mnemonicParsing="false" selected="true" text="No" />
                </children>
             </AnchorPane>
          </children>
