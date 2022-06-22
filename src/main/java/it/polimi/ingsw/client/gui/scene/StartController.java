@@ -2,24 +2,19 @@ package it.polimi.ingsw.client.gui.scene;
 
 import it.polimi.ingsw.client.ServerHandler;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
-import it.polimi.ingsw.listeners.ViewListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class StartController extends ViewListener implements GenericSceneController{
+public class StartController implements GenericSceneController{
     @FXML
     private TextField serverIpField;
-
+    @FXML
+    private TextField serverIpField1;
     @FXML
     private Button joinBtn;
-
-    @FXML
-    private Label errorLabel;
-
     private ServerHandler serverHandler;
 
     public StartController(ServerHandler serverHandler1){
@@ -38,20 +33,25 @@ public class StartController extends ViewListener implements GenericSceneControl
      */
     private void onJoinBtnClick(Event event) {
         String serverIP = serverIpField.getText();
+        String serverPort = serverIpField1.getText();
         boolean valid = false;
-        if (serverIP.equals("")){
+        if (serverPort.equals(""))
+            serverPort = IPValidator.getDefaultPort();
+
+        if (serverIP.equals(""))
             serverIP = IPValidator.getDefaultIP();
+
+        if (!IPValidator.isCorrectIP(serverIP) || !IPValidator.isCorrectPort(serverPort)) {
+                SceneController.showError("NETWORK SETTING", "The inserted IP or PORT are not valid.");
+        } else
             valid = true;
-        } else if (!IPValidator.isCorrectIP(serverIP)) {
-                errorLabel.setText("Server IP not valid. Please try again.");
-                errorLabel.setVisible(true);
-        }
-        else valid = true;
+
         if(valid){
             String finalServerIP = serverIP;
+            String finalServerPort = serverPort;
             (new Thread(() -> {
                 try {
-                    serverHandler.initConnection(finalServerIP);
+                    serverHandler.initConnection(finalServerIP, finalServerPort);
                 } catch (Exception ignored) {
                 }
             })).start();

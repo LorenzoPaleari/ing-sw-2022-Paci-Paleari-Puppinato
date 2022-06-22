@@ -239,9 +239,12 @@ public enum AnsiGraphics
         if (gameInfo.isExpertMode())
             for (int i = 0; i < 3; i++)
                 game.append(character(7+i*10, 18+leftOffside, gameInfo.getCharacterCost(i), gameInfo.getCharacterInfo(i), i+1));
+
         game.append(islands(gameInfo, 12, 37+leftOffside));
+
         for (int i = 0; i < gameInfo.getNumPlayer(); i++)
             game.append(cloud(gameInfo, 16, leftOffside+54+i*15+ (gameInfo.getNumPlayer()+1)%2*8,i));
+
         int index = 0;
         for (String player : gameInfo.getPlayersName()) {
             if (player.equals(gameInfo.getFrontPlayer())) {

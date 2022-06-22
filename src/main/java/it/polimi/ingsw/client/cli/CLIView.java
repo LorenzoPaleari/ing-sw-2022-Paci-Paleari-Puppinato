@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.client.viewUtilities.IPValidator;
-import it.polimi.ingsw.client.viewUtilities.LobbyValidator;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.CharacterType;
@@ -39,6 +38,7 @@ public class CLIView implements View {
     @Override
     public synchronized void start() {
         String serverIP;
+        String serverPort;
         boolean valid;
 
         System.out.print(AnsiGraphics.setTitle("SERVER IP SELECTION"));
@@ -59,7 +59,25 @@ public class CLIView implements View {
             }
         } while (!valid);
 
-        serverHandler.initConnection(serverIP);
+        System.out.print(AnsiGraphics.setTitle("SERVER PORT SELECTION"));
+        System.out.print(AnsiGraphics.putText(" > Enter the server PORT [Press enter for 8080]", false, true));
+        do {
+            serverPort = scanner.nextLine();
+
+            if (serverPort.equals("")){
+                valid = true;
+                serverPort = IPValidator.getDefaultPort();
+            } else {
+                if (!IPValidator.isCorrectPort(serverPort)){
+                    valid = false;
+                    System.out.print(AnsiGraphics.putText("  > Server PORT not valid. Please try again", true, false));
+                } else {
+                    valid = true;
+                }
+            }
+        } while (!valid);
+
+        serverHandler.initConnection(serverIP, serverPort);
     }
 
     @Override
@@ -116,38 +134,40 @@ public class CLIView implements View {
     private synchronized void lobbySelection(List<String[]> lobbies) {
         boolean valid;
         boolean valid2;
+        boolean lobbiesStarting = false;
         int starting = 0;
-        if (!LobbyValidator.checkForValidLobby(lobbies))
+        if (lobbies.get(0)[0].equals("starting")) {
             System.out.print(AnsiGraphics.putText(" > There are some lobby starting. Press Enter to refresh or type \"NewGame\" to create a lobby", false, true));
-        else
+            lobbiesStarting = true;
+        } else
             System.out.print(AnsiGraphics.putText(" > Insert the number of the lobby, press Enter to refresh or type \"NewGame\" to create a lobby", false, true));
 
         do {
             valid2 = true;
-            if (LobbyValidator.checkForValidLobby(lobbies))
+            if (!lobbiesStarting) {
                 AnsiGraphics.clean();
-            int lobbySize = lobbyCounter(lobbies);
-            printLobbies(lobbies, starting);
+                printLobbies(lobbies, starting);
+            }
             do {
                 valid = true;
-                String lobby = scanner.nextLine().toLowerCase();
-                if (lobby.equals(""))
+                String selection = scanner.nextLine().toLowerCase();
+                if (selection.equals(""))
                     serverHandler.refreshLobbies();
-                else if (lobby.matches("newgame"))
+                else if (selection.matches("newgame"))
                     serverHandler.setGame(true, -1);
-                else if (lobby.matches("prev") || lobby.matches("next")) {
+                else if (selection.matches("prev") || selection.matches("next")) {
                     valid2 = false;
-                    if (starting + 7 < lobbySize && lobby.matches("next"))
+                    if (starting + 7 < lobbies.size() && selection.matches("next"))
                         starting += 7;
-                    else if (starting > 0 && lobby.matches("prev"))
+                    else if (starting > 0 && selection.matches("prev"))
                         starting -= 7;
-                } else if (lobby.matches("\\d+")) {
-                    int numLobby = Integer.parseInt(lobby);
-                    if (numLobby > lobbySize || numLobby < 1) {
+                } else if (selection.matches("\\d+") && !lobbiesStarting) {
+                    int numLobby = Integer.parseInt(selection);
+                    if (numLobby > lobbies.size() || numLobby < 1) {
                         System.out.print(AnsiGraphics.putText("  > Inserted number don't correspond to any Lobby, try again", true, false));
                         valid = false;
                     } else {
-                        serverHandler.setGame(false, LobbyValidator.validLobbyCount(numLobby, lobbies));
+                        serverHandler.setGame(false, Integer.parseInt(lobbies.get(numLobby - 1)[0]));
                     }
                 } else {
                     System.out.print(AnsiGraphics.putText("  > You haven't inserted a positive number, try again", true, false));
@@ -157,48 +177,36 @@ public class CLIView implements View {
         } while (!valid2);
     }
 
-    private int lobbyCounter(List<String[]> lobbies){
-        int count = 0;
-        for (String[] s : lobbies)
-            if (s.length < 6)
-                count++;
-
-        return count;
-    }
-
     private void printLobbies(List<String[]> lobbies, int starting) {
         int k = starting;
-        int i = LobbyValidator.validLobbyCount(starting, lobbies);
         int maxLength = 30;
         StringBuilder base = new StringBuilder();
-        while(k < Math.min(7+starting, lobbyCounter(lobbies))) {
-            if (lobbies.get(i).length < 6) {
-                k++;
-                base.delete(0, base.length());
-                base.append("  > Lobby-").append(k).append(" : ");
-                for (int j = 0; j < lobbies.get(i).length - 2; j++)
-                    if (j == 0) {
-                        base.append(lobbies.get(i)[j], 0, Math.min(lobbies.get(i)[j].length(), maxLength));
-                    } else {
-                        base.append(", ").append(lobbies.get(i)[j], 0, Math.min(lobbies.get(i)[j].length(), maxLength));
-                    }
-                String expert = "Yes";
-                if (lobbies.get(i)[lobbies.get(i).length - 1].equals("false"))
-                    expert = "No";
-                System.out.print(AnsiGraphics.putText(base + "       NumPlayers: "+lobbies.get(i)[lobbies.get(i).length - 2]+" - ExpertMode: " + expert, false, false));
-            }
-            i++;
+        while(k < Math.min(7+starting, lobbies.size())) {
+            k++;
+            base.delete(0, base.length());
+            base.append("  > Lobby-").append(k).append(" : ");
+            for (int j = 1; j < lobbies.get(k - 1).length - 2; j++)
+                if (j == 1) {
+                    base.append(lobbies.get(k - 1)[j], 0, Math.min(lobbies.get(k - 1)[j].length(), maxLength));
+                } else {
+                    base.append(", ").append(lobbies.get(k - 1)[j], 0, Math.min(lobbies.get(k - 1)[j].length(), maxLength));
+                }
+            String expert = "Yes";
+            if (lobbies.get(k - 1)[lobbies.get(k - 1).length - 1].equals("false"))
+                expert = "No";
+            System.out.print(AnsiGraphics.putText(base + "       NumPlayers: "+lobbies.get(k - 1)[lobbies.get(k - 1).length - 2]+" - ExpertMode: " + expert, false, false));
+
         }
-        if (lobbyCounter(lobbies) > 7 && starting == 0)
+        if (lobbies.size() > 7 && starting == 0)
             System.out.print(AnsiGraphics.putText("  > ... type [Next] to see other lobbies", false, false));
-        else if (lobbyCounter(lobbies) > 7 && lobbyCounter(lobbies)-starting <= 7)
+        else if (lobbies.size() > 7 && lobbies.size()-starting <= 7)
             System.out.print(AnsiGraphics.putText("  > ... type [Prev] to go back", false, false));
-        else if (lobbyCounter(lobbies) > 7)
+        else if (lobbies.size() > 7)
             System.out.print(AnsiGraphics.putText("  > ... type [Prev/Next] to move through lobbies", false, false));
     }
 
     @Override
-    public void fullLobby(List<String[]> lobbies){
+    public void fullLobby(){
         System.out.print(AnsiGraphics.putText("  > The lobby is full, try again", true, false));
         synchronized (this){
             try{
@@ -378,9 +386,12 @@ public class CLIView implements View {
             System.out.println(exception.getErrorType().getErrorText() + exception.getPrice() + ")");
         else if (exception.getErrorType().equals(ErrorType.MAX_STUDENT_REACHED))
             System.out.println(exception.getErrorType().getErrorText() + exception.getPawnColor());
+        else if (exception.getErrorType().equals(ErrorType.SERVER_OFFLINE))
+            System.out.print(AnsiGraphics.putText("  > Server may be offline. Please try again", true, false));
         else
             System.out.println(exception.getErrorType().getErrorText());
-        choseAction();
+        if (!exception.getErrorType().equals(ErrorType.SERVER_OFFLINE))
+            choseAction();
     }
 
     @Override

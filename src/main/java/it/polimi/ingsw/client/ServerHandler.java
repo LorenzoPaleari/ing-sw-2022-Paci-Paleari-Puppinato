@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
@@ -21,9 +23,9 @@ public class ServerHandler implements NetworkHandler {
     public ServerHandler(){
 
     }
-    public void initConnection(String serverIp){
+    public void initConnection(String serverIp, String serverPort){
         try{
-            socket = new Socket(serverIp, Server.PORT);
+            socket = new Socket(serverIp, Integer.parseInt(serverPort));
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             isConnected = true;
@@ -33,7 +35,9 @@ public class ServerHandler implements NetworkHandler {
             listen();
         }
         catch(IOException e){
-            System.out.print("Connection refused, server may be offline");
+            ClientException exception = new ClientException(ErrorType.SERVER_OFFLINE);
+            view.printError(exception);
+            view.start();
         }
 
 

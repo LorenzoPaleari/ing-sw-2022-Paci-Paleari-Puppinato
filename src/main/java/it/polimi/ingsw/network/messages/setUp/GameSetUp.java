@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMessage {
     MessageType type;
-    List<String[]> lobbies;
 
     boolean newGame;
 
@@ -34,11 +33,9 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     /**
      * Constructor
      * Initialize the lobbies and the boolean full game
-     * @param lobbies the list of lobbies
      * @param fullGame
      */
-    public GameSetUp(List<String[]> lobbies, boolean fullGame){
-        this.lobbies = lobbies;
+    public GameSetUp(boolean fullGame){
         this.fullGame = fullGame;
     }
 
@@ -71,7 +68,7 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
         if (!fullGame)
             view.gameSetUp();
         else
-            view.fullLobby(lobbies);
+            view.fullLobby();
     }
 
     /**

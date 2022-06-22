@@ -17,7 +17,7 @@ public interface View {
 
     void refreshLobbies(List<String[]> lobbies, boolean firstLobby);
 
-    void fullLobby(List<String[]> lobbies);
+    void fullLobby();
 
     void initialSetUp();
 

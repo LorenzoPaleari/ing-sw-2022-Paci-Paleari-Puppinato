@@ -18,7 +18,6 @@ public class SceneController {
 
     }
     public static void changeRootPane(GenericSceneController controller, String fxml) {
-
         changeRootPane(controller, activeScene, fxml);
     }
 
@@ -34,8 +33,33 @@ public class SceneController {
             e.printStackTrace();
         }
     }
+    public static void showError(String type, String message) {
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/errorScene.fxml"));
+
+        Parent parent = null;
+        try {
+            parent = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ErrorSceneController controller = loader.getController();
+        Scene alertScene = new Scene(parent);
+        controller.setScene(alertScene);
+        controller.setErrorType(type);
+        controller.setErroreMessage(message);
+        controller.displayAlert();
+    }
 
     public static void setActiveScene(Scene activeScene1){
         activeScene = activeScene1;
+    }
+
+    public static Scene getActiveScene() {
+        return activeScene;
+    }
+
+    public static Object getActiveController() {
+        return activeController;
     }
 }

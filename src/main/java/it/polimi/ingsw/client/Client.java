@@ -2,21 +2,19 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.cli.CLIView;
 
-import it.polimi.ingsw.client.gui.GUIView;
 import it.polimi.ingsw.client.gui.JavaFXInit;
 import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
 import javafx.application.Application;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.util.Scanner;
-import java.util.logging.Level;
 
 public class Client {
     public static void main(String[] args) {
         AnsiConsole.systemInstall();
         Scanner scanner = new Scanner(System.in);
         ServerHandler serverHandler = new ServerHandler();
-        View view = null;
+        View view;
         boolean incorrect;
         System.out.print(AnsiGraphics.getTitle()+ "\n");
         System.out.print(AnsiGraphics.createMenu());

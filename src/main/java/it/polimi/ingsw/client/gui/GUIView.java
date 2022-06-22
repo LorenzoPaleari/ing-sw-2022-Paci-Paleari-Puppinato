@@ -2,49 +2,18 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ServerHandler;
 import it.polimi.ingsw.client.View;
-import it.polimi.ingsw.client.gui.scene.GameSetupController;
-import it.polimi.ingsw.client.gui.scene.NicknameController;
-import it.polimi.ingsw.client.gui.scene.SceneController;
-import it.polimi.ingsw.client.gui.scene.StartController;
-import it.polimi.ingsw.client.viewUtilities.AnsiGraphics;
+import it.polimi.ingsw.client.gui.scene.*;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
-import it.polimi.ingsw.client.viewUtilities.IPValidator;
-import it.polimi.ingsw.client.viewUtilities.LobbyValidator;
 import it.polimi.ingsw.exceptions.ClientException;
+import it.polimi.ingsw.exceptions.ErrorType;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import java.awt.desktop.AppForegroundListener;
-import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 public class GUIView implements View {
-
-    private GameInfo gameInfo;
     private ServerHandler serverHandler;
-    private GameSetupController gameSetupController;
-
-    private NicknameController nicknameController;
-    private Scanner scanner;
-
-    private SceneController sceneController;
 
     public GUIView(ServerHandler serverHandler){
         this.serverHandler = serverHandler;
@@ -52,110 +21,159 @@ public class GUIView implements View {
 
     @Override
     public void start() {
-
-
     }
 
     @Override
     public void gameSetUp() {
-        gameSetupController = new GameSetupController(serverHandler);
-        Platform.runLater(() -> SceneController.changeRootPane(gameSetupController, "gameSetup.fxml"));
-        /*
-        if (response.equals("YES"))
-            serverHandler.setGame(true, -1);
-        else {
-            serverHandler.refreshLobbies();
-        }*/
+        GameSetupController gameSetupController = getGameSetupController();
     }
 
     @Override
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
-        /*if (firstLobby) {
-            System.out.println("There isn't any lobby, we will create one just for you");
-
-            }
+        GameSetupController gameSetupController = getGameSetupController();
+        if (firstLobby){
             serverHandler.setGame(true, -1);
-            //} else{
-            //  lobbySelection(lobbies);
-        }*/
+            Platform.runLater(() -> SceneController.showError("SETUP WARNING", "There isn't any lobby, we have created one for you"));
+        } else {
+            Platform.runLater(() -> gameSetupController.lobbySelection(lobbies));
+        }
     }
 
     @Override
-    public void fullLobby(List<String[]> lobbies) {
-        gameSetupController.errorMessage("Errore");
+    public void fullLobby() {
+        Platform.runLater(() -> SceneController.showError("LOBBY SELECTION", "The lobby is full, try again."));
         serverHandler.refreshLobbies();
     }
 
     @Override
     public void initialSetUp() {
-
+        GameSetupController gameSetupController = getGameSetupController();
+        Platform.runLater(gameSetupController::newGame);
     }
 
     @Override
     public void playerSetUp(boolean requestAgain) {
         if (!requestAgain) {
-            nicknameController = new NicknameController(serverHandler);
+            NicknameController nicknameController = new NicknameController(serverHandler);
             Platform.runLater(() -> SceneController.changeRootPane(nicknameController, "nickname.fxml"));
         } else
-            nicknameController.errorMessage("This nickname has already been taken, please try again");
+            Platform.runLater(() -> SceneController.showError("NICKNAME SELECTION ERROR", "This nickname has already been taken, please try again"));
     }
 
     @Override
     public void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
-
+        ColorSetUpContoller colorSetUpContoller = getColorSetUpController();
+        if (requestAgain)
+            Platform.runLater(() -> SceneController.showError("COLOR SELECTION", "This color has already been taken."));
+        Platform.runLater(() -> colorSetUpContoller.setUp(tower));
     }
 
     @Override
     public void printGameBoard(GameInfo gameInfo) {
-
+        MainController mainController = getMainController(gameInfo);
+        Platform.runLater(mainController::update);
     }
 
     @Override
     public void choseAction() {
-
+        return;
     }
 
     @Override
     public void printWinner(String winner1, String winner2, String nickname) {
-
+        EndController endController = getEndController();
+        serverHandler.endConnection();
+        Platform.runLater(() -> endController.winner(winner1, winner2, nickname));
+        newGame("");
     }
 
     @Override
     public void printInterrupt(String nickname, boolean notEntered) {
-
+        if (notEntered) {
+            Platform.runLater(() -> SceneController.showError("LOBBY SELECTION", "The game was interrupted just before your entrance, please choose another Lobby."));
+            Platform.runLater(() -> serverHandler.refreshLobbies());
+        } else {
+            Platform.runLater(() -> SceneController.showError("PLAYER DISCONNECTION", nickname + " disconnected from the server. Game ended!"));
+            newGame("");
+        }
     }
 
     @Override
     public void newGame(String nickname) {
-
+        EndController endController = getEndController();
+        Platform.runLater(() -> endController.newGame());
     }
 
     @Override
     public void printServerDown() {
-
+        Platform.runLater(() -> SceneController.showError("SERVER DISCONNECTED", "Server is down, the game will close."));
     }
 
     @Override
-    public void stopClearer() {
-
-    }
+    public void stopClearer() {}
 
     @Override
-    public void bufferClearer() {
-
-    }
+    public void bufferClearer() {}
 
     @Override
     public void printError(ClientException exception) {
-
+        if (exception.getErrorType().equals(ErrorType.NOT_ENOUGH_MONEY))
+            Platform.runLater(() -> SceneController.showError(exception.getErrorType().toString(), exception.getErrorType().getErrorText() + exception.getPrice() + ")"));
+        else if (exception.getErrorType().equals(ErrorType.MAX_STUDENT_REACHED))
+            Platform.runLater(() -> SceneController.showError(exception.getErrorType().toString(), exception.getErrorType().getErrorText() + exception.getPawnColor()));
+        else
+            Platform.runLater(() -> SceneController.showError(exception.getErrorType().toString(), exception.getErrorType().getErrorText()));
     }
 
-    private int lobbyCounter(List<String[]> lobbies){
-        int count = 0;
-        for (String[] s : lobbies)
-            if (s.length < 6)
-                count++;
-
-        return count;
+    private GameSetupController getGameSetupController() {
+        GameSetupController controller;
+        try {
+            controller = (GameSetupController) SceneController.getActiveController();
+        } catch (ClassCastException e) {
+            controller = new GameSetupController(serverHandler);
+            GameSetupController finalController = controller;
+            Platform.runLater(() -> SceneController.changeRootPane(finalController, "gameSetup.fxml"));
+        }
+        return controller;
     }
+
+    private MainController getMainController(GameInfo gameInfo) {
+        MainController controller;
+        try {
+            controller = (MainController) SceneController.getActiveController();
+            MainController finalController1 = controller;
+            Platform.runLater(() -> finalController1.setGameInfo(gameInfo));
+        } catch (ClassCastException e) {
+            controller = new MainController(serverHandler);
+            MainController finalController = controller;
+            Platform.runLater(() -> finalController.setGameInfo(gameInfo));
+            Platform.runLater(() -> SceneController.changeRootPane(finalController, "main.fxml"));
+        }
+        return controller;
+    }
+
+    private ColorSetUpContoller getColorSetUpController() {
+        ColorSetUpContoller controller;
+        try {
+            controller = (ColorSetUpContoller) SceneController.getActiveController();
+        } catch (ClassCastException e) {
+            controller = new ColorSetUpContoller(serverHandler);
+            ColorSetUpContoller finalController = controller;
+            Platform.runLater(() -> SceneController.changeRootPane(finalController, "colorSetUp.fxml"));
+        }
+        return controller;
+    }
+
+    private EndController getEndController(){
+        EndController controller;
+        try {
+            controller = (EndController) SceneController.getActiveController();
+        } catch (ClassCastException e) {
+            controller = new EndController();
+            EndController finalController = controller;
+            Platform.runLater(() -> SceneController.changeRootPane(finalController, "end.fxml"));
+        }
+        return controller;
+    }
+
 }

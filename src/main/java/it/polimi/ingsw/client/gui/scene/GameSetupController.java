@@ -1,11 +1,16 @@
 package it.polimi.ingsw.client.gui.scene;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
 import it.polimi.ingsw.client.ServerHandler;
-import it.polimi.ingsw.client.viewUtilities.LobbyValidator;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -13,118 +18,146 @@ public class GameSetupController implements GenericSceneController{
 
     private ServerHandler serverHandler;
     @FXML
-    private Button yesBtn;
-
+    private Button yesBtn, noBtn, createBtn, refreshBtn, newGameBtn, enterBtn;
     @FXML
-    private Button noBtn;
-
+    private ListView<String> lobbyList;
     @FXML
-    private ChoiceBox lobbySelector;
-
-    private ToggleGroup toggleGroupNumPlayers;
-
+    private Text label, expertMode, playerNumber, numPlayer, isExpert, lobbySelection;
     @FXML
-    private RadioButton radio2;
-
-    @FXML
-    private RadioButton radio3;
-
-    private ToggleGroup toggleGroupMode;
-
-    @FXML
-    private RadioButton expertYes;
-
-    @FXML
-    private RadioButton expertNo;
-
-    private Label infoLabel;
+    private RadioButton expertNo, expertYes, players3, players2;
+    private boolean refreshed = false;
+    private List<String[]> lobbies;
 
     public GameSetupController(ServerHandler serverHandler1){
         serverHandler = serverHandler1;
     }
 
-
     @FXML
     public void initialize(){
         yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onYesBtnClick);
         noBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNoBtnClick);
-        toggleGroupNumPlayers = new ToggleGroup();
-        radio2.setToggleGroup(toggleGroupNumPlayers);
-        radio3.setToggleGroup(toggleGroupNumPlayers);
+        createBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onCreateBtnClicked);
+        refreshBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onRefreshBtnClicked);
+        newGameBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onNewGameBtnClicked);
+        enterBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onEnterBTnClicked);
+        lobbyList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (lobbyList.getSelectionModel().getSelectedItem() == null) {
+                    numPlayer.setText("PLAYERS:                           n.a");
+                    isExpert.setText("EXPERT MODE:               n.a");
+                } else {
+                    String player1Name = lobbyList.getSelectionModel().getSelectedItem().substring(0, (!lobbyList.getSelectionModel().getSelectedItem().contains(",") ? lobbyList.getSelectionModel().getSelectedItem().length() : lobbyList.getSelectionModel().getSelectedItem().indexOf(",")));
+                    for (String[] lobb : lobbies)
+                        if (lobb[1].equals(player1Name)) {
+                            numPlayer.setText("PLAYERS:                             " + lobb[lobb.length - 2]);
+                            isExpert.setText("EXPERT MODE:               " + (lobb[lobb.length - 1].equals("true") ? "YES" : "NO"));
+                        }
+                }
+                textOffset(numPlayer);
+                textOffset(isExpert);
+            }
+        });
+    }
 
-        toggleGroupMode = new ToggleGroup();
-        expertNo.setToggleGroup(toggleGroupMode);
-        expertYes.setToggleGroup(toggleGroupMode);
+    private <T extends Event> void onRefreshBtnClicked(T t) {
+        serverHandler.refreshLobbies();
+    }
 
-        radio2.setVisible(false);
-        radio3.setVisible(false);
-        expertYes.setVisible(false);
-        expertNo.setVisible(false);
+    private <T extends Event> void onNewGameBtnClicked(T t) {
+        serverHandler.setGame(true, -1);
+    }
 
+    private <T extends Event> void onEnterBTnClicked(T t) {
+        if (lobbyList.getSelectionModel().getSelectedItem() == null)
+            Platform.runLater(() -> SceneController.showError("LOBBY SELECTION", "Please select a Lobby in order to continue!"));
+        else {
+            String player1Name = lobbyList.getSelectionModel().getSelectedItem();
+            player1Name = player1Name.substring(0, (!player1Name.contains(",") ? player1Name.length() : player1Name.indexOf(",")));
+            for (String[] s : lobbies)
+                if (s[1].equals(player1Name)) {
+                    Platform.runLater(() -> serverHandler.setGame(false, Integer.parseInt(s[0])));
+                    return;
+                }
+        }
     }
 
     @FXML
     private void onYesBtnClick(Event event) {
         serverHandler.setGame(true, -1);
-        radio2.setVisible(true);
-        radio3.setVisible(true);
-        expertYes.setVisible(true);
-        expertNo.setVisible(true);
-        lobbySelector.setVisible(false);
     }
 
     @FXML
     private void onNoBtnClick(Event event) {
-        lobbySelector.setVisible(true);
-        radio2.setVisible(false);
-        radio3.setVisible(false);
-
-
+        refreshed = true;
         serverHandler.refreshLobbies();
     }
 
-    public void errorMessage(String message){
-        infoLabel.setText(message);
+    public void newGame() {
+        change(false);
+        expertNo.setVisible(true);
+        expertYes.setVisible(true);
+        players2.setVisible(true);
+        players3.setVisible(true);
+        playerNumber.setVisible(true);
+        expertMode.setVisible(true);
+        createBtn.setVisible(true);
     }
 
-    public void fillChoiceBox(List<String[]> lobbies){
-        int lobbySize = lobbyCounter(lobbies);
+    private void onCreateBtnClicked(Event event) {
+        int numPlayer = 2;
+        if (players3.isSelected())
+            numPlayer = 3;
+        boolean expert = expertYes.isPressed();
+        serverHandler.initialSetUp(numPlayer, expert);
+    }
 
+    public void lobbySelection(List<String[]> lobbies) {
+        this.lobbies = lobbies;
+        change(true);
+        if(lobbies.get(0)[0].equals("starting") && !refreshed){
+            Platform.runLater(() -> SceneController.showError("LOBBY SELECTION", "There are some lobby starting try Refreshing or start a New Game"));
+            return;
+        }
+        refreshed = false;
 
-        //serverHandler.setGame(false, LobbyValidator.validLobbyCount(numLobby, lobbies)); //ok
-        serverHandler.refreshLobbies(); //refresh
-
-
-        int k = 0;
-        int i = LobbyValidator.validLobbyCount(0, lobbies);
-        StringBuilder base = new StringBuilder();
-        while(k < lobbyCounter(lobbies)) {
-            if (lobbies.get(i).length < 6) {
-                k++;
-                base.delete(0, base.length());
-                base.append("  > Lobby-").append(k).append(" : ");
-                for (int j = 0; j < lobbies.get(i).length - 2; j++)
-                    if (j == 0) {
-                        base.append(lobbies.get(i)[j]);
-                    } else {
-                        base.append(", ").append(lobbies.get(i)[j]);
-                    }
-                String expert = "Yes";
-                if (lobbies.get(i)[lobbies.get(i).length - 1].equals("false"))
-                    expert = "No";
-                lobbySelector.getItems().add(base + "       NumPlayers: "+lobbies.get(i)[lobbies.get(i).length - 2]+" - ExpertMode: " + expert);
+        lobbyList.getItems().clear();
+        StringBuilder builder;
+        String[] playersName = new String[lobbies.size()];
+        for (String[] s : lobbies){
+            builder = new StringBuilder();
+            for (int i = 1; i < s.length - 2; i++) {
+                if (i == 1)
+                    builder.append(s[i]);
+                else
+                    builder.append(", ").append(s[i]);
             }
-            i++;
+            playersName[lobbies.indexOf(s)] = builder.toString();
         }
 
+        lobbyList.getItems().addAll(playersName);
     }
 
-    private int lobbyCounter(List<String[]> lobbies){
-        int count = 0;
-        for (String[] s : lobbies)
-            if (s.length < 6)
-                count++;
+    private void change(boolean lobby){
+        yesBtn.setVisible(false);
+        noBtn.setVisible(false);
+        label.setVisible(false);
+        numPlayer.setVisible(lobby);
+        isExpert.setVisible(lobby);
+        lobbySelection.setVisible(lobby);
+        lobbyList.setVisible(lobby);
+        refreshBtn.setVisible(lobby);
+        newGameBtn.setVisible(lobby);
+        enterBtn.setVisible(lobby);
+    }
 
-        return count;
+    private void textOffset(Text text){
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        double max = 0;
+        for (int i = 0; i < text.getText().length(); i++){
+            max += fontLoader.getCharWidth(text.getText().charAt(i), text.getFont());
+        }
+        text.setWrappingWidth(max);
+        text.setLayoutX(345.0);
     }
 }

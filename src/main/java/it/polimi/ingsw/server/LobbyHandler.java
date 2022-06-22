@@ -78,29 +78,32 @@ public class LobbyHandler {
      * gets the list of the lobbies
      * @return
      */
-    public synchronized List<String[]> getLobbies(){
+    private synchronized List<String[]> getLobbies(){
         List<String[]> lobbiesModified = new ArrayList<>();
-        for (ClientHandler[] c : lobbies){
-            if (controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer() == -1 && !controllers.get(lobbies.indexOf(c)).getGame().isGameEnded()) {
-                String[] temp = new String[6];
-                temp[5] = "Starting... ";
-                lobbiesModified.add(temp);
-            } else if (controllers.get(lobbies.indexOf(c)).getGame().isGameEnded() || c.length == controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer()) {
-                String[] temp = new String[6];
-                temp[5] = "NOT AVAILABLE";
-                lobbiesModified.add(temp);
-            } else {
-                String[] temp = new String[c.length + 2];
+        boolean valid = false;
+        boolean starting = false;
+        for (ClientHandler[] c : lobbies) {
+            if (controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer() == -1 && !controllers.get(lobbies.indexOf(c)).getGame().isGameEnded())
+                starting = true;
+            else if (!(controllers.get(lobbies.indexOf(c)).getGame().isGameEnded() || c.length == controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer())){
+                valid = true;
+                String[] temp = new String[c.length + 3];
 
-                for (int i = 0; i < c.length; i++)
-                    temp[i] = c[i].getPlayerNickname();
+                for (int i = 1; i < c.length + 1; i++)
+                    temp[i] = c[i - 1].getPlayerNickname();
 
-                temp[c.length] = "" + controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer();
-                temp[c.length + 1] = "" + controllers.get(lobbies.indexOf(c)).getGame().isExpertMode();
+                temp[0] = "" + lobbies.indexOf(c);
+                temp[c.length + 1] = "" + controllers.get(lobbies.indexOf(c)).getGame().getNumPlayer();
+                temp[c.length + 2] = "" + controllers.get(lobbies.indexOf(c)).getGame().isExpertMode();
 
                 lobbiesModified.add(temp);
             }
         }
+        if (starting && !valid) {
+            String[] temp = {"starting"};
+            lobbiesModified.add(temp);
+        }
+
         return lobbiesModified;
     }
 
@@ -126,13 +129,11 @@ public class LobbyHandler {
      */
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
         List<String[]> lobbies = getLobbies();
-        for (String[] s : lobbies)
-            if (s.length < 6 || s[5].equals("Starting... ")){
-                clientHandler.refreshLobbies(lobbies, false);
-                return;
-            }
 
-        clientHandler.refreshLobbies(null, true);
+        if (lobbies.size() == 0)
+            clientHandler.refreshLobbies(null, true);
+        else
+            clientHandler.refreshLobbies(lobbies, false);
     }
 
     /**

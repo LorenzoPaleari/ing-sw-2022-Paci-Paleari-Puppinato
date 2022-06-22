@@ -18,7 +18,9 @@ public enum ErrorType implements Serializable {
     WRONG_ACTION2("Before moving mother nature, please move all the students"),
     WRONG_PHASE("You must choose an Assistant"),
     WRONG_PHASE2("You must move students or mother nature"),
-    WRONG_PHASE3("You have to choose a cloud");
+    WRONG_PHASE3("You have to choose a cloud"),
+
+    SERVER_OFFLINE("Connection refused, server may be offline");
     private final String errorText;
 
     /**
@@ -35,5 +37,10 @@ public enum ErrorType implements Serializable {
      */
     public String getErrorText() {
         return errorText;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

@@ -125,7 +125,7 @@ public class ClientHandler extends Thread implements NetworkHandler{
      * @param fullGame
      */
     public void gameSetUp(boolean fullGame){
-        send(new GameSetUp(lobbyHandler.getLobbies(), fullGame));
+        send(new GameSetUp(fullGame));
     }
 
     /**
