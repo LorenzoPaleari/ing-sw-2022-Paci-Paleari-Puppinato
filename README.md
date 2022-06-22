@@ -22,6 +22,15 @@ La seguente documentazione include una descrizione delle classi e dei metodi uti
 Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: xxx
 
 
+
+**Criterio di coverage: linee di codice**
+
+| Package | Coverage |
+|:-----------------------|:------------------------------------:|
+| Controller | 432/451 (95%)
+| Model | 624/629 (99%)
+
+
 ### Librerie e Plugins
 |Libreria/Plugin|Descrizione|
 |---------------|-----------|
