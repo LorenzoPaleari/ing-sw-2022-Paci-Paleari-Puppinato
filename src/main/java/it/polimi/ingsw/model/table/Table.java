@@ -2,12 +2,14 @@ package it.polimi.ingsw.model.table;
 
 import it.polimi.ingsw.controller.islandStrategy.IslandStrategy;
 import it.polimi.ingsw.exceptions.GeneralSupplyFinishedException;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.character.Character;
 import it.polimi.ingsw.model.character.Factory;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.pawns.Student;
+import it.polimi.ingsw.model.player.Player;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -29,9 +31,9 @@ public class Table {
      * Instantiates this table and the elements it contains.
      * @param numPlayer the number of player that joined the game.
      * @param expert true only if the game is played in expert mode.
-     * @param islandUpdate
-     * @param checkProfessor
-     * @param islandStrategy
+     * @param islandUpdate the update island method {@link it.polimi.ingsw.controller.TableHandler#updateIsland(Island)} .
+     * @param checkProfessor the check professor method {@link it.polimi.ingsw.controller.professorStrategy.ProfessorStrategy#checkProfessor(Game, Player, PawnColor)}.
+     * @param islandStrategy the island strategy, needed to use the strategy pattern.
      */
     public Table(int numPlayer, boolean expert, Method islandUpdate, Method checkProfessor, IslandStrategy islandStrategy) {
         motherNature = new MotherNature();
@@ -284,6 +286,14 @@ public class Table {
             island.remove(islandNotCurr);
         }
     }
+
+    /**
+     * Sets a specific character card, it's only used in test classes.
+     * @param position the position of the character in the character's list, it must be a number between 0 and 2.
+     * @param type the type of the character to set at the specified position.
+     * @param islandUpdate the update island method {@link it.polimi.ingsw.controller.TableHandler#updateIsland(Island)}.
+     * @param checkProfessor the check professor method {@link it.polimi.ingsw.controller.professorStrategy.ProfessorStrategy#checkProfessor(Game, Player, PawnColor)}.
+     */
 
     public void setCharacter(int position, CharacterType type, Method islandUpdate, Method checkProfessor){
         Factory factory = new Factory();

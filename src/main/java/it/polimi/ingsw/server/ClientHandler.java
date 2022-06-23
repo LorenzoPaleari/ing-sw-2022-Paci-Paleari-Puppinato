@@ -17,7 +17,7 @@ import java.net.Socket;
 import java.util.*;
 
 /**
- * communicates with the serverHandler
+ * A client handler which manages the communication the client, there is one client handler for each client
  */
 public class ClientHandler extends Thread implements NetworkHandler{
     private final Socket socket;
@@ -53,14 +53,14 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     * starts listening
+     * Starts listening
      */
     public void run(){
         listen();
     }
 
     /**
-     * listens and prints status messages
+     * While the connection is present it listens for any message that could arrive and, based on the message's type, it performs different actions
      */
     public void listen(){
         playerSetUp(false);
@@ -89,8 +89,8 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     * sends message
-     * @param message the message to be sent
+     * Sends the given message
+     * @param message the generic message
      */
     public synchronized void send(GenericMessage message) {
         if(isConnected){
@@ -114,7 +114,7 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     * sends gamesetup message
+     * Sends gameSetUp message
      */
     public void gameSetUp(){
         send(new GameSetUp());

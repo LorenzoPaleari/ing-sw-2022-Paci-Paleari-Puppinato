@@ -9,7 +9,14 @@ import org.fusesource.jansi.AnsiConsole;
 
 import java.util.Scanner;
 
+/**
+ * Client class
+ */
 public class Client {
+    /**
+     * Main of the Client class
+     * @param args
+     */
     public static void main(String[] args) {
         AnsiConsole.systemInstall();
         Scanner scanner = new Scanner(System.in);

@@ -26,7 +26,7 @@ public class Game {
 
     /**
      * Constructor.
-     * initialize  only the List of players.
+     * Initialize  only the List of players.
      *
      * Full initialization of the class take place, when all
      * the players joined the game, in function startGame()

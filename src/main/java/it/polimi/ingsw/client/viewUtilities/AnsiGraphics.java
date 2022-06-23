@@ -25,7 +25,7 @@ public enum AnsiGraphics
     ANSI_BRIGHT_ORANGE("\u001b[38;5;208m"),
     STUDENT("\u25CF"),
     PROFESSOR("\u265B"),
-    MOTHER_NATURE("\u058E"),
+    MOTHER_NATURE("\u2659"),
     TOWER("\u06E9"),
     COIN("\u20A1"),
     NO_ENTRY_TILE("\u2757"),

@@ -44,7 +44,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * removes and returns student from the list
+     * Removes and returns student from the list
      * @param color the student color
      * @return the student of the given color
      */
@@ -55,7 +55,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * returns student from the list
+     * Returns student from the list
      * @param color the student color
      * @return the student of the given color
      */
@@ -72,7 +72,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * adds the student s to the list
+     * Adds the student s to the list
      * @param s the student to be added
      */
     @Override
@@ -81,7 +81,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * activate character
+     * Activate character
      * @param game the current game
      * @param player the current player
      * @param color the pawn color
@@ -105,7 +105,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * activate character
+     * Activate character
      * @param island the current island
      * @param color the pawn color
      * @throws BagIsEmptyException
@@ -118,7 +118,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * activate character
+     * Activate character
      * @param player the current player
      * @param color the list of pawn color
      * @param boardHandler the board handler
@@ -141,7 +141,7 @@ public class CharacterGroupStudent extends Character{
     }
 
     /**
-     * counts the student of the given color
+     * Counts the student of the given color
      * @param pawnColor the pawn color
      * @return the number of student of the given color
      */

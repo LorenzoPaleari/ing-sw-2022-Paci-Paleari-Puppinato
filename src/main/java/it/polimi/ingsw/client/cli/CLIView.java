@@ -22,6 +22,9 @@ import java.util.Scanner;
 import static it.polimi.ingsw.model.enumerations.PawnColor.getColor;
 import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 
+/**
+ * This class manages the view of a specific client, reading input and sending specific messages to the server
+ */
 public class CLIView implements View {
     private GameInfo gameInfo;
     private Scanner scanner;
@@ -29,12 +32,19 @@ public class CLIView implements View {
     private ServerHandler serverHandler;
     private Boolean clearer;
 
-
+    /**
+     * Constructor
+     * Initializes this client view.
+     * @param serverHandler the specific client of this view.
+     */
     public CLIView(ServerHandler serverHandler){
         scanner = new Scanner(System.in);
         this.serverHandler = serverHandler;
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void start() {
         String serverIP;
@@ -314,6 +324,7 @@ public class CLIView implements View {
         System.out.print(AnsiGraphics.createGame(gameInfo));
     }
 
+    @Override
     public void bufferClearer() {
         InputStreamReader control = new InputStreamReader(System.in);
         threadScanner = new Scanner(System.in);
@@ -328,6 +339,7 @@ public class CLIView implements View {
         }
     }
 
+    @Override
     public void stopClearer() {
         clearer = false;
     }
