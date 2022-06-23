@@ -283,7 +283,8 @@ public class MainController implements GenericSceneController{
             int i;
             for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
                 sum += gameInfo.getIslandSize(i);
-            controller.setOk();
+            if (controller != null)
+                controller.setOk();
             if (islandSelector)
                 controller.setIslandSelected(i - 1);
         });
