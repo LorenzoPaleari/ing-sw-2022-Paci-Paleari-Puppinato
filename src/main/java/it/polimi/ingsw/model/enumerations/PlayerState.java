@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.enumerations;
 
+import java.io.Serializable;
+
 /**
  * Player state enum
  */
-public enum PlayerState {
+public enum PlayerState implements Serializable {
     PLANNING("PLANNING"), ACTION("ACTION"), WAIT("WAIT"), ENDTURN("END TURN");
 
     private final String text;

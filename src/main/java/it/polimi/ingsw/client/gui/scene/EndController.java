@@ -8,7 +8,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EndController implements GenericSceneController{
 
@@ -20,6 +24,9 @@ public class EndController implements GenericSceneController{
     @FXML
     public void initialize(){
         yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            JavaFXInit.setStopped(true);
+            JavaFXInit.getPlayer().stop();
+            JavaFXInit.setStopped(false);
             JavaFXInit.getStage().close();
             Platform.runLater(JavaFXInit::reStart);
         });

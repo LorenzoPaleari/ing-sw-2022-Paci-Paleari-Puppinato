@@ -108,7 +108,7 @@ public class GameSetupController implements GenericSceneController{
         int numPlayer = 2;
         if (players3.isSelected())
             numPlayer = 3;
-        boolean expert = expertYes.isPressed();
+        boolean expert = expertYes.isSelected();
         serverHandler.initialSetUp(numPlayer, expert);
     }
 

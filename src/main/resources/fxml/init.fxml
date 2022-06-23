@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -40,6 +41,7 @@
                   <font>
                      <Font size="40.0" />
                   </font></Text>
+               <Pane fx:id="music" layoutX="1200.0" layoutY="640.0" prefHeight="50.0" prefWidth="50.0" styleClass="audio" />
                 </AnchorPane>
             </children>
         </Group>

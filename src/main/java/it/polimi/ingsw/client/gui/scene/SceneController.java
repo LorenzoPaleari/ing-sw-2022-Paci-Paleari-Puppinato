@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.scene;
 
 import java.io.IOException;
 
+import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -51,8 +52,21 @@ public class SceneController {
         controller.displayAlert();
     }
 
-    public static void setActiveScene(Scene activeScene1){
-        activeScene = activeScene1;
+    public static void showCharacter(MainController mainController, CharacterSceneController controller, GameInfo gameInfo, int number) {
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/character.fxml"));
+        loader.setController(controller);
+
+        Parent parent = null;
+        try {
+            parent = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene alertScene = new Scene(parent);
+        controller.setScene(alertScene);
+        controller.setMain(mainController);
+        controller.setInfo(gameInfo, number);
+        controller.displayAlert();
     }
 
     public static Scene getActiveScene() {

@@ -51,56 +51,56 @@
                         </Group>
                         <Group fx:id="bd2Students">
                            <children>
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
                            </children>
                         </Group>
                         <Group fx:id="bd2Towers" layoutX="325.5" layoutY="33.0">
@@ -165,56 +165,56 @@
                      <children>
                         <Group fx:id="bd3Students">
                            <children>
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
                            </children>
                         </Group>
                         <Group fx:id="bd3Professors" layoutX="273.0" layoutY="21.0">
@@ -308,56 +308,56 @@
                      <children>
                         <Group fx:id="bd1Students">
                            <children>
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
-                              <Pane prefHeight="15.0" prefWidth="15.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
+                              <Pane prefHeight="19.0" prefWidth="19.0" />
                            </children>
                         </Group>
                         <Group fx:id="bd1Professors" layoutX="273.0" layoutY="21.0">
@@ -638,7 +638,7 @@
                   </Pane>
                   <Group fx:id="assistants" layoutX="30.0" layoutY="610.0">
                      <children>
-                        <Pane fx:id="assistantRoot" prefHeight="110.0" prefWidth="200.0" visible="false" />
+                        <Pane fx:id="assistantRoot" prefHeight="110.0" prefWidth="200.0" />
                         <Pane layoutX="630.0" layoutY="90.0" prefHeight="20.0" prefWidth="70.0" />
                         <Pane layoutX="560.0" layoutY="90.0" prefHeight="20.0" prefWidth="70.0" />
                         <Pane layoutX="490.0" layoutY="90.0" prefHeight="20.0" prefWidth="70.0" />
@@ -1503,8 +1503,24 @@
                         <Font name="Georgia Bold" size="15.0" />
                      </font>
                   </Label>
+                  <ImageView fx:id="coinc1" fitHeight="20.0" fitWidth="20.0" layoutX="30.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../photos/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="coinc2" fitHeight="40.0" fitWidth="20.0" layoutX="150.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../photos/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="coinc3" fitHeight="40.0" fitWidth="20.0" layoutX="270.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../photos/coin.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
+            <Pane fx:id="music" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="30.0" styleClass="audio" stylesheets="@../css/init.css" />
          </children>
       </Group>
    </children>

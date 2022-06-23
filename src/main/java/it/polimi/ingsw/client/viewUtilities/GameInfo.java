@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.viewUtilities;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
+import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Professor;
 import it.polimi.ingsw.model.player.Assistant;
@@ -20,7 +21,7 @@ public class GameInfo implements Serializable {
     private int motherNaturePosition;
     private int numberOfPlayer;
     private int numberOfIsland;
-
+    private PlayerState playerState;
     private Integer[] diningStudents;
     private Integer[] entranceStudents;
     private String[] professors;
@@ -43,8 +44,10 @@ public class GameInfo implements Serializable {
     public GameInfo(Game game, String frontPlayer){
         int numAssistant = 0;
         for (Player p: game.getPlayers())
-            if (p.getNickname().equals(frontPlayer))
+            if (p.getNickname().equals(frontPlayer)) {
                 numAssistant = p.getDeck().getSize();
+                playerState = p.getState();
+            }
 
         init(game.getNumPlayer(), game.getTable().getNumIsland(), game.isExpertMode(), numAssistant);
 
@@ -124,6 +127,7 @@ public class GameInfo implements Serializable {
         numberOfPlayer=numPlayer;
         islandSize = new int[numIsland];
         numberOfIsland=numIsland;
+        playerState = PlayerState.WAIT;
 
         diningStudents = new Integer[5*numPlayer];
         entranceStudents = new Integer[5*numPlayer];
@@ -160,6 +164,10 @@ public class GameInfo implements Serializable {
 
     public int getNumPlayer(){
         return numberOfPlayer;
+    }
+
+    public PlayerState getPlayerState(){
+        return playerState;
     }
 
     public int getNumCoin(String nickname){

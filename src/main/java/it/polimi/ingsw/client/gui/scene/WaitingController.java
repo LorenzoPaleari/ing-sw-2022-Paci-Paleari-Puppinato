@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client.gui.scene;
 
+import it.polimi.ingsw.client.gui.JavaFXInit;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class WaitingController implements GenericSceneController{
@@ -14,6 +16,8 @@ public class WaitingController implements GenericSceneController{
     private ImageView image1, image2, image3, image4;
     @FXML
     private ProgressBar bar;
+    @FXML
+    private Pane music;
 
     @FXML
     public void initialize(){
@@ -21,6 +25,11 @@ public class WaitingController implements GenericSceneController{
         effect(image2);
         effect(image3);
         effect(image4);
+        if (JavaFXInit.isMuted()){
+            music.getStyleClass().clear();
+            music.getStyleClass().add("noAudio");
+        }
+        JavaFXInit.musicEffect(music);
     }
 
     private void effect(Node node){

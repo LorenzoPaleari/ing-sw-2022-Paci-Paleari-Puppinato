@@ -1,18 +1,28 @@
 package it.polimi.ingsw.client.gui.scene;
 
 import it.polimi.ingsw.client.ServerHandler;
+import it.polimi.ingsw.client.gui.JavaFXInit;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InitController implements GenericSceneController{
 
     private ServerHandler serverHandler;
     @FXML
     private Button startBtn;
-
+    @FXML
+    private Pane music;
     @FXML
     private Button exitBtn;
 
@@ -25,7 +35,7 @@ public class InitController implements GenericSceneController{
     public void initialize(){
         startBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onStartBtnClick);
         exitBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onExitBtnClick);
-
+        JavaFXInit.musicEffect(music);
     }
 
     @FXML

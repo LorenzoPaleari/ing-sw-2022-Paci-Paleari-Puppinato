@@ -27,3 +27,13 @@
     -fx-font-size: 40;
     -fx-text-fill: white;
 }
+
+.audio{
+    -fx-background-image: url("../photos/media/audio.png");
+    -fx-background-size: cover;
+}
+
+.noAudio{
+    -fx-background-image: url("../photos/media/noAudio.png");
+    -fx-background-size: cover;
+}
