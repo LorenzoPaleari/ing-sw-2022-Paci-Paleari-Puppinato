@@ -43,7 +43,7 @@ public class CLIView implements View {
     }
 
     /**
-     *
+     * Sets the server IP and port
      */
     @Override
     public synchronized void start() {
@@ -90,6 +90,10 @@ public class CLIView implements View {
         serverHandler.initConnection(serverIP, serverPort);
     }
 
+    /**
+     * Nickname setup
+     * @param requestAgain if is it true, the client inserts a nickname which has already been chosen, so it has to choose another
+     */
     @Override
     public synchronized void playerSetUp(boolean requestAgain) {
         System.out.print(AnsiGraphics.setTitle("NICKNAME SELECTION"));
@@ -103,6 +107,9 @@ public class CLIView implements View {
         serverHandler.setPlayerInfo(nickname);
     }
 
+    /**
+     * Game setup. New game or join an existing lobby
+     */
     @Override
     public synchronized void gameSetUp() {
         boolean valid;
@@ -126,6 +133,11 @@ public class CLIView implements View {
         }
     }
 
+    /**
+     * Refreshes the lobbies
+     * @param lobbies the list of the names of the lobbies present
+     * @param firstLobby a flag which is true only if there are no lobbies
+     */
     @Override
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
         if (firstLobby){
@@ -141,6 +153,10 @@ public class CLIView implements View {
             lobbySelection(lobbies);
     }
 
+    /**
+     * Lobby selection method
+     * @param lobbies the lobby list to be print
+     */
     private synchronized void lobbySelection(List<String[]> lobbies) {
         boolean valid;
         boolean valid2;
@@ -187,6 +203,11 @@ public class CLIView implements View {
         } while (!valid2);
     }
 
+    /**
+     * Prints the lobbies available
+     * @param lobbies
+     * @param starting
+     */
     private void printLobbies(List<String[]> lobbies, int starting) {
         int k = starting;
         int maxLength = 30;
@@ -215,6 +236,9 @@ public class CLIView implements View {
             System.out.print(AnsiGraphics.putText("  > ... type [Prev/Next] to move through lobbies", false, false));
     }
 
+    /**
+     * Prints that the lobby is full
+     */
     @Override
     public void fullLobby(){
         System.out.print(AnsiGraphics.putText("  > The lobby is full, try again", true, false));
@@ -227,6 +251,9 @@ public class CLIView implements View {
         serverHandler.refreshLobbies();
     }
 
+    /**
+     * Initial setup. Sets the number of players, the expert mode.
+     */
     @Override
     public synchronized void initialSetUp() {
         boolean expert= false;
@@ -263,6 +290,11 @@ public class CLIView implements View {
         serverHandler.initialSetUp(numPlayer, expert);
     }
 
+    /**
+     * Color selection method
+     * @param tower the list of the colors of the towers available
+     * @param requestAgain if is it true, the client inserts a color which has already been chosen, so it has to choose another
+     */
     @Override
     public synchronized void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
         boolean valid=false;
@@ -317,6 +349,10 @@ public class CLIView implements View {
         serverHandler.setPlayerColor(color);
     }
 
+    /**
+     * Prints the game board
+     * @param gameInfo contains the information of the status of the game
+     */
     @Override
     public void printGameBoard(GameInfo gameInfo){
         this.gameInfo = gameInfo;
@@ -324,6 +360,9 @@ public class CLIView implements View {
         System.out.print(AnsiGraphics.createGame(gameInfo));
     }
 
+    /**
+     * Clears the buffer
+     */
     @Override
     public void bufferClearer() {
         InputStreamReader control = new InputStreamReader(System.in);
@@ -339,11 +378,17 @@ public class CLIView implements View {
         }
     }
 
+    /**
+     * Stops the clearer
+     */
     @Override
     public void stopClearer() {
         clearer = false;
     }
 
+    /**
+     * Switches between actions
+     */
     @Override
     public synchronized void choseAction(){
         boolean valid;
@@ -392,6 +437,10 @@ public class CLIView implements View {
         }while (!valid);
     }
 
+    /**
+     * Prints error messages
+     * @param exception the exception occurred
+     */
     @Override
     public void printError(ClientException exception){
         if (exception.getErrorType().equals(ErrorType.NOT_ENOUGH_MONEY))
@@ -406,6 +455,12 @@ public class CLIView implements View {
             choseAction();
     }
 
+    /**
+     * prints the winner
+     * @param winner1 the nickname of the winner
+     * @param winner2 the nickname of the eventual second winner in case of draw. It may be null if there is only one winner
+     * @param nickname the nickname of the client
+     */
     @Override
     public void printWinner(String winner1, String winner2, String nickname) {
         serverHandler.endConnection();
@@ -427,6 +482,11 @@ public class CLIView implements View {
         newGame("");
     }
 
+    /**
+     * Prints interrupt message and then refreshed lobbies
+     * @param nickname the nickname of the player disconnected
+     * @param notEntered true if the client is not entered in the lobby
+     */
     @Override
     public synchronized void printInterrupt(String nickname, boolean notEntered) {
         if (notEntered){
@@ -443,6 +503,10 @@ public class CLIView implements View {
         }
     }
 
+    /**
+     * Starts a new game
+     * @param nickname the nickname of the player disconnected, if present. It may be null
+     */
     @Override
     public void newGame(String nickname) {
         boolean valid2;
@@ -465,6 +529,9 @@ public class CLIView implements View {
         }while(!valid2);
     }
 
+    /**
+     * prints that the server is down
+     */
     @Override
     public synchronized void printServerDown() {
         System.out.print(AnsiGraphics.getTitle()+ "\n");
