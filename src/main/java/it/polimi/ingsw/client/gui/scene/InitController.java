@@ -26,11 +26,18 @@ public class InitController implements GenericSceneController{
     @FXML
     private Button exitBtn;
 
+    /**
+     * Constructor
+     * Initializes this controller with the server handler associated
+     * @param serverHandler1 the server handler to associate
+     */
     public InitController(ServerHandler serverHandler1){
         serverHandler = serverHandler1;
     }
 
-
+    /**
+     * Registers the start and exit buttons for the event MOUSE_CLICKED, then set the music
+     */
     @FXML
     public void initialize(){
         startBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onStartBtnClick);

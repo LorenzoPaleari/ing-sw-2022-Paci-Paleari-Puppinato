@@ -18,7 +18,7 @@ public interface View {
     void start();
 
     /**
-     * Asks if the client wants to start a new game or prefers to enter a lobby created previously by another player
+     * Asks the client if it wants to start a new game or prefers to enter a lobby created previously by another player
      */
     void gameSetUp();
 

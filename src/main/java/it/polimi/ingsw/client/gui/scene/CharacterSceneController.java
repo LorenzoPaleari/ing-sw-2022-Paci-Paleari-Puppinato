@@ -213,18 +213,34 @@ public class CharacterSceneController implements GenericSceneController {
         }
     }
 
+    /**
+     * Sets the main controller
+     * @param mainController the main controller to set
+     */
     public void setMain(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * Sets the specified island
+     * @param i the island to set
+     */
     public void setIslandSelected(int i) {
         islandSelected = i;
     }
 
+    /**
+     * Sets the specified color
+     * @param string the string representing the color to set
+     */
     public void setColor(String string) {
         color = string;
     }
 
+    /**
+     * Sets the text with the specified string
+     * @param s the string to set
+     */
     public void setText(String s){
         request.setText(s);
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -235,6 +251,9 @@ public class CharacterSceneController implements GenericSceneController {
         request.setLayoutX(225 + (335-max)/2);
     }
 
+    /**
+     * Display the text "OK"
+     */
     public void setOk(){
         ok.setVisible(true);
     }

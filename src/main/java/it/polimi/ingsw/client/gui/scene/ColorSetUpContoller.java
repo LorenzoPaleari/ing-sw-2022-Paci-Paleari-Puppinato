@@ -24,6 +24,11 @@ public class ColorSetUpContoller implements GenericSceneController{
         event(tower2);
         event(tower3);
     }
+    /**
+     * Constructor
+     * Initializes the server handler with it is associated
+     * @param serverHandler the server handler to associate
+     */
     public ColorSetUpContoller(ServerHandler serverHandler) {
         this.serverHandler = serverHandler;
     }
