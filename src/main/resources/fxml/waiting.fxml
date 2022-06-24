@@ -15,7 +15,7 @@
             <Image url="@../photos/eriantys_text_logo.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="215.0" layoutY="300.0" stroke="#4c71d7" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="2.0" text="WATING FOR OTHER PLAYERS..." wrappingWidth="849.2332153320312">
+      <Text fill="WHITE" layoutX="207.5" layoutY="242.0" stroke="#4c71d7" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="2.0" text="WAITING FOR OTHER PLAYERS..." wrappingWidth="865.2332153320312">
          <font>
             <Font size="60.0" />
          </font>

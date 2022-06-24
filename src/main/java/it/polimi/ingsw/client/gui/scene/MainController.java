@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
 import it.polimi.ingsw.model.enumerations.TowerColor;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +71,7 @@ public class MainController implements GenericSceneController{
     private CharacterSceneController controller;
     private CharacterType character = null;
     private boolean characterPlayed;
-    private boolean islandSelector;
+    private boolean islandSelector, boardSelector;
 
     public MainController(ServerHandler serverHandler) {
         this.serverHandler = serverHandler;
@@ -142,23 +144,23 @@ public class MainController implements GenericSceneController{
         board1.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
-            if (db.hasString() && db.getString().charAt(0) == 'C' && character.equals(CharacterType.SPOILED_PRINCESS)){
+            if (db.hasString() && db.getString().charAt(0) == 'C' && boardSelector){
                 controller.setColor(db.getString().substring(1));
                 controller.setOk();
-                if (!gameInfo.getPlayerState().equals(PlayerState.PLANNING) && gameInfo.getNumCoin(gameInfo.getFrontPlayer()) >= character.getPrice()) {
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("");
-                    db.setContent(content);
-                }
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+
                 success = true;
             }
             else if (db.hasString() && !db.getString().equals("mother") && !(db.getString().charAt(0) == 'C')) {
                 serverHandler.moveToDiningRoomRequest(PawnColor.lookup(db.getString()));
-                if (gameInfo.getPlayerState().equals(PlayerState.ACTION) && gameInfo.getRemainingMoves() > 0 && gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer()) && gameInfo.getEntranceStudents(gameInfo.getFrontPlayer())[PawnColor.lookup(db.getString()).getIndex()] < 10) {
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("");
-                    db.setContent(content);
-                }
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+
                 success = true;
             }
 
@@ -198,35 +200,64 @@ public class MainController implements GenericSceneController{
             controller = getCharacterController();
             character = gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1);
             Platform.runLater(() -> SceneController.showCharacter(this, controller, gameInfo, Integer.parseInt(pane.getId().substring(9)) - 1));
-            if (gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.MONK) || gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.GRANDMOTHER_HERBS) || gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.SPOILED_PRINCESS))
+            if (gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.MONK) || gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.GRANDMOTHER_HERBS)) {
                 characterPlayed = true;
-            if (character.equals(CharacterType.HERALD))
+                islandSelector = false;
+                boardSelector = false;
+            }
+             else if (character.equals(CharacterType.HERALD)) {
                 islandSelector = true;
+                characterPlayed = false;
+                boardSelector = false;
+            }
+             else if (gameInfo.getCharacter(Integer.parseInt(pane.getId().substring(9)) - 1).equals(CharacterType.SPOILED_PRINCESS)){
+                boardSelector = true;
+                islandSelector = false;
+                characterPlayed = false;
+            } else {
+                boardSelector = false;
+                islandSelector = false;
+                characterPlayed = false;
+            }
         });
 
         for (Node node : pane.getChildren()){
             node.setOnDragDetected(event -> {
-                if (node.getStyleClass().size() != 0 && characterPlayed) {
+                if (node.getStyleClass().size() != 0 && (characterPlayed || boardSelector)) {
                     Dragboard db = node.startDragAndDrop(TransferMode.MOVE);
                     Pane panel = (Pane) node;
-                    if (node.getStyleClass().get(0).equals("doNotEnter"))
-                        db.setDragView(new Image(String.valueOf(getClass().getResource("/photos/deny_island_icon.png")), panel.getHeight(), panel.getWidth(), true, true));
-                    else
-                        db.setDragView(new Image(String.valueOf(getClass().getResource("/photos/students/student_"+panel.getStyleClass().get(0)+".png")), panel.getHeight(), panel.getWidth(), true, true));
                     ClipboardContent content = new ClipboardContent();
                     content.putString("C"+node.getStyleClass().get(0));
+
+                    if (node.getStyleClass().get(0).equals("doNotEnter")) {
+                        db.setDragView(new Image(String.valueOf(getClass().getResource("/photos/deny_island_icon.png")), panel.getHeight(), panel.getWidth(), true, true));
+                        node.getStyleClass().clear();
+                    }else {
+                        db.setDragView(new Image(String.valueOf(getClass().getResource("/photos/students/student_" + panel.getStyleClass().get(0) + ".png")), panel.getHeight(), panel.getWidth(), true, true));
+                        int number = Integer.parseInt(((Label) panel.getChildren().get(0)).getText().substring(1));
+                        if (number <= 1){
+                            node.getStyleClass().clear();
+                        }
+                        ((Label) ((Pane) node).getChildren().get(0)).setText("x"+(number-1));
+                    }
+
                     db.setContent(content);
-                    node.getStyleClass().clear();
+
                     event.consume();
                 }
             });
 
             node.setOnDragDone(event -> {
                 Dragboard db = event.getDragboard();
-                if (!db.getString().equals(""))
-                    node.getStyleClass().add(db.getString().substring(1));
-                else
+                if (!db.getString().equals("")) {
+                    int number = Integer.parseInt(((Label) ((Pane) node).getChildren().get(0)).getText().substring(1));
+                    if (number == 0)
+                        node.getStyleClass().add(db.getString().substring(1));
+                    ((Label) ((Pane) node).getChildren().get(0)).setText("x"+(number+1));
+                } else {
                     characterPlayed = false;
+                    boardSelector = false;
+                }
                 event.consume();
             });
         }
@@ -272,21 +303,22 @@ public class MainController implements GenericSceneController{
 
         mother.setOnDragDone(event -> {
             Dragboard db = event.getDragboard();
-            if (!db.getString().matches("\\d+"))
+            if (!db.getString().equals(""))
                 mother.setVisible(true);
             event.consume();
         });
 
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            int target = Integer.parseInt(pane.getId().substring(6));
-            int sum = 0;
-            int i;
-            for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
-                sum += gameInfo.getIslandSize(i);
-            if (controller != null)
+            if (islandSelector) {
+                int target = Integer.parseInt(pane.getId().substring(6));
+                int sum = 0;
+                int i;
+                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
+                    sum += gameInfo.getIslandSize(i);
+
                 controller.setOk();
-            if (islandSelector)
                 controller.setIslandSelected(i - 1);
+            }
         });
         pane.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> {
             if (islandSelector) {
@@ -306,45 +338,52 @@ public class MainController implements GenericSceneController{
         pane.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
-            String s = null;
-            if (db.hasString())
-                s = db.getString();
-            if (db.hasString() && s.charAt(0) == 'C' && !character.equals(CharacterType.SPOILED_PRINCESS)){
+
+            if (db.hasString() && db.getString().charAt(0) == 'C' && characterPlayed){
                 int target = Integer.parseInt(pane.getId().substring(6));
                 int sum = 0;
                 int i;
                 for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
                     sum += gameInfo.getIslandSize(i);
+
                 controller.setIslandSelected(i - 1);
                 controller.setColor(db.getString().substring(1));
                 controller.setOk();
-                if (!gameInfo.getPlayerState().equals(PlayerState.PLANNING) && gameInfo.getNumCoin(gameInfo.getFrontPlayer()) >= character.getPrice()) {
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("");
-                    db.setContent(content);
-                }
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+
                 success = true;
-            }
-             else if (db.hasString() && !db.getString().equals("mother")) {
+            } else if (db.hasString() && !db.getString().equals("mother") && !(db.getString().charAt(0) == 'C')) {
                 int target = Integer.parseInt(pane.getId().substring(6));
                 int sum = 0;
                 int i;
                 for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
                     sum += gameInfo.getIslandSize(i);
+
                 serverHandler.moveStudentToIslandRequest(i - 1, PawnColor.lookup(db.getString()));
-                if (gameInfo.getPlayerState().equals(PlayerState.ACTION) && gameInfo.getRemainingMoves() > 0 && gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer())) {
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("");
-                    db.setContent(content);
-                }
+
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+
                 success = true;
             } else if (db.hasString() && db.getString().equals("mother")){
-                serverHandler.moveMotherNatureRequest(Integer.parseInt(pane.getId().substring(6)) - 1);
-                if (gameInfo.getPlayerState().equals(PlayerState.ACTION) && gameInfo.getRemainingMoves() > 0 && gameInfo.getCurrentPlayer().equals(gameInfo.getFrontPlayer())){
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString(pane.getId().substring(6));
-                    db.setContent(content);
-                }
+                int target = Integer.parseInt(pane.getId().substring(6));
+                int sum = 0;
+                int i;
+                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
+                    sum += gameInfo.getIslandSize(i);
+
+                serverHandler.moveMotherNatureRequest(i-1);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                db.setContent(content);
+
+                success = true;
             }
 
             event.setDropCompleted(success);
@@ -363,7 +402,7 @@ public class MainController implements GenericSceneController{
 
         pane.setOnDragEntered(event -> {
             if (event.getGestureSource() != pane &&
-                    event.getDragboard().hasString() && !(pane.getId().charAt(0) == 'i' && character != null && character.equals(CharacterType.SPOILED_PRINCESS))&&!(event.getDragboard().getString().equals("mother") && pane.getId().equals("board1")) && !(event.getDragboard().getString().charAt(0) == 'C' && !character.equals(CharacterType.SPOILED_PRINCESS) && pane.getId().equals("board1"))) {
+                    event.getDragboard().hasString() && !(pane.getId().charAt(0) == 'i' && boardSelector) && !(event.getDragboard().getString().equals("mother") && pane.getId().equals("board1")) && !(event.getDragboard().getString().charAt(0) == 'C' && characterPlayed && pane.getId().equals("board1"))) {
                 DropShadow dropShadow = new DropShadow();
                 dropShadow.setHeight(15.0);
                 dropShadow.setWidth(15.0);
@@ -388,6 +427,7 @@ public class MainController implements GenericSceneController{
     public void update(){
         characterPlayed = false;
         islandSelector = false;
+        boardSelector = false;
         character = null;
 
         info.setText("It's "+gameInfo.getCurrentPlayer()+" Turn!");
@@ -406,7 +446,7 @@ public class MainController implements GenericSceneController{
         for (int index = 1; index < assistantNumbers.length + 1; index++)
             assistants.getChildren().get(index).getStyleClass().add("assistant"+assistantNumbers[index - 1]);
 
-        ImageView coinc[] = {coinc1, coinc2, coinc3};
+        ImageView[] coinc = {coinc1, coinc2, coinc3};
         if (gameInfo.isExpertMode()) {
             Pane[] characters = {character1, character2, character3};
             for (int i = 0; i < 3; i++) {
@@ -445,10 +485,6 @@ public class MainController implements GenericSceneController{
         }
 
         Group[] boardElements = {bd1Entrance, bd2Entrance, bd3Entrance, bd1Students, bd2Students, bd3Students, bd1Professors, bd2Professors, bd3Professors, bd1Towers, bd2Towers, bd3Towers};
-        Pane[][] entranceStudent = new Pane[3][9];
-        for (int i = 0; i < gameInfo.getNumPlayer(); i++)
-            for (Node node : boardElements[i].getChildren())
-                entranceStudent[i][boardElements[i].getChildren().indexOf(node)] = (Pane) node;
         Label[] coinNumbers = {coinNumber1, coinNumber2, coinNumber3};
         Pane[] lastAssistants = {lastAssistant1, lastAssistant2, lastAssistant3};
 
@@ -548,53 +584,53 @@ public class MainController implements GenericSceneController{
         for (int i = 0; i < gameInfo.getNumIsland(); i++){
             color = gameInfo.getTowersOnIsland(i);
             if (gameInfo.getIslandSize(i) == 1) {
-                islandFill(i, color, true);
-                //actualVert = vPosition + islandPositions[index][0];
-                //actualHoriz = hPosition + islandPositions[index][1];
-            /*}else {
-                islands.append(islandStructure(vPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][0], hPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][1], i, color, true, gameInfo));
-                actualVert = vPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][0];
-                actualHoriz = hPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][1];
+                islandFill(index, color,i, true, islands[index].getLayoutX(), islands[index].getLayoutY());
+            }else {
+                double v = 213 * Math.sin(Math.toRadians(15.0 + 30.0 * (index + gameInfo.getIslandSize(i)/2)));
+                actualVert = 230 - v;
+                double v1 = 337.5 - 213 * Math.cos(Math.toRadians(15.0 + 30.0 *(index + gameInfo.getIslandSize(i)/2)));
+                actualHoriz = v1;
+                islandFill(index + gameInfo.getIslandSize(i)/2, color, i, true, actualHoriz, actualVert);
                 for (int j = index + gameInfo.getIslandSize(i) / 2 - 1; j >= index; j--) {
                     switch (islandUnion(before, j)) {
                         case 0:
-                            islands.append(islandStructure(actualVert + diagPositions[j / 3][0], actualHoriz + diagPositions[j / 3][1], i, color, false, gameInfo));
                             actualVert += diagPositions[j / 3][0];
                             actualHoriz += diagPositions[j / 3][1];
+                            islandFill(j, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 1:
-                            islands.append(islandStructure(actualVert +  vertPositions[(j - 1) / 6][0], actualHoriz + vertPositions[(j - 1) / 6][1], i, color, false, gameInfo));
                             actualVert += vertPositions[(j - 1) / 6][0];
                             actualHoriz += vertPositions[(j - 1) / 6][1];
+                            islandFill(j, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 2:
-                            islands.append(islandStructure(actualVert + horPositions[j / 6][0], actualHoriz + horPositions[j / 6][1], i, color, false, gameInfo));
                             actualVert += horPositions[j / 6][0];
                             actualHoriz += horPositions[j / 6][1];
+
                             break;
                     }
                 }
-                actualVert = vPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][0];
-                actualHoriz = hPosition + islandPositions[index + gameInfo.getIslandSize(i) / 2][1];
+                actualVert = 230 - v;
+                actualHoriz = v1;
                 for (int j = index + gameInfo.getIslandSize(i) / 2 + 1; j < index + gameInfo.getIslandSize(i); j++) {
                     switch (islandUnion(after, j)) {
                         case 0:
-                            islands.append(islandStructure(actualVert - diagPositions[j / 3][0], actualHoriz - diagPositions[j / 3][1], i, color, false, gameInfo));
                             actualVert -= diagPositions[j / 3][0];
                             actualHoriz -= diagPositions[j / 3][1];
+                            islandFill(i, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 1:
-                            islands.append(islandStructure(actualVert + vertPositions[j / 6][0], actualHoriz + vertPositions[j / 6][1], i, color, false, gameInfo));
                             actualVert += vertPositions[j/ 6][0];
                             actualHoriz += vertPositions[j / 6][1];
+                            islandFill(i, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 2:
-                            islands.append(islandStructure(actualVert - horPositions[j / 6][0], actualHoriz - horPositions[j / 6][1], i, color, false, gameInfo));
                             actualVert -= horPositions[j / 6][0];
                             actualHoriz -= horPositions[j / 6][1];
+                            islandFill(i, color, 0,false, actualHoriz, actualVert);
                             break;
                     }
-                }*/
+                }
             }
 
             index += gameInfo.getIslandSize(i);
@@ -610,8 +646,15 @@ public class MainController implements GenericSceneController{
         return -1;
     }
 
-    private void islandFill(int number, int color, boolean fill){
+    private void islandFill(int number, int color, int actual, boolean fill, double newX, double newY){
         Pane[] islands = {island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12};
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(islands[number]);
+        translate.setDuration(Duration.millis(500));
+        translate.setByX(newX - islands[number].getLayoutX());
+        translate.setByY(newY - islands[number].getLayoutY());
+        translate.play();
+
         if (color!=-1) {
             islands[number].getChildren().get(5).getStyleClass().clear();
             islands[number].getChildren().get(5).getStyleClass().add(TowerColor.getColor(color - 5).toString().toLowerCase());
@@ -620,11 +663,11 @@ public class MainController implements GenericSceneController{
         if (fill) {
             if (number == gameInfo.getMotherNaturePosition())
                 islands[number].getChildren().get(7).setVisible(true);
-            if (gameInfo.hasNoEntryTile(number))
+            if (gameInfo.hasNoEntryTile(actual))
                 islands[number].getChildren().get(6).setVisible(true);
         }
 
-        for (Integer student : gameInfo.getStudentsOnIsland(number)) {
+        for (Integer student : gameInfo.getStudentsOnIsland(actual)) {
             Pane pane = (Pane) islands[number].getChildren().get(index);
             pane.getStyleClass().clear();
             pane.getChildren().get(0).setVisible(false);
@@ -640,14 +683,6 @@ public class MainController implements GenericSceneController{
 
     public void setGameInfo(GameInfo gameInfo){
         this.gameInfo = gameInfo;
-    }
-
-    public void setCharacterPlayed(boolean characterPlayed){
-        this.characterPlayed = characterPlayed;
-    }
-
-    public void setIslandSelector(boolean islandSelector){
-        this.islandSelector = islandSelector;
     }
 
     private CharacterSceneController getCharacterController(){

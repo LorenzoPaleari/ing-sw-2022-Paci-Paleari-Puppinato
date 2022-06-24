@@ -123,6 +123,13 @@ public class GUIView implements View {
             Platform.runLater(() -> SceneController.showError(exception.getErrorType().toString(), exception.getErrorType().getErrorText() + exception.getPawnColor()));
         else
             Platform.runLater(() -> SceneController.showError(exception.getErrorType().toString(), exception.getErrorType().getErrorText()));
+
+        MainController controller;
+        try {
+            controller = (MainController) SceneController.getActiveController();
+            Platform.runLater(controller::update);
+        } catch (ClassCastException ignored){}
+
     }
 
     private GameSetupController getGameSetupController() {

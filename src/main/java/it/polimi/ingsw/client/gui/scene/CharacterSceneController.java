@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CharacterSceneController implements GenericSceneController {
@@ -35,7 +36,10 @@ public class CharacterSceneController implements GenericSceneController {
     private ServerHandler serverHandler;
     private MainController mainController;
     private String color;
-    private int[] colorSelected = {0,0,0,0,0,0,0,0,0,0};
+    private int[] colorPresent = {0,0,0,0,0,0,0,0,0,0};
+    private int[] colorSect = {-1,-1,-1,-1,-1,-1};
+    private List<String> color1 = new ArrayList<>();
+    private List<String> color2 = new ArrayList<>();
     @FXML
     private StackPane rootPane;
     @FXML
@@ -49,62 +53,51 @@ public class CharacterSceneController implements GenericSceneController {
     @FXML
     private ListView<String> colors;
     @FXML
-    private MenuButton green1, red1, yellow1, pink1, blue1, green2, red2, yellow2, pink2, blue2;
+    private ChoiceBox<String> choice01, choice02, choice03, choice11, choice12, choice13;
+    @FXML
+    private Label label0, label1, label2, label3, label4, label5;
+    private List<ChoiceBox<String>> selection;
 
     @FXML
     public void initialize() {
+        selection = new ArrayList<>();
+        Collections.addAll(selection, choice01, choice02, choice03, choice11, choice12, choice13);
         rootPane.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onRootPaneMousePressed);
         rootPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::onRootPaneMouseDragged);
         close.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            mainController.setCharacterPlayed(false);
-            mainController.setIslandSelector(false);
+            Platform.runLater(() -> mainController.update());
             stage.close();
         });
         play.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onPlayClicked);
-        String[] color = {"Green", "Red", "Yellow", "Pink", "Blue"};
-        colors.getItems().addAll(color);
-        MenuButton[] selection = {green1, red1, yellow1, pink1, blue1, green2, red2, yellow2, pink2, blue2};
-        for (MenuButton i : selection)
-            for (MenuItem node : i.getItems())
-                node.setOnAction(event -> {
-                    int multi = Integer.parseInt(i.getId().substring(i.getId().charAt(i.getId().length() - 1)));
-                    int colorIndex = PawnColor.lookup(i.getId().substring(0, i.getId().length() - 1)).getIndex();
-                    colorSelected[multi*colorIndex] = Integer.parseInt(node.getText());
-                });
+        for (ChoiceBox<String> choice : selection)
+            choiceBoxEffect(choice);
+    }
+
+    private void choiceBoxEffect(ChoiceBox<String> choiceBox){
+        Label[] labels = {label0, label1, label2, label3, label4, label5};
+        choiceBox.setOnAction(event -> {
+            if (choiceBox.getValue() != null) {
+                colorSect[Integer.parseInt(choiceBox.getId().substring(7)) - (Integer.parseInt(choiceBox.getId().substring(6, 7)) == 0 ? 1 : -2)] = PawnColor.lookup(choiceBox.getValue()).getIndex();
+                labels[Integer.parseInt(choiceBox.getId().substring(7)) - (Integer.parseInt(choiceBox.getId().substring(6, 7)) == 0 ? 1 : -2)].setText(PawnColor.lookup(choiceBox.getValue()).toString());
+                updateChoiceBox(characterType.equals(CharacterType.MINSTREL) ? 2 : 3);
+            }
+        });
     }
 
     private <T extends Event> void onPlayClicked(T t) {
-        int sum1 = 0, sum2 = 0;
-        boolean valid = true;
-        List<Integer> tempColor = new ArrayList<>();
-        List<Integer> tempColor2 = new ArrayList<>();
-        for (int i = 0; i < 5; i++){
-            if (colorSelected[i] > 0) {
-                tempColor.add(0, i);
-                if (gameInfo.getEntranceStudents(gameInfo.getFrontPlayer())[i] < colorSelected[i])
-                    valid = false;
-            }
-            if (colorSelected[i+5] > 0) {
-                tempColor2.add(i);
-                if (characterType.equals(CharacterType.THIEF) && gameInfo.getCharacterInfo(number)[i] < colorSelected[i+5])
-                    valid = false;
-                if (characterType.equals(CharacterType.MINSTREL) && gameInfo.getDiningStudents(gameInfo.getFrontPlayer())[i] < colorSelected[i+5])
-                    valid = false;
-            }
-            sum1 += colorSelected[i];
-            sum2 += colorSelected[5 + i];
-        }
-        int[] colorListFinal;
-        colorListFinal = new int[characterType.equals(CharacterType.MINSTREL) ? 4 : 6];
-        for (int i = 0; i < Math.min(Math.min(characterType.equals(CharacterType.MINSTREL) ? 2 : 3, tempColor.size()), tempColor2.size()); i++){
-            colorListFinal[i] = tempColor.get(i);
-            colorListFinal[i+(characterType.equals(CharacterType.MINSTREL) ? 2 : 3)] = tempColor2.get(i);
-        }
-        for (int i = Math.min(Math.min(characterType.equals(CharacterType.MINSTREL) ? 2 : 3, tempColor.size()), tempColor2.size()); i < (characterType.equals(CharacterType.MINSTREL) ? 2 : 3); i++){
-            colorListFinal[i] = -1;
-            colorListFinal[i+(characterType.equals(CharacterType.MINSTREL) ? 2 : 3)] = -1;
+        int sum1 = 0;
+        int sum2=0;
+        int[] colorListFinal = new int[(characterType.equals(CharacterType.MINSTREL) ? 4 : 6)];
+        for (int i = 0; i < (characterType.equals(CharacterType.MINSTREL) ? 2 : 3); i++){
+            if (colorSect[i] != -1)
+                sum1++;
+            if (colorSect[i+3] != -1)
+                sum2++;
+            colorListFinal[i] = colorSect[i];
+            colorListFinal[i+(characterType.equals(CharacterType.MINSTREL) ? 2 : 3)] = colorSect[i+3];
         }
 
+        boolean close = true;
 
         if (characterType.equals(CharacterType.FARMER) || characterType.equals(CharacterType.MAGIC_DELIVERY_MAN) || characterType.equals(CharacterType.CENTAUR) || characterType.equals(CharacterType.KNIGHT))
             serverHandler.useCharacterRequest(number);
@@ -114,24 +107,18 @@ public class CharacterSceneController implements GenericSceneController {
             serverHandler.useCharacterRequest(islandSelected, PawnColor.lookup(color), number);
         else if (((characterType.equals(CharacterType.SPOILED_PRINCESS)) && color!= null) || ((characterType.equals(CharacterType.MUSHROOM_HUNTER) || characterType.equals(CharacterType.THIEF)) && colors.getSelectionModel().getSelectedItem() != null))
             serverHandler.useCharacterRequest(color != null ? PawnColor.lookup(color) : PawnColor.lookup(colors.getSelectionModel().getSelectedItem()) , number);
-        else if ((characterType.equals(CharacterType.MINSTREL) || (characterType.equals(CharacterType.THIEF))) && valid) {
-            if (characterType.equals(CharacterType.MINSTREL) && sum1 <= 2 && sum1 == sum2)
-                serverHandler.useCharacterRequest(colorListFinal, number);
-            else if (characterType.equals(CharacterType.MINSTREL))
-                Platform.runLater(() -> SceneController.showError("CHARACTER PLAY", "You have to choose at max 2 students, also you must move the same amount"));
-            if (characterType.equals(CharacterType.THIEF) && sum1 <= 3 && sum1 == sum2)
-                serverHandler.useCharacterRequest(colorListFinal, number);
-            else if (characterType.equals(CharacterType.THIEF))
-                Platform.runLater(() -> SceneController.showError("CHARACTER PLAY", "You have to choose at max 3 students, also you must move the same amount"));
-        }
-        else if (characterType.equals(CharacterType.MINSTREL) || (characterType.equals(CharacterType.THIEF)))
-            Platform.runLater(() -> SceneController.showError("CHARACTER PLAY", "You don't have enough students"));
-        else
+        else if ((characterType.equals(CharacterType.MINSTREL) || (characterType.equals(CharacterType.JESTER))) && sum1 == sum2 && sum1 > 0)
+            serverHandler.useCharacterRequest(colorListFinal, number);
+        else if ((characterType.equals(CharacterType.MINSTREL) || (characterType.equals(CharacterType.JESTER))) && sum1 != sum2){
+            Platform.runLater(() -> SceneController.showError("CHARACTER PLAY", "You must choose the same amount of student to move"));
+            close = false;
+        } else {
             Platform.runLater(() -> SceneController.showError("CHARACTER PLAY", "Some actions are required in order to play this card, Please fulfill them."));
+            close = false;
+        }
 
-        mainController.setCharacterPlayed(false);
-        mainController.setIslandSelector(false);
-        stage.close();
+        if (close)
+            stage.close();
     }
 
     public CharacterSceneController(ServerHandler serverHandler) {
@@ -146,7 +133,7 @@ public class CharacterSceneController implements GenericSceneController {
     }
 
     public void displayAlert() {
-        stage.showAndWait();
+        stage.show();
     }
 
     public void setScene(Scene scene) {
@@ -164,12 +151,19 @@ public class CharacterSceneController implements GenericSceneController {
     }
 
     public void setInfo(GameInfo gameInfo, int number) {
+        Label[] labels = {label0, label1, label2, label3, label4, label5};
+        for (Label i : labels)
+            i.setText("");
         ok.setVisible(false);
-        MenuButton[] selection = {green1, red1, yellow1, pink1, blue1, green2, red2, yellow2, pink2, blue2};
-        for (MenuButton i : selection)
+        for (ChoiceBox<String> i : selection) {
             i.setVisible(false);
+            i.getItems().clear();
+        }
 
-        colorSelected = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        color1.clear();
+        color2.clear();
+        colorSect = new int[]{-1,-1,-1,-1,-1,-1};
+        colorPresent = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         islandSelected = -1;
         color = null;
         playable = false;
@@ -202,15 +196,41 @@ public class CharacterSceneController implements GenericSceneController {
         if (characterType.equals(CharacterType.MUSHROOM_HUNTER) || characterType.equals(CharacterType.THIEF)) {
             setText("Select a Color");
             colors.setVisible(true);
+            colors.getItems().addAll("Green", "Red", "Yellow", "Pink", "Blue");
         }
-        if (characterType.equals(CharacterType.MINSTREL) || characterType.equals(CharacterType.JESTER)){
-            if (characterType.equals(CharacterType.MINSTREL))
-                setText("Entrance - Dining");
-            else
-                setText("Entrance - Card");
-            for (MenuButton i : selection)
-                i.setVisible(true);
+        int dimension = 0;
+        if (characterType.equals(CharacterType.MINSTREL)) {
+            setText("Entrance - Dining");
+            dimension = 2;
         }
+        if (characterType.equals(CharacterType.JESTER)) {
+            setText("Entrance - Card");
+            dimension = 3;
+        }
+
+
+        for (int i = 0; i < 5; i++){
+            colorPresent[i] = gameInfo.getEntranceStudents(gameInfo.getFrontPlayer())[i];
+            if (gameInfo.getEntranceStudents(gameInfo.getFrontPlayer())[i] > 0)
+                color1.add(PawnColor.getColor(i).toString());
+            if (dimension == 2) {
+                colorPresent[i + 5] = gameInfo.getDiningStudents(gameInfo.getFrontPlayer())[i];
+                if (gameInfo.getDiningStudents(gameInfo.getFrontPlayer())[i] > 0)
+                    color2.add(PawnColor.getColor(i).toString());
+            }
+            else {
+                colorPresent[i + 5] = gameInfo.getCharacterInfo(number)[i];
+                if (gameInfo.getCharacterInfo(number)[i] > 0)
+                    color2.add(PawnColor.getColor(i).toString());
+            }
+        }
+        for (int i = 0; i < dimension; i++){
+            selection.get(i).setVisible(true);
+            selection.get(i).getItems().addAll(color1);
+            selection.get(i+3).setVisible(true);
+            selection.get(i+3).getItems().addAll(color2);
+        }
+
     }
 
     public void setMain(MainController mainController) {
@@ -237,5 +257,30 @@ public class CharacterSceneController implements GenericSceneController {
 
     public void setOk(){
         ok.setVisible(true);
+    }
+
+    private void updateChoiceBox(int max){
+        color1.clear();
+        color2.clear();
+        int minus1, minus2;
+        for (int i = 0; i < 5; i++){
+            minus1 = 0; minus2 = 0;
+            for (int j = 0; j < 3; j++){
+                if (colorSect[j] == i)
+                    minus1++;
+                if (colorSect[j+3] == i)
+                    minus2++;
+            }
+            if (colorPresent[i] - minus1 > 0)
+                color1.add(PawnColor.getColor(i).toString());
+            if (colorPresent[i+5] - minus2> 0)
+                color2.add(PawnColor.getColor(i).toString());
+        }
+        for (int i = 0; i < max; i++){
+            selection.get(i).getItems().clear();
+            selection.get(i).getItems().addAll(color1);
+            selection.get(i+3).getItems().clear();
+            selection.get(i+3).getItems().addAll(color2);
+        }
     }
 }
