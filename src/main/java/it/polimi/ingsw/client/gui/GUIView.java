@@ -12,22 +12,41 @@ import javafx.application.Platform;
 
 import java.util.List;
 
+/**
+ * This class manages the GUI view of a specific client, reading input and sending specific messages to the server
+ */
 public class GUIView implements View {
     private ServerHandler serverHandler;
 
+    /**
+     * Constructor
+     * Initializes the client view
+     * @param serverHandler the server handler to associate
+     */
     public GUIView(ServerHandler serverHandler){
         this.serverHandler = serverHandler;
     }
 
+    /**
+     * Method of the Interface View, not used in this implementation
+     */
     @Override
     public void start() {
     }
 
+    /**
+     * Asks the client if it wants to start a new game or prefers to enter a lobby created previously by another player
+     */
     @Override
     public void gameSetUp() {
         GameSetupController gameSetupController = getGameSetupController();
     }
 
+    /**
+     * Creates a new lobby if there are no other present, otherwise prints the list of available lobbies and asks which one the client wants to join
+     * @param lobbies the list of the names of the lobbies present
+     * @param firstLobby a flag which is true only if there are no lobbies
+     */
     @Override
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
         GameSetupController gameSetupController = getGameSetupController();
@@ -39,18 +58,28 @@ public class GUIView implements View {
         }
     }
 
+    /**
+     * Informs the client that the lobby it chooses is full, then displays the list of the lobbies available
+     */
     @Override
     public void fullLobby() {
         Platform.runLater(() -> SceneController.showError("LOBBY SELECTION", "The lobby is full, try again."));
         serverHandler.refreshLobbies();
     }
 
+    /**
+     * Asks at the client, only if it creates a new lobby, the number of player and the difficulty of the game it wants to create
+     */
     @Override
     public void initialSetUp() {
         GameSetupController gameSetupController = getGameSetupController();
         Platform.runLater(gameSetupController::newGame);
     }
 
+    /**
+     * Asks the client its nickname
+     * @param requestAgain if is it true, the client inserts a nickname which has already been chosen, so it has to choose another
+     */
     @Override
     public void playerSetUp(boolean requestAgain) {
         if (!requestAgain) {
@@ -60,6 +89,11 @@ public class GUIView implements View {
             Platform.runLater(() -> SceneController.showError("NICKNAME SELECTION ERROR", "This nickname has already been taken, please try again"));
     }
 
+    /**
+     * Asks at the client which color wants for its towers
+     * @param tower the list of the colors of the towers available
+     * @param requestAgain if is it true, the client inserts a color which has already been chosen, so it has to choose another
+     */
     @Override
     public void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
         ColorSetUpContoller colorSetUpContoller = getColorSetUpController();
@@ -68,17 +102,30 @@ public class GUIView implements View {
         Platform.runLater(() -> colorSetUpContoller.setUp(tower));
     }
 
+    /**
+     * Displays the actual status of the game
+     * @param gameInfo contains the information of the status of the game
+     */
     @Override
     public void printGameBoard(GameInfo gameInfo) {
         MainController mainController = getMainController(gameInfo);
         Platform.runLater(mainController::update);
     }
 
+    /**
+     * Method of the Interface View, not used in this implementation
+     */
     @Override
     public void choseAction() {
         return;
     }
 
+    /**
+     * Displays the winner of the game, then calls {@link #newGame(String)} method
+     * @param winner1 the nickname of the winner
+     * @param winner2 the nickname of the eventual second winner in case of draw. It may be null if there is only one winner
+     * @param nickname the nickname of the client
+     */
     @Override
     public void printWinner(String winner1, String winner2, String nickname) {
         EndController endController = getEndController();
@@ -87,6 +134,11 @@ public class GUIView implements View {
         newGame("");
     }
 
+    /**
+     * Informs the client, while it is choosing a lobby, if that lobby is no more available because of a disconnection of one of the player in the lobby, otherwise calls {@link #newGame(String)} method
+     * @param nickname the nickname of the player disconnected
+     * @param notEntered true if the client is not entered in the lobby
+     */
     @Override
     public void printInterrupt(String nickname, boolean notEntered) {
         if (notEntered) {
@@ -98,23 +150,40 @@ public class GUIView implements View {
         }
     }
 
+    /**
+     * Asks the client if it wants to start a new game
+     * @param nickname the nickname of the player disconnected, if present. It may be null
+     */
     @Override
     public void newGame(String nickname) {
         EndController endController = getEndController();
         Platform.runLater(() -> endController.newGame());
     }
 
+    /**
+     * Informs the client that the game is ended due to a problem with the server
+     */
     @Override
     public void printServerDown() {
         Platform.runLater(() -> SceneController.showError("SERVER DISCONNECTED", "Server is down, the game will close."));
     }
 
+    /**
+     * Method of the Interface View, not used in this implementation
+     */
     @Override
     public void stopClearer() {}
 
+    /**
+     * Method of the Interface View, not used in this implementation
+     */
     @Override
     public void bufferClearer() {}
 
+    /**
+     * Displays a description of some possible exception, if one of them occurs
+     * @param exception the exception occurred
+     */
     @Override
     public void printError(ClientException exception) {
         if (exception.getErrorType().equals(ErrorType.NOT_ENOUGH_MONEY))

@@ -23,7 +23,7 @@ import static it.polimi.ingsw.model.enumerations.PawnColor.getColor;
 import static it.polimi.ingsw.model.enumerations.PawnColor.lookup;
 
 /**
- * This class manages the view of a specific client, reading input and sending specific messages to the server
+ * This class manages the CLI view of a specific client, reading input and sending specific messages to the server
  */
 public class CLIView implements View {
     private GameInfo gameInfo;
@@ -43,7 +43,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Sets the server IP and port
+     * Asks the ServerIp, then gives it to the ServerHandler which will establish the connection between server and Client
      */
     @Override
     public synchronized void start() {
@@ -91,7 +91,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Nickname setup
+     * Asks the client its nickname
      * @param requestAgain if is it true, the client inserts a nickname which has already been chosen, so it has to choose another
      */
     @Override
@@ -108,7 +108,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Game setup. New game or join an existing lobby
+     * Asks the client if it wants to start a new game or prefers to enter a lobby created previously by another player
      */
     @Override
     public synchronized void gameSetUp() {
@@ -134,7 +134,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Refreshes the lobbies
+     * Creates a new lobby if there are no other present, otherwise prints the list of available lobbies and asks which one the client wants to join
      * @param lobbies the list of the names of the lobbies present
      * @param firstLobby a flag which is true only if there are no lobbies
      */
@@ -237,7 +237,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Prints that the lobby is full
+     * Informs the client that the lobby it chooses is full, then prints the list of the lobbies available
      */
     @Override
     public void fullLobby(){
@@ -252,7 +252,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Initial setup. Sets the number of players, the expert mode.
+     * Asks at the client, only if it creates a new lobby, the number of player and the difficulty of the game it wants to create
      */
     @Override
     public synchronized void initialSetUp() {
@@ -291,7 +291,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Color selection method
+     * Asks at the client which color wants for its towers
      * @param tower the list of the colors of the towers available
      * @param requestAgain if is it true, the client inserts a color which has already been chosen, so it has to choose another
      */
@@ -350,7 +350,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Prints the game board
+     * Prints at screen the actual status of the game
      * @param gameInfo contains the information of the status of the game
      */
     @Override
@@ -361,7 +361,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Clears the buffer
+     * Clears the buffer of a client while it is not its turn
      */
     @Override
     public void bufferClearer() {
@@ -379,7 +379,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Stops the clearer
+     * Stops the cleaning of the buffer
      */
     @Override
     public void stopClearer() {
@@ -387,7 +387,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Switches between actions
+     * Asks at the client which action it would like to do among the actions available
      */
     @Override
     public synchronized void choseAction(){
@@ -438,7 +438,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Prints error messages
+     * Prints a description of some possible exception, if one of them occurs
      * @param exception the exception occurred
      */
     @Override
@@ -456,7 +456,7 @@ public class CLIView implements View {
     }
 
     /**
-     * prints the winner
+     * Prints the winner of the game, then calls {@link #newGame(String)} method
      * @param winner1 the nickname of the winner
      * @param winner2 the nickname of the eventual second winner in case of draw. It may be null if there is only one winner
      * @param nickname the nickname of the client
@@ -483,7 +483,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Prints interrupt message and then refreshed lobbies
+     * Informs the client, while it is choosing a lobby, if that lobby is no more available because of a disconnection of one of the player in the lobby, otherwise calls {@link #newGame(String)} method
      * @param nickname the nickname of the player disconnected
      * @param notEntered true if the client is not entered in the lobby
      */
@@ -504,7 +504,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Starts a new game
+     * Asks the client if it wants to start a new game
      * @param nickname the nickname of the player disconnected, if present. It may be null
      */
     @Override
@@ -530,7 +530,7 @@ public class CLIView implements View {
     }
 
     /**
-     * prints that the server is down
+     * Informs the client that the game is ended due to a problem with the server
      */
     @Override
     public synchronized void printServerDown() {

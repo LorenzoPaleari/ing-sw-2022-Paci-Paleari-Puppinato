@@ -13,6 +13,9 @@ import it.polimi.ingsw.model.table.Island;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class contains the status of the game, it is sent as a message from the server  to all the server handler
+ */
 public class GameInfo implements Serializable {
     private String[][] players;
     private int[] playersInfo = new int[2]; //Indexes of the currentTurnPlayer and the frontPlayer
@@ -41,6 +44,12 @@ public class GameInfo implements Serializable {
     private int[] playersCoin;
     private Integer[][] characterInfo; //The first 5 are the eventual student, the sixth is the number of NoEntryTiles
 
+    /**
+     * Constructor
+     * Initializes the class' attributes taking information by the game itself
+     * @param game the status of the game
+     * @param frontPlayer the first player of this round
+     */
     public GameInfo(Game game, String frontPlayer){
         int numAssistant = 0;
         for (Player p: game.getPlayers())
@@ -158,10 +167,18 @@ public class GameInfo implements Serializable {
         return -1;
     }
 
+    /**
+     * Returns true only if the game is played in expert mode
+     * @return true only if the game is played in expert mode
+     */
     public boolean isExpertMode() {
         return expertMode;
     }
 
+    /**
+     * Returns the number of the player of this game
+     * @return the number of the player of this game
+     */
     public int getNumPlayer(){
         return numberOfPlayer;
     }
@@ -170,26 +187,54 @@ public class GameInfo implements Serializable {
         return playerState;
     }
 
+    /**
+     * Returns the number of coin the player with the specified nickname
+     * @param nickname the nickname of the player
+     * @return the number of coin the player with the specified nickname
+     */
     public int getNumCoin(String nickname){
         return playersCoin[playerPosition(nickname)];
     }
 
+    /**
+     * Returns the number of the island present in the game
+     * @return the number of the island present in the game
+     */
     public int getNumIsland(){
         return numberOfIsland;
     }
 
+    /**
+     * Returns the character at the specified position
+     * @param position the position of the character to get
+     * @return the character at the specified position
+     */
     public CharacterType getCharacter(int position){
         return character[position];
     }
 
+    /**
+     * Returns an array of Integer in which the first 5 are the eventual student, the sixth is the number of NoEntryTiles
+     * @param position the position of the character
+     * @return an array of Integer in which the first 5 are the eventual student, the sixth is the number of NoEntryTiles
+     */
     public Integer [] getCharacterInfo(int position){
         return characterInfo [position];
     }
 
-    public int getCharacterCost(int number) {
-        return characterCost[number];
+    /**
+     * Returns the cost of the Character at the specified position
+     * @param position the position of the character
+     * @return the cost of the Character at the specified position
+     */
+    public int getCharacterCost(int position) {
+        return characterCost[position];
     }
 
+    /**
+     * Returns an array containing the nickname of each player, in order
+     * @return an array containing the nickname of each player, in order
+     */
     public String[] getPlayersName(){
         String[] names = new String[players.length];
         for(int i = 0; i < players.length; i++){
@@ -198,31 +243,63 @@ public class GameInfo implements Serializable {
         return names;
     }
 
+    /**
+     * Returns the tower color as index of the specified player
+     * @param player the nickname of the player
+     * @return the tower color as index of the specified player
+     */
     public Integer getPlayersTowerColor(String player){
         String towerColor = players[playerPosition(player)][1];
         return TowerColor.getColor(towerColor).getIndex() + 5;
     }
 
+    /**
+     * Returns the current player
+     * @return the current player
+     */
     public String getCurrentPlayer(){
         return players[playersInfo[0]][0];
     }
 
+    /**
+     * Returns the nickname of the first player of this round
+     * @return the nickname of the first player of this round
+     */
     public String getFrontPlayer(){
         return players[playersInfo[1]][0];
     }
 
+    /**
+     * Returns true only if the specified island has a NoEntryTiles on
+     * @param numIsland the number of the island
+     * @return true only if the specified island has a NoEntryTiles on
+     */
     public boolean hasNoEntryTile(int numIsland){
         return noEntryTile[numIsland];
     }
 
+    /**
+     * Returns the number of students to move in this turn
+     * @return the number of students to move in this turn
+     */
     public int getRemainingMoves(){
         return remainingMoves;
     }
 
+    /**
+     * Returns the weight of the specified island
+     * @param numIsland the position of the island
+     * @return the weight of the specified island
+     */
     public int getIslandSize(int numIsland){
         return islandSize[numIsland];
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains the number of student of a color present on the cloud at the specified position
+     * @param number the position of the cloud
+     * @return Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index)
+     */
     public Integer[] getCloudStudents(int number) {
         Integer[] students = new Integer[5];
         System.arraycopy(cloudStudents, number * 5, students, 0, 5);
@@ -230,6 +307,11 @@ public class GameInfo implements Serializable {
         return students;
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains the number of student of a color present on the entrance of the specified player
+     * @param nickname the nickname of the player
+     * @return an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index)
+     */
     public Integer[] getEntranceStudents(String nickname){
         return getIntegers(nickname, 1);
     }
@@ -255,6 +337,11 @@ public class GameInfo implements Serializable {
         return students;
     }
 
+    /**
+     * Returns the number of tower left at the specified player
+     * @param nickname the nickname of the player
+     * @return the number of tower left at the specified player
+     */
     public int getBoardTower(String nickname){
         int numPlayer = 0;
         for(int i = 0; i < players.length; i++){
@@ -263,14 +350,28 @@ public class GameInfo implements Serializable {
         return boardTower[numPlayer];
     }
 
+    /**
+     * Returns the position of Mother Nature
+     * @return the position of Mother Nature
+     */
     public int getMotherNaturePosition(){
         return motherNaturePosition;
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains the number of student of a color present in the dining room of the specified player
+     * @param nickname the nickname of the player
+     * @return an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index)
+     */
     public Integer[] getDiningStudents(String nickname){
         return getIntegers(nickname, -1);
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains the number of student of a color present on the island of the specified position
+     * @param numIsland the position of the island
+     * @return an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index)
+     */
     public Integer[] getStudentsOnIsland(int numIsland){
         Integer[] students = new Integer[5];
         int cont = 0;
@@ -281,11 +382,21 @@ public class GameInfo implements Serializable {
         return students;
     }
 
+    /**
+     * Returns the number of tower present on the specified island
+     * @param numIsland the position of the island
+     * @return  the number of tower present on the specified island
+     */
     public int getTowersOnIsland(int numIsland){
         if(islandTowers[numIsland] == - 1) return -1;
         else return TowerColor.getColor(islandTowers[numIsland]).getIndex() + 5;
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains 1 if the professor of a color is present in the dining room of the specified player
+     * @param nickName the nickname of the player
+     * @return an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains 1 if the professor of a color is present in the dining room of the specified player
+     */
     public int[] getProfessors(String nickName) {
         int[] colors = {0,0,0,0,0};
         for (int i = 0; i < 5; i++)
@@ -295,6 +406,10 @@ public class GameInfo implements Serializable {
         return colors;
     }
 
+    /**
+     * Returns an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains 1 if the professor of a color is present on the table
+     * @return an array of 5 cells, each one representing one Pawncolor (ordered by Pawncolor's index). Each cell contains 1 if the professor of a color is present on the table
+     */
     public int[] getProfessors(){
         int[] colors = {0,0,0,0,0};
         for (int i = 0; i < 5; i++)
@@ -304,10 +419,19 @@ public class GameInfo implements Serializable {
         return colors;
     }
 
+    /**
+     * Returns the last used Assistant card of the specified player
+     * @param nickName the nickname of the player
+     * @return the last used Assistant card of the specified player
+     */
     public int getLastUsed(String nickName){
         return lastUsed[playerPosition(nickName)];
     }
 
+    /**
+     * Returns an array with the weight of the assistant left
+     * @return an array with the weight of the assistant left
+     */
     public Integer[] getAssistants(){
         return assistants;
     }

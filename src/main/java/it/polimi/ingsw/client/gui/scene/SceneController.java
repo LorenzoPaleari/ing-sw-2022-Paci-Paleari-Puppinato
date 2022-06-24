@@ -14,10 +14,20 @@ public class SceneController {
     private static Scene activeScene;
     private static GenericSceneController activeController;
 
+    /**
+     * Sets the active scene based on the event that occurred
+     * @param event the event that occurred
+     */
     public static void setActiveScene(Event event){
         activeScene = ((Node) event.getSource()).getScene();
 
     }
+
+    /**
+     * Changes the root pane
+     * @param controller
+     * @param fxml
+     */
     public static void changeRootPane(GenericSceneController controller, String fxml) {
         changeRootPane(controller, activeScene, fxml);
     }
@@ -69,10 +79,18 @@ public class SceneController {
         controller.displayAlert();
     }
 
+    /**
+     * Returns the active scene
+     * @return the active scene
+     */
     public static Scene getActiveScene() {
         return activeScene;
     }
 
+    /**
+     * Returns the active controller
+     * @return the active controller
+     */
     public static Object getActiveController() {
         return activeController;
     }

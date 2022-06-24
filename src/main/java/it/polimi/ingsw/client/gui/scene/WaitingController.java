@@ -19,6 +19,9 @@ public class WaitingController implements GenericSceneController{
     @FXML
     private Pane music;
 
+    /**
+     * Initializes the controller that manages the client waiting for other clients to join its lobby
+     */
     @FXML
     public void initialize(){
         effect(image1);

@@ -29,6 +29,10 @@ public class JavaFXInit extends Application {
     private static int current = 0;
     private static List<Media> playlist;
 
+    /**
+     *
+     * @param stage
+     */
     @Override
     public void start(Stage stage) {
         JavaFXInit.stage = stage;
@@ -38,6 +42,9 @@ public class JavaFXInit extends Application {
         loading(serverHandler);
     }
 
+    /**
+     *
+     */
     public static void reStart(){
         JavaFXInit.stage = new Stage();
         ServerHandler serverHandler = new ServerHandler();
@@ -80,25 +87,50 @@ public class JavaFXInit extends Application {
         stage.show();
     }
 
+    /**
+     * Returns the stage
+     * @return the stage
+     */
     public static Stage getStage(){
         return stage;
     }
+
+    /**
+     *
+     * @param stopped
+     */
     public static void setStopped(boolean stopped) {
         JavaFXInit.stopped = stopped;
     }
 
+    /**
+     * Returns the MediaPlayer (music)
+     * @return the MediaPlayer (music)
+     */
     public static MediaPlayer getPlayer(){
         return player;
     }
 
+    /**
+     * Returns true only if the music is muted
+     * @return true only if the music is muted
+     */
     public static boolean isMuted() {
         return muted;
     }
 
+    /**
+     *
+     * @param muted
+     */
     public static void setMuted(boolean muted) {
         JavaFXInit.muted = muted;
     }
 
+    /**
+     *
+     * @param music
+     */
     public static void musicEffect(Pane music){
         music.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> {
             DropShadow dropShadow = new DropShadow();
@@ -127,6 +159,10 @@ public class JavaFXInit extends Application {
         });
     }
 
+    /**
+     * Changes
+     * @param musics
+     */
     public static void changeMusic(List<Media> musics) {
         muted = false;
         playlist = musics;

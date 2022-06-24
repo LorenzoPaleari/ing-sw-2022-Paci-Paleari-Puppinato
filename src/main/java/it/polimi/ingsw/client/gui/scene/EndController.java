@@ -35,6 +35,12 @@ public class EndController implements GenericSceneController{
         });
     }
 
+    /**
+     * Displays the winner(s) of the game
+     * @param winner1 the nickname of the winner
+     * @param winner2 the nickname of the eventual second winner in case of draw. It may be null if there is only one winner
+     * @param nickname the nickname of the client
+     */
     public void winner(String winner1, String winner2, String nickname){
         winner.setVisible(true);
         if(winner2==null){
@@ -61,6 +67,9 @@ public class EndController implements GenericSceneController{
         winner.setLayoutX((1280 - max)/2);
     }
 
+    /**
+     * Displays the text "Would you like to start a new game?" and the button Yes and the button and the button No
+     */
     public void newGame(){
         yesBtn.setVisible(true);
         noBtn.setVisible(true);

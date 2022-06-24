@@ -28,6 +28,11 @@ public class GameSetupController implements GenericSceneController{
     private boolean refreshed = false;
     private List<String[]> lobbies;
 
+    /**
+     * Constructor
+     * Initializes the server handler with it is associated
+     * @param serverHandler1 the server handler to associate
+     */
     public GameSetupController(ServerHandler serverHandler1){
         serverHandler = serverHandler1;
     }
@@ -93,6 +98,10 @@ public class GameSetupController implements GenericSceneController{
         serverHandler.refreshLobbies();
     }
 
+    /**
+     * Displays the text "NUMBER OF PLAYERS" and at its right it displays two RatioButton with 2 for the first, and 3 for the second.
+     * Displays the text "EXPERT MODE" and at its right it displays two RatioButton with YES for the first, and NO for the second.
+     */
     public void newGame() {
         change(false);
         expertNo.setVisible(true);
@@ -112,6 +121,10 @@ public class GameSetupController implements GenericSceneController{
         serverHandler.initialSetUp(numPlayer, expert);
     }
 
+    /**
+     * Informs the client that there is a lobby that are starting but they are not ready yet. Otherwise, shows the available lobbies to select
+     * @param lobbies the list of lobbies available
+     */
     public void lobbySelection(List<String[]> lobbies) {
         this.lobbies = lobbies;
         change(true);

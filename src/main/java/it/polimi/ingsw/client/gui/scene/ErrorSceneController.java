@@ -49,10 +49,17 @@ public class ErrorSceneController implements GenericSceneController{
         yOffset = 0;
     }
 
+    /**
+     * Displays an alert and wait for another event
+     */
     public void displayAlert() {
         stage.showAndWait();
     }
 
+    /**
+     * Sets the specified scene
+     * @param scene the scene to set
+     */
     public void setScene(Scene scene) {
         stage.setScene(scene);
     }
@@ -67,6 +74,10 @@ public class ErrorSceneController implements GenericSceneController{
         stage.setY(event.getScreenY() + yOffset);
     }
 
+    /**
+     * Sets the type of the error with the one specified
+     * @param type the type of the error
+     */
     public void setErrorType(String type) {
         this.type.setText(type);
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -77,6 +88,10 @@ public class ErrorSceneController implements GenericSceneController{
         this.type.setLayoutX(250 - max/2);
     }
 
+    /**
+     * Sets the text to display with the one specified
+     * @param message the text of the error
+     */
     public void setErroreMessage(String message) {
         this.message.setText(message);
     }
