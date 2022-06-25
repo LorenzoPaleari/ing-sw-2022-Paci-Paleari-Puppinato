@@ -170,7 +170,7 @@ public class JavaFXInit extends Application {
 
         player = new MediaPlayer(playlist.get(current));
         player.play();
-        player.setVolume(25);
+        player.setVolume(0.1);
         playerEffect();
     }
 
@@ -185,6 +185,7 @@ public class JavaFXInit extends Application {
                 }
                 player = new MediaPlayer(playlist.get(current));
                 playerEffect();
+                player.setVolume(0.1);
                 player.seek(Duration.ZERO);
                 player.play();
             }
