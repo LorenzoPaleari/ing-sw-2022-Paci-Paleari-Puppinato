@@ -26,9 +26,9 @@ public enum AnsiGraphics
     STUDENT("\u25CF"),
     PROFESSOR("\u265B"),
     MOTHER_NATURE("\u2659"),
-    TOWER("\u06E9"),
+    TOWER("\u2656"),
     COIN("\u20A1"),
-    NO_ENTRY_TILE("\u2757"),
+    NO_ENTRY_TILE("\u00F8"),
 
     DOUBLE_HORIZONTAL_LINE("\u2550"),
     DOUBLE_VERTICAL_LINE("\u2551"),
