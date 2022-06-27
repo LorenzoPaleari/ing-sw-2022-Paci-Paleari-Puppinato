@@ -87,7 +87,7 @@ public class CharacterGroupStudent extends Character{
      * @param color the pawn color
      * @param context the context
      * @param boardHandler the board handler
-     * @throws BagIsEmptyException
+     * @throws BagIsEmptyException if the are no students in the bag
      */
     @Override
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException {
@@ -108,7 +108,7 @@ public class CharacterGroupStudent extends Character{
      * Activate character
      * @param island the current island
      * @param color the pawn color
-     * @throws BagIsEmptyException
+     * @throws BagIsEmptyException if there are no students in the bag
      */
     @Override
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException {

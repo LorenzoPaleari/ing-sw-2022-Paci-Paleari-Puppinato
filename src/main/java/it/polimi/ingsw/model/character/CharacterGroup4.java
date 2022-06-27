@@ -19,6 +19,11 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class CharacterGroup4 extends Character{
     private IslandStrategy island = new IslandStrategyCentaur();
+
+    /**
+     * Constructor
+     * @param type the character type
+     */
     public CharacterGroup4 (CharacterType type){
         super(type);
     }

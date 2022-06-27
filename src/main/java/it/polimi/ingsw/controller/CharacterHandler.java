@@ -29,15 +29,15 @@ public class CharacterHandler {
     /**
      * Constructor
      * Initialize the components
-     * @param turnController
-     * @param game
-     * @param professorContext
-     * @param motherNatureContext
-     * @param islandContext
-     * @param virtualView
-     * @param tableHandler
-     * @param boardHandler
-     * @param islandStrategy
+     * @param turnController the turn controller
+     * @param game the current game
+     * @param professorContext the professor context
+     * @param motherNatureContext the mother nature context
+     * @param islandContext the island context
+     * @param virtualView the virtual view
+     * @param tableHandler the table handler
+     * @param boardHandler the board handler
+     * @param islandStrategy the island strategy
      */
     public CharacterHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, VirtualView virtualView, TableHandler tableHandler, BoardHandler boardHandler, IslandStrategy islandStrategy){
         this.game = game;

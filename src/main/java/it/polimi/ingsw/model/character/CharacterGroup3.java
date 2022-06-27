@@ -53,8 +53,8 @@ public class CharacterGroup3 extends Character{
      * @param player the current player
      * @param color the list of pawn color
      * @param boardHandler the board handler
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
+     * @throws InvocationTargetException if you can't invocate the character
+     * @throws IllegalAccessException if you don't have access
      */
     @Override
     public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) throws InvocationTargetException, IllegalAccessException {

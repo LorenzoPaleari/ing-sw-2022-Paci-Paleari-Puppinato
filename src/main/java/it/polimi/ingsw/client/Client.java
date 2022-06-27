@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Client {
     /**
      * Main of the Client class
-     * @param args
+     * @param args the command line parameter
      */
     public static void main(String[] args) {
         AnsiConsole.systemInstall();

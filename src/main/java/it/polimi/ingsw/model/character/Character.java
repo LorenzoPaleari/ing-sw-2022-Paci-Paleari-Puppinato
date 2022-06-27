@@ -56,7 +56,7 @@ public abstract class Character {
      * @param color the pawn color
      * @param context the context
      * @param boardHandler the board handler
-     * @throws BagIsEmptyException
+     * @throws BagIsEmptyException if you don't have any student
      */
     public void activateCharacter(Game game, Player player, PawnColor color, Context context, BoardHandler boardHandler) throws BagIsEmptyException{}
 
@@ -64,7 +64,7 @@ public abstract class Character {
      * activates the character
      * @param island the current island
      * @param color the pawn color
-     * @throws BagIsEmptyException
+     * @throws BagIsEmptyException if you don't have any student
      */
     public void activateCharacter(Island island, PawnColor color) throws BagIsEmptyException{}
 
@@ -72,7 +72,7 @@ public abstract class Character {
      * activates the character
      * @param island the current island
      * @param tableHandler the table handler
-     * @throws ClientException
+     * @throws ClientException if the client has problems
      */
     public void activateCharacter(Island island, TableHandler tableHandler) throws ClientException{}
 
@@ -81,8 +81,8 @@ public abstract class Character {
      * @param player the current player
      * @param color the list of pawn color
      * @param boardHandler the board handler
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
+     * @throws InvocationTargetException if you can't invocate the character
+     * @throws IllegalAccessException if you don't have access
      */
     public void activateCharacter(Player player, PawnColor[] color, BoardHandler boardHandler) throws InvocationTargetException, IllegalAccessException{}
 

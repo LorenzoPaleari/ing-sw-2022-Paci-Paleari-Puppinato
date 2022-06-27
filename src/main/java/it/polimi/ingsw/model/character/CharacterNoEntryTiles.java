@@ -45,7 +45,7 @@ public class CharacterNoEntryTiles extends Character{
      * activate character
      * @param island the current island
      * @param tableHandler the table handler
-     * @throws ClientException
+     * @throws ClientException if there are no sufficient no entry tiles
      */
     @Override
     public void activateCharacter(Island island, TableHandler tableHandler)throws ClientException {
