@@ -754,7 +754,7 @@ public class CLIView implements View {
                             colors = new int[4];
                             tmpColors.addAll(correctEntranceColor(2));
                             tmpColors.addAll(correctDiningColor(2));
-                            for (int i = 0; i < 6; i++)
+                            for (int i = 0; i < 4; i++)
                                 colors[i] = tmpColors.get(i);
                         }
                         serverHandler.useCharacterRequest(colors, position);
