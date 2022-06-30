@@ -20,7 +20,7 @@ public class TurnController {
      * @param player the current player
      * @param costo the current cost
      * @param character the character you want to use
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkCharacter(Game game, Player player, int costo, Character character) throws ClientException {
         if(game.getRound().getTurn().isUsedCharacter())
@@ -58,7 +58,7 @@ public class TurnController {
      * @param turn the current turn
      * @param player the current player
      * @param state the player state
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkPermission(Turn turn, Player player, PlayerState state) throws ClientException {
         checkCorrectTurn(turn, player);
@@ -68,7 +68,7 @@ public class TurnController {
     /**
      * checks if you have other movements available for this turn
      * @param turn the current turn
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void canMove(Turn turn) throws ClientException {
         if (turn.getRemainingMovements() == 0)
@@ -80,7 +80,7 @@ public class TurnController {
     /**
      * checks if there are remaining movements
      * @param turn the current turn
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void canMoveMother(Turn turn) throws ClientException {
         if (turn.getRemainingMovements() > 0)
@@ -91,7 +91,7 @@ public class TurnController {
      * checks if the player has enough money
      * @param player the current player
      * @param costo the cost of the character
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void enoughMoney(Player player, int costo) throws ClientException {
         if (player.getNumCoin() < costo)
@@ -102,7 +102,7 @@ public class TurnController {
      * checks if the dining is full of a specific color
      * @param dining the current dining
      * @param color the color to be counted
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkFullDining(DiningRoom dining, PawnColor color) throws ClientException {
         if (dining.count(color) == 10)
@@ -113,7 +113,7 @@ public class TurnController {
      * checks if the turn is correct
      * @param turn the current turn
      * @param player the current player
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkCorrectTurn(Turn turn, Player player) throws ClientException {
         if(!turn.getCurrentPlayer().equals(player))
@@ -124,7 +124,7 @@ public class TurnController {
      * checks if the action is correct
      * @param player the current player
      * @param state the current player state
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkCorrectAction(Player player, PlayerState state) throws ClientException {
         if (!player.getState().equals(state)) {
@@ -140,7 +140,7 @@ public class TurnController {
      * checks if the cloud has been already chosen
      * @param round the current round
      * @param position the position
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public void checkCloud(Round round, int position) throws ClientException {
         if (round.getCloudChosen().contains(position))

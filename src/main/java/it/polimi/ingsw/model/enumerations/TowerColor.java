@@ -4,7 +4,18 @@ package it.polimi.ingsw.model.enumerations;
  * Tower color enum
  */
 public enum TowerColor {
-    WHITE("WHITE", 0), BLACK("BLACK", 1), GREY("GREY", 2);
+    /**
+     * white
+     */
+    WHITE("WHITE", 0),
+    /**
+     * black
+     */
+    BLACK("BLACK", 1),
+    /**
+     * grey
+     */
+    GREY("GREY", 2);
 
     private final String text;
     private final Integer index;
@@ -44,6 +55,11 @@ public enum TowerColor {
         return index;
     }
 
+    /**
+     * gets the tower color for the given string
+     * @param color the color string
+     * @return the tower color for the given string
+     */
     public static TowerColor getColor(String color){
         for (TowerColor t : TowerColor.values())
             if(t.toString().equals(color.toUpperCase()))

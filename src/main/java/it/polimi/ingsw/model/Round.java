@@ -75,15 +75,15 @@ public class Round {
 
     /**
      * Gets num turns done
-     * @return
+     * @return the num turn done
      */
     public int getNumTurnDone() {
         return numTurnDone;
     }
 
     /**
-     *
-     * @return
+     * next action turn
+     * @return true if everything is okay
      */
     public boolean nextActionTurn(){
         int index = playerSequenceAscend.indexOf(turn.getCurrentPlayer());
@@ -104,7 +104,7 @@ public class Round {
     }
 
     /**
-     *
+     * ends the planning phase
      */
     public void endPlanningPhase(){
         int assistenteBasso = 11;
@@ -141,8 +141,8 @@ public class Round {
     }
 
     /**
-     *
-     * @return
+     * next planning turn
+     * @return true if everything is okay
      */
     public boolean nextPlanningTurn(){
         int index = playerSequence.indexOf(turn.getCurrentPlayer());
@@ -192,7 +192,7 @@ public class Round {
     public void attach(ModelListener modelListener){this.modelListener=modelListener;}
 
     /**
-     *
+     * notifies the view
      */
     public void notifyView() {
         if (modelListener != null)

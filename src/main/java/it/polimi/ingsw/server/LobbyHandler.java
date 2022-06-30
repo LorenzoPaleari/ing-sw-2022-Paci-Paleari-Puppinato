@@ -27,8 +27,8 @@ public class LobbyHandler {
 
     /**
      * adds a client to the lobby
-     * @param lobbyNumber
-     * @param clientHandler
+     * @param lobbyNumber the lobby number
+     * @param clientHandler the client handler
      */
     public synchronized void addClient(int lobbyNumber, ClientHandler clientHandler) {
         if (controllers.get(lobbyNumber).getGame().isGameEnded()){
@@ -53,7 +53,7 @@ public class LobbyHandler {
 
     /**
      * adds a new client handler
-     * @param clientHandler
+     * @param clientHandler the client handler
      */
     public synchronized void newClient(ClientHandler clientHandler){
         ClientHandler[] clientHandlers = {clientHandler};
@@ -109,8 +109,8 @@ public class LobbyHandler {
 
     /**
      * checks if the given nickname is already used
-     * @param nickName
-     * @return
+     * @param nickName the player nickname
+     * @return true the client nickname is equal to the given nickname
      */
     public synchronized boolean isNicknameUsed(String nickName){
         if (nickName.equals(""))
@@ -125,7 +125,7 @@ public class LobbyHandler {
 
     /**
      * refreshes the lobby list
-     * @param clientHandler
+     * @param clientHandler the client handler
      */
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
         List<String[]> lobbies = getLobbies();
@@ -138,8 +138,8 @@ public class LobbyHandler {
 
     /**
      * sets the player nickname
-     * @param nickname
-     * @param clientHandler
+     * @param nickname the player nickname
+     * @param clientHandler the client handler
      */
     public synchronized void setPlayerNickname(String nickname, ClientHandler clientHandler) {
         allClientHandlers.add(clientHandler);
@@ -154,8 +154,8 @@ public class LobbyHandler {
 
     /**
      * removes the lobby with the indicated virtual view
-     * @param virtualView
-     * @param clientHandler
+     * @param virtualView the virtual view
+     * @param clientHandler the client handler
      */
     public synchronized void terminateLobby(VirtualView virtualView, ClientHandler clientHandler) {
         int index = virtualViews.indexOf(virtualView);

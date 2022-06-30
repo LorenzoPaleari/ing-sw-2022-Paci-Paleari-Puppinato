@@ -17,6 +17,9 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
     private MessageType type;
     private GameInfo gameInfo;
     private View view;
+    /**
+     * public thread
+     */
     public Thread thread = null;
 
     /**

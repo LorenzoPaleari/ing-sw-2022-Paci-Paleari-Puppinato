@@ -10,12 +10,18 @@ import it.polimi.ingsw.model.table.Table;
  */
 public class MotherNatureStrategyMagicDeliveryMan implements MotherNatureStrategy {
     /**
+     * Constructor
+     */
+    public MotherNatureStrategyMagicDeliveryMan(){
+
+    }
+    /**
      * checks mother nature movements
      * @param table the current table
      * @param endPosition the end mother nature position
      * @param player the current player
      * @return num moves
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public int checkMotherNature(Table table, int endPosition, Player player) throws ClientException {
         int numMoves;

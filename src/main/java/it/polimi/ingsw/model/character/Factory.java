@@ -11,6 +11,13 @@ import java.lang.reflect.Method;
  */
 public class Factory {
     /**
+     * Constructor
+     */
+    public Factory(){
+
+    }
+
+    /**
      * Get character
      * @param type the character type
      * @param bag the current bag

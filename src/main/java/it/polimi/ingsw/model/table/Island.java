@@ -47,6 +47,10 @@ public class Island {
         return weight;
     }
 
+    /**
+     * Sets not entry tiles
+     * @param noEntryTiles the entry tile to be set
+     */
     public void setNoEntryTiles(boolean noEntryTiles) {
         this.noEntryTiles = noEntryTiles;
     }

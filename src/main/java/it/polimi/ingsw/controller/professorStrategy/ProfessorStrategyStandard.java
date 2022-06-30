@@ -11,6 +11,12 @@ import it.polimi.ingsw.model.player.Player;
  */
 public class ProfessorStrategyStandard implements ProfessorStrategy {
     /**
+     * Constructor
+     */
+    public ProfessorStrategyStandard(){
+
+    }
+    /**
      * checks professor
      * @param game the current game
      * @param player the current player

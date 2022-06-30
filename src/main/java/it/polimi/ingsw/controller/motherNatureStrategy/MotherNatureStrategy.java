@@ -14,7 +14,7 @@ public interface MotherNatureStrategy {
      * @param endPosition the end mother nature position
      * @param player the current player
      * @return status
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     int checkMotherNature(Table table, int endPosition, Player player) throws ClientException;
 }

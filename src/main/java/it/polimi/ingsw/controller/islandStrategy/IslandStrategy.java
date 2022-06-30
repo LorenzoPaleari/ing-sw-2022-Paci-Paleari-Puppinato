@@ -20,9 +20,9 @@ public interface IslandStrategy {
      * calculates the influence
      * @param island the current island
      * @param game the current game
-     * @param owner
+     * @param owner the owner array
      * @param color the tower color
-     * @param playerCandidate
+     * @param playerCandidate the candidate player
      */
     void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate);
 

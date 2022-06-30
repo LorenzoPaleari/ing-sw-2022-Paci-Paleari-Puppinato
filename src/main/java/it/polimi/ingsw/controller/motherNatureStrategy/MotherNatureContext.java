@@ -35,7 +35,7 @@ public class MotherNatureContext extends Context {
      * @param endPosition the end position of mother nature
      * @param player the current player
      * @return status
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     @Override
     public int motherNatureControl(Table table, int endPosition, Player player) throws ClientException {

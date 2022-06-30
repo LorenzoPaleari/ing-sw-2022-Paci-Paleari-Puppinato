@@ -34,15 +34,15 @@ public class TableHandler {
 
     /**
      * Constructor
-     * @param turnController
-     * @param game
-     * @param professorContext
-     * @param motherNatureContext
-     * @param islandContext
-     * @param professorStrategyStandard
-     * @param motherNatureStrategy
-     * @param islandStrategy
-     * @param virtualView
+     * @param turnController the turn controller
+     * @param game the current game
+     * @param professorContext the professor context
+     * @param motherNatureContext the mother nature context
+     * @param islandContext the island context
+     * @param professorStrategyStandard the professor strategy
+     * @param motherNatureStrategy the mother nature strategy
+     * @param islandStrategy the island strategy
+     * @param virtualView the virtual view
      */
     public TableHandler(TurnController turnController, Game game, Context professorContext, Context motherNatureContext, Context islandContext, ProfessorStrategy professorStrategyStandard, MotherNatureStrategy motherNatureStrategy, IslandStrategy islandStrategy, VirtualView virtualView) {
         this.game = game;

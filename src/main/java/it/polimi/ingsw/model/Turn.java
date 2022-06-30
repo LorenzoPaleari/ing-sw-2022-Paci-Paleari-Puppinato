@@ -88,7 +88,7 @@ public class Turn{
     }
 
     /**
-     *
+     * notifies the view
      */
     public void notifyView() {
         if (modelListener != null)

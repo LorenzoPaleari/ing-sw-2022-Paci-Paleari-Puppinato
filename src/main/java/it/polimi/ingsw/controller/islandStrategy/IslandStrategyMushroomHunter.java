@@ -14,12 +14,19 @@ public class IslandStrategyMushroomHunter implements IslandStrategy {
     private PawnColor noColor = null;
 
     /**
+     * Constructor
+     */
+    public IslandStrategyMushroomHunter(){
+
+    }
+
+    /**
      * calculates influence
      * @param island the current island
      * @param game the current game
-     * @param owner
+     * @param owner the owner array
      * @param color the tower color
-     * @param playerCandidate
+     * @param playerCandidate the player candidate
      */
     public void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate){
         int MoreInfluence = 0;

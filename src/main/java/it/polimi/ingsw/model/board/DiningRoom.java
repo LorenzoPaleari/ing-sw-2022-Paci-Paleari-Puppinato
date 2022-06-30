@@ -129,7 +129,7 @@ public class DiningRoom {
     }
 
     /**
-     *
+     * notify thw view
      */
     public void notifyView() {
         if (listen)
@@ -137,14 +137,14 @@ public class DiningRoom {
     }
 
     /**
-     *
+     * detach sets the listen to false
      */
     public void detach(){
         listen=false;
     }
 
     /**
-     *
+     * reattach sets the listen to true
      */
     public void reattach(){listen = true;}
 }

@@ -15,6 +15,12 @@ import it.polimi.ingsw.model.table.Table;
  */
 public abstract class Context {
     /**
+     * Constructor
+     */
+    public Context(){
+
+    }
+    /**
      *  changes context
      * @param strategy ths island strategy
      */
@@ -56,7 +62,7 @@ public abstract class Context {
      * @param endPosition the end position of mother nature
      * @param player the current player
      * @return 0
-     * @throws ClientException
+     * @throws ClientException if there are problems
      */
     public int motherNatureControl(Table table, int endPosition, Player player) throws ClientException {
         return 0;

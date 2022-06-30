@@ -8,15 +8,27 @@ import java.net.Socket;
  * server class
  */
 public class Server {
+    /**
+     * the default port
+     */
     public static final int PORT = 8080;
+    /**
+     * the server
+     */
     public static Server server;
+    /**
+     * the server socket
+     */
     public static ServerSocket serverSocket;
+    /**
+     * the lobby handler
+     */
     private static LobbyHandler lobbyHandler;
     private static boolean active = false;
 
     /**
      * main class for the server
-     * @param args
+     * @param args the parameters
      */
     public static void main(String[] args) {
         try {

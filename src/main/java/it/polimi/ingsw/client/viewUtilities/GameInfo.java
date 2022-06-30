@@ -183,6 +183,10 @@ public class GameInfo implements Serializable {
         return numberOfPlayer;
     }
 
+    /**
+     * gets the player state
+     * @return the player state
+     */
     public PlayerState getPlayerState(){
         return playerState;
     }

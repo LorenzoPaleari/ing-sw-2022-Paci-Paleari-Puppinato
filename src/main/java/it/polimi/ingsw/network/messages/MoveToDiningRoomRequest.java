@@ -20,7 +20,7 @@ public class MoveToDiningRoomRequest implements Serializable, ViewControllerMess
     /**
      * Constructor
      * Sets the pawn color
-     * @param color
+     * @param color the studetn color
      */
     public MoveToDiningRoomRequest (PawnColor color){
         this.color=color;

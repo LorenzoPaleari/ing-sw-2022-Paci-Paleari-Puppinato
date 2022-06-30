@@ -14,6 +14,12 @@ import java.util.Scanner;
  */
 public class Client {
     /**
+     * Constructor
+     */
+    public Client(){
+
+    }
+    /**
      * Main of the Client class
      * @param args the command line parameter
      */

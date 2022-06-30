@@ -12,12 +12,18 @@ import it.polimi.ingsw.model.table.Island;
  */
 public class IslandStrategyCentaur implements IslandStrategy {
     /**
+     * Constructor
+     */
+    public IslandStrategyCentaur(){
+
+    }
+    /**
      * calculates influence
      * @param island the current island
      * @param game the current game
-     * @param owner
+     * @param owner the owner array
      * @param color the tower color
-     * @param playerCandidate
+     * @param playerCandidate the candidate player
      */
     public void calculateInfluence(Island island, Game game, String[] owner, TowerColor color, String[] playerCandidate){
         int MoreInfluence = 0;

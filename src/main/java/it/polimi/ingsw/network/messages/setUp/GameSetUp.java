@@ -33,7 +33,7 @@ public class GameSetUp implements Serializable, LobbyMessage, ControllerViewMess
     /**
      * Constructor
      * Initialize the lobbies and the boolean full game
-     * @param fullGame
+     * @param fullGame the full game boolean
      */
     public GameSetUp(boolean fullGame){
         this.fullGame = fullGame;

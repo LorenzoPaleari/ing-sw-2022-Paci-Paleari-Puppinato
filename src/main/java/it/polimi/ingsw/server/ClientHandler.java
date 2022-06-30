@@ -121,23 +121,23 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     *
-     * @param fullGame
+     * Game setup method
+     * @param fullGame if the game is full
      */
     public void gameSetUp(boolean fullGame){
         send(new GameSetUp(fullGame));
     }
 
     /**
-     *
+     * Initial setup method
      */
     public void initialSetUp(){
         send(new InitialSetUp());
     }
 
     /**
-     *
-     * @param requestAgain
+     * Player setup method
+     * @param requestAgain true if the player setup has to be set again
      */
     public void playerSetUp(boolean requestAgain){
         send(new PlayerSetUp(requestAgain));
@@ -145,7 +145,7 @@ public class ClientHandler extends Thread implements NetworkHandler{
 
     /**
      * sets the tower color
-     * @param requestAgain
+     * @param requestAgain true if the color setup has to be set again
      */
     public void colorSetUp(boolean requestAgain){
         List<TowerColor> towerColor;
@@ -155,7 +155,7 @@ public class ClientHandler extends Thread implements NetworkHandler{
 
     /**
      * gets player nickname
-     * @return
+     * @return the player nickname
      */
     public String getPlayerNickname() {
         return playerNickname;
@@ -163,32 +163,32 @@ public class ClientHandler extends Thread implements NetworkHandler{
 
     /**
      * sets player nickname
-     * @param playerNickname
+     * @param playerNickname the player nickname
      */
     public void setPlayerNickname(String playerNickname) {
         this.playerNickname = playerNickname;
     }
 
     /**
-     *
-     * @param gameInfo
+     * prints the game board
+     * @param gameInfo the game info
      */
     public void printGameBoard(GameInfo gameInfo){
         send(new GameInfoMessage(gameInfo));
     }
 
     /**
-     *
-     * @param error
+     * prints the error message
+     * @param error the client exception error
      */
     public void printError(ClientException error){
         send (new ErrorMessage(error));
     }
 
     /**
-     *
-     * @param nickname
-     * @param notEntered
+     * prints interrupt
+     * @param nickname the player nickname
+     * @param notEntered if the player has not entered yet
      */
     public void printInterrupt(String nickname, boolean notEntered){
         if (notEntered)
@@ -198,15 +198,15 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     *
-     * @return
+     * gets true if the connection is alive
+     * @return true if the connection is alive
      */
     public boolean connectionAlive() {
         return isConnected;
     }
 
     /**
-     *
+     * ends the connection
      */
     public void setDisconnected() {
         isConnected = false;
@@ -215,10 +215,10 @@ public class ClientHandler extends Thread implements NetworkHandler{
     }
 
     /**
-     *
-     * @param winner1
-     * @param winner2
-     * @param nickname
+     * prints the winner
+     * @param winner1 the winner player
+     * @param winner2 the other player
+     * @param nickname the winner nickname
      */
     public void printWinner(String winner1, String winner2, String nickname){
         send(new WinnerMessage(winner1, winner2, nickname));
@@ -237,16 +237,16 @@ public class ClientHandler extends Thread implements NetworkHandler{
 
     /**
      * sets the virtual view
-     * @param virtualView
+     * @param virtualView the virtual view
      */
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
 
     /**
-     *
-     * @param lobbies
-     * @param firstLobby
+     * refreshes the lobbies
+     * @param lobbies the lobby list
+     * @param firstLobby the first lobby
      */
     public void refreshLobbies(List<String[]> lobbies, boolean firstLobby) {
         send(new RefreshMessage(lobbies, firstLobby));

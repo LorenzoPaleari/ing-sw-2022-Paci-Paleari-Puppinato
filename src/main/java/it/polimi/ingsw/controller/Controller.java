@@ -313,7 +313,7 @@ public class Controller {
 
     /**
      * starts the game
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     public void gameStart() throws InterruptedException {
         synchronized (this) {

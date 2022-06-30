@@ -6,7 +6,22 @@ import java.io.Serializable;
  * Player state enum
  */
 public enum PlayerState implements Serializable {
-    PLANNING("PLANNING"), ACTION("ACTION"), WAIT("WAIT"), ENDTURN("END TURN");
+    /**
+     * Planning
+     */
+    PLANNING("PLANNING"),
+    /**
+     * Action
+     */
+    ACTION("ACTION"),
+    /**
+     * Wait
+     */
+    WAIT("WAIT"),
+    /**
+     * End turn
+     */
+    ENDTURN("END TURN");
 
     private final String text;
 

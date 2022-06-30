@@ -6,7 +6,26 @@ import java.io.Serializable;
  * Pawn color enum
  */
 public enum PawnColor implements Serializable {
-    GREEN(0, "GREEN"), RED(1, "RED"), YELLOW(2, "YELLOW"), PINK(3, "PINK"), BLUE(4, "BLUE");
+    /**
+     * Green
+     */
+    GREEN(0, "GREEN"),
+    /**
+     * Red
+     */
+    RED(1, "RED"),
+    /**
+     * Yellow
+     */
+    YELLOW(2, "YELLOW"),
+    /**
+     * Pink
+     */
+    PINK(3, "PINK"),
+    /**
+     * Blue
+     */
+    BLUE(4, "BLUE");
 
     private final int index;
     private final String text;
