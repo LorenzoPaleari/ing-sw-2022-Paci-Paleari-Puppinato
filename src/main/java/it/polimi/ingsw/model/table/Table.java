@@ -26,6 +26,7 @@ public class Table {
     private Bag bag;
     private List<Professor> professor;
     private IslandStrategy islandStrategy;
+    private int[] lastMerged = {-1,-1,-1};
 
     /**
      * Instantiates this table and the elements it contains.
@@ -253,19 +254,23 @@ public class Table {
             positionNext=position+1;
         }
 
+        lastMerged = new int[]{positionPrev, position, positionNext};
+
         Island islandPrev= island.get(positionPrev);
         Island islandCurr= island.get(position);
         Island islandNext= island.get(positionNext);
 
-        updateIsland(islandPrev, islandCurr);
-        updateIsland(islandNext, islandCurr);
+        updateIsland(islandPrev, islandCurr, 0);
+        updateIsland(islandNext, islandCurr, 2);
 
         motherNature.setPosition(island.indexOf(islandCurr));
     }
 
-    private void updateIsland(Island islandNotCurr, Island islandCurr) {
-        if (islandNotCurr.getIslandTower().size() == 0)
+    private void updateIsland(Island islandNotCurr, Island islandCurr, int notCurr) {
+        if (islandNotCurr.getIslandTower().isEmpty()) {
+            lastMerged[notCurr] = -1;
             return;
+        }
 
         if(islandNotCurr.getIslandTower().get(0).getColor()==islandCurr.getIslandTower().get(0).getColor())
         {
@@ -284,6 +289,8 @@ public class Table {
                 islandCurr.setNoEntryTiles(true);
 
             island.remove(islandNotCurr);
+        } else {
+            lastMerged[notCurr] = -1;
         }
     }
 
@@ -298,6 +305,13 @@ public class Table {
     public void setCharacter(int position, CharacterType type, Method islandUpdate, Method checkProfessor){
         Factory factory = new Factory();
         character.set(position,factory.getCharacter(type, bag, islandUpdate, checkProfessor, islandStrategy));
+    }
+
+    /**
+     * @return the indexes of the latest merged island (-1 if not merged)
+     */
+    public int[] getMerged() {
+        return lastMerged;
     }
 }
 

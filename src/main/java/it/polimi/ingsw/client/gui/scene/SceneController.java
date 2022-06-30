@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
 /**
  * Scene controller class
@@ -50,7 +51,6 @@ public class SceneController {
             activeScene = scene;
             activeScene.setRoot(root);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -66,7 +66,6 @@ public class SceneController {
         try {
             parent = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         ErrorSceneController controller = loader.getController();
@@ -92,7 +91,6 @@ public class SceneController {
         try {
             parent = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
         }
         Scene alertScene = new Scene(parent);
         controller.setScene(alertScene);

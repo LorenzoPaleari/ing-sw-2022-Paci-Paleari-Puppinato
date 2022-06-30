@@ -1,20 +1,17 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.viewUtilities.IPValidator;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Objects;
+import java.util.Scanner;
 
 /**
  * server class
  */
 public class Server {
-    /**
-     * the default port
-     */
-    public static final int PORT = 8080;
-    /**
-     * the server
-     */
     public static Server server;
     /**
      * the server socket
@@ -31,8 +28,25 @@ public class Server {
      * @param args the parameters
      */
     public static void main(String[] args) {
+        boolean valid;
+        int port = 0;
+        do {
+            valid = true;
+            System.out.print("Insert the server PORT or press Enter for default (8080): ");
+            Scanner scanner = new Scanner(System.in);
+            String tempPort = scanner.nextLine();
+            if (Objects.equals(tempPort, "")){
+                port = Integer.parseInt(IPValidator.getDefaultPort());
+            } else if (!IPValidator.isCorrectPort(tempPort)){
+                System.out.print("The inserted port is not valid!\n\n");
+                valid = false;
+            } else {
+                port = Integer.parseInt(tempPort);
+            }
+        } while (!valid);
+
         try {
-            serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(port);
         }
         catch(Exception e){
             System.out.println("Server not started correctly");

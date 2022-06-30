@@ -8,7 +8,7 @@
     -fx-font-family: 'LillyBelle';
     -fx-font-size: 40;
     -fx-text-fill: white;
-    -fx-background-image: url("../photos/button.png");
+    -fx-background-image: url("../photos/Button.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-label-padding: -3px 0 0 0;
@@ -36,4 +36,10 @@
 .noAudio{
     -fx-background-image: url("../photos/media/noAudio.png");
     -fx-background-size: cover;
+}
+
+.dawn{
+    -fx-background-image: url("../photos/dawn.jpeg");
+    -fx-background-size: cover;
+    -fx-position: relative;
 }

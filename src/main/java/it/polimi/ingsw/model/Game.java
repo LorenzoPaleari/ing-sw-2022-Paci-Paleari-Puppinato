@@ -75,7 +75,7 @@ public class Game {
         round = new Round(player);
         player.get(0).changeState(PlayerState.PLANNING);
 
-        LinkedList<Student> student;
+        List<Student> student;
         int quantity;
         if (numPlayer == 2)
             quantity = 7;

@@ -59,12 +59,7 @@ public class StartController implements GenericSceneController{
         if(valid){
             String finalServerIP = serverIP;
             String finalServerPort = serverPort;
-            (new Thread(() -> {
-                try {
-                    serverHandler.initConnection(finalServerIP, finalServerPort);
-                } catch (Exception ignored) {
-                }
-            })).start();
+            (new Thread(() -> serverHandler.initConnection(finalServerIP, finalServerPort))).start();
         }
 
 

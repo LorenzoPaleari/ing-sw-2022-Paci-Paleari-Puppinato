@@ -8,16 +8,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="menuBackground" stylesheets="@../css/colorSetUp.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="dawn" stylesheets="@../css/init.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Group>
          <children>
-            <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/colorSetUp.css">
+            <AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/init.css">
                <children>
                   <Pane fx:id="tower1" layoutX="109.0" layoutY="200.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/main.css" />
                   <Pane fx:id="tower2" layoutX="229.0" layoutY="200.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/main.css" />
                   <Pane fx:id="tower3" layoutX="346.0" layoutY="200.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/main.css" />
-                  <Text layoutX="250.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a color" styleClass="textbox">
+                  <Text layoutX="230.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT A COLOR">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
                   </Text>
                </children>
                <opaqueInsets>

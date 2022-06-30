@@ -3,16 +3,13 @@ package it.polimi.ingsw.client.gui.scene;
 import com.sun.javafx.tk.FontLoader;
 import com.sun.javafx.tk.Toolkit;
 import it.polimi.ingsw.client.gui.JavaFXInit;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * End controller class
@@ -22,7 +19,9 @@ public class EndController implements GenericSceneController{
     @FXML
     private Button yesBtn, noBtn;
     @FXML
-    private Text newGame, winner, draw;
+    private Text winner, draw;
+    @FXML
+    private ImageView newGame, yes, no;
 
     /**
      * Initialize the mouse clicked event
@@ -56,13 +55,14 @@ public class EndController implements GenericSceneController{
                 winner.setText(winner1+" HAS WON");
         }
         else{
+            String won = " have won the game";
             draw.setVisible(true);
             if(winner1.equals(nickname))
-                winner.setText("You and " +winner2+ " have won the game");
+                winner.setText("You and " +winner2+ won);
             else if(winner2.equals(nickname))
-                winner.setText("You and " +winner1+ " have won the game");
+                winner.setText("You and " +winner1+ won);
             else
-                winner.setText(winner1 +" and " +winner2+ " have won the game");
+                winner.setText(winner1 +" and " +winner2+ won);
         }
 
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -80,5 +80,7 @@ public class EndController implements GenericSceneController{
         yesBtn.setVisible(true);
         noBtn.setVisible(true);
         newGame.setVisible(true);
+        yes.setVisible(true);
+        no.setVisible(true);
     }
 }

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Round;
 import it.polimi.ingsw.model.enumerations.CharacterType;
 import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.PlayerState;
+import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 import it.polimi.ingsw.model.player.Player;
 import it.polimi.ingsw.model.table.Island;
@@ -182,7 +183,7 @@ public class TableHandler {
      * checks if there is a winner
      */
     public void winner(){
-        Player winner1 = null;
+        Player winner1 = new Player("", TowerColor.WHITE);
         Player winner2 = null;
         int numTowers = 9;
         int numProfessors = 0;

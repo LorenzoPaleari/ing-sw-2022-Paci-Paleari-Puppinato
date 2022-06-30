@@ -9,11 +9,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Group>
-            <children>
-                <AnchorPane layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
+
+<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="dawn" stylesheets="@../css/init.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Group>
+         <children>
+            <AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/init.css">
                     <children>
                         <Text fx:id="nicknameLabel" layoutX="175.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INSERT NICKNAME" textAlignment="CENTER" wrappingWidth="250.8154296875">
                             <font>
@@ -23,7 +24,7 @@
                                 <Cursor fx:constant="DEFAULT" />
                             </cursor>
                         </Text>
-                        <Button fx:id="joinBtn" layoutX="180.0" layoutY="300.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="smallButton" text="Join">
+                        <Button fx:id="joinBtn" layoutX="180.0" layoutY="300.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" text="Join">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -41,7 +42,7 @@
                         </TextField>
                     </children>
                 </AnchorPane>
-            </children>
-        </Group>
-    </children>
+         </children>
+      </Group>
+   </children>
 </StackPane>

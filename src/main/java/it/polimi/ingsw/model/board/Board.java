@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.board;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.model.pawns.Student;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Board class
@@ -22,7 +22,7 @@ public class Board {
      * @param numPlayer the num of players
      * @param towerColor the tower color
      */
-    public Board(LinkedList<Student> student, int numPlayer, TowerColor towerColor){
+    public Board(List<Student> student, int numPlayer, TowerColor towerColor){
         entrance = new Entrance(student);
         diningRoom = new DiningRoom();
         professorTable = new ProfessorTable();

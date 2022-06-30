@@ -29,10 +29,6 @@ public class JavaFXInit extends Application {
     private static int current = 0;
     private static List<Media> playlist;
 
-    /**
-     *
-     * @param stage
-     */
     @Override
     public void start(Stage stage) {
         JavaFXInit.stage = stage;
@@ -43,7 +39,7 @@ public class JavaFXInit extends Application {
     }
 
     /**
-     *
+     *If a player wants to start a new game reset all the variables and creates new one
      */
     public static void reStart(){
         JavaFXInit.stage = new Stage();
@@ -53,6 +49,10 @@ public class JavaFXInit extends Application {
         loading(serverHandler);
     }
 
+    /**
+     * loads the first scene and create the stage
+     * @param serverHandler the reference to the {@link ServerHandler} instance.
+     */
     private static void loading(ServerHandler serverHandler){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(JavaFXInit.class.getResource("/fxml/init.fxml"));
@@ -74,7 +74,9 @@ public class JavaFXInit extends Application {
         stage.setScene(scene);
         stage.setWidth(1280d);
         stage.setHeight(747d);
-        stage.setResizable(true);
+        stage.setResizable(false);
+        stage.setFullScreen(false);
+        stage.setFullScreenExitKeyCombination(null);
         stage.setTitle("Eriantys");
 
         List<Media> musics = new ArrayList<>();
@@ -96,7 +98,7 @@ public class JavaFXInit extends Application {
     }
 
     /**
-     *
+     *set the stopped variable to true or false
      * @param stopped
      */
     public static void setStopped(boolean stopped) {
@@ -120,7 +122,7 @@ public class JavaFXInit extends Application {
     }
 
     /**
-     *
+     *set the muted variable to true or false
      * @param muted
      */
     public static void setMuted(boolean muted) {
@@ -128,8 +130,8 @@ public class JavaFXInit extends Application {
     }
 
     /**
-     *
-     * @param music
+     * add eventHandlers to the music image in the scene
+     * @param music the pane representing the music in the scene
      */
     public static void musicEffect(Pane music){
         music.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> {
@@ -160,8 +162,8 @@ public class JavaFXInit extends Application {
     }
 
     /**
-     * Changes
-     * @param musics
+     * Changes the music playing
+     * @param musics the list of music to cycle throw
      */
     public static void changeMusic(List<Media> musics) {
         muted = false;
@@ -174,6 +176,9 @@ public class JavaFXInit extends Application {
         playerEffect();
     }
 
+    /**
+     * Make the player to cycle throw the list of music
+     */
     private static void playerEffect(){
         player.setOnEndOfMedia(() -> {
             if (!stopped) {

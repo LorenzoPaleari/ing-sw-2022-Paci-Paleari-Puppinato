@@ -11,6 +11,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -48,6 +49,8 @@ public class CharacterSceneController implements GenericSceneController {
     private Text request, characterName, ok;
     @FXML
     private TextArea description;
+    @FXML
+    private ImageView coin;
     @FXML
     private Pane character;
     @FXML
@@ -179,6 +182,7 @@ public class CharacterSceneController implements GenericSceneController {
      * @param number
      */
     public void setInfo(GameInfo gameInfo, int number) {
+        coin.setVisible(false);
         Label[] labels = {label0, label1, label2, label3, label4, label5};
         for (Label i : labels)
             i.setText("");
@@ -200,6 +204,8 @@ public class CharacterSceneController implements GenericSceneController {
         this.number = number;
         characterType = gameInfo.getCharacter(number);
         character.getStyleClass().clear();
+        if (characterType.getPrice() + 1 == gameInfo.getCharacterCost(number))
+            coin.setVisible(true);
         character.getStyleClass().add(gameInfo.getCharacter(number).getText().toLowerCase());
         description.setText(gameInfo.getCharacter(number).getDescription());
         characterName.setText(gameInfo.getCharacter(number).getText().replaceAll("_", " "));

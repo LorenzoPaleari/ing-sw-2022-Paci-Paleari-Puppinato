@@ -30,7 +30,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Main controller class
@@ -75,6 +74,8 @@ public class MainController implements GenericSceneController{
     private CharacterType character = null;
     private boolean characterPlayed;
     private boolean islandSelector, boardSelector;
+    private int unionAtStart = 0, unionAtEnd = 0, lastSize = 0, newFirst = 1, newLast = 12;
+    private List<Integer> islandsSize = new ArrayList<>();
     private double[] currentLocations = new double[24];
 
     /**
@@ -85,6 +86,9 @@ public class MainController implements GenericSceneController{
         this.serverHandler = serverHandler;
     }
 
+    /**
+     *Initialize all the components of the scene.
+     */
     @FXML
     public void initialize() {
         Pane[] clouds = {cloud1, cloud2, cloud3};
@@ -165,7 +169,7 @@ public class MainController implements GenericSceneController{
 
                 success = true;
             }
-            else if (db.hasString() && !db.getString().equals("mother") && !(db.getString().charAt(0) == 'C')) {
+            else if (db.hasString() && !db.getString().equals("mother") && db.getString().charAt(0) != 'C') {
                 serverHandler.moveToDiningRoomRequest(PawnColor.lookup(db.getString()));
 
                 ClipboardContent content = new ClipboardContent();
@@ -190,17 +194,17 @@ public class MainController implements GenericSceneController{
         Pane node = (Pane) node1;
 
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-            if (node.getStyleClass().size() != 0) {
+            if (!node.getStyleClass().isEmpty()) {
                 node.setLayoutY(3);
                 node.setPrefHeight(106.06);
             }
         });
         node.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent -> {
-            node.setLayoutY(110 - 20);
+            node.setLayoutY(110.0 - 20.0);
             node.setPrefHeight(20);
         });
         node.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (node.getStyleClass().size() != 0) {
+            if (!node.getStyleClass().isEmpty()) {
                 serverHandler.useAssistantRequest(Arrays.asList(gameInfo.getAssistants()).indexOf(Integer.parseInt(node.getStyleClass().get(0).substring(9))));
             }
         });
@@ -234,7 +238,7 @@ public class MainController implements GenericSceneController{
 
         for (Node node : pane.getChildren()){
             node.setOnDragDetected(event -> {
-                if (node.getStyleClass().size() != 0 && (characterPlayed || boardSelector)) {
+                if (!node.getStyleClass().isEmpty() && (characterPlayed || boardSelector)) {
                     Dragboard db = node.startDragAndDrop(TransferMode.MOVE);
                     Pane panel = (Pane) node;
                     ClipboardContent content = new ClipboardContent();
@@ -276,7 +280,7 @@ public class MainController implements GenericSceneController{
 
     private void studentEffect(Pane pane){
         pane.setOnDragDetected(event -> {
-            if (pane.getStyleClass().size() != 0) {
+            if (!pane.getStyleClass().isEmpty()) {
                 Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
                 db.setDragView(new Image(String.valueOf(getClass().getResource("/photos/students/student_"+pane.getStyleClass().get(0)+".png")), pane.getHeight(), pane.getWidth(), true, true));
                 ClipboardContent content = new ClipboardContent();
@@ -319,13 +323,12 @@ public class MainController implements GenericSceneController{
             event.consume();
         });
 
+        Integer[] temp = new Integer[]{1,1,1,1,1,1,1,1,1,1,1,1};
+        islandsSize.addAll(List.of(temp));
+
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (islandSelector) {
-                int target = Integer.parseInt(pane.getId().substring(6));
-                int sum = 0;
-                int i;
-                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
-                    sum += gameInfo.getIslandSize(i);
+                int i = islandTarget(Integer.parseInt(pane.getId().substring(6)));
 
                 controller.setOk();
                 controller.setIslandSelected(i - 1);
@@ -351,11 +354,7 @@ public class MainController implements GenericSceneController{
             boolean success = false;
 
             if (db.hasString() && db.getString().charAt(0) == 'C' && characterPlayed){
-                int target = Integer.parseInt(pane.getId().substring(6));
-                int sum = 0;
-                int i;
-                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
-                    sum += gameInfo.getIslandSize(i);
+                int i = islandTarget(Integer.parseInt(pane.getId().substring(6)));
 
                 controller.setIslandSelected(i - 1);
                 controller.setColor(db.getString().substring(1));
@@ -366,15 +365,10 @@ public class MainController implements GenericSceneController{
                 db.setContent(content);
 
                 success = true;
-            } else if (db.hasString() && !db.getString().equals("mother") && !(db.getString().charAt(0) == 'C')) {
-                int target = Integer.parseInt(pane.getId().substring(6));
-                int sum = 0;
-                int i;
-                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
-                    sum += gameInfo.getIslandSize(i);
+            } else if (db.hasString() && !db.getString().equals("mother") && db.getString().charAt(0) != 'C') {
+                int i = islandTarget(Integer.parseInt(pane.getId().substring(6)));
 
                 serverHandler.moveStudentToIslandRequest(i - 1, PawnColor.lookup(db.getString()));
-
 
                 ClipboardContent content = new ClipboardContent();
                 content.putString("");
@@ -382,11 +376,7 @@ public class MainController implements GenericSceneController{
 
                 success = true;
             } else if (db.hasString() && db.getString().equals("mother")){
-                int target = Integer.parseInt(pane.getId().substring(6));
-                int sum = 0;
-                int i;
-                for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
-                    sum += gameInfo.getIslandSize(i);
+                int i = islandTarget(Integer.parseInt(pane.getId().substring(6)));
 
                 serverHandler.moveMotherNatureRequest(i-1);
 
@@ -435,11 +425,36 @@ public class MainController implements GenericSceneController{
         });
     }
 
+    /**
+     * update the scene with the new game information
+     */
     public void update(){
         characterPlayed = false;
         islandSelector = false;
         boardSelector = false;
         character = null;
+
+        if (gameInfo.getLastMerged()[1] == 0 && gameInfo.getLastMerged()[0] != -1)
+            unionAtStart = islandsSize.get(islandsSize.size()-1);
+        if (gameInfo.getLastMerged()[1] > 0 && gameInfo.getLastMerged()[2] == 0)
+            unionAtEnd = islandsSize.get(0);
+
+        if (lastSize == gameInfo.getNumIsland() + 1){
+            int first = newFirst;
+            if (unionAtEnd!=0) {
+                newFirst += unionAtEnd - 12 + newLast;
+                newLast = 12;
+            }
+            if (unionAtStart != 0){
+                newLast -= unionAtStart + first - 1;
+                newFirst = 1;
+            }
+        }
+
+        lastSize = gameInfo.getNumIsland();
+        islandsSize.clear();
+        for (int i = 0; i < lastSize; i++)
+            islandsSize.add(gameInfo.getIslandSize(i));
 
         info.setText("It's "+gameInfo.getCurrentPlayer()+" Turn!");
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -448,7 +463,18 @@ public class MainController implements GenericSceneController{
             max += fontLoader.getCharWidth(info.getText().charAt(i), info.getFont());
         }
         info.setLayoutX(387.5 - max/2);
-        info1.setText("Student Moves Remaining: "+gameInfo.getRemainingMoves());
+        info1.setText(""+gameInfo.getPlayerState());
+        if (gameInfo.getPlayerState() == PlayerState.ACTION)
+            info1.setText("Student Moves Remaining: " + gameInfo.getRemainingMoves());
+        else if (gameInfo.getPlayerState().equals(PlayerState.PLANNING))
+            info1.setText("Choose an Assistant");
+        else if (gameInfo.getPlayerState().equals(PlayerState.ENDTURN))
+            info1.setText("Choose a Cloud");
+        max = 0;
+        for (int i = 0; i < info1.getText().length(); i++){
+            max += fontLoader.getCharWidth(info1.getText().charAt(i), info1.getFont());
+        }
+        info1.setLayoutX(387.5 - max/2);
 
         Integer[] assistantNumbers = gameInfo.getAssistants();
         for (int index = 1; index < 11; index++)
@@ -538,7 +564,7 @@ public class MainController implements GenericSceneController{
                 for (int i = 0; i < 5; i++)
                     for (int j = 0; j < gameInfo.getDiningStudents(player)[i]; j++, number++) {
                         bd1Students.getChildren().get(number).getStyleClass().add(PawnColor.getColor(i).toString().toLowerCase());
-                        bd1Students.getChildren().get(number).setLayoutX(74 + j*19);
+                        bd1Students.getChildren().get(number).setLayoutX(74.0 + j*19.0);
                         bd1Students.getChildren().get(number).setLayoutY(21 + i*28.5);
                     }
             }
@@ -565,8 +591,8 @@ public class MainController implements GenericSceneController{
                 for (int i = 0; i < 5; i++)
                     for (int j = 0; j < gameInfo.getDiningStudents(player)[i]; j++, number++) {
                         boardElements[3+index].getChildren().get(number).getStyleClass().add(PawnColor.getColor(i).toString().toLowerCase());
-                        boardElements[3+index].getChildren().get(number).setLayoutX(74 + j*19);
-                        boardElements[3+index].getChildren().get(number).setLayoutY(21 + i*28.5);
+                        boardElements[3+index].getChildren().get(number).setLayoutX(74.0 + j*19.0);
+                        boardElements[3+index].getChildren().get(number).setLayoutY(21.0 + i*28.5);
                     }
                 index++;
             }
@@ -595,50 +621,53 @@ public class MainController implements GenericSceneController{
         for (int i = 0; i < gameInfo.getNumIsland(); i++){
             color = gameInfo.getTowersOnIsland(i);
             if (gameInfo.getIslandSize(i) == 1) {
-                islandFill(index, color, i, true, islands[index].getLayoutX(), islands[index].getLayoutY());
+                islandFill(index + newFirst - 13 + newLast, color, i, true, islands[index + newFirst - 13 +newLast].getLayoutX(), islands[index + newFirst - 13 +newLast].getLayoutY());
             }else {
                 int center = gameInfo.getIslandSize(i)/2;
-                double v2 = Math.toRadians(15.0 + 30.0 * (index + center));
+                double v2 = Math.toRadians(15.0 + 30.0 * (index + center + newFirst - 13 + newLast));
                 actualVert = 230 - 213 * Math.sin(v2);
                 actualHoriz = 337.5 - 213 * Math.cos(v2);
-                islandFill(index + gameInfo.getIslandSize(i)/2, color, i, true, actualHoriz, actualVert);
-                for (int j = index + gameInfo.getIslandSize(i) / 2 - 1; j >= index; j--) {
-                    switch (islandUnion(before, j)) {
+                System.out.println(actualHoriz+ " " + actualVert);
+                islandFill(index + center + newFirst - 13 + newLast, color, i, true, actualHoriz, actualVert);
+                for (int j = index + center + newFirst - 14 + newLast; j >= index + newFirst - 13 + newLast; j--) {
+                    int h = j + (j < 0 ? 12 : 0);
+                    switch (islandUnion(before, h)) {
                         case 0:
-                            actualVert += diagPositions[j / 3][0];
-                            actualHoriz += diagPositions[j / 3][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert += diagPositions[h / 3][0];
+                            actualHoriz += diagPositions[h / 3][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 1:
-                            actualVert += vertPositions[(j - 1) / 6][0];
-                            actualHoriz += vertPositions[(j - 1) / 6][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert += vertPositions[(h - 1) / 6][0];
+                            actualHoriz += vertPositions[(h - 1) / 6][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 2:
-                            actualVert += horPositions[j / 6][0];
-                            actualHoriz += horPositions[j / 6][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert += horPositions[h / 6][0];
+                            actualHoriz += horPositions[h / 6][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                     }
                 }
                 actualVert = 230 - 213 * Math.sin(v2);
                 actualHoriz = 337.5 - 213 * Math.cos(v2);
-                for (int j = index + gameInfo.getIslandSize(i) / 2 + 1; j < index + gameInfo.getIslandSize(i); j++) {
-                    switch (islandUnion(after, j)) {
+                for (int j = index + center + newFirst -12 + newLast; j < index + gameInfo.getIslandSize(i) + newFirst - 13 + newLast; j++) {
+                    int h = j - (j < 12 ? 0 : 12);
+                    switch (islandUnion(after, h)) {
                         case 0:
-                            actualVert -= diagPositions[j / 3][0];
-                            actualHoriz -= diagPositions[j / 3][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert -= diagPositions[h / 3][0];
+                            actualHoriz -= diagPositions[h / 3][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 1:
-                            actualVert += vertPositions[j/ 6][0];
-                            actualHoriz += vertPositions[j / 6][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert += vertPositions[h/ 6][0];
+                            actualHoriz += vertPositions[h / 6][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                         case 2:
-                            actualVert -= horPositions[j / 6][0];
-                            actualHoriz -= horPositions[j / 6][1];
-                            islandFill(j, color, 0,false, actualHoriz, actualVert);
+                            actualVert -= horPositions[h / 6][0];
+                            actualHoriz -= horPositions[h / 6][1];
+                            islandFill(h, color, 0,false, actualHoriz, actualVert);
                             break;
                     }
                 }
@@ -646,6 +675,8 @@ public class MainController implements GenericSceneController{
 
             index += gameInfo.getIslandSize(i);
         }
+        unionAtEnd = 0;
+        unionAtStart = 0;
     }
 
     private static int islandUnion(List<int[]> list, int island){
@@ -694,6 +725,10 @@ public class MainController implements GenericSceneController{
         }
     }
 
+    /**
+     * Set the new Game information used to update the scene
+     * @param gameInfo the info about the game
+     */
     public void setGameInfo(GameInfo gameInfo){
         this.gameInfo = gameInfo;
     }
@@ -703,5 +738,19 @@ public class MainController implements GenericSceneController{
             controller = new CharacterSceneController(serverHandler);
 
         return controller;
+    }
+
+    private int islandTarget(int target){
+        int sum = 0;
+        int i;
+        for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
+            sum += gameInfo.getIslandSize(i);
+
+        if (target < newFirst)
+            i = gameInfo.getNumIsland();
+        if (target > newLast)
+            i = 1;
+
+        return i;
     }
 }

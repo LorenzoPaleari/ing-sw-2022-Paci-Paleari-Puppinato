@@ -52,6 +52,7 @@ public class GameInfoMessage implements Serializable, ModelViewMessage, Runnable
      */
     public void run(){
         view.printGameBoard(gameInfo);
+        view.setClearer(true);
         view.bufferClearer();
     }
 

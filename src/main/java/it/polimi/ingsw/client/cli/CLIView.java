@@ -43,7 +43,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Asks the ServerIp, then gives it to the ServerHandler which will establish the connection between server and Client
+     * Asks the ServerIp and ServerPort, then gives it to the ServerHandler which will establish the connection between server and Client
      */
     @Override
     public synchronized void start() {
@@ -51,6 +51,8 @@ public class CLIView implements View {
         String serverPort;
         boolean valid;
 
+        System.out.print(AnsiGraphics.getTitle()+ "\n");
+        System.out.print(AnsiGraphics.createMenu());
         System.out.print(AnsiGraphics.setTitle("SERVER IP SELECTION"));
         System.out.print(AnsiGraphics.putText(" > Enter the server IP [Press enter for 127.0.0.1]", false, true));
         do {
@@ -146,6 +148,7 @@ public class CLIView implements View {
                 try{
                     this.wait(3000);
                 } catch (InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                 }
             }
             serverHandler.setGame(true, -1);
@@ -246,6 +249,7 @@ public class CLIView implements View {
             try{
                 this.wait(3000);
             } catch (InterruptedException ignored) {
+                Thread.currentThread().interrupt();
             }
         }
         serverHandler.refreshLobbies();
@@ -313,6 +317,7 @@ public class CLIView implements View {
                 try{
                     this.wait(3000);
                 } catch (InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                 }
             }
         }
@@ -367,8 +372,7 @@ public class CLIView implements View {
     public void bufferClearer() {
         InputStreamReader control = new InputStreamReader(System.in);
         threadScanner = new Scanner(System.in);
-        clearer = true;
-        while (clearer) {
+        while (Boolean.TRUE.equals(clearer)) {
             try {
                 if (control.ready())
                     threadScanner.nextLine();
@@ -382,8 +386,8 @@ public class CLIView implements View {
      * Stops the cleaning of the buffer
      */
     @Override
-    public void stopClearer() {
-        clearer = false;
+    public void setClearer(boolean condition) {
+        clearer = condition;
     }
 
     /**
@@ -495,6 +499,7 @@ public class CLIView implements View {
                 try{
                     this.wait(2000);
                 } catch (InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                 }
             }
             serverHandler.refreshLobbies();
@@ -540,6 +545,9 @@ public class CLIView implements View {
         System.out.print(AnsiGraphics.putText(" > Server Unreachable.", true, true));
     }
 
+    /**
+     * Print in System.Out the description of the Character Cards used in this game.
+     */
     private void printCharacterDescription(){
         if (!gameInfo.isExpertMode()){
             System.out.println("You can do that only in expert mode");
@@ -549,11 +557,16 @@ public class CLIView implements View {
             System.out.println("Character "+i+" is: "+ gameInfo.getCharacter(i-1).getText() + ", " + gameInfo.getCharacter(i-1).getDescription());
     }
 
+    /**
+     * Ask the player to insert the number of the island in which the action will take place.
+     * Check if the number inserted is valid.
+     * @return the number of the island starting from 0
+     */
     private int correctIslandInput(){
         boolean correct=false;
         int islandPosition=0;
         do {
-            System.out.print("Insert the number of the island you want to chose: ");
+            System.out.print("Insert the number of the island you want to choose: ");
             String strNumIsland = scanner.nextLine();
             if (strNumIsland.matches("\\d+")) {
                 islandPosition = Integer.parseInt(strNumIsland);
@@ -567,6 +580,11 @@ public class CLIView implements View {
         return islandPosition-1;
     }
 
+    /**
+     * Ask player the color of a student to move from the entrance, will ask maxRequest times.
+     * @param maxRequest the maximum number of student to move.
+     * @return list of indexes of the colors selected
+     */
     private List<Integer> correctEntranceColor(int maxRequest){
         int correct=0;
         List<Integer> colors= new ArrayList<>();
@@ -587,6 +605,12 @@ public class CLIView implements View {
         return colors;
     }
 
+    /**
+     *Ask player the color of a student to move from the character card, will ask maxRequest times.
+     * @param position the position in list of the character chosen
+     * @param maxRequest the maximum amount of student movable
+     * @return list of indexes of the colors selected
+     */
     private List<Integer> correctCharacterColor(int position, int maxRequest){
         int correct=0;
         List<Integer> colors= new ArrayList<>();
@@ -607,6 +631,11 @@ public class CLIView implements View {
         return colors;
     }
 
+
+    /**Ask player the color of a student to move from the dining, will ask maxRequest times.
+     * @param maxRequest the maximum amount of student movable
+     * @return list of indexes of the colors selected
+     */
     private List<Integer> correctDiningColor(int maxRequest){
         int correct=0;
         List<Integer> colors= new ArrayList<>();
@@ -627,6 +656,10 @@ public class CLIView implements View {
         return colors;
     }
 
+    /**
+     * Ask the player to choose an assistant and validate the input given.
+     * If is correct call {@link ServerHandler#useAssistantRequest(int) useAssistantRequest} method.
+     */
     private void correctAssistant() {
         boolean correct=false;
         do {
@@ -643,6 +676,11 @@ public class CLIView implements View {
         } while (!correct);
     }
 
+    /**
+     * Ask the player to insert the number of the cloud.
+     * Check if the inserted value is correct.
+     * If is correct calls {@link ServerHandler#cloudChosenRequest cloudChosenRequest}
+     */
     private void correctCloud() {
         boolean correct=false;
         do {
@@ -661,6 +699,11 @@ public class CLIView implements View {
         } while (!correct);
     }
 
+    /**
+     * Ask the player which character he wants to use.
+     * Then asks the necessary information to use the selected character.
+     * @return if the character has been called successfully
+     */
     private boolean correctCharacter(){
         boolean valid=false;
         if (!gameInfo.isExpertMode()){

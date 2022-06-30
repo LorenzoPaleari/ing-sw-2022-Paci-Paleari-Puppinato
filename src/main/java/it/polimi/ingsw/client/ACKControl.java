@@ -24,14 +24,17 @@ public class ACKControl extends Thread {
     /**
      * If the network handler is still connected, send an ACK messages to another network handler (of the other type) at regular intervals
      */
+    @Override
     public void run (){
         while (networkHandler.connectionAlive()){
             networkHandler.send(new ACK(isServer));
             try {
-                ACKControl.sleep(5000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
+
+
         }
     }
 }

@@ -32,8 +32,8 @@ public class Bag {
      * @param quantity the number of students to remove from this bag.
      * @return the list of students removed.
      */
-    public LinkedList<Student> initialSetup(int quantity){
-        LinkedList<Student> draw = new LinkedList<>(student.subList(0, quantity));
+    public List<Student> initialSetup(int quantity){
+        List<Student> draw = new LinkedList<>(student.subList(0, quantity));
         student.subList(0, quantity).clear();
 
         return draw;
@@ -75,7 +75,7 @@ public class Bag {
      */
     public boolean isEmpty()
     {
-        return student.size()==0;
+        return student.isEmpty();
     }
 
     /**

@@ -105,7 +105,7 @@ public class Controller {
         if (remaining == 0) {
             canStart = true;
             synchronized (this) {
-                this.notify();
+                this.notifyAll();
             }
         }
     }

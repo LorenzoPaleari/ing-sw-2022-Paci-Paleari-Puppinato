@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.enumerations.PawnColor;
 import it.polimi.ingsw.model.enumerations.TowerColor;
 import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.messages.*;
+import it.polimi.ingsw.network.messages.service.ACK;
 import it.polimi.ingsw.network.messages.service.InterruptedGameMessage;
 import it.polimi.ingsw.network.messages.setUp.*;
-import it.polimi.ingsw.server.Server;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,33 +25,31 @@ public class ServerHandler implements NetworkHandler {
     private boolean isConnected = false;
 
     /**
-     * Default constructor
-     */
-    public ServerHandler(){}
-
-    /**
      * Establishes the socket between this server handler and the server, at the specified serverIP on the specified Port, then instantiates a new ACKControl and begin to listen for any message that could arrive
      * @param serverIp the ip address of the server
      * @param serverPort the port's number of the server
      */
-    public void initConnection(String serverIp, String serverPort){
+    public synchronized void initConnection(String serverIp, String serverPort){
         try{
             socket = new Socket(serverIp, Integer.parseInt(serverPort));
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             isConnected = true;
             socket.setSoTimeout(25000);
-            ACKControl ACKcontrol= new ACKControl(this, false);
-            ACKcontrol.start();
+            ACKControl aCKcontrol= new ACKControl(this, false);
+            aCKcontrol.start();
             listen();
         }
         catch(IOException e){
             ClientException exception = new ClientException(ErrorType.SERVER_OFFLINE);
             view.printError(exception);
+            try {
+                this.wait(2000);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
             view.start();
         }
-
-
     }
 
     /**
@@ -66,11 +64,12 @@ public class ServerHandler implements NetworkHandler {
                     endConnection();
                 }
 
-                stopBufferClearer();
+                if (!(message instanceof ACK))
+                    stopBufferClearer();
 
-                if (message instanceof GameInfoMessage){
+                if (message instanceof GameInfoMessage)
                     currentMessage = (GameInfoMessage) message;
-                }
+
 
                 message.action(view);
             } catch (IOException | ClassNotFoundException e) {
@@ -84,14 +83,17 @@ public class ServerHandler implements NetworkHandler {
         }
     }
 
+    /**
+     * Stops the bufferClearer (Cli version of the game)
+     */
     private void stopBufferClearer() {
         if (currentMessage != null && currentMessage.thread != null) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
             }
-            view.stopClearer();
+            view.setClearer(false);
             currentMessage.thread.interrupt();
         }
     }

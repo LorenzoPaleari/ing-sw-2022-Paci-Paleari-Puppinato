@@ -120,6 +120,10 @@ public enum AnsiGraphics
         return title.toString();
     }
 
+    /**
+     * Create the menu graphic with AnsiCode.
+     * @return the String to print
+     */
     public static String createMenu(){
         StringBuilder menu = new StringBuilder();
 
@@ -143,6 +147,11 @@ public enum AnsiGraphics
         return menu.toString();
     }
 
+    /**
+     * Set the title of the Menu {@link #createMenu()}
+     * @param s the title to insert
+     * @return the String to print
+     */
     public static String setTitle(String s){
         StringBuilder title = new StringBuilder();
         title.append(RESET + "\u001b[").append(height / 3 + 1).append(";H");
@@ -150,6 +159,14 @@ public enum AnsiGraphics
         return  "" + title.append(horizontalBar(s));
     }
 
+    /**
+     * Give the text to insert in the Menu {@link #createMenu()}
+     * The text could be red if it is an error and can replace all the text already present or continue below
+     * @param s the text to insert in the menu
+     * @param error if the text is an error message
+     * @param cleanAll if the menu text has to be cleared
+     * @return the String to print
+     */
     public static String putText(String s, boolean error, boolean cleanAll){
         if (cleanAll){
             clean();
@@ -162,6 +179,9 @@ public enum AnsiGraphics
         return "" + innerRow(s, error) + cursorReposition();
     }
 
+    /**
+     * Method in charge of cleaning the Menu text box
+     */
     public static void clean(){
         firstFreeLine = height/3 + 3;
 
@@ -229,6 +249,12 @@ public enum AnsiGraphics
         return "" + RESET;
     }
 
+    /**
+     *
+     * @param gameInfo
+     * @return
+     */
+
     public static String createGame(GameInfo gameInfo){
         int leftOffside = (width - 154)/2;
         StringBuilder game = new StringBuilder();
@@ -247,13 +273,7 @@ public enum AnsiGraphics
 
         int index = 0;
         for (String player : gameInfo.getPlayersName()) {
-            if (player.equals(gameInfo.getFrontPlayer())) {
-                if (gameInfo.isExpertMode())
-                    game.append(setPosition(41, 98+leftOffside)).append(COIN).append(": ").append(gameInfo.getNumCoin(player));
-                game.append(assistant(43, 97+leftOffside, gameInfo.getLastUsed(player)));
-                game.append(board(gameInfo, 37, 9, 38, 56+leftOffside, true, gameInfo.getFrontPlayer()));
-            }
-            else {
+            if (!player.equals(gameInfo.getFrontPlayer())) {
                 if (gameInfo.isExpertMode())
                     game.append(setPosition(10 + index*15, 149+leftOffside)).append(COIN).append(": ").append(gameInfo.getNumCoin(player));
                 game.append(setPosition(6+index*15, 124+leftOffside)).append(player.toUpperCase());
@@ -263,23 +283,44 @@ public enum AnsiGraphics
             }
         }
 
+        int hOffset = 0;
+        if (height < 50){
+            game.append(setPosition(38, 0));
+            for (int i = 0; i < 12; i++)
+                game.append("\n");
+
+            hOffset = 50 - height;
+        }
+
+
+        for (String player : gameInfo.getPlayersName()) {
+            if (!player.equals(gameInfo.getFrontPlayer())) {
+                if (gameInfo.isExpertMode())
+                    game.append(setPosition(41-hOffset, 98 + leftOffside)).append(COIN).append(": ").append(gameInfo.getNumCoin(player));
+                game.append(assistant(43-hOffset, 97 + leftOffside, gameInfo.getLastUsed(player)));
+                game.append(board(gameInfo, 37, 9, 38-hOffset, 56 + leftOffside, true, gameInfo.getFrontPlayer()));
+            }
+        }
+
+
+
         String turn;
         turn = gameInfo.getCurrentPlayer();
         if (gameInfo.getFrontPlayer().equals(gameInfo.getCurrentPlayer()))
             turn = "YOUR";
-        game.append(setPosition(42, 12+leftOffside)).append(colored(0, "IT'S "+turn+" TURN!"));
-        game.append(setPosition(44, 11+leftOffside)).append(colored(0, "MOVABLE STUDENTS: "+ gameInfo.getRemainingMoves()));
+        game.append(setPosition(42-hOffset, 12+leftOffside)).append(colored(0, "IT'S "+turn+" TURN!"));
+        game.append(setPosition(44-hOffset, 11+leftOffside)).append(colored(0, "MOVABLE STUDENTS: "+ gameInfo.getRemainingMoves()));
 
-        game.append(setPosition(39, 124+leftOffside)).append(colored(4, "COMMAND INFO"));
-        game.append(setPosition(41, 124+leftOffside)).append(colored(4, "1: Assistant Selection"));
-        game.append(setPosition(42, 124+leftOffside)).append(colored(4, "2: Move student to dining"));
-        game.append(setPosition(43, 124+leftOffside)).append(colored(4, "3: Move student to island"));
-        game.append(setPosition(44, 124+leftOffside)).append(colored(4, "4: Move mother nature"));
-        game.append(setPosition(45, 124+leftOffside)).append(colored(4, "5: Character infos (Expert mode)"));
-        game.append(setPosition(46, 124+leftOffside)).append(colored(4, "6: Character selection (Expert mode)"));
-        game.append(setPosition(47, 124+leftOffside)).append(colored(4, "7: Cloud selection"));
+        game.append(setPosition(39-hOffset, 124+leftOffside)).append(colored(4, "COMMAND INFO"));
+        game.append(setPosition(41-hOffset, 124+leftOffside)).append(colored(4, "1: Assistant Selection"));
+        game.append(setPosition(42-hOffset, 124+leftOffside)).append(colored(4, "2: Move student to dining"));
+        game.append(setPosition(43-hOffset, 124+leftOffside)).append(colored(4, "3: Move student to island"));
+        game.append(setPosition(44-hOffset, 124+leftOffside)).append(colored(4, "4: Move mother nature"));
+        game.append(setPosition(45-hOffset, 124+leftOffside)).append(colored(4, "5: Character infos (Expert mode)"));
+        game.append(setPosition(46-hOffset, 124+leftOffside)).append(colored(4, "6: Character selection (Expert mode)"));
+        game.append(setPosition(47-hOffset, 124+leftOffside)).append(colored(4, "7: Cloud selection"));
 
-        game.append(setPosition(49,0));
+        game.append(setPosition(49-hOffset,0));
         return game.toString();
     }
 
@@ -577,6 +618,12 @@ public enum AnsiGraphics
         }
         return line.append(setPosition(vPosition, horizontal)).append(getAnsiCharacter("SINGLE", "v_single_H_right"));
     }
+
+    /**
+     *
+     * @param text
+     * @return
+     */
     public static String finalMessages(String text){
         return setPosition(23, width/2 - text.length()/2) + colored(1, text.toUpperCase()) + setPosition(24, width/2 - 23/2) + colored(1, "PRESS ENTER TO CONTINUE");
     }

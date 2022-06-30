@@ -3,7 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.viewUtilities.GameInfo;
 import it.polimi.ingsw.exceptions.ClientException;
 import it.polimi.ingsw.model.enumerations.TowerColor;
-import it.polimi.ingsw.model.table.Island;
 
 import java.util.List;
 
@@ -103,6 +102,6 @@ public interface View {
     /**
      * Stops the cleaning of the buffer
      */
-    void stopClearer();
+    void setClearer(boolean condition);
 }
 

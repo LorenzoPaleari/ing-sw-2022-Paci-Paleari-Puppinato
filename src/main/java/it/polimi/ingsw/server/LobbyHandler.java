@@ -65,10 +65,13 @@ public class LobbyHandler {
         virtualViews.get(virtualViews.size()-1).addClientHandler(clientHandler);
 
         (new Thread(() -> {
+
             try {
                 controllers.get(controllers.size() - 1).gameStart();
-            } catch (Exception ignored) {
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
+
         })).start();
 
         clientHandler.initialSetUp();
@@ -128,12 +131,12 @@ public class LobbyHandler {
      * @param clientHandler the client handler
      */
     public synchronized void refreshLobbies(ClientHandler clientHandler) {
-        List<String[]> lobbies = getLobbies();
+        List<String[]> lobby = getLobbies();
 
-        if (lobbies.size() == 0)
+        if (lobby.isEmpty())
             clientHandler.refreshLobbies(null, true);
         else
-            clientHandler.refreshLobbies(lobbies, false);
+            clientHandler.refreshLobbies(lobby, false);
     }
 
     /**

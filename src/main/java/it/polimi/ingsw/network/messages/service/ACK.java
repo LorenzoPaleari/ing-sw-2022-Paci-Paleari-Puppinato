@@ -43,6 +43,7 @@ public class ACK implements Serializable, ViewControllerMessage, ControllerViewM
      */
     @Override
     public void action(View view) {
+        //When using ACK this method is never called
     }
 
     /**
@@ -52,6 +53,7 @@ public class ACK implements Serializable, ViewControllerMessage, ControllerViewM
      */
     @Override
     public void action(VirtualView virtualView, String playerNickname) {
+        //When using ACK this method is never called
     }
 
     /**
@@ -61,6 +63,6 @@ public class ACK implements Serializable, ViewControllerMessage, ControllerViewM
      */
     @Override
     public void action(LobbyHandler lobbyHandler, ClientHandler clientHandler) {
-
+        //When using ACK this method is never called
     }
 }

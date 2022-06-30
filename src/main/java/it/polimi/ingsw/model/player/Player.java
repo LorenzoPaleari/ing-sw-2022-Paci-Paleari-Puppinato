@@ -39,7 +39,7 @@ public class Player {
      * @param expert true only if the game is played in expert mode.
      * @param numPlayer the number of player in the game.
      */
-    public void setUp(LinkedList<Student> student, boolean expert, int numPlayer)
+    public void setUp(List<Student> student, boolean expert, int numPlayer)
     {
         board = new Board(student, numPlayer, towerColor);
         deck = new Deck();

@@ -37,11 +37,11 @@ public class GameInfo implements Serializable {
     private boolean[] noEntryTile;
 
     private Integer[] cloudStudents;
-
     private CharacterType[] character;
     private int[] characterCost;
     private boolean expertMode;
     private int[] playersCoin;
+    private int[] lastMerged = new int[3];
     private Integer[][] characterInfo; //The first 5 are the eventual student, the sixth is the number of NoEntryTiles
 
     /**
@@ -64,6 +64,8 @@ public class GameInfo implements Serializable {
             players[i][0] = game.getPlayers().get(i).getNickname();
             players[i][1] = String.valueOf(game.getPlayers().get(i).getTowerColor());
         }
+
+        lastMerged = game.getTable().getMerged();
 
         expertMode = game.isExpertMode();
 
@@ -105,7 +107,7 @@ public class GameInfo implements Serializable {
         for (Island i : game.getTable().getIsland()){
             tempIslandList.addAll(index*5, Arrays.asList(i.countAll()));
             noEntryTile[index] = i.isNoEntryTiles();
-            if (i.getIslandTower().size() != 0)
+            if (!i.getIslandTower().isEmpty())
                 islandTowers[index] = i.getIslandTower().get(0).getColor().getIndex();
             else
                 islandTowers[index] = -1;
@@ -131,12 +133,18 @@ public class GameInfo implements Serializable {
         }
     }
 
+    /**
+     * Initialize all the variables to their correct dimensions and default values.
+     * @param numPlayer the number of the player fo this game
+     * @param numIsland the number of island remaining
+     * @param expertMode if the game is in expert mode
+     * @param numAssistant number of assistant remaining in the deck of a player
+     */
     private void init(int numPlayer, int numIsland, boolean expertMode, int numAssistant){
         players = new String[numPlayer][2];
         numberOfPlayer=numPlayer;
         islandSize = new int[numIsland];
         numberOfIsland=numIsland;
-        playerState = PlayerState.WAIT;
 
         diningStudents = new Integer[5*numPlayer];
         entranceStudents = new Integer[5*numPlayer];
@@ -158,6 +166,11 @@ public class GameInfo implements Serializable {
         }
     }
 
+    /**
+     * Given a String find the index of the player in the playerList
+     * @param nickname the nickname of the player
+     * @return the index of the player in the List
+     */
     private int playerPosition(String nickname){
         for (int index = 0; index < numberOfPlayer; index++ ){
             if (players[index][0].equals(nickname))
@@ -224,6 +237,14 @@ public class GameInfo implements Serializable {
      */
     public Integer [] getCharacterInfo(int position){
         return characterInfo [position];
+    }
+
+    /**
+     * Returns an array on int representing the indexes of last merged islands
+     * @return the array
+     */
+    public int[] getLastMerged(){
+        return lastMerged;
     }
 
     /**

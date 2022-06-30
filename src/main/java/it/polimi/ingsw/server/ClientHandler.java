@@ -48,8 +48,8 @@ public class ClientHandler extends Thread implements NetworkHandler{
         } catch (IOException e) {
         }
 
-        ACKControl ACKcontrol= new ACKControl(this, true);
-        ACKcontrol.start();
+        ACKControl aCKcontrol= new ACKControl(this, true);
+        aCKcontrol.start();
     }
 
     /**

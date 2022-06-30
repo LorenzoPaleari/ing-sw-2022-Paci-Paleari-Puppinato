@@ -9,14 +9,14 @@ import java.util.*;
  * entrance class
  */
 public class Entrance {
-    private LinkedList<Student> student;
+    private List<Student> student;
 
     /**
      * Constructor
      * Initialize the students list
      * @param stud the list of students
      */
-    public Entrance(LinkedList<Student> stud) {
+    public Entrance(List<Student> stud) {
         this.student = stud;
     }
 
@@ -24,7 +24,7 @@ public class Entrance {
      * Gets the students list
      * @return the students list
      */
-    public LinkedList<Student> getStudent() {
+    public List<Student> getStudent() {
         return student;
     }
 

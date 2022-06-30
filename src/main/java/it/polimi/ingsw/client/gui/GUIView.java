@@ -172,7 +172,7 @@ public class GUIView implements View {
      * Method of the Interface View, not used in this implementation
      */
     @Override
-    public void stopClearer() {}
+    public void setClearer(boolean condition) {}
 
     /**
      * Method of the Interface View, not used in this implementation
@@ -201,6 +201,10 @@ public class GUIView implements View {
 
     }
 
+    /**
+     * If already present return the instance of {@link GameSetupController} if not create a new one.
+     * @return The instance of {@link GameSetupController}
+     */
     private GameSetupController getGameSetupController() {
         GameSetupController controller;
         try {
@@ -213,6 +217,12 @@ public class GUIView implements View {
         return controller;
     }
 
+    /**
+     *If already present return the instance of {@link MainController} if not create a new one.
+     * update the controller with gameInfo.
+     * @param gameInfo the current game information to display
+     * @return The instance of {@link MainController}
+     */
     private MainController getMainController(GameInfo gameInfo) {
         MainController controller;
         try {
@@ -228,6 +238,10 @@ public class GUIView implements View {
         return controller;
     }
 
+    /**
+     * If already present return the instance of {@link ColorSetUpContoller} if not create a new one.
+     * @return The instance of {@link ColorSetUpContoller}
+     */
     private ColorSetUpController getColorSetUpController() {
         ColorSetUpController controller;
         try {
@@ -240,6 +254,10 @@ public class GUIView implements View {
         return controller;
     }
 
+    /**
+     * If already present return the instance of {@link EndController} if not create a new one.
+     * @return The instance of {@link EndController}
+     */
     private EndController getEndController(){
         EndController controller;
         try {
