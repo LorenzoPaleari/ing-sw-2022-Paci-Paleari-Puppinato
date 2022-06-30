@@ -294,7 +294,7 @@ public enum AnsiGraphics
 
 
         for (String player : gameInfo.getPlayersName()) {
-            if (!player.equals(gameInfo.getFrontPlayer())) {
+            if (player.equals(gameInfo.getFrontPlayer())) {
                 if (gameInfo.isExpertMode())
                     game.append(setPosition(41-hOffset, 98 + leftOffside)).append(COIN).append(": ").append(gameInfo.getNumCoin(player));
                 game.append(assistant(43-hOffset, 97 + leftOffside, gameInfo.getLastUsed(player)));

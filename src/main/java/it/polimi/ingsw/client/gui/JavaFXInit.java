@@ -54,6 +54,7 @@ public class JavaFXInit extends Application {
      * @param serverHandler the reference to the {@link ServerHandler} instance.
      */
     private static void loading(ServerHandler serverHandler){
+        System.setProperty("prism.allowhidpi", "false");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(JavaFXInit.class.getResource("/fxml/init.fxml"));
         loader.setController(new InitController(serverHandler));

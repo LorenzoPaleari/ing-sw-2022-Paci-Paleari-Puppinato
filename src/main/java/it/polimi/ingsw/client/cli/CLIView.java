@@ -526,7 +526,8 @@ public class CLIView implements View {
             valid2 = true;
             String expertString = scanner.nextLine();
             if ((expertString.equalsIgnoreCase("YES"))) {
-                Client.main(null);
+                String[] cli = {"-c"};
+                Client.main(cli);
             } else if (!(expertString.equalsIgnoreCase("NO"))) {
                 System.out.print(AnsiGraphics.putText("  > Wrong choice, try again", true, false));
                 valid2 = false;
