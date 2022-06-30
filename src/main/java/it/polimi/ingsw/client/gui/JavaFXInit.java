@@ -11,6 +11,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -171,10 +172,14 @@ public class JavaFXInit extends Application {
         playlist = musics;
         current = 0;
 
-        player = new MediaPlayer(playlist.get(current));
-        player.play();
-        player.setVolume(0.1);
-        playerEffect();
+        try {
+            player = new MediaPlayer(playlist.get(current));
+            player.play();
+            player.setVolume(0.1);
+            playerEffect();
+        } catch (MediaException e){
+        }
+
     }
 
     /**

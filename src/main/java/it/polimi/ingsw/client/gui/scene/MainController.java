@@ -37,12 +37,6 @@ import java.util.List;
 public class MainController implements GenericSceneController{
 
     @FXML
-    private StackPane rootPane;
-    @FXML
-    private Group root;
-    @FXML
-    private AnchorPane anchorRoot;
-    @FXML
     private Pane board1, board2, board3;
     @FXML
     private Group bd1Entrance, bd1Students, bd1Professors, bd1Towers;

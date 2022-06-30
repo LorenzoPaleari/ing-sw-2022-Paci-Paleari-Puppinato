@@ -239,8 +239,8 @@ public class GUIView implements View {
     }
 
     /**
-     * If already present return the instance of {@link ColorSetUpContoller} if not create a new one.
-     * @return The instance of {@link ColorSetUpContoller}
+     * If already present return the instance of {@link ColorSetUpController} if not create a new one.
+     * @return The instance of {@link ColorSetUpController}
      */
     private ColorSetUpController getColorSetUpController() {
         ColorSetUpController controller;
