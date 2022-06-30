@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Nickname controller class
+ */
 public class NicknameController implements GenericSceneController {
 
     @FXML
@@ -14,10 +17,18 @@ public class NicknameController implements GenericSceneController {
     @FXML
     private Button joinBtn;
     private ServerHandler serverHandler;
+
+    /**
+     * Constructor
+     * @param serverHandler1 the server handler
+     */
     public NicknameController(ServerHandler serverHandler1){
         serverHandler = serverHandler1;
     }
 
+    /**
+     * Initialize the mouse click event
+     */
     @FXML
     public void initialize() {
         joinBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onJoinBtnClick);

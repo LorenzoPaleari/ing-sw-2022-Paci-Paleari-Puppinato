@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Start controller class
+ */
 public class StartController implements GenericSceneController{
     @FXML
     private TextField serverIpField;
@@ -17,10 +20,17 @@ public class StartController implements GenericSceneController{
     private Button joinBtn;
     private ServerHandler serverHandler;
 
+    /**
+     * Constructor
+     * @param serverHandler1 the server handler
+     */
     public StartController(ServerHandler serverHandler1){
         serverHandler = serverHandler1;
     }
 
+    /**
+     * sets the mouse click event
+     */
     @FXML
     public void initialize() {
         joinBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onJoinBtnClick);

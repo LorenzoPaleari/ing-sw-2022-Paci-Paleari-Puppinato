@@ -58,6 +58,9 @@ public class CharacterSceneController implements GenericSceneController {
     private Label label0, label1, label2, label3, label4, label5;
     private List<ChoiceBox<String>> selection;
 
+    /**
+     * Initialize the mouse pressed, dragged and clicked events
+     */
     @FXML
     public void initialize() {
         selection = new ArrayList<>();
@@ -121,6 +124,11 @@ public class CharacterSceneController implements GenericSceneController {
             stage.close();
     }
 
+    /**
+     * Constructor
+     * Sets the stage
+     * @param serverHandler the server handler
+     */
     public CharacterSceneController(ServerHandler serverHandler) {
         this.serverHandler = serverHandler;
         stage = new Stage();
@@ -132,24 +140,44 @@ public class CharacterSceneController implements GenericSceneController {
         yOffset = 0;
     }
 
+    /**
+     * Shows the stage
+     */
     public void displayAlert() {
         stage.show();
     }
 
+    /**
+     * Sets the scene
+     * @param scene
+     */
     public void setScene(Scene scene) {
         stage.setScene(scene);
     }
 
+    /**
+     * on Root Pane Mouse Pressed sets the x and y offset
+     * @param event
+     */
     private void onRootPaneMousePressed(MouseEvent event) {
         xOffset = stage.getX() - event.getScreenX();
         yOffset = stage.getY() - event.getScreenY();
     }
 
+    /**
+     * on Root Pane Mouse Dragged sets the x and y
+     * @param event
+     */
     private void onRootPaneMouseDragged(MouseEvent event) {
         stage.setX(event.getScreenX() + xOffset);
         stage.setY(event.getScreenY() + yOffset);
     }
 
+    /**
+     * sets the character infos and actions
+     * @param gameInfo
+     * @param number
+     */
     public void setInfo(GameInfo gameInfo, int number) {
         Label[] labels = {label0, label1, label2, label3, label4, label5};
         for (Label i : labels)

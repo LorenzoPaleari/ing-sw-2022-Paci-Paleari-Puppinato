@@ -14,6 +14,9 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
+/**
+ * Game setup controller class
+ */
 public class GameSetupController implements GenericSceneController{
 
     private ServerHandler serverHandler;
@@ -37,6 +40,9 @@ public class GameSetupController implements GenericSceneController{
         serverHandler = serverHandler1;
     }
 
+    /**
+     * Sets the mouse click events and the observer for the lobby list
+     */
     @FXML
     public void initialize(){
         yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onYesBtnClick);

@@ -13,6 +13,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Error scene controller
+ */
 public class ErrorSceneController implements GenericSceneController{
 
     private final Stage stage;
@@ -29,6 +32,9 @@ public class ErrorSceneController implements GenericSceneController{
     @FXML
     private Button button;
 
+    /**
+     * Initialize the button click event and the drag event for the root pane
+     */
     @FXML
     public void initialize() {
         button.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
@@ -39,6 +45,10 @@ public class ErrorSceneController implements GenericSceneController{
         rootPane.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onRootPaneMousePressed);
         rootPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::onRootPaneMouseDragged);
     }
+
+    /**
+     * Constructor. Sets the stage
+     */
     public ErrorSceneController() {
         stage = new Stage();
         stage.initOwner(SceneController.getActiveScene().getWindow());

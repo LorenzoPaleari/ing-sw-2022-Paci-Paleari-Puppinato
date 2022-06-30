@@ -32,6 +32,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Main controller class
+ */
 public class MainController implements GenericSceneController{
 
     @FXML
@@ -74,6 +77,10 @@ public class MainController implements GenericSceneController{
     private boolean islandSelector, boardSelector;
     private double[] currentLocations = new double[24];
 
+    /**
+     * Constructor
+     * @param serverHandler the server handler
+     */
     public MainController(ServerHandler serverHandler) {
         this.serverHandler = serverHandler;
     }

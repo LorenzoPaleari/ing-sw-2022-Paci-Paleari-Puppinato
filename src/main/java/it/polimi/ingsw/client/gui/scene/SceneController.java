@@ -9,6 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+/**
+ * Scene controller class
+ */
 public class SceneController {
 
     private static Scene activeScene;
@@ -25,13 +28,19 @@ public class SceneController {
 
     /**
      * Changes the root pane
-     * @param controller
-     * @param fxml
+     * @param controller the scene controller
+     * @param fxml the new pane path
      */
     public static void changeRootPane(GenericSceneController controller, String fxml) {
         changeRootPane(controller, activeScene, fxml);
     }
 
+    /**
+     * changes the root pane
+     * @param controller the scene controller
+     * @param scene the active scene
+     * @param fxml the new pane path
+     */
     public static void changeRootPane(GenericSceneController controller, Scene scene, String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/" + fxml));
@@ -44,6 +53,12 @@ public class SceneController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Shows the error popup
+     * @param type the type of error
+     * @param message the error message
+     */
     public static void showError(String type, String message) {
         FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/errorScene.fxml"));
 
@@ -62,6 +77,13 @@ public class SceneController {
         controller.displayAlert();
     }
 
+    /**
+     * Shows the character
+     * @param mainController the main controller
+     * @param controller the character scene controller
+     * @param gameInfo the game info
+     * @param number the character number
+     */
     public static void showCharacter(MainController mainController, CharacterSceneController controller, GameInfo gameInfo, int number) {
         FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/character.fxml"));
         loader.setController(controller);

@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Init controller class
+ */
 public class InitController implements GenericSceneController{
 
     private ServerHandler serverHandler;
@@ -45,12 +48,20 @@ public class InitController implements GenericSceneController{
         JavaFXInit.musicEffect(music);
     }
 
+    /**
+     * On start btn click opens the start fxml pane
+     * @param event the click event
+     */
     @FXML
     private void onStartBtnClick(Event event) {
         SceneController.setActiveScene(event);
         Platform.runLater(() -> SceneController.changeRootPane(new StartController(serverHandler), "start.fxml"));
     }
 
+    /**
+     * on exit button click closes the app
+     * @param event the click event
+     */
     @FXML
     private void onExitBtnClick(Event event) {
         System.exit(0);

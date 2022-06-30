@@ -96,10 +96,10 @@ public class GUIView implements View {
      */
     @Override
     public void colorSetUp(List<TowerColor> tower, boolean requestAgain) {
-        ColorSetUpContoller colorSetUpContoller = getColorSetUpController();
+        ColorSetUpController colorSetUpController = getColorSetUpController();
         if (requestAgain)
             Platform.runLater(() -> SceneController.showError("COLOR SELECTION", "This color has already been taken."));
-        Platform.runLater(() -> colorSetUpContoller.setUp(tower));
+        Platform.runLater(() -> colorSetUpController.setUp(tower));
     }
 
     /**
@@ -228,13 +228,13 @@ public class GUIView implements View {
         return controller;
     }
 
-    private ColorSetUpContoller getColorSetUpController() {
-        ColorSetUpContoller controller;
+    private ColorSetUpController getColorSetUpController() {
+        ColorSetUpController controller;
         try {
-            controller = (ColorSetUpContoller) SceneController.getActiveController();
+            controller = (ColorSetUpController) SceneController.getActiveController();
         } catch (ClassCastException e) {
-            controller = new ColorSetUpContoller(serverHandler);
-            ColorSetUpContoller finalController = controller;
+            controller = new ColorSetUpController(serverHandler);
+            ColorSetUpController finalController = controller;
             Platform.runLater(() -> SceneController.changeRootPane(finalController, "colorSetUp.fxml"));
         }
         return controller;

@@ -12,12 +12,18 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class ColorSetUpContoller implements GenericSceneController{
+/**
+ * Color setup controller
+ */
+public class ColorSetUpController implements GenericSceneController{
 
     private ServerHandler serverHandler;
     @FXML
     private Pane tower1, tower2, tower3;
 
+    /**
+     * Initialize the events on the three towers
+     */
     @FXML
     public void initialize(){
         event(tower1);
@@ -29,10 +35,14 @@ public class ColorSetUpContoller implements GenericSceneController{
      * Initializes the server handler with it is associated
      * @param serverHandler the server handler to associate
      */
-    public ColorSetUpContoller(ServerHandler serverHandler) {
+    public ColorSetUpController(ServerHandler serverHandler) {
         this.serverHandler = serverHandler;
     }
 
+    /**
+     * Sets the mouse entered, exited and clicked events
+     * @param pane the pane
+     */
     public void event(Pane pane){
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(20.0);
@@ -53,6 +63,10 @@ public class ColorSetUpContoller implements GenericSceneController{
         });
     }
 
+    /**
+     * Setsthe towers position
+     * @param tower the list of towers
+     */
     public void setUp(List<TowerColor> tower) {
         Pane[] colors = {tower1, tower2, tower3};
         tower1.setVisible(false);

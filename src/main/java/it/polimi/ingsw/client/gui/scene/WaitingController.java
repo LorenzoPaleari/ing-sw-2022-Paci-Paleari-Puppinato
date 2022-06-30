@@ -10,6 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+/**
+ * Waiting controller class
+ */
 public class WaitingController implements GenericSceneController{
 
     @FXML
@@ -35,6 +38,10 @@ public class WaitingController implements GenericSceneController{
         JavaFXInit.musicEffect(music);
     }
 
+    /**
+     * Shows the waiting transition
+     * @param node the node
+     */
     private void effect(Node node){
         TranslateTransition translate = new TranslateTransition();
         translate.setNode(node);

@@ -14,6 +14,9 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * End controller class
+ */
 public class EndController implements GenericSceneController{
 
     @FXML
@@ -21,6 +24,9 @@ public class EndController implements GenericSceneController{
     @FXML
     private Text newGame, winner, draw;
 
+    /**
+     * Initialize the mouse clicked event
+     */
     @FXML
     public void initialize(){
         yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
