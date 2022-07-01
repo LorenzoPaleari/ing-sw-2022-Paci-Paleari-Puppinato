@@ -60,7 +60,7 @@ public class GameSetupController implements GenericSceneController{
                 } else {
                     String player1Name = lobbyList.getSelectionModel().getSelectedItem().substring(0, (!lobbyList.getSelectionModel().getSelectedItem().contains(",") ? lobbyList.getSelectionModel().getSelectedItem().length() : lobbyList.getSelectionModel().getSelectedItem().indexOf(",")));
                     for (String[] lobb : lobbies)
-                        if (lobb[1].equals(player1Name)) {
+                        if (lobb.length > 1 && lobb[1].equals(player1Name)) {
                             numPlayer.setText("PLAYERS:                             " + lobb[lobb.length - 2]);
                             isExpert.setText("EXPERT MODE:               " + (lobb[lobb.length - 1].equals("true") ? "YES" : "NO"));
                         }

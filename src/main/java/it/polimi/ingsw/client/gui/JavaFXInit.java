@@ -74,7 +74,7 @@ public class JavaFXInit extends Application {
         });
 
         double value = 747d;
-        if ((System.getProperty("os.name").startsWith("windows"))){
+        if ((System.getProperty("os.name").contains("Windows")) || (System.getProperty("os.name").contains("nux")) || (System.getProperty("os.name").contains("nix"))|| (System.getProperty("os.name").contains("aix"))){
            value = 757d;
         }
         stage.setScene(scene);
@@ -153,12 +153,16 @@ public class JavaFXInit extends Application {
         });
         music.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (JavaFXInit.isMuted()) {
-                JavaFXInit.getPlayer().play();
+                try {
+                    JavaFXInit.getPlayer().play();
+                } catch (NullPointerException e){}
                 JavaFXInit.setMuted(false);
                 music.getStyleClass().clear();
                 music.getStyleClass().add("audio");
             } else {
-                JavaFXInit.getPlayer().pause();
+                try {
+                    JavaFXInit.getPlayer().pause();
+                } catch (NullPointerException e){}
                 JavaFXInit.setMuted(true);
                 music.getStyleClass().clear();
                 music.getStyleClass().add("noAudio");

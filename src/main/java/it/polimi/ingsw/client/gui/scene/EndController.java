@@ -30,7 +30,10 @@ public class EndController implements GenericSceneController{
     public void initialize(){
         yesBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             JavaFXInit.setStopped(true);
-            JavaFXInit.getPlayer().stop();
+            try {
+                JavaFXInit.getPlayer().stop();
+            } catch (NullPointerException e){
+            }
             JavaFXInit.setStopped(false);
             JavaFXInit.getStage().close();
             Platform.runLater(JavaFXInit::reStart);

@@ -95,7 +95,10 @@ public class MainController implements GenericSceneController{
         }
         JavaFXInit.musicEffect(music);
         JavaFXInit.setStopped(true);
-        JavaFXInit.getPlayer().stop();
+        try {
+            JavaFXInit.getPlayer().stop();
+        } catch (NullPointerException e){
+        }
         List<Media> musics = new ArrayList<>();
         musics.add(new Media(String.valueOf(getClass().getClassLoader()
                 .getResource("media/Game/Game.mp3"))));

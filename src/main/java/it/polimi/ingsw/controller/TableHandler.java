@@ -119,7 +119,7 @@ public class TableHandler {
                 }
         }
         else if(islandContext.conquerIsland(island , game)) {
-            game.getTable().mergeIsland(game.getTable().getMotherPosition());
+            game.getTable().mergeIsland(game.getTable().getIsland().indexOf(island));
 
             for (Player p : game.getPlayers())
                 if (p.getBoard().getTowerCourt().isEmpty()) {
