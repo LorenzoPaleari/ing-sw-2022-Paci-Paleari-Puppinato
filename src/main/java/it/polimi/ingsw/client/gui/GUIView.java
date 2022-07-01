@@ -146,7 +146,7 @@ public class GUIView implements View {
             Platform.runLater(() -> serverHandler.refreshLobbies());
         } else {
             Platform.runLater(() -> SceneController.showError("PLAYER DISCONNECTION", nickname + " disconnected from the server. Game ended!"));
-            newGame("");
+            Platform.runLater(() -> newGame(""));
         }
     }
 
@@ -157,7 +157,7 @@ public class GUIView implements View {
     @Override
     public void newGame(String nickname) {
         EndController endController = getEndController();
-        Platform.runLater(() -> endController.newGame());
+        Platform.runLater(endController::newGame);
     }
 
     /**
@@ -262,7 +262,7 @@ public class GUIView implements View {
         EndController controller;
         try {
             controller = (EndController) SceneController.getActiveController();
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NoClassDefFoundError e) {
             controller = new EndController();
             EndController finalController = controller;
             Platform.runLater(() -> SceneController.changeRootPane(finalController, "end.fxml"));
