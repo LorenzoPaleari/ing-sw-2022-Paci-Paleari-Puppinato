@@ -62,11 +62,10 @@ public class CLIView implements View {
                 valid = true;
                 serverIP = IPValidator.getDefaultIP();
             } else {
+                valid = true;
                 if (!IPValidator.isCorrectIP(serverIP)){
                     valid = false;
                     System.out.print(AnsiGraphics.putText("  > Server IP not valid. Please try again", true, false));
-                } else {
-                    valid = true;
                 }
             }
         } while (!valid);
@@ -80,11 +79,10 @@ public class CLIView implements View {
                 valid = true;
                 serverPort = IPValidator.getDefaultPort();
             } else {
+                valid = true;
                 if (!IPValidator.isCorrectPort(serverPort)){
                     valid = false;
                     System.out.print(AnsiGraphics.putText("  > Server PORT not valid. Please try again", true, false));
-                } else {
-                    valid = true;
                 }
             }
         } while (!valid);

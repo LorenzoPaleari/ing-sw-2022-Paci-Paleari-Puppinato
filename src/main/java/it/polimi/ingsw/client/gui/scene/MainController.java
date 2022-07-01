@@ -20,9 +20,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -433,14 +431,14 @@ public class MainController implements GenericSceneController{
         if (gameInfo.getLastMerged()[1] > 0 && gameInfo.getLastMerged()[2] == 0)
             unionAtEnd = islandsSize.get(0);
 
-        if (lastSize == gameInfo.getNumIsland() + 1){
+        if (lastSize > gameInfo.getNumIsland()){
             int first = newFirst;
             if (unionAtEnd!=0) {
                 newFirst += unionAtEnd - 12 + newLast;
                 newLast = 12;
             }
             if (unionAtStart != 0){
-                newLast -= unionAtStart + first - 1;
+                newLast -= unionAtStart - first + 1;
                 newFirst = 1;
             }
         }
@@ -608,22 +606,21 @@ public class MainController implements GenericSceneController{
         after.add(new int[]{1, 2, 4, 5, 7, 8, 10, 11});
         after.add(new int[]{0, 6});
         after.add(new int[]{3,9});
-        index = 0;
+        index = newFirst+newLast-13;
         double actualVert;
         double actualHoriz;
         int color;
         for (int i = 0; i < gameInfo.getNumIsland(); i++){
             color = gameInfo.getTowersOnIsland(i);
             if (gameInfo.getIslandSize(i) == 1) {
-                islandFill(index + newFirst - 13 + newLast, color, i, true, islands[index + newFirst - 13 +newLast].getLayoutX(), islands[index + newFirst - 13 +newLast].getLayoutY());
+                islandFill(index, color, i, true, islands[index].getLayoutX(), islands[index].getLayoutY());
             }else {
                 int center = gameInfo.getIslandSize(i)/2;
-                double v2 = Math.toRadians(15.0 + 30.0 * (index + center + newFirst - 13 + newLast));
+                double v2 = Math.toRadians(15.0 + 30.0 * (index + center));
                 actualVert = 230 - 213 * Math.sin(v2);
                 actualHoriz = 337.5 - 213 * Math.cos(v2);
-                System.out.println(actualHoriz+ " " + actualVert);
-                islandFill(index + center + newFirst - 13 + newLast, color, i, true, actualHoriz, actualVert);
-                for (int j = index + center + newFirst - 14 + newLast; j >= index + newFirst - 13 + newLast; j--) {
+                islandFill(index + center + (index + center < 0 ? 12 : 0), color, i, true, actualHoriz, actualVert);
+                for (int j = index + center -1; j >= index; j--) {
                     int h = j + (j < 0 ? 12 : 0);
                     switch (islandUnion(before, h)) {
                         case 0:
@@ -645,7 +642,7 @@ public class MainController implements GenericSceneController{
                 }
                 actualVert = 230 - 213 * Math.sin(v2);
                 actualHoriz = 337.5 - 213 * Math.cos(v2);
-                for (int j = index + center + newFirst -12 + newLast; j < index + gameInfo.getIslandSize(i) + newFirst - 13 + newLast; j++) {
+                for (int j = index + center + 1; j < index + gameInfo.getIslandSize(i); j++) {
                     int h = j - (j < 12 ? 0 : 12);
                     switch (islandUnion(after, h)) {
                         case 0:
@@ -709,7 +706,7 @@ public class MainController implements GenericSceneController{
             Pane pane = (Pane) islands[number].getChildren().get(index);
             pane.getStyleClass().clear();
             pane.getChildren().get(0).setVisible(false);
-            if (student != 0 && fill) {
+            if (fill && student != 0) {
                 islands[number].getChildren().get(index).getStyleClass().add(PawnColor.getColor(index).toString().toLowerCase());
                 pane.getChildren().get(0).setVisible(true);
                 Label label = (Label) pane.getChildren().get(0);
@@ -737,9 +734,11 @@ public class MainController implements GenericSceneController{
     private int islandTarget(int target){
         int sum = 0;
         int i;
-        for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++)
+        for (i = 0; i < gameInfo.getNumIsland() && target > sum; i++) {
             sum += gameInfo.getIslandSize(i);
-
+            if (i == 0)
+                sum += -13 + newLast + newFirst;
+        }
         if (target < newFirst)
             i = gameInfo.getNumIsland();
         if (target > newLast)

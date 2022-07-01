@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class JavaFXInit extends Application {
@@ -55,7 +56,6 @@ public class JavaFXInit extends Application {
      * @param serverHandler the reference to the {@link ServerHandler} instance.
      */
     private static void loading(ServerHandler serverHandler){
-        System.setProperty("prism.allowhidpi", "false");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(JavaFXInit.class.getResource("/fxml/init.fxml"));
         loader.setController(new InitController(serverHandler));
@@ -73,17 +73,20 @@ public class JavaFXInit extends Application {
             System.exit(0);
         });
 
+        double value = 747d;
+        if ((System.getProperty("os.name").startsWith("windows"))){
+           value = 757d;
+        }
         stage.setScene(scene);
         stage.setWidth(1280d);
-        stage.setHeight(747d);
+        stage.setHeight(value);
         stage.setResizable(false);
         stage.setFullScreen(false);
         stage.setFullScreenExitKeyCombination(null);
         stage.setTitle("Eriantys");
 
         List<Media> musics = new ArrayList<>();
-        musics.add(new Media(String.valueOf(JavaFXInit.class.getClassLoader()
-                .getResource("media/Lobby/Lobby.mp3"))));
+        musics.add(new Media(String.valueOf(JavaFXInit.class.getClassLoader().getResource("media/Lobby/Lobby.mp3"))));
 
         changeMusic(musics);
 
