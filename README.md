@@ -28,7 +28,7 @@ At the following link you can consult the coverage report of the tests carried o
 | Package | Coverage |
 |:-----------------------|:------------------------------------:|
 | Controller | 432/451 (95%)
-| Model | 624/629 (99%)
+| Model | 637/643 (99%)
 
 
 ### Libraries & Plugins
