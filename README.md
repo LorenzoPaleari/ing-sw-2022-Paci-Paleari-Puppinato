@@ -12,14 +12,14 @@ Interazione e gameplay: linea di comando (CLI) e grafica (GUI).
 ## Documentazione
 
 ### UML
-- UML Iniziali
-- UML Finali
+- [UML Iniziali](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Paleari-Puppinato/tree/main/Deliverables/UML/Initial)
+- [UML Finali](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Paleari-Puppinato/tree/main/Deliverables/UML/Final)
 
 ### JavaDoc
-La seguente documentazione include una descrizione delle classi e dei metodi utilizzati, consultabile qui: xxx
+La seguente documentazione include una descrizione delle classi e dei metodi utilizzati, consultabile qui: [click](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Paleari-Puppinato/tree/main/Deliverables/Code%20Coverage)
 
 ### Coverage report
-Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: xxx
+Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: [click](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Paleari-Puppinato/tree/main/Deliverables/Code%20Coverage)
 
 
 
