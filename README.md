@@ -80,7 +80,9 @@ On Windows you should use CMD.
 You can double click on the jar file if your OS supports it or you can launch it with the terminal using the following command:
 ```
 java -jar Client.jar
-```
+```  
+In Windows if the GUI window exits the screen boarder we suggest to check Windows Scaling and to lower it:  
+Settings > Display > Scale and Layout (For Example from 150% to 125%).
 
 ## HOW TO PLAY
 #### Lobby Selection
