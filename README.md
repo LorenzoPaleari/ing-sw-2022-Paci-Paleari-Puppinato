@@ -75,7 +75,7 @@ On all OS we suggest to open the terminal at full screen before launching the ap
 For best performance we suggest to use mono spaced font (12 size) and to have UTF-8 character set.
 On Windows you should use CMD. 
 
-####GUI
+#### GUI
 You can double click on the jar file if your OS supports it or you can launch it with the terminal using the following command:
 ```
 java -jar Client.jar
