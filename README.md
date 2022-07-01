@@ -48,6 +48,20 @@ Al seguente link è possibile consultare il report della coverage dei test effet
     - __Carte personaggio:__ implementate tutte e 12 le carte personaggio.
     - __Partite multiple:__ server realizzato in modo che possa gestire più partite contemporaneamente.
 
+## Esecuzione Jar
+L'utente ha a disposizione due jar, uno per il server e uno per il client.
+Il primo è eseguibile da riga di comando 
+```
+java -jar server.jar
+```
+Per quanto riguarda il client, è possibile utilizzare sia un'interfaccia di tipo testuale (CLI), che una grafica (GUI).
+La CLI si può eseguire con i seguenti comandi
+```
+java -jar client.jar -c
+java -jar client.jar -cli
+```
+Per quanto riguarda la GUI, è sufficiente premere due volte sul jar.
+
 ## About us
 - ###        Paci Emanuele ([@emanuelePaci](https://github.com/emanuelePaci))
 - ###        Paleari Lorenzo ([@LorenzoPaleari](https://github.com/LorenzoPaleari))
