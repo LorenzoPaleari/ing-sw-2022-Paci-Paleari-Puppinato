@@ -50,6 +50,7 @@ At the following [link](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Palea
     - __Multiple games:__ server designed so that it can manage multiple games at the same time.
 
 ## Jar execution
+In order to run correctly you should have JDK 17 or above. [Here](https://www.oracle.com/java/technologies/downloads/#java17) you can find the download page.  
 The user has two jars available, one for the server and one for the client.
 You can find them [here](https://github.com/LorenzoPaleari/ing-sw-2022-Paci-Paleari-Puppinato/tree/main/Deliverables/JAR).
 ### Server
