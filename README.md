@@ -1,5 +1,14 @@
-# Prova Finale Ingegneria del Software 2022
-## Gruppo GC12
+# Software Engineering Project - 2022 
+
+Software Engineering Project - Politecnico di Milano - Academic Year 2021/2022
+
+## Group Members
+
+### Group GC12
+
+- ####        Paci Emanuele ([@emanuelePaci](https://github.com/emanuelePaci))
+- ####        Paleari Lorenzo ([@LorenzoPaleari](https://github.com/LorenzoPaleari))
+- ####        Puppinato Thomas ([@PuppinatoThomas](https://github.com/PuppinatoThomas))
 
 Implementation of the Eriantys board game.
 
@@ -85,7 +94,17 @@ java -jar Client.jar
 In Windows if the GUI window exits the screen boarder we suggest to check Windows Scaling and to lower it:  
 Settings > Display > Scale and Layout (For Example from 150% to 125%).
 
-## HOW TO PLAY
+## Sreenshots
+### GUI
+![GUI](.github/assets/images/Gui_3.png?raw=true)
+![GUI](.github/assets/images/Gui_2.png?raw=true)
+![GUI](.github/assets/images/Gui_1.png?raw=true)
+### CLI
+![CLI](.github/assets/images/Cli_1.png?raw=true)
+![CLI](.github/assets/images/Cli_2.png?raw=true)
+![CLI](.github/assets/images/Cli_3.png?raw=true)
+
+## How To Play
 #### Lobby Selection
 During set-up phase you will be asked if you want to create a new game or not.  
 By selecting "NO" the server will send all the available lobbies with NumPlayer, ExpertMode and the Partecipants: you have the possibility to choose in which lobby you would like to enter by scrolling throw them (GUI) or by changing page with "Next/Prev" (CLI).
@@ -104,9 +123,3 @@ Clouds are choosed by clicking on them.
 Character Card description and instruction will be displayed in a new window after clicking on them.  
 In order to use a Character you should click on the Play button.
 Some of the Characters are playable instantly, other ones requires the player to perform some actions either on the main game (Draggin students/do not entry tiles or clicking on a island) or selecting options int the Character window.
-
-
-## About us
-- ###        Paci Emanuele ([@emanuelePaci](https://github.com/emanuelePaci))
-- ###        Paleari Lorenzo ([@LorenzoPaleari](https://github.com/LorenzoPaleari))
-- ###        Puppinato Thomas ([@PuppinatoThomas](https://github.com/PuppinatoThomas))
