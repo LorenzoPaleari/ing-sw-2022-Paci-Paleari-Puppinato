@@ -2,6 +2,13 @@
 
 Software Engineering Project - Politecnico di Milano - Academic Year 2021/2022
 
+---
+Eryantis board game implementation.
+
+The game features a distributed system using the MVC (Model-View-Controller) pattern. Network communications are managed with the use of sockets.
+
+Interaction and gameplay: command line (CLI) and graphics (GUI).
+
 ## Group Members
 
 ### Group GC12
@@ -9,14 +16,6 @@ Software Engineering Project - Politecnico di Milano - Academic Year 2021/2022
 - ####        Paci Emanuele ([@emanuelePaci](https://github.com/emanuelePaci))
 - ####        Paleari Lorenzo ([@LorenzoPaleari](https://github.com/LorenzoPaleari))
 - ####        Puppinato Thomas ([@PuppinatoThomas](https://github.com/PuppinatoThomas))
-
-Implementation of the Eriantys board game.
-
-The project consists in the implementation of a distributed system using the MVC (Model-View-Controller) pattern.
-
-The network is managed with the use of sockets.
-
-Interaction and gameplay: command line (CLI) and graphics (GUI).
 
 ## Documentation
 
@@ -70,8 +69,8 @@ java -jar Server.jar
 The server asks the port to bind to. 
 
 ### Client
-Both base_client and M1_client works in Windows and Linux.  
-Due to some path conflict JavaFx is not able to generate a Jar working either for Intel Mac and Apple Silicon Mac; for the first one you have to launch base_client, for the other M1_client. 
+You are free to choose the version corresponding to your opearting system. While all versions should work on Windows and Linux it is recommended to pay more attention to MacOsX: due to some path conflict JavaFx is not able to generate a Jar working either for Intel Mac and Apple Silicon Mac; for the first one you have to launch x64, while aarch64 for the other.
+
 #### CLI
 CLI has full compatibility with Windows and Unix platforms. You can launch it with the following command:
 ```
