@@ -4,6 +4,9 @@ target/
 out/
 *.iml
 
+# VS Code files
+.vscode/
+
 # MacOS files
 *.DS_Store
 
