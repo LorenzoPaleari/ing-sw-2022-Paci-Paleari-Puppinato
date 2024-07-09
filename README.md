@@ -69,7 +69,7 @@ java -jar Server.jar
 The server asks the port to bind to. 
 
 ### Client
-You are free to choose the version corresponding to your opearting system. While all versions should work on Windows and Linux it is recommended to pay more attention to MacOsX: due to some path conflict JavaFx is not able to generate a Jar working either for Intel Mac and Apple Silicon Mac; for the first one you have to launch x64, while aarch64 for the other.
+You are free to choose the version corresponding to your opearting system. It is recommended to pay more attention to MacOsX: due to some path conflict JavaFx is not able to generate a Jar working either for Intel Mac and Apple Silicon Mac; for the first one you have to launch x64, while aarch64 for the other.
 
 #### CLI
 CLI has full compatibility with Windows and Unix platforms. You can launch it with the following command:
