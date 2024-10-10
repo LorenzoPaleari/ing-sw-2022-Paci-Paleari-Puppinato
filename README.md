@@ -9,6 +9,9 @@ The game features a distributed system using the MVC (Model-View-Controller) pat
 
 Interaction and gameplay: command line (CLI) and graphics (GUI).
 
+**Final grade**: $30/30$
+
+
 ## Group Members
 
 ### Group GC12
